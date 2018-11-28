@@ -25,7 +25,7 @@ const Hero = () => (
   <div className="hero">
     <div className="left">
       <h1 className="tagline">Download and seed<br />torrents on-demand.</h1>
-      <p className="tagline-price">Starting at $0.0075 / GB / month.</p>
+      <p className="tagline-price">Seed at $0.0075 / GB / month.</p>
       <Button href="/signup" large>Signup</Button>
     </div>
     <div className="right">
@@ -93,7 +93,7 @@ const Features = (
       <div className="feature first">
         <div className="image" />
         <p className="text">
-          Add a torrent using our dashboard or API.
+          Add torrents using our dashboard or API.
         </p>
       </div>
       <div className="feature second">
@@ -116,6 +116,7 @@ const Features = (
         padding: 0 15px;
       }
       .title {
+        font-size: 24px;
         margin-bottom: 20px;
       }
       .features-inner {

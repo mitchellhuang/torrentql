@@ -29,18 +29,20 @@ class NavBar extends Component {
         </div>
         <div className="center" />
         <div className="right">
-          <Link href="/features">
-            <a>Features</a>
-          </Link>
-          <Link href="/pricing">
-            <a>Pricing</a>
-          </Link>
-          <Link href="/network">
-            <a>Network</a>
-          </Link>
-          <Link href="/api">
-            <a>API</a>
-          </Link>
+          <div className="d-none-mobile">
+            <Link href="/features">
+              <a>Features</a>
+            </Link>
+            <Link href="/pricing">
+              <a>Pricing</a>
+            </Link>
+            <Link href="/network">
+              <a>Network</a>
+            </Link>
+            <Link href="/api">
+              <a>API</a>
+            </Link>
+          </div>
           <Button href="/login">
             Login
           </Button>
@@ -51,27 +53,36 @@ class NavBar extends Component {
             align-items: center;
             padding: 15px;
           }
-          nav a {
+          a {
             transition: color 0.2s ease;
             text-decoration: none;
           }
-          nav .left a {
+          .left a {
             color: inherit;
             font-size: 22px;
             font-weight: 600;
+            letter-spacing: 1px;
           }
-          nav .right a {
+          .right a {
             color: #666;
             font-weight: 500;
           }
-          nav div a:hover {
+          div a:hover {
             color: inherit;
           }
-          nav .center {
+          .center {
             flex: 1;
           }
-          nav .right a:not(:last-child) {
+          .right a {
             margin-right: 25px;
+          }
+          .d-none-mobile {
+            display: none;
+          }
+          @media(min-width: 550px) {
+            .d-none-mobile {
+              display: inline-block;
+            }
           }
         `}</style>
       </nav>

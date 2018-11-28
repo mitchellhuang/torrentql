@@ -14,7 +14,8 @@ const Button = ({
         a {
           display: ${block ? 'block' : 'inline-block'};
           color: #fff;
-          background-color: #000;
+          background-color: #0076ff;
+          box-shadow: 0 1px 14px 0 rgba(0,118,255,0.39);
           border: none;
           border-radius: 5px;
           padding: ${large ? '12.5px' : '10px'};
@@ -25,7 +26,7 @@ const Button = ({
           text-align: center;
         }
         a:hover {
-          background-color: #111;
+          background-color: rgba(0,118,255,0.9);
         }
       `}</style>
     </a>
