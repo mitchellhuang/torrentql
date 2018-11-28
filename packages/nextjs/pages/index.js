@@ -25,7 +25,10 @@ const Hero = () => (
   <div className="hero">
     <div className="left">
       <h1 className="tagline">Download and seed<br />torrents on-demand.</h1>
-      <p className="tagline-price">Seed at $0.0075 / GB / month.</p>
+      <div className="tagline-more">
+        <p className="tagline-price">Upload starting at $0.0075 / GB.</p>
+        <p className="tagline-price">Storage at $0.01 / GB / month.</p>
+      </div>
       <Button href="/signup" large>Signup</Button>
     </div>
     <div className="right">
@@ -47,9 +50,15 @@ const Hero = () => (
         margin: 0;
         margin-top: 15px;
       }
-      .tagline-price {
+      .tagline-more {
         font-size: 18px;
         margin: 15px 0;
+      }
+      .tagline-price {
+        margin: 0;
+      }
+      .tagline-price:not(:last-child) {
+        margin-bottom: 5px;
       }
       .example {
         color: white;
@@ -73,7 +82,7 @@ const Hero = () => (
         .tagline {
           font-size: 32px;
         }
-        .tagline-price {
+        .tagline-more {
           margin: 15px 0;
         }
         .example {
