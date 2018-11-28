@@ -1,0 +1,9 @@
+{
+  "name": "torrentql",
+  "version": "0.1.0",
+  "description": "Torrent as a service",
+  "main": "index.js",
+  "author": "mitchell@mitchellhuang.net",
+  "license": "MIT",
+  "private": true
+}

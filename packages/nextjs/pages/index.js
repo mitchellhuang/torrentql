@@ -1,0 +1,170 @@
+import React from 'react';
+import Main from '../layouts/Main';
+import Button from '../components/Button';
+
+const Index = () => (
+  <Main title="TorrentQL">
+    <Hero />
+    <Features />
+  </Main>
+);
+
+const mutationExample = `mutation {
+  createTorrent(uri: "magnet?x=123") {
+    id
+    torrent
+    status
+    files []
+    leechers
+    seeders
+    url
+  }
+}`;
+
+const Hero = () => (
+  <div className="hero">
+    <div className="left">
+      <h1 className="tagline">Download and seed<br />torrents on-demand.</h1>
+      <p className="tagline-price">Starting at $0.0075 / GB / month.</p>
+      <Button href="/signup" large>Signup</Button>
+    </div>
+    <div className="right">
+      <div className="example">
+        <pre
+          // eslint-disable-next-line
+          dangerouslySetInnerHTML={{ __html: mutationExample }}
+        />
+      </div>
+    </div>
+    <style jsx>{`
+      .hero {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 0 15px;
+      }
+      .tagline {
+        font-size: 24px;
+        margin: 0;
+        margin-top: 15px;
+      }
+      .tagline-price {
+        font-size: 18px;
+        margin: 15px 0;
+      }
+      .example {
+        color: white;
+        padding: 15px;
+        background-color: black;
+        border-radius: 5px;
+      }
+      .example pre {
+        margin: 0;
+        padding: 0 5px;
+        font-size: 14px;
+      }
+      @media(min-width: 768px) {
+        .hero {
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 100px 15px;
+          margin-bottom: 50px;
+        }
+        .tagline {
+          font-size: 32px;
+        }
+        .tagline-price {
+          margin: 15px 0;
+        }
+        .example {
+          width: 360px;
+          margin-left: 35px;
+        }
+      }
+    `}</style>
+  </div>
+);
+
+const Features = (
+) => (
+  <div className="features">
+    <h2 className="title">How it works</h2>
+    <div className="features-inner">
+      <div className="feature first">
+        <div className="image" />
+        <p className="text">
+          Add a torrent using our dashboard or API.
+        </p>
+      </div>
+      <div className="feature second">
+        <div className="image" />
+        <p className="text">
+           Our servers will download and seed your torrents.
+        </p>
+      </div>
+      <div className="feature third">
+        <div className="image" />
+        <p className="text">
+          Access your files over HTTPS, SFTP, or FUSE.
+        </p>
+      </div>
+    </div>
+    <style jsx>{`
+      .features {
+        display: flex;
+        flex-direction: column;
+        padding: 0 15px;
+      }
+      .title {
+        margin-bottom: 20px;
+      }
+      .features-inner {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 50px;
+      }
+      .feature {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+      }
+      .feature:not(:last-child) {
+        margin-bottom: 5px;
+      }
+      .image {
+        width: 65px;
+        height: 65px;
+        background-color: black;
+        border-radius: 10px;
+      }
+      .text {
+        margin-top: 15px;
+      }
+      @media(min-width: 768px) {
+        .features {
+          align-items: center;
+        }
+        .title {
+          margin-bottom: 40px;
+        }
+        .features-inner {
+          flex-direction: row;
+          justify-content: center;
+        }
+        .feature {
+          width: 215px;
+          align-items: center;
+        }
+        .feature:not(:last-child) {
+          margin-bottom: 0;
+          margin-right: 35px;
+        }
+        .text {
+          text-align: center;
+        }
+      }
+    `}</style>
+  </div>
+);
+
+export default Index;
