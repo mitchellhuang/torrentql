@@ -4,6 +4,7 @@
   "main": "server.js",
   "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "dev": "node server.js",
     "build": "next build",

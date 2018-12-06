@@ -1,0 +1,21 @@
+{
+  "name": "torrentql-graphql",
+  "version": "0.1.0",
+  "main": "server.js",
+  "author": "mitchell@mitchellhuang.net",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon server-esm.js",
+    "start": "node server-esm.js"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.2.5",
+    "esm": "^3.0.84",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
+  }
+}

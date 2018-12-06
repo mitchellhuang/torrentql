@@ -155,6 +155,7 @@ const Features = (
           align-items: center;
         }
         .title {
+          font-size: 30px;
           margin-bottom: 40px;
         }
         .features-inner {
