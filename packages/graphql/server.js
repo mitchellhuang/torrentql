@@ -4,12 +4,15 @@ import typeDefs from './schema';
 import resolvers from './resolvers';
 
 const server = new ApolloServer({ typeDefs, resolvers });
+const port = parseInt(process.env.PORT, 10) || 3001;
 
 const app = express();
 server.applyMiddleware({ app });
 
-const port = 3001;
+if (!process.env.LAMBDA) {
+  app.listen({ port }, () =>
+    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
+  );
+}
 
-app.listen({ port }, () =>
-  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
-);
+module.exports = app;

@@ -1,6 +1,9 @@
 # dependencies
 **/node_modules
 
+# serverless
+.serverless/
+
 # misc
 .DS_Store
 npm-debug.log

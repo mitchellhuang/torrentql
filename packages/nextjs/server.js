@@ -26,20 +26,22 @@ const createServer = () => {
       },
     );
   }
-  server.get('/view/:id', (req, res) => {
-    app.render(req, res, '/view', { id: req.params.id });
-  });
   server.get('*', (req, res) => handle(req, res));
   return server;
 };
 
 const server = createServer();
 
-app.prepare()
-  .then(() => {
-    server.listen(port, (err) => {
-      if (err) throw err;
-      // eslint-disable-next-line
-      console.log(`> Ready on http://localhost:${port}`);
+if (!process.env.LAMBDA) {
+  app.prepare()
+    .then(() => {
+      server.listen(port, (err) => {
+        if (err) throw err;
+        // eslint-disable-next-line
+        console.log(`> Ready on http://localhost:${port}`);
+      });
     });
-  });
+}
+
+exports.app = app;
+exports.server = server;
