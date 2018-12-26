@@ -74,7 +74,7 @@ class NavBar extends Component {
             flex: 1;
           }
           .right a {
-            margin-right: 25px;
+            margin-right: 20px;
           }
           .d-none-mobile {
             display: none;

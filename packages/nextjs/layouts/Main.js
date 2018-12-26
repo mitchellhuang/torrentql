@@ -22,8 +22,8 @@ const Main = ({
         min-height: 100vh;
         flex-direction: column;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-           Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-           'Segoe UI Emoji', 'Segoe UI Symbol';
+          Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+          'Segoe UI Emoji', 'Segoe UI Symbol';
       }
       .content {
         flex: 1;

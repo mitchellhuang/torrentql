@@ -44,7 +44,7 @@ const Footer = () => (
         color: inherit;
       }
       .links a:not(:last-child) {
-        margin-right: 15px;
+        margin-right: 20px;
       }
       .copy {
         font-size: 16px;

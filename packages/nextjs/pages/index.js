@@ -10,7 +10,7 @@ const Index = () => (
 );
 
 const mutationExample = `mutation {
-  createTorrent(uri: "magnet?x=123") {
+  addTorrent(uri: "magnet?x=123abc") {
     id
     torrent
     status
@@ -24,12 +24,14 @@ const mutationExample = `mutation {
 const Hero = () => (
   <div className="hero">
     <div className="left">
-      <h1 className="tagline">Download and seed<br />torrents on-demand.</h1>
+      <h1 className="tagline">Download and seed<br />torrents on a 1 Gb/s<br /> OVH network.</h1>
       <div className="tagline-more">
         <p className="tagline-price">Upload starting at $0.0075 / GB.</p>
         <p className="tagline-price">Storage at $0.01 / GB / month.</p>
       </div>
-      <Button href="/signup" large>Signup</Button>
+      <Button href="/signup">Signup</Button>
+      <span style={{ marginLeft: '15px' }} />
+      <Button href="/pricing" white>View pricing →</Button>
     </div>
     <div className="right">
       <div className="example">
@@ -49,10 +51,13 @@ const Hero = () => (
         font-size: 24px;
         margin: 0;
         margin-top: 15px;
+        margin-bottom: 15px;
+        font-weight: 600;
       }
       .tagline-more {
+        display: none;
         font-size: 18px;
-        margin: 15px 0;
+        margin-bottom: 15px;
       }
       .tagline-price {
         margin: 0;
@@ -126,6 +131,7 @@ const Features = (
       }
       .title {
         font-size: 24px;
+        font-weight: 600;
         margin-bottom: 20px;
       }
       .features-inner {

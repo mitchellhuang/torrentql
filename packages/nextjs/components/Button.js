@@ -6,6 +6,7 @@ const Button = ({
   large,
   block,
   children,
+  white,
 }) => (
   <Link href={href}>
     <a>
@@ -13,20 +14,21 @@ const Button = ({
       <style jsx>{`
         a {
           display: ${block ? 'block' : 'inline-block'};
-          color: #fff;
-          background-color: #0076ff;
-          box-shadow: 0 1px 14px 0 rgba(0,118,255,0.39);
-          border: none;
+          color: ${white ? '#000' : '#fff'};
+          background-color: ${white ? '#fff' : '#0076ff'};
+          box-shadow: 0 5px 10px rgba(0,0,0,0.12);
           border-radius: 5px;
           padding: ${large ? '12.5px' : '10px'};
-          font-weight: 600;
           outline: none;
           cursor: pointer;
           text-decoration: none;
           text-align: center;
+          font-weight: 600;
+          transition: all 0.15s ease;
         }
         a:hover {
-          background-color: rgba(0,118,255,0.9);
+          transform: translateY(-1px);
+          box-shadow: 0 7px 20px rgba(0,0,0,0.12);
         }
       `}</style>
     </a>
