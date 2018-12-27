@@ -16,4 +16,4 @@ if (!process.env.LAMBDA) {
   );
 }
 
-export default app;
+module.exports = app;
