@@ -1,6 +1,8 @@
+import user from './queries/user';
+
 const resolvers = {
   Query: {
-    hello: () => 'Hello world!',
+    user: user
   },
 };
 

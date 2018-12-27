@@ -1,11 +1,11 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type User {
     email: String
   }
   type Query {
-    hello: String
+    user: String
   }
 `;
 

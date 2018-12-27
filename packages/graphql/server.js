@@ -1,3 +1,4 @@
+import {} from 'dotenv/config';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './schema';
@@ -11,8 +12,8 @@ server.applyMiddleware({ app });
 
 if (!process.env.LAMBDA) {
   app.listen({ port }, () =>
-    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
+    console.log(`> Ready on http://localhost:${port}`),
   );
 }
 
-module.exports = app;
+export default app;
