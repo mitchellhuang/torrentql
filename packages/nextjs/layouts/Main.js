@@ -9,7 +9,7 @@ const Main = ({
 }) => (
   <Fragment>
     <Head title={title} />
-    <div className="site">
+    <div className="wrapper">
       <NavBar />
       <div className="content">
         {children}
@@ -17,13 +17,15 @@ const Main = ({
       <Footer />
     </div>
     <style jsx>{`
-      .site {
+      .wrapper {
         display: flex;
         min-height: 100vh;
         flex-direction: column;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
           Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
           'Segoe UI Emoji', 'Segoe UI Symbol';
+        margin: 0 auto;
+        max-width: 1280px;
       }
       .content {
         flex: 1;

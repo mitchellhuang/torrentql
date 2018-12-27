@@ -24,7 +24,7 @@ class NavBar extends Component {
       <nav>
         <div className="left">
           <Link href="/">
-            <a>TorrentQL</a>
+            <a className="logo">TorrentQL</a>
           </Link>
         </div>
         <div className="center" />
@@ -57,11 +57,10 @@ class NavBar extends Component {
             transition: color 0.2s ease;
             text-decoration: none;
           }
-          .left a {
+          .logo {
             color: inherit;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
-            letter-spacing: 1px;
           }
           .right a {
             color: #666;

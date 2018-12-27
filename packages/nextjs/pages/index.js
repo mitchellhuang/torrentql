@@ -82,7 +82,7 @@ const Hero = () => (
           justify-content: center;
           align-items: center;
           padding: 100px 15px;
-          margin-bottom: 50px;
+          margin-bottom: 25px;
         }
         .tagline {
           font-size: 32px;
@@ -150,8 +150,8 @@ const Features = (
       .image {
         width: 65px;
         height: 65px;
-        background-color: black;
-        border-radius: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
       }
       .text {
         margin-top: 15px;
