@@ -23,14 +23,13 @@ const Footer = () => (
     </div>
     <style jsx>{`
       footer {
-        margin-top: 15px;
       }
       .footer {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100px;
+        height: 75px;
       }
       .links a {
         color: #666;

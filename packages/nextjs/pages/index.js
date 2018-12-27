@@ -137,7 +137,6 @@ const Features = (
       .features-inner {
         display: flex;
         flex-direction: column;
-        margin-bottom: 50px;
       }
       .feature {
         display: flex;
@@ -167,6 +166,7 @@ const Features = (
         .features-inner {
           flex-direction: row;
           justify-content: center;
+          margin-bottom: 50px;
         }
         .feature {
           width: 215px;
