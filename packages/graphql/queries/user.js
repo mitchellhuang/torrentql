@@ -2,8 +2,7 @@ const User = require('../models/User');
 
 const user = async () => {
   const result = await User.query();
-  console.log(result);
-  return 'hello world';
+  return JSON.stringify(result);
 };
 
 module.exports = user;
