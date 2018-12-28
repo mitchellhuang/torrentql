@@ -1,35 +1,10 @@
 pipeline:
-  build-repo:
-    group: build
-    image: node:8-alpine
-    commands:
-      - yarn
-
-  build-nextjs:
-    group: build
-    image: node:8-alpine
+  deploy-nextjs:
+    group: deploy
+    image: mitchellhuang/aws-ebcli
     commands:
       - cd packages/nextjs
-      - yarn
-      - yarn build
-
-  build-graphql:
-    group: build
-    image: node:8
-    commands:
-      - cd packages/graphql
-      - yarn
-
-  envsubst:
-    image: alpine
-    commands:
-      - apk add --no-cache gettext
-      - ./packages/deploy/scripts/envsubst.sh ./serverless.yml
-    secrets: [ db_host, db_user, db_password, db_database ]
-
-  deploy:
-    image: node:8-alpine
-    commands:
-      - yarn global add serverless
-      - serverless deploy
+      - eb deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
+    when:
+      branch: master
