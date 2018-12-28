@@ -21,7 +21,10 @@ pipeline:
       - yarn
 
   deploy:
-    image: mitchellhuang/node-serverless
+    image: node:8-alpine
     commands:
+      - apk add --no-cache gettext
+      - yarn global add serverless
+      - ./packages/deploy/scripts/envsubst.sh ./serverless.yml
       - serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
