@@ -20,11 +20,16 @@ pipeline:
       - cd packages/graphql
       - yarn
 
+  envsubst:
+    image: alpine
+    commands:
+      - apk add --no-cache gettext
+      - ./packages/deploy/scripts/envsubst.sh ./serverless.yml
+    secrets: [ db_host, db_user, db_password, db_database ]
+
   deploy:
     image: node:8-alpine
     commands:
-      - apk add --no-cache gettext
       - yarn global add serverless
-      - ./packages/deploy/scripts/envsubst.sh ./serverless.yml
       - serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
