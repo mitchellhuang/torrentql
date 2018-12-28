@@ -1,5 +1,9 @@
+const User = require('../models/User');
+
 const user = async () => {
-  return 'hello world'
+  const result = await User.query();
+  console.log(result);
+  return 'hello world';
 };
 
-export default user;
+module.exports = user;

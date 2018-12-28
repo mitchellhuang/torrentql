@@ -1,4 +1,4 @@
-import user from './queries/user';
+const user = require('./queries/user');
 
 const resolvers = {
   Query: {
@@ -6,4 +6,4 @@ const resolvers = {
   },
 };
 
-export default resolvers;
+module.exports = resolvers;

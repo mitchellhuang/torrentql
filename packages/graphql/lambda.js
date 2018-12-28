@@ -1,4 +1,10 @@
 const serverless = require('serverless-http');
-const server = require('./server-esm');
+const server = require('./server');
+const knex = require('./lib/knex');
 
-exports.handler = serverless(server);
+const handler = serverless(server);
+
+exports.handler = async (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+  return await handler(event, context);
+}

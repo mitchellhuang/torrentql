@@ -1,5 +1,5 @@
-import knex from 'knex';
-import { Model } from 'objection';
+const knex = require('knex');
+const { Model } = require('objection');
 
 const knexClient = knex({
   client: 'mysql',
@@ -13,4 +13,4 @@ const knexClient = knex({
 
 Model.knex(knexClient);
 
-export default knexClient;
+module.exports = knexClient;
