@@ -1,4 +1,14 @@
 pipeline:
+  deploy-graphql:
+    group: deploy
+    image: mitchellhuang/aws-ebcli
+    commands:
+      - cd packages/graphql
+      - eb deploy
+    secrets: [ aws_access_key_id, aws_secret_access_key ]
+    when:
+      branch: master
+
   deploy-nextjs:
     group: deploy
     image: mitchellhuang/aws-ebcli
