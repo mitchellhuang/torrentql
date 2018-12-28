@@ -149,7 +149,7 @@ const Features = (
       .image {
         width: 65px;
         height: 65px;
-        border: 1px solid #000;
+        background-color: #000;
         border-radius: 5px;
       }
       .text {
