@@ -2,7 +2,7 @@ const knex = require('knex');
 const { Model } = require('objection');
 
 const knexClient = knex({
-  client: 'mysql',
+  client: 'pg',
   connection: {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

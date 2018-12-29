@@ -2,7 +2,7 @@ const user = require('./queries/user');
 
 const resolvers = {
   Query: {
-    user: user
+    me: user
   },
 };
 
