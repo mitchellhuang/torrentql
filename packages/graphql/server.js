@@ -16,6 +16,10 @@ const server = new ApolloServer({
 const app = express();
 server.applyMiddleware({ app });
 
+app.get('/health', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.listen({ port }, () =>
   console.log(`> Ready on http://localhost:${port}`),
 );
