@@ -32,8 +32,7 @@
     "react-adopt": "^0.6.0",
     "react-apollo": "^2.3.3",
     "react-dom": "^16.7.0",
-    "react-dropzone": "^8.0.3",
-    "serverless-http": "^1.8.0"
+    "react-dropzone": "^8.0.3"
   },
   "devDependencies": {
     "eslint": "^5.11.0",

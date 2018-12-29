@@ -13,9 +13,6 @@
   },
   "devDependencies": {
     "lerna": "^3.8.0",
-    "rimraf": "^2.6.2",
-    "serverless-apigw-binary": "^0.4.4",
-    "serverless-domain-manager": "^2.6.10",
-    "serverless-offline": "^3.31.3"
+    "rimraf": "^2.6.2"
   }
 }
