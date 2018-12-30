@@ -4,12 +4,12 @@ const createUser = require('./mutations/createUser');
 
 const resolvers = {
   Query: {
-    me
+    me,
   },
   Mutation: {
     login,
-    createUser
-  }
+    createUser,
+  },
 };
 
 module.exports = resolvers;

@@ -12,12 +12,15 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => ({ user: req.user }),
-  introspection: true
+  introspection: true,
 });
 
 const app = express();
 
-app.use(jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false }))
+app.use(jwt({
+  secret: process.env.JWT_SECRET,
+  credentialsRequired: false,
+}));
 
 server.applyMiddleware({ app });
 
@@ -25,6 +28,7 @@ app.get('/health', (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen({ port }, () =>
-  console.log(`> Ready on http://localhost:${port}`),
-);
+app.listen({ port }, () => {
+  // eslint-disable-next-line
+  console.log(`> Ready on http://localhost:${port}`);
+});

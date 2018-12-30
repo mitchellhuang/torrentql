@@ -1,7 +1,7 @@
-const jsonwebtoken = require('jsonwebtoken')
+const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/User');
 
-const login = async (parent, args, context) => {
+const login = async (parent, args) => {
   const { email, password } = args;
   const user = await User.query().first().where({ email });
   const passwordValid = await user.verifyPassword(password);
@@ -12,9 +12,9 @@ const login = async (parent, args, context) => {
     ...user,
     token: jsonwebtoken.sign({
       id: user.id,
-      email: user.email
-    }, process.env.JWT_SECRET)
+      email: user.email,
+    }, process.env.JWT_SECRET),
   };
-}
+};
 
 module.exports = login;

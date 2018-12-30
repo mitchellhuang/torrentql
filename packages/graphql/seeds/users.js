@@ -1,10 +1,8 @@
 const uuid = require('uuid/v4');
 
-exports.seed = function(knex, Promise) {
+exports.seed = function (knex) {
   return knex('users').del()
-    .then(function () {
-      return knex('users').insert([
-        { id: uuid(), email: 'test@example.com', password: '123' }
-      ]);
-    });
+    .then(() => knex('users').insert([
+      { id: uuid(), email: 'test@example.com', password: '123' },
+    ]));
 };
