@@ -1,6 +1,7 @@
+const Password = require('objection-password')();
 const { Model } = require('objection');
 
-class User extends Model {
+class User extends Password(Model) {
   static get tableName() {
     return 'users'
   }
