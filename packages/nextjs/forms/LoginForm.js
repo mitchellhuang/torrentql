@@ -48,7 +48,7 @@ const LoginForm = () => (
             Login
           </Button>
           <Button
-            type="submit"
+            href="/forgot_password"
             disabled={isSubmitting}
             style={{ marginLeft: '10px' }}
             white

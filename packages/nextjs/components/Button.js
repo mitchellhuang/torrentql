@@ -35,7 +35,7 @@ const Button = ({
   if (href) {
     return (
       <Link href={href}>
-        <a className={`${className} button`}>
+        <a className={`${className} button`} {...props}>
           {children}
           {styles}
         </a>

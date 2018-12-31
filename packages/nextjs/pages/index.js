@@ -30,8 +30,7 @@ const Hero = () => (
         <p className="tagline-price">Storage at $0.01 / GB / month.</p>
       </div>
       <Button href="/signup">Signup</Button>
-      <span style={{ marginLeft: '15px' }} />
-      <Button href="/pricing" white>View pricing →</Button>
+      <Button href="/pricing" style={{ marginLeft: '10px' }} white>View pricing →</Button>
     </div>
     <div className="right">
       <div className="example">
@@ -80,8 +79,8 @@ const Hero = () => (
           flex-direction: row;
           justify-content: center;
           align-items: center;
-          padding: 100px 15px;
-          margin-bottom: 25px;
+          padding-top: 75px;
+          padding-bottom: 75px;
         }
         .tagline {
           font-size: 32px;
@@ -90,8 +89,8 @@ const Hero = () => (
           margin: 15px 0;
         }
         .example {
-          width: 360px;
-          margin-left: 35px;
+          width: 350px;
+          margin-left: 25px;
         }
       }
     `}</style>
