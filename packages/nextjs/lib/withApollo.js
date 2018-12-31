@@ -1,7 +1,6 @@
 /* eslint-disable */
 import Head from 'next/head';
 import { getDataFromTree } from 'react-apollo';
-import gql from 'graphql-tag';
 import initApollo from './initApollo';
 
 export default (App) => {
@@ -58,27 +57,6 @@ export default (App) => {
       // `getDataFromTree` renders the component first, the client is passed off as a property.
       // After that rendering is done using Next's normal rendering pipeline
       this.apolloClient = props.apolloClient || initApollo(props.apolloState.data)
-    }
-
-    componentDidMount() {
-      const ADD_FILE = gql`
-        mutation addFile($file: File!) {
-          addFile(file: $file) @client
-        }
-      `;
-      const { mutate } = this.apolloClient;
-      let localFiles = localStorage.getItem('localFiles');
-      if (localFiles) {
-        localFiles = JSON.parse(localFiles);
-        localFiles.forEach(file => {
-          mutate({
-            mutation: ADD_FILE,
-            variables: {
-              file
-            }
-          })
-        });
-      }
     }
 
     render () {
