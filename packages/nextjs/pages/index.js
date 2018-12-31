@@ -45,7 +45,6 @@ const Hero = () => (
       .hero {
         display: flex;
         flex-direction: column-reverse;
-        padding: 0 15px;
       }
       .tagline {
         font-size: 24px;
@@ -127,7 +126,6 @@ const Features = (
       .features {
         display: flex;
         flex-direction: column;
-        padding: 0 15px;
       }
       .title {
         font-size: 24px;
