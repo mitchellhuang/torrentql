@@ -44,6 +44,7 @@ const Hero = () => (
       .hero {
         display: flex;
         flex-direction: column-reverse;
+        padding-bottom: 15px;
       }
       .tagline {
         font-size: 24px;

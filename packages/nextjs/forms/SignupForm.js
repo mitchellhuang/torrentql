@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
+import Link from 'next/link';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -47,6 +48,9 @@ const SignupForm = () => (
           >
             Signup
           </Button>
+          <span style={{ marginLeft: '10px' }}>
+            Have an account? <Link href="/login"><a>Login</a></Link>
+          </span>
         </form>
       );
     }}

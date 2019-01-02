@@ -32,6 +32,16 @@ const Main = ({
         padding: 0 15px;
       }
     `}</style>
+    <style jsx global>{`
+      h1, h2, h3, h4, h5 {
+        margin-top: 0;
+        font-weight: 600;
+      }
+      a {
+        text-decoration: none;
+        color: #0076ff;
+      }
+    `}</style>
   </Fragment>
 );
 

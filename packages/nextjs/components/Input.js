@@ -22,7 +22,7 @@ const Input = ({
         display: block;
         width: 100%;
         box-sizing: border-box;
-        border: 1px solid #777;
+        border: 1px solid #999;
         border-radius: 3px;
         padding: 5px 10px;
         height: 38px;
