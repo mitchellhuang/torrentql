@@ -11,7 +11,7 @@ const handle = app.getRequestHandler();
 const createServer = () => {
   const server = express();
   if (dev) {
-    server.use(proxy(`${process.env.API_URI}/graphql`));
+    server.use(proxy(process.env.API_URI));
   }
   if (!dev) {
     server.get(

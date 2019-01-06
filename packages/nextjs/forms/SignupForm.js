@@ -1,27 +1,54 @@
 import React from 'react';
 import { Formik } from 'formik';
 import Link from 'next/link';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { adopt } from 'react-adopt';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const SignupForm = () => (
-  <Formik
-    initialValues={{ email: '', password: '' }}
-    onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
+const SIGNUP = gql`
+  mutation createUser($email: String!, $password: String!) {
+    createUser(email: $email, password: $password) {
+      id
+    }
+  }
+`;
+
+const Composed = adopt({
+  apollo: ({ render }) => (
+    <Mutation mutation={SIGNUP}>
+      {(mutation, result) => render({ mutation, result })}
+    </Mutation>
+  ),
+  formik: ({ apollo, render }) => (
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      onSubmit={async (values, { setSubmitting }) => {
+        await apollo.mutation({
+          variables: {
+            email: values.email,
+            password: values.password,
+          },
+        });
         setSubmitting(false);
-      }, 500);
-    }}
-  >
-    {(props) => {
+      }}
+    >
+      {render}
+    </Formik>
+  ),
+});
+
+const SignupForm = () => (
+  <Composed>
+    {({ formik }) => {
       const {
         values,
         isSubmitting,
         handleChange,
         handleBlur,
         handleSubmit,
-      } = props;
+      } = formik;
       return (
         <form onSubmit={handleSubmit}>
           <Input
@@ -54,7 +81,7 @@ const SignupForm = () => (
         </form>
       );
     }}
-  </Formik>
+  </Composed>
 );
 
 export default SignupForm;
