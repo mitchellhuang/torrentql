@@ -1,6 +1,6 @@
 # graphql
 
-A GraphQL API server for Tetrabis. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
+A GraphQL API server for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
 
 ## Requirements
 
