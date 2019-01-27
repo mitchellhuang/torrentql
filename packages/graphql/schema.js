@@ -2,15 +2,16 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
-    id:     String
-    email:  String
-    token:  String
+    id: String
+    email: String
+    token: String
+    torrents: [Torrent]
   }
   type Torrent {
-    id:     String
+    id: String
     magnet: String
-    file:   String
-    uuid:   String
+    file: String
+    user: User
   }
   type Query {
     me: User

@@ -1,20 +1,18 @@
 const uuid = require('uuid/v4');
-const User = require('../models/User');
 const Torrent = require('../models/Torrent');
-const jwt = require('../lib/jwt');
 
-const addTorrent = async (parent, args) => {
+const addTorrent = async (parent, args, context) => {
+  if (!context.user) {
+    throw new Error('You are not authenticated.');
+  }
   const { magnet, file } = args;
-  var decoded = jwt.verify(token); //need to get the token so I can attach uuid
   const torrent = await Torrent.query().insert({
-    id: uuid()/*need to make unique id for torrent*/,
+    id: uuid(),
     magnet,
     file,
-    uuid: decoded.id /*get logged in user id*/
+    user_id: context.user.id, /* get logged in user id */
   });
-  return {
-    ...torrent
-  };
+  return torrent;
 };
 
 module.exports = addTorrent;
