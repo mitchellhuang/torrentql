@@ -25,7 +25,7 @@ const Composed = adopt({
     <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={async (values, { setSubmitting }) => {
-        await apollo.mutation({
+        const result = await apollo.mutation({
           variables: {
             email: values.email,
             password: values.password,
