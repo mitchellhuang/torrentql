@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import Link from 'next/link';
+import Router from 'next/router';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { adopt } from 'react-adopt';
@@ -31,7 +32,10 @@ const Composed = adopt({
             password: values.password,
           },
         });
+        const { data: { login: { token } } } = result;
+        document.cookie = token;
         setSubmitting(false);
+        Router.push('/dashboard');
       }}
     >
       {render}

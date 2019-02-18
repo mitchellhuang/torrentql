@@ -29,7 +29,7 @@ const DisplayQuery = () => (
         loading ? <p>Loading...</p> :
         error ? <p>Error: {error.message}</p> : (
           <div>
-          {data.User.id}
+          {data.me.id}
           </div>
         )
       )}

@@ -3,6 +3,12 @@ import Head from 'next/head';
 import { getDataFromTree } from 'react-apollo';
 import initApollo from './initApollo';
 
+function getCookie(context = {}) {
+  return context.req && context.req.headers
+    ? context.req.headers.cookie
+    : document.cookie
+}
+
 export default (App) => {
   return class Apollo extends React.Component {
     // static displayName = 'withApollo(App)'
@@ -18,7 +24,7 @@ export default (App) => {
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apollo = initApollo()
+      const apollo = initApollo({}, { getToken: () => getCookie(context)})
       try {
         // Run all GraphQL queries
         await getDataFromTree(
@@ -56,7 +62,7 @@ export default (App) => {
       super(props)
       // `getDataFromTree` renders the component first, the client is passed off as a property.
       // After that rendering is done using Next's normal rendering pipeline
-      this.apolloClient = props.apolloClient || initApollo(props.apolloState.data)
+      this.apolloClient = props.apolloClient || initApollo(props.apolloState.data, { getToken: () => getCookie()})
     }
 
     render () {

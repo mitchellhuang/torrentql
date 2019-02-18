@@ -1,5 +1,6 @@
 import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'isomorphic-fetch';
 
@@ -9,26 +10,38 @@ if (!process.browser) {
   global.fetch = fetch;
 }
 
-function create(initialState) {
+function create(initialState, { getToken }) {
   const inMemoryCache = new InMemoryCache().restore(initialState || {});
   const httpLink = new HttpLink({
     uri: process.browser ? '/graphql' : process.env.API_URI,
   });
+  const authLink = setContext((_, { headers }) => {
+    const token = getToken();
+    if (token) {
+      return {
+        headers: {
+          ...headers,
+          Authorization: token ? `Bearer ${token}` : null,
+        },
+      };
+    }
+    return { headers };
+  });
   return new ApolloClient({
     connectToDevTools: process.browser,
     ssrMode: true,
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache: inMemoryCache,
   });
 }
 
-export default function initApollo(initialState) {
+export default function initApollo(initialState, options) {
   if (!process.browser) {
-    return create(initialState);
+    return create(initialState, options);
   }
 
   if (!apolloClient) {
-    apolloClient = create(initialState);
+    apolloClient = create(initialState, options);
   }
 
   return apolloClient;
