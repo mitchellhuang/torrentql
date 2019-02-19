@@ -11,11 +11,13 @@ const Dashboard = () => (
 
 const GET_USER = gql`
   {
-    User {
+    me {
       id
       email
       token
-      torrents
+      torrents {
+        id
+      }
     }
   }
 `;
