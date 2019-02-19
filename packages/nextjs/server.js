@@ -13,18 +13,6 @@ const createServer = () => {
   if (dev) {
     server.use(proxy(process.env.API_URI));
   }
-  if (!dev) {
-    server.get(
-      /^\/_next\/static\/(runtime|chunks|images|css)\//,
-      (_, res, nextHandler) => {
-        res.setHeader(
-          'Cache-Control',
-          'public, max-age=31536000, immutable',
-        );
-        nextHandler();
-      },
-    );
-  }
   server.get('*', (req, res) => handle(req, res));
   return server;
 };
