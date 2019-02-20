@@ -1,6 +1,6 @@
 import React from 'react';
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 import Main from '../layouts/Main';
 
 const Dashboard = () => (
@@ -25,14 +25,15 @@ const GET_USER = gql`
 const DisplayQuery = () => (
   <div className="dashboard">
     <Query query={GET_USER}>
-      {({ loading, error, data }) => (
-        loading ? <p>Loading...</p> :
-        error ? <p>Error: {error.message}</p> : (
-          <div>
-          {data.me.id}
-          </div>
-        )
-      )}
+      {({ loading, error, data }) => {
+        if (loading) {
+          return 'Loading...';
+        }
+        if (error) {
+          return `Error: ${error.message}`;
+        }
+        return JSON.stringify(data.me);
+      }}
     </Query>
   </div>
 );
