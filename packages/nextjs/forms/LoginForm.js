@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import cookie from 'cookie';
 import { adopt } from 'react-adopt';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -33,7 +34,7 @@ const Composed = adopt({
           },
         });
         const { data: { login: { token } } } = result;
-        document.cookie = token;
+        document.cookie = cookie.serialize('token', token);
         setSubmitting(false);
         Router.push('/dashboard');
       }}

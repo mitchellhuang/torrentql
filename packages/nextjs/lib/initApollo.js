@@ -11,9 +11,9 @@ if (!process.browser) {
 }
 
 function create(initialState, { getToken }) {
-  const inMemoryCache = new InMemoryCache().restore(initialState || {});
   const httpLink = new HttpLink({
     uri: process.browser ? '/graphql' : process.env.API_URI,
+    credentials: 'same-origin',
   });
   const authLink = setContext((_, { headers }) => {
     const token = getToken();
@@ -21,7 +21,7 @@ function create(initialState, { getToken }) {
       return {
         headers: {
           ...headers,
-          Authorization: token ? `Bearer ${token}` : null,
+          authorization: token ? `Bearer ${token}` : '',
         },
       };
     }
@@ -29,9 +29,9 @@ function create(initialState, { getToken }) {
   });
   return new ApolloClient({
     connectToDevTools: process.browser,
-    ssrMode: true,
+    ssrMode: !process.browser,
     link: authLink.concat(httpLink),
-    cache: inMemoryCache,
+    cache: new InMemoryCache().restore(initialState || {}),
   });
 }
 
