@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik } from 'formik';
 import Link from 'next/link';
+import Router from 'next/router';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import cookie from 'cookie';
 import { adopt } from 'react-adopt';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -25,13 +27,16 @@ const Composed = adopt({
     <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={async (values, { setSubmitting }) => {
-        await apollo.mutation({
+        const result = await apollo.mutation({
           variables: {
             email: values.email,
             password: values.password,
           },
         });
+        const { data: { login: { token } } } = result;
+        document.cookie = cookie.serialize('token', token);
         setSubmitting(false);
+        Router.push('/dashboard');
       }}
     >
       {render}
