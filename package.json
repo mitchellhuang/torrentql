@@ -12,7 +12,7 @@
     "clean-lock": "rimraf packages/*/yarn.lock"
   },
   "devDependencies": {
-    "lerna": "^3.8.0",
-    "rimraf": "^2.6.2"
+    "lerna": "^3.13.1",
+    "rimraf": "^2.6.3"
   }
 }
