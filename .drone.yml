@@ -1,20 +1,34 @@
 pipeline:
-  deploy-graphql:
-    group: deploy
-    image: mitchellhuang/aws-ebcli
+  bootstrap:
+    group: build
+    image: node:10-alpine
     commands:
-      - cd packages/graphql
-      - eb deploy
-    secrets: [ aws_access_key_id, aws_secret_access_key ]
+      - yarn
+      - yarn bootstrap
     when:
       branch: master
 
-  deploy-nextjs:
-    group: deploy
-    image: mitchellhuang/aws-ebcli
+  build-nextjs:
+    group: build
+    image: node:10-alpine
     commands:
       - cd packages/nextjs
-      - eb deploy
+      - yarn build
+    when:
+      branch: master
+
+  build-graphql:
+    group: build
+    image: node:10-alpine
+    commands:
+      - cd packages/graphql
+    when:
+      branch: master
+
+  deploy:
+    image: node:10-alpine
+    commands:
+      - yarn serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     when:
       branch: master
