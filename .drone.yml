@@ -18,6 +18,7 @@ pipeline:
     group: build
     image: node:10-alpine
     commands:
+      - apk add --no-cache python g++ make
       - cd packages/graphql
       - yarn
 
