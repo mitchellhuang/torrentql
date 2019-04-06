@@ -2,17 +2,17 @@ pipeline:
   build-repo:
     image: node:10-alpine
     commands:
-      - yarn
+      - yarn --production
 
   build-nextjs:
     group: build
     image: node:10-alpine
     commands:
       - cd packages/nextjs
-      - yarn
+      - yarn --production
       - yarn build
       - cd lambda
-      - yarn
+      - yarn --production
 
   build-graphql:
     group: build
@@ -20,7 +20,7 @@ pipeline:
     commands:
       - apk add --no-cache python g++ make
       - cd packages/graphql
-      - yarn
+      - yarn --production
 
   deploy:
     image: node:10-alpine
