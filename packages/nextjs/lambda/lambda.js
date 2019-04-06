@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const serverless = require('serverless-http');
 const routes = require('./routes');
 
@@ -28,7 +29,7 @@ const binaryMimeTypes = [
 
 const app = express();
 
-app.use('/_next', express.static('.next'))
+app.use('/_next/static', express.static(path.join(__dirname, '../.next/static')))
 app.get('/health', (req, res) => {
   res.sendStatus(200);
 });
