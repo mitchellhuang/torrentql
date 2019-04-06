@@ -1,12 +1,12 @@
 pipeline:
   build-repo:
-    image: node:10-alpine
+    image: node:8-alpine
     commands:
       - yarn --production
 
   build-nextjs:
     group: build
-    image: node:10-alpine
+    image: node:8-alpine
     commands:
       - cd packages/nextjs
       - yarn --production
@@ -16,14 +16,14 @@ pipeline:
 
   build-graphql:
     group: build
-    image: node:10-alpine
+    image: node:8-alpine
     commands:
       - apk add --no-cache python g++ make
       - cd packages/graphql
       - yarn --production
 
   deploy:
-    image: node:10-alpine
+    image: node:8-alpine
     commands:
       - yarn serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
