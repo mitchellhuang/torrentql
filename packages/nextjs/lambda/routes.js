@@ -7,6 +7,9 @@ const routes = [{
 }, {
   path: '/signup',
   page: '/signup',
+}, {
+  path: '/dashboard',
+  page: '/dashboard',
 }];
 
 module.exports = routes;
