@@ -1,12 +1,12 @@
 const routes = [{
   path: '/',
-  page: '/index'
+  page: '/index',
 }, {
   path: '/login',
-  page: '/login'
+  page: '/login',
 }, {
   path: '/signup',
-  page: '/signup'
+  page: '/signup',
 }];
 
 module.exports = routes;

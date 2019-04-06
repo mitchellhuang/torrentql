@@ -29,14 +29,14 @@ const binaryMimeTypes = [
 
 const app = express();
 
-app.use('/_next/static', express.static(path.join(__dirname, '../.next/static')))
+app.use('/_next/static', express.static(path.join(__dirname, '../.next/static')));
 app.get('/health', (req, res) => {
   res.sendStatus(200);
 });
 routes.forEach((route) => {
-  app.get(route.path, (req, res) => require(`../.next/serverless/pages${route.page}.js`).render(req, res))
-})
+  app.get(route.path, (req, res) => require(path.join(__dirname, `../.next/serverless/pages${route.page}.js`)).render(req, res));
+});
 
 exports.handler = serverless(app, {
-  binary: binaryMimeTypes
+  binary: binaryMimeTypes,
 });
