@@ -25,7 +25,6 @@ custom:
     certificateName: torrentql.com
     createRoute53Record: false
     endpointType: regional
-    stage: production
   apigwBinary:
     types:
       - '*/*'
@@ -35,7 +34,7 @@ package:
 
 functions:
   nextjs:
-    handler: packages/nextjs/lambda.handler
+    handler: packages/nextjs/lambda/lambda.handler
     events:
       - http:
           method: ANY
@@ -47,7 +46,8 @@ functions:
       exclude:
         - ./**
       include:
-        - packages/nextjs/**
+        - packages/nextjs/.next/**
+        - packages/nextjs/lambda/**
   graphql:
     handler: packages/graphql/lambda.handler
     events:

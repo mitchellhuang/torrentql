@@ -1,34 +1,28 @@
 pipeline:
-  bootstrap:
-    group: build
+  build-repo:
     image: node:10-alpine
     commands:
       - yarn
-      - yarn bootstrap
-    when:
-      branch: master
 
   build-nextjs:
     group: build
     image: node:10-alpine
     commands:
       - cd packages/nextjs
+      - yarn
       - yarn build
-    when:
-      branch: master
+      - cd lambda
+      - yarn
 
   build-graphql:
     group: build
     image: node:10-alpine
     commands:
       - cd packages/graphql
-    when:
-      branch: master
+      - yarn
 
   deploy:
     image: node:10-alpine
     commands:
       - yarn serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
-    when:
-      branch: master
