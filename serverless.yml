@@ -54,6 +54,9 @@ functions:
       - http:
           method: ANY
           path: /graphql
+      - http:
+          method: ANY
+          path: /health
     package:
       exclude:
         - ./**

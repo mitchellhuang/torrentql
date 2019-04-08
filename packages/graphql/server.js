@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('./lib/knex');
+const knex = require('./lib/knex');
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const jwt = require('express-jwt');
@@ -25,7 +25,11 @@ app.use(jwt({
 server.applyMiddleware({ app });
 
 app.get('/health', (req, res) => {
-  res.sendStatus(200);
+  knex.raw('select 1+1 as result').then(() => {
+    res.sendStatus(200);
+  }).catch(() => {
+    res.sendStatus(503);
+  });
 });
 
 if (!process.env.LAMBDA) {
