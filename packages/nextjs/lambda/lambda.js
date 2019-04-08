@@ -29,7 +29,7 @@ const binaryMimeTypes = [
 
 const app = express();
 
-app.use('/_next/static', express.static(path.join(__dirname, '../.next/static')));
+app.use('/_next/static', express.static(path.join(__dirname, '../.next/static'), { maxAge: 86400000, immutable: true }));
 app.get('/health', (req, res) => {
   res.sendStatus(200);
 });
