@@ -11,8 +11,12 @@
     "clean": "rimraf packages/*/node_modules",
     "clean-lock": "rimraf packages/*/yarn.lock"
   },
-  "devDependencies": {
-    "lerna": "^3.8.0",
-    "rimraf": "^2.6.2"
+  "dependencies": {
+    "lerna": "^3.13.1",
+    "rimraf": "^2.6.3",
+    "serverless": "^1.40.0",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-domain-manager": "^3.2.1",
+    "serverless-offline": "^4.9.4"
   }
 }

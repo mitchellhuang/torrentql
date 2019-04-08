@@ -1,20 +1,37 @@
 pipeline:
-  deploy-graphql:
-    group: deploy
-    image: mitchellhuang/aws-ebcli
+  build-repo:
+    image: node:8-alpine
     commands:
-      - cd packages/graphql
-      - eb deploy
-    secrets: [ aws_access_key_id, aws_secret_access_key ]
+      - yarn --production
     when:
       branch: master
 
-  deploy-nextjs:
-    group: deploy
-    image: mitchellhuang/aws-ebcli
+  build-nextjs:
+    group: build
+    image: node:8-alpine
     commands:
       - cd packages/nextjs
-      - eb deploy
+      - yarn --production
+      - yarn build
+      - cd lambda
+      - yarn --production
+    when:
+      branch: master
+
+  build-graphql:
+    group: build
+    image: node:8-alpine
+    commands:
+      - apk add --no-cache git
+      - cd packages/graphql
+      - yarn --production
+    when:
+      branch: master
+
+  deploy:
+    image: node:8-alpine
+    commands:
+      - yarn serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     when:
       branch: master

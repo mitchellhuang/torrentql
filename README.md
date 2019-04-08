@@ -12,5 +12,5 @@ Download and seed torrents on-demand.
 
 ```
 yarn install
-yarn run bootstrap
+yarn bootstrap
 ```

@@ -9,6 +9,7 @@ const knexClient = knex({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
   },
+  pool: { min: 1, max: 1 },
 });
 
 Model.knex(knexClient);

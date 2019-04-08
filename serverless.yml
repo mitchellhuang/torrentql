@@ -1,0 +1,61 @@
+service: torrentql
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: production
+  region: eu-west-1
+  endpointType: regional
+  memorySize: 1024
+  timeout: 15
+  environment:
+    NODE_ENV: production
+    LAMBDA: 'true'
+
+plugins:
+  - serverless-offline
+  - serverless-domain-manager
+  - serverless-apigw-binary
+
+custom:
+  serverless-offline:
+    port: 8000
+  customDomain:
+    domainName: torrentql.com
+    certificateName: torrentql.com
+    createRoute53Record: false
+    endpointType: regional
+  apigwBinary:
+    types:
+      - '*/*'
+
+package:
+  individually: true
+
+functions:
+  nextjs:
+    handler: packages/nextjs/lambda/lambda.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: /{any+}
+    package:
+      exclude:
+        - ./**
+      include:
+        - packages/nextjs/.next/**
+        - packages/nextjs/lambda/**
+  graphql:
+    handler: packages/graphql/lambda.handler
+    events:
+      - http:
+          method: ANY
+          path: /graphql
+    package:
+      exclude:
+        - ./**
+      include:
+        - packages/graphql/**

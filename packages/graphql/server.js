@@ -28,7 +28,11 @@ app.get('/health', (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen({ port }, () => {
-  // eslint-disable-next-line
-  console.log(`> Ready on http://localhost:${port}`);
-});
+if (!process.env.LAMBDA) {
+  app.listen({ port }, () => {
+    // eslint-disable-next-line
+    console.log(`> Ready on http://localhost:${port}`);
+  });
+}
+
+module.exports = app;
