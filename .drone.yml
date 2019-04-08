@@ -3,6 +3,8 @@ pipeline:
     image: node:8-alpine
     commands:
       - yarn --production
+    when:
+      branch: master
 
   build-nextjs:
     group: build
@@ -13,6 +15,8 @@ pipeline:
       - yarn build
       - cd lambda
       - yarn --production
+    when:
+      branch: master
 
   build-graphql:
     group: build
@@ -21,9 +25,13 @@ pipeline:
       - apk add --no-cache git
       - cd packages/graphql
       - yarn --production
+    when:
+      branch: master
 
   deploy:
     image: node:8-alpine
     commands:
       - yarn serverless deploy
     secrets: [ aws_access_key_id, aws_secret_access_key ]
+    when:
+      branch: master
