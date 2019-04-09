@@ -1,37 +1,49 @@
-pipeline:
-  build-repo:
-    image: node:8-alpine
-    commands:
-      - yarn --production
-    when:
-      branch: master
+kind: pipeline
+name: default
 
-  build-nextjs:
-    group: build
-    image: node:8-alpine
-    commands:
-      - cd packages/nextjs
-      - yarn --production
-      - yarn build
-      - cd lambda
-      - yarn --production
-    when:
-      branch: master
+steps:
+- name: build-repo
+  image: node:8-alpine
+  commands:
+  - yarn --production
+  when:
+    branch: master
 
-  build-graphql:
-    group: build
-    image: node:8-alpine
-    commands:
-      - apk add --no-cache git
-      - cd packages/graphql
-      - yarn --production
-    when:
-      branch: master
+- name: build-nextjs
+  image: node:8-alpine
+  commands:
+  - cd packages/nextjs
+  - yarn --production
+  - yarn build
+  - cd lambda
+  - yarn --production
+  depends_on:
+  - build-repo
+  when:
+    branch: master
 
-  deploy:
-    image: node:8-alpine
-    commands:
-      - yarn serverless deploy
-    secrets: [ aws_access_key_id, aws_secret_access_key ]
-    when:
-      branch: master
+- name: build-graphql
+  image: node:8-alpine
+  commands:
+  - apk add --no-cache git
+  - cd packages/graphql
+  - yarn --production
+  depends_on:
+  - build-repo
+  when:
+    branch: master
+
+- name: deploy
+  image: node:8-alpine
+  commands:
+  - yarn serverless deploy
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: aws_access_key_id
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: aws_secret_access_key
+  depends_on:
+  - build-nextjs
+  - build-graphql
+  when:
+    branch: master
