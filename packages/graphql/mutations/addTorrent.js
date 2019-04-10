@@ -8,9 +8,10 @@ const addTorrent = async (parent, args, context) => {
   const { magnet, file } = args;
   const torrent = await Torrent.query().insert({
     id: uuid(),
-    status: 'pending',
+    status: 'active',
     file,
     magnet,
+    server_id: 's001',
     user_id: context.user.id,
   });
   return torrent;
