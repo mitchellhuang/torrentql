@@ -13,7 +13,7 @@ const Main = ({
       <div className="content">
         <h1 className="title">TorrentQL</h1>
         <p className="subtitle">Download and seed torrents on a 1 Gb/s OVH network.</p>
-        <p className="subtitle">Beta launching in summer of 2019.</p>
+        <p className="subtitle">Beta launching in the summer of 2019.</p>
       </div>
     </div>
     <style jsx>{`
