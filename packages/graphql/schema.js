@@ -12,6 +12,12 @@ const typeDefs = gql`
     magnet: String
     file: String
     user: User
+    server: Server
+  }
+  type Server {
+    id: String
+    hostname: String
+    region: String
   }
   type Query {
     me: User

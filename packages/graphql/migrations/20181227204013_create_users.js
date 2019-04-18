@@ -1,9 +1,10 @@
+
 exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', (table) => {
       table.uuid('id').primary();
-      table.string('email').unique().index();
-      table.string('password');
+      table.text('email').unique().index().notNullable();
+      table.text('password').notNullable();
     }),
   ]);
 };

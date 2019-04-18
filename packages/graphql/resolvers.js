@@ -23,6 +23,9 @@ const resolvers = {
     user(torrent) {
       return torrent.$relatedQuery('user');
     },
+    server(torrent) {
+      return torrent.$relatedQuery('server');
+    },
   },
 };
 
