@@ -3,7 +3,7 @@ service: torrentql
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: production
+  stage: ${opt:stage, 'staging'}
   region: eu-west-1
   endpointType: regional
   memorySize: 1024
@@ -21,7 +21,7 @@ custom:
   serverless-offline:
     port: 8000
   customDomain:
-    domainName: torrentql.com
+    domainName: ${opt:domain, 'staging.torrentql.com'}
     certificateName: torrentql.com
     createRoute53Record: false
     endpointType: regional

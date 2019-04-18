@@ -7,7 +7,9 @@ steps:
   commands:
   - yarn --production
   when:
-    branch: master
+    branch:
+    - master
+    - production
 
 - name: build-nextjs
   image: node:8-alpine
@@ -20,7 +22,9 @@ steps:
   depends_on:
   - build-repo
   when:
-    branch: master
+    branch:
+    - master
+    - production
 
 - name: build-graphql
   image: node:8-alpine
@@ -31,9 +35,11 @@ steps:
   depends_on:
   - build-repo
   when:
-    branch: master
+    branch:
+    - master
+    - production
 
-- name: deploy
+- name: deploy-staging
   image: node:8-alpine
   commands:
   - yarn serverless deploy
@@ -46,4 +52,21 @@ steps:
   - build-nextjs
   - build-graphql
   when:
-    branch: master
+    branch:
+    - master
+
+- name: deploy-production
+  image: node:8-alpine
+  commands:
+  - yarn serverless deploy --stage production --domain torrentql.com
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: aws_access_key_id
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: aws_secret_access_key
+  depends_on:
+  - build-nextjs
+  - build-graphql
+  when:
+    branch:
+    - production
