@@ -12,8 +12,14 @@ const Main = ({
     <div className="wrapper">
       <div className="content">
         <h1 className="title">TorrentQL</h1>
-        <p className="subtitle">Download and seed torrents on a 1 Gb/s OVH network.</p>
-        <p className="subtitle">Beta launching in the summer of 2019.</p>
+        <p className="subtitle">
+          Download and seed torrents on a 1 Gb/s OVH network.&nbsp;
+          <br className="break" />
+          Beta launching in summer of 2019.
+        </p>
+        <p className="subtitle copy">
+          &copy; 2019 TorrentQL LLC
+        </p>
       </div>
     </div>
     <style jsx>{`
@@ -28,7 +34,7 @@ const Main = ({
         justify-content: center;
       }
       .content {
-        padding: 50px 10px;
+        padding: 50px 15px;
         padding-bottom: 25vh;
       }
       .title {
@@ -37,6 +43,18 @@ const Main = ({
       .subtitle {
         margin: 0;
         margin-bottom: 10px;
+        line-height: 1.5;
+      }
+      .break {
+        display: none;
+      }
+      .copy {
+        color: grey;
+      }
+      @media (min-width: 500px) {
+        .break {
+          display: block;
+        }
       }
     `}</style>
     <style jsx global>{`
