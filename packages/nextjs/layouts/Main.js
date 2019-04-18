@@ -10,11 +10,11 @@ const Main = ({
   <Fragment>
     <Head title={title} />
     <div className="wrapper">
-      <NavBar />
       <div className="content">
-        {children}
+        <h1 className="title">TorrentQL</h1>
+        <p className="subtitle">Download and seed torrents on a 1 Gb/s OVH network.</p>
+        <p className="subtitle">Beta launching in summer of 2019.</p>
       </div>
-      <Footer />
     </div>
     <style jsx>{`
       .wrapper {
@@ -24,12 +24,19 @@ const Main = ({
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
           Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
           'Segoe UI Emoji', 'Segoe UI Symbol';
-        margin: 0 auto;
-        max-width: 1280px;
+        align-items: center;
+        justify-content: center;
       }
       .content {
-        flex: 1;
-        padding: 0 15px;
+        padding: 50px 10px;
+        padding-bottom: 25vh;
+      }
+      .title {
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        margin: 0;
+        margin-bottom: 10px;
       }
     `}</style>
     <style jsx global>{`

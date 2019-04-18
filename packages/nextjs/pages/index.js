@@ -4,8 +4,6 @@ import Button from '../components/Button';
 
 const Index = () => (
   <Main title="TorrentQL">
-    <Hero />
-    <Features />
   </Main>
 );
 
