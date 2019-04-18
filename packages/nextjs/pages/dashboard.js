@@ -14,9 +14,15 @@ const GET_USER = gql`
     me {
       id
       email
-      token
       torrents {
         id
+        magnet
+        file
+        server {
+          id
+          hostname
+          region
+        }
       }
     }
   }

@@ -11,7 +11,7 @@ const addTorrent = async (parent, args, context) => {
     status: 'active',
     file,
     magnet,
-    server_id: 's001',
+    server_id: 'gra001',
     user_id: context.user.id,
   });
   return torrent;
