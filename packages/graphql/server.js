@@ -1,8 +1,8 @@
 require('dotenv').config();
-const knex = require('./lib/knex');
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const jwt = require('express-jwt');
+const knex = require('./lib/knex');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
