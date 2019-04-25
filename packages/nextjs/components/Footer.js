@@ -23,7 +23,7 @@ const Footer = () => (
     </div>
     <style jsx>{`
       footer {
-        padding: 100px 15px;
+        padding: 75px 15px;
         background-color: #605F5E;
         color: #fff;
       }

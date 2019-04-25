@@ -18,9 +18,6 @@ const Main = ({
     </div>
     <style jsx>{`
       .wrapper {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-          Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-          'Segoe UI Emoji', 'Segoe UI Symbol';
         display: flex;
         min-height: 100vh;
         flex-direction: column;
@@ -33,6 +30,11 @@ const Main = ({
       }
     `}</style>
     <style jsx global>{`
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+          'Segoe UI Emoji', 'Segoe UI Symbol';
+      }
       h1, h2, h3, h4, h5 {
         margin-top: 0;
         font-weight: 600;

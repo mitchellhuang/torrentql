@@ -156,6 +156,7 @@ const Features = (
       @media(min-width: 768px) {
         .features {
           align-items: center;
+          padding: 50px;
         }
         .title {
           font-size: 30px;
