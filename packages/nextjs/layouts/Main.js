@@ -11,25 +11,25 @@ const Main = ({
     <Head title={title} />
     <div className="wrapper">
       <NavBar />
-      <div className="content">
+      <div className="container">
         {children}
       </div>
       <Footer />
     </div>
     <style jsx>{`
       .wrapper {
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
           Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
           'Segoe UI Emoji', 'Segoe UI Symbol';
-        margin: 0 auto;
-        max-width: 1280px;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
       }
-      .content {
+      .container {
+        padding: 15px;
+        max-width: 1280px;
+        margin: 0 auto;
         flex: 1;
-        padding: 0 15px;
       }
     `}</style>
     <style jsx global>{`

@@ -23,7 +23,9 @@ const Footer = () => (
     </div>
     <style jsx>{`
       footer {
-        padding: 20px 15px;
+        padding: 100px 15px;
+        background-color: #605F5E;
+        color: #fff;
       }
       .footer {
         display: flex;
@@ -32,7 +34,7 @@ const Footer = () => (
         justify-content: center;
       }
       .links a {
-        color: #666;
+        color: #fff;
         font-weight: 500;
         text-decoration: none;
       }
