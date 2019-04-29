@@ -4,8 +4,10 @@ import Button from '../components/Button';
 
 const Index = () => (
   <Main title="TorrentQL">
-    <Hero />
-    <Features />
+    <div className="wrapper">
+      <Hero />
+      <Features />
+    </div>
   </Main>
 );
 

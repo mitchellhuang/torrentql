@@ -4,13 +4,15 @@ import LoginForm from '../forms/LoginForm';
 
 const Login = () => (
   <Main title="Login - TorrentQL">
-    <div className="container">
+    <div className="wrapper">
       <h1>Login to TorrentQL</h1>
       <LoginForm />
       <style jsx>{`
+        h1 {
+          margin-bottom: 15px;
+        }
         .container {
           max-width: 375px;
-          margin: 0 auto;
           margin-top: 50px;
         }
       `}</style>
