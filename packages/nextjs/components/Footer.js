@@ -21,7 +21,7 @@ const Footer = () => (
       <div className="logo">
         TorrentQL
         <div className="copy">
-          &copy; 2019 Blue Bits, LLC
+          &copy; 2019 TorrentQL, LLC
         </div>
       </div>
       <ul className="links">
@@ -44,7 +44,6 @@ const Footer = () => (
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-between;
-        border-top: 1px solid #111;
       }
       .logo {
         color: #000;
@@ -64,7 +63,7 @@ const Footer = () => (
       }
       .links li a {
         display: block;
-        color: #0366d6;
+        font-size: 18px;
         font-weight: 600;
       }
       .links li:not(:last-child) a {
@@ -74,21 +73,21 @@ const Footer = () => (
         .wrapper {
           flex-direction: row;
           align-items: center;
+          padding-top: 50px;
+          padding-bottom: 50px;
         }
         .logo {
           margin-bottom: 0;
           font-size: 24px;
         }
+        .links li a {
+          font-size: 16px;
+        }
         .links li:not(:last-child) a {
-          margin-right: 20px;
+          margin-right: 25px;
         }
         .links li {
           float: left;
-        }
-      }
-      @media(min-width: 1280px) {
-        .wrapper {
-          padding: 35px 0;
         }
       }
     `}</style>

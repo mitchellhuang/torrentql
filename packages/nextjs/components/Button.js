@@ -7,7 +7,7 @@ const getButtonStyle = (block, white) => css.resolve`
     display: ${block ? 'block' : 'inline-block'};
     padding: 10px;
     color: ${white ? '#000' : '#fff'};
-    background-color: ${white ? '#fff' : '#1190C6'};
+    background-color: ${white ? '#fff' : '#0366d6'};
     box-shadow: 0 5px 10px rgba(0,0,0,0.12);
     border: 0;
     border-radius: 5px;

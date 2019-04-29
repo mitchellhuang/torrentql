@@ -54,19 +54,15 @@ export default withRouter(({ router }) => (
         padding: 0;
         margin: 0;
       }
-      .tabs li {
-        float: left;
-      }
       .tabs li a {
         display: block;
-        color: #111;
-        padding: 10px;
+        font-size: 18px;
         font-weight: 600;
         border: 2px solid transparent;
         border-radius: 5px;
       }
-      .tabs li .active {
-        border: 2px solid #111;
+      .tabs li :not(:last-child) a {
+        margin-bottom: 5px;
       }
       @media(min-width: 768px) {
         .wrapper {
@@ -75,6 +71,17 @@ export default withRouter(({ router }) => (
         }
         .logo {
           margin-bottom: 0;
+        }
+        .tabs li {
+          float: left;
+        }
+        .tabs li a {
+          color: #111;
+          font-size: 16px;
+          padding: 10px;
+        }
+        .tabs li .active {
+          border: 2px solid #111;
         }
       }
     `}</style>

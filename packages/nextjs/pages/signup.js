@@ -5,17 +5,30 @@ import SignupForm from '../forms/SignupForm';
 const Signup = () => (
   <Main title="Signup - TorrentQL">
     <div className="wrapper">
-      <h1>Signup for TorrentQL</h1>
-      <SignupForm />
-      <style jsx>{`
-        h1 {
-          margin-bottom: 15px;
-        }
-        .wrapper {
-          max-width: 375px;
-        }
-      `}</style>
+      <div className="container">
+        <h1>Signup for TQL</h1>
+        <SignupForm />
+      </div>
     </div>
+    <style jsx>{`
+    h1 {
+      margin-bottom: 15px;
+    }
+    .container {
+      width: 100%;
+    }
+    .wrapper {
+      justify-content: center;
+    }
+    @media(min-width: 768px) {
+      .wrapper {
+        justify-content: flex-start;
+        align-items: center;
+        max-width: 375px;
+        margin-top: 100px;
+      }
+    }
+  `}</style>
   </Main>
 );
 
