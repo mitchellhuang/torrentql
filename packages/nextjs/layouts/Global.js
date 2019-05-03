@@ -17,7 +17,7 @@ const Global = ({
         font-weight: 600;
       }
       h1 {
-        font-size: 32px;
+        font-size: 36px;
       }
       a {
         color: #0366d6;

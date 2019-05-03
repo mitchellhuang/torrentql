@@ -81,7 +81,7 @@ const LoginForm = () => (
             Log in
           </Button>
           <span style={{ marginLeft: '10px' }}>
-            Need an account? <Link href="/signup"><a>Sign up.</a></Link>
+            Need an account? <Link href="/signup"><a>Sign up</a></Link>.
           </span>
         </form>
       );

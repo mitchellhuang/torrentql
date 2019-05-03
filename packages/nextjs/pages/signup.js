@@ -3,10 +3,10 @@ import Main from '../layouts/Main';
 import SignupForm from '../forms/SignupForm';
 
 const Signup = () => (
-  <Main title="Signup - TorrentQL">
+  <Main title="Sign up - TorrentQL">
     <div className="wrapper">
       <div className="container">
-        <h1>Sign up for TQL</h1>
+        <h1>Sign up</h1>
         <SignupForm />
       </div>
     </div>

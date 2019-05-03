@@ -76,7 +76,7 @@ const SignupForm = () => (
             Sign up
           </Button>
           <span style={{ marginLeft: '10px' }}>
-            Have an account? <Link href="/login"><a>Log in.</a></Link>
+            Have an account? <Link href="/login"><a>Log in</a></Link>.
           </span>
         </form>
       );

@@ -6,7 +6,7 @@ const Login = () => (
   <Main title="Log in">
     <div className="wrapper">
       <div className="container">
-        <h1>Log in to TQL</h1>
+        <h1>Log in</h1>
         <LoginForm />
       </div>
     </div>

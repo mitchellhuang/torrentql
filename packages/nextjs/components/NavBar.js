@@ -68,6 +68,7 @@ export default withRouter(({ router }) => (
           align-items: center;
         }
         .logo {
+          margin: 0 10px;
           margin-bottom: 0;
         }
         .tabs li {

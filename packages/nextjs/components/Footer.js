@@ -79,12 +79,11 @@ const Footer = () => (
         .logo {
           margin-bottom: 0;
           font-size: 24px;
+          margin: 0 10px;
         }
         .links li a {
           font-size: 16px;
-        }
-        .links li:not(:last-child) a {
-          margin-right: 25px;
+          margin: 10px;
         }
         .links li {
           float: left;
