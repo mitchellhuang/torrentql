@@ -3,7 +3,7 @@ import Main from '../layouts/Main';
 import SignupForm from '../forms/SignupForm';
 
 const Signup = () => (
-  <Main title="Sign up - TorrentQL">
+  <Main title="Sign up">
     <div className="wrapper">
       <div className="container">
         <h1>Sign up</h1>

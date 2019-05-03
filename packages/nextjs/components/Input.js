@@ -20,8 +20,8 @@ const Input = ({
       }
       input {
         display: block;
-        width: 100%;
         box-sizing: border-box;
+        width: 100%;
         border: 1px solid #999;
         border-radius: 3px;
         padding: 5px 10px;
