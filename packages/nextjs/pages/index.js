@@ -3,7 +3,7 @@ import Main from '../layouts/Main';
 import Button from '../components/Button';
 
 const Index = () => (
-  <Main title="TorrentQL">
+  <Main>
     <div className="wrapper">
       <Hero />
       <Features />
