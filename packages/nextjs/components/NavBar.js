@@ -16,7 +16,7 @@ const items = [{
   url: '/login',
 }];
 
-export default withRouter(({ router }) => (
+const NavBar = ({ router }) => (
   <div className="navbar">
     <div className="wrapper">
       <div className="logo">
@@ -82,4 +82,6 @@ export default withRouter(({ router }) => (
       }
     `}</style>
   </div>
-));
+);
+
+export default withRouter(NavBar);
