@@ -78,10 +78,10 @@ const LoginForm = () => (
             type="submit"
             disabled={isSubmitting}
           >
-            Login
+            Log in
           </Button>
           <span style={{ marginLeft: '10px' }}>
-            Need an account? <Link href="/signup"><a>Signup</a></Link>
+            Need an account? <Link href="/signup"><a>Sign up</a></Link>.
           </span>
         </form>
       );

@@ -1,92 +1,87 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import Button from './Button';
+import { withRouter } from 'next/router';
 
-class NavBar extends Component {
-  constructor(props) {
-    super(props);
+const items = [{
+  name: 'Features',
+  url: '/features',
+}, {
+  name: 'Pricing',
+  url: '/pricing',
+}, {
+  name: 'API',
+  url: '/api',
+}, {
+  name: 'Log in',
+  url: '/login',
+}];
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false,
-    };
-  }
-
-  toggle() {
-    const { isOpen } = this.state;
-    this.setState({
-      isOpen: !isOpen,
-    });
-  }
-
-  render() {
-    return (
-      <nav>
-        <div className="left">
-          <Link href="/">
-            <a className="logo">TorrentQL</a>
-          </Link>
-        </div>
-        <div className="center" />
-        <div className="right">
-          <div className="d-none-mobile">
-            <Link href="/features">
-              <a>Features</a>
+const NavBar = ({ router }) => (
+  <div className="navbar">
+    <div className="wrapper">
+      <div className="logo">
+        <Link href="/"><a>TorrentQL</a></Link>
+      </div>
+      <ul className="tabs">
+        { items.map(item => (
+          <li key={item.url}>
+            <Link href={item.url}>
+              <a className={router.pathname === item.url ? 'active' : null}>
+                {item.name}
+              </a>
             </Link>
-            <Link href="/pricing">
-              <a>Pricing</a>
-            </Link>
-            <Link href="/network">
-              <a>Network</a>
-            </Link>
-            <Link href="/api">
-              <a>API</a>
-            </Link>
-          </div>
-          <Button href="/login">
-            Login
-          </Button>
-        </div>
-        <style jsx>{`
-          nav {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-          }
-          a {
-            transition: color 0.2s ease;
-            text-decoration: none;
-          }
-          .logo {
-            color: inherit;
-            font-size: 24px;
-            font-weight: 600;
-          }
-          .right a {
-            color: #666;
-            font-weight: 500;
-          }
-          div a:hover {
-            color: inherit;
-          }
-          .center {
-            flex: 1;
-          }
-          .right a {
-            margin-right: 20px;
-          }
-          .d-none-mobile {
-            display: none;
-          }
-          @media(min-width: 550px) {
-            .d-none-mobile {
-              display: inline-block;
-            }
-          }
-        `}</style>
-      </nav>
-    );
-  }
-}
+          </li>
+        )) }
+      </ul>
+    </div>
+    <style jsx>{`
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .logo {
+        font-weight: 600;
+        font-size: 28px;
+        margin-bottom: 15px;
+      }
+      .logo a {
+        color: #111;
+      }
+      .tabs {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      .tabs li a {
+        display: block;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+      }
+      .tabs li :not(:last-child) a {
+        margin-bottom: 5px;
+      }
+      @media(min-width: 768px) {
+        .wrapper {
+          flex-direction: row;
+          align-items: center;
+        }
+        .logo {
+          margin: 0 10px;
+          margin-bottom: 0;
+        }
+        .tabs li {
+          float: left;
+        }
+        .tabs li a {
+          color: #111;
+          font-size: 16px;
+          padding: 10px;
+        }
+      }
+    `}</style>
+  </div>
+);
 
-export default NavBar;
+export default withRouter(NavBar);

@@ -3,9 +3,11 @@ import Main from '../layouts/Main';
 import Button from '../components/Button';
 
 const Index = () => (
-  <Main title="TorrentQL">
-    <Hero />
-    <Features />
+  <Main>
+    <div className="wrapper">
+      <Hero />
+      <Features />
+    </div>
   </Main>
 );
 
@@ -23,32 +25,29 @@ const mutationExample = `mutation {
 
 const Hero = () => (
   <div className="hero">
-    <div className="left">
+    <div className="info">
       <h1 className="tagline">Download and seed<br />torrents on a 1 Gb/s<br /> OVH network.</h1>
       <div className="tagline-more">
         <p className="tagline-price">Upload starting at $0.0075 / GB.</p>
         <p className="tagline-price">Storage at $0.01 / GB / month.</p>
       </div>
-      <Button href="/signup">Signup</Button>
-      <Button href="/pricing" style={{ marginLeft: '10px' }} white>View pricing →</Button>
+      <Button href="/signup" animate>Sign up</Button>
+      <Button href="/pricing" style={{ marginLeft: '10px' }} white animate>View pricing →</Button>
     </div>
-    <div className="right">
-      <div className="example">
-        <pre
-          // eslint-disable-next-line
-          dangerouslySetInnerHTML={{ __html: mutationExample }}
-        />
-      </div>
+    <div className="example">
+      <pre
+        // eslint-disable-next-line
+        dangerouslySetInnerHTML={{ __html: mutationExample }}
+      />
     </div>
     <style jsx>{`
       .hero {
         display: flex;
         flex-direction: column-reverse;
-        padding-bottom: 15px;
+        margin-bottom: 25px;
       }
       .tagline {
         font-size: 24px;
-        margin: 0;
         margin-top: 15px;
         margin-bottom: 15px;
         font-weight: 600;
@@ -65,14 +64,13 @@ const Hero = () => (
         margin-bottom: 5px;
       }
       .example {
-        color: white;
-        padding: 15px;
-        background-color: black;
+        color: #fff;
+        background-color: #111;
         border-radius: 5px;
+        padding: 15px;
       }
       .example pre {
         margin: 0;
-        padding: 0 5px;
         font-size: 14px;
       }
       @media(min-width: 768px) {
@@ -156,6 +154,7 @@ const Features = (
       @media(min-width: 768px) {
         .features {
           align-items: center;
+          padding: 50px;
         }
         .title {
           font-size: 30px;

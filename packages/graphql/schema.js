@@ -23,7 +23,7 @@ const typeDefs = gql`
     me: User
   }
   type Mutation {
-    login(email: String!, password: String): User
+    login(email: String!, password: String!): User
     createUser(email: String!, password: String!): User
     deleteUser: Boolean
     addTorrent(magnet: String, file: String): Torrent

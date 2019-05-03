@@ -3,18 +3,28 @@ import Main from '../layouts/Main';
 import SignupForm from '../forms/SignupForm';
 
 const Signup = () => (
-  <Main title="Signup - TorrentQL">
-    <div className="container">
-      <h1>Signup for TorrentQL</h1>
-      <SignupForm />
-      <style jsx>{`
-        .container {
-          max-width: 375px;
-          margin: 0 auto;
-          margin-top: 50px;
-        }
-      `}</style>
+  <Main title="Sign up">
+    <div className="wrapper">
+      <div className="container">
+        <h1>Sign up</h1>
+        <SignupForm />
+      </div>
     </div>
+    <style jsx>{`
+    h1 {
+      margin-bottom: 15px;
+    }
+    .container {
+      width: 100%;
+    }
+    @media(min-width: 768px) {
+      .wrapper {
+        align-items: center;
+        max-width: 350px;
+        margin-top: 75px;
+      }
+    }
+  `}</style>
   </Main>
 );
 

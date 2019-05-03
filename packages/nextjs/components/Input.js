@@ -20,8 +20,8 @@ const Input = ({
       }
       input {
         display: block;
-        width: 100%;
         box-sizing: border-box;
+        width: 100%;
         border: 1px solid #999;
         border-radius: 3px;
         padding: 5px 10px;
@@ -29,7 +29,7 @@ const Input = ({
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       }
       input:focus {
-        border: 1px solid #0076ff;
+        border: 1px solid #0366d6;
         outline: none;
       }
     `}</style>
