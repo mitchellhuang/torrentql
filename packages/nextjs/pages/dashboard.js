@@ -23,7 +23,7 @@ const GET_USER = gql`
 `;
 
 const Dashboard = () => (
-  <Main title="Dashboard - TorrentQL">
+  <Main title="Dashboard">
     <div className="dashboard">
       <Query query={GET_USER}>
         {({ loading, error, data }) => {
