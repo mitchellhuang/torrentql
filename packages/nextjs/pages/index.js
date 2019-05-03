@@ -31,7 +31,7 @@ const Hero = () => (
         <p className="tagline-price">Upload starting at $0.0075 / GB.</p>
         <p className="tagline-price">Storage at $0.01 / GB / month.</p>
       </div>
-      <Button href="/signup">Signup</Button>
+      <Button href="/signup">Sign up</Button>
       <Button href="/pricing" style={{ marginLeft: '10px' }} white>View pricing →</Button>
     </div>
     <div className="example">

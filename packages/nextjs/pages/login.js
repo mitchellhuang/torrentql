@@ -3,10 +3,10 @@ import Main from '../layouts/Main';
 import LoginForm from '../forms/LoginForm';
 
 const Login = () => (
-  <Main title="Login - TorrentQL">
+  <Main title="Log in">
     <div className="wrapper">
       <div className="container">
-        <h1>Login to TQL</h1>
+        <h1>Log in to TQL</h1>
         <LoginForm />
       </div>
     </div>
@@ -17,15 +17,11 @@ const Login = () => (
     .container {
       width: 100%;
     }
-    .wrapper {
-      justify-content: center;
-    }
     @media(min-width: 768px) {
       .wrapper {
-        justify-content: flex-start;
         align-items: center;
-        max-width: 375px;
-        margin-top: 100px;
+        max-width: 350px;
+        margin-top: 75px;
       }
     }
   `}</style>

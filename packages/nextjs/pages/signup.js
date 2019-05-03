@@ -6,7 +6,7 @@ const Signup = () => (
   <Main title="Signup - TorrentQL">
     <div className="wrapper">
       <div className="container">
-        <h1>Signup for TQL</h1>
+        <h1>Sign up for TQL</h1>
         <SignupForm />
       </div>
     </div>
@@ -17,15 +17,11 @@ const Signup = () => (
     .container {
       width: 100%;
     }
-    .wrapper {
-      justify-content: center;
-    }
     @media(min-width: 768px) {
       .wrapper {
-        justify-content: flex-start;
         align-items: center;
-        max-width: 375px;
-        margin-top: 100px;
+        max-width: 350px;
+        margin-top: 75px;
       }
     }
   `}</style>

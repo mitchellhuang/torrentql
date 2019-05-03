@@ -73,8 +73,8 @@ const Footer = () => (
         .wrapper {
           flex-direction: row;
           align-items: center;
-          padding-top: 50px;
-          padding-bottom: 50px;
+          padding-top: 35px;
+          padding-bottom: 35px;
         }
         .logo {
           margin-bottom: 0;

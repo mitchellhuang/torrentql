@@ -3,9 +3,6 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 
 const items = [{
-  name: 'Home',
-  url: '/',
-}, {
   name: 'Features',
   url: '/features',
 }, {
@@ -15,7 +12,7 @@ const items = [{
   name: 'API',
   url: '/api',
 }, {
-  name: 'Login',
+  name: 'Log in',
   url: '/login',
 }];
 
@@ -23,7 +20,7 @@ export default withRouter(({ router }) => (
   <div className="navbar">
     <div className="wrapper">
       <div className="logo">
-        TorrentQL
+        <Link href="/"><a>TorrentQL</a></Link>
       </div>
       <ul className="tabs">
         { items.map(item => (
@@ -44,10 +41,12 @@ export default withRouter(({ router }) => (
         justify-content: space-between;
       }
       .logo {
-        color: #111;
         font-weight: 600;
         font-size: 28px;
         margin-bottom: 15px;
+      }
+      .logo a {
+        color: #111;
       }
       .tabs {
         list-style-type: none;
@@ -58,7 +57,6 @@ export default withRouter(({ router }) => (
         display: block;
         font-size: 18px;
         font-weight: 600;
-        border: 2px solid transparent;
         border-radius: 5px;
       }
       .tabs li :not(:last-child) a {
@@ -79,9 +77,6 @@ export default withRouter(({ router }) => (
           color: #111;
           font-size: 16px;
           padding: 10px;
-        }
-        .tabs li .active {
-          border: 2px solid #111;
         }
       }
     `}</style>
