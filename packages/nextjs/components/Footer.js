@@ -67,7 +67,7 @@ const Footer = () => (
         font-weight: 600;
       }
       .links li:not(:last-child) a {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
       @media(min-width: 768px) {
         .wrapper {
@@ -77,7 +77,6 @@ const Footer = () => (
           padding-bottom: 35px;
         }
         .logo {
-          margin-bottom: 0;
           font-size: 24px;
           margin: 0 10px;
         }
