@@ -35,12 +35,6 @@ const Global = ({
           margin: 0 auto;
         }
       }
-      @media(min-width: 1280px) {
-        .wrapper {
-          padding-left: 0;
-          padding-right: 0;
-        }
-      }
     `}</style>
   </>
 );
