@@ -11,20 +11,20 @@ const Login = () => (
       </div>
     </div>
     <style jsx>{`
-    h1 {
-      margin-bottom: 15px;
-    }
-    .container {
-      width: 100%;
-    }
-    @media(min-width: 768px) {
-      .wrapper {
-        align-items: center;
-        max-width: 350px;
-        margin-top: 100px;
+      h1 {
+        margin-bottom: 15px;
       }
-    }
-  `}</style>
+      .container {
+        width: 100%;
+      }
+      @media(min-width: 768px) {
+        .wrapper {
+          align-items: center;
+          max-width: 350px;
+          margin-top: 100px;
+        }
+      }
+    `}</style>
   </Main>
 );
 
