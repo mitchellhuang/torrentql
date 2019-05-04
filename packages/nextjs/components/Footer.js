@@ -73,6 +73,8 @@ const Footer = () => (
         .wrapper {
           flex-direction: row;
           align-items: center;
+          padding-top: 35px;
+          padding-bottom: 35px;
         }
         .logo {
           font-size: 24px;

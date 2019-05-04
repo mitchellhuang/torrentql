@@ -21,7 +21,7 @@ const Login = () => (
         .wrapper {
           align-items: center;
           max-width: 350px;
-          margin-top: 100px;
+          margin-top: 75px;
         }
       }
     `}</style>
