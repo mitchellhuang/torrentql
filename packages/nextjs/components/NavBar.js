@@ -18,7 +18,7 @@ const items = [{
 
 const NavBar = ({ router }) => (
   <div className="navbar">
-    <div className="wrapper">
+    <div className="wrapper wrapper-v">
       <div className="logo">
         <Link href="/"><a>TorrentQL</a></Link>
       </div>
@@ -59,7 +59,7 @@ const NavBar = ({ router }) => (
         font-weight: 600;
         border-radius: 5px;
       }
-      .tabs li :not(:last-child) a {
+      .tabs li:not(:last-child) a {
         margin-bottom: 5px;
       }
       @media(min-width: 768px) {
@@ -68,7 +68,6 @@ const NavBar = ({ router }) => (
           align-items: center;
         }
         .logo {
-          margin: 0 10px;
           margin-bottom: 0;
         }
         .tabs li {
@@ -77,7 +76,10 @@ const NavBar = ({ router }) => (
         .tabs li a {
           color: #111;
           font-size: 16px;
-          padding: 10px;
+        }
+        .tabs li:not(:last-child) a {
+          margin-bottom: 0;
+          margin-right: 15px;
         }
       }
     `}</style>

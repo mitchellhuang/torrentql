@@ -26,13 +26,22 @@ const Global = ({
       .wrapper {
         display: flex;
         flex-direction: column;
-        padding: 15px;
+        padding: 0 15px;
         max-width: 1280px;
         flex: 1;
+      }
+      .wrapper-v {
+        padding-top: 15px;
+        padding-bottom: 15px;
       }
       @media(min-width: 768px) {
         .wrapper {
           margin: 0 auto;
+          padding: 0 25px;
+        }
+        .wrapper-v {
+          padding-top: 25px;
+          padding-bottom: 25px;
         }
       }
     `}</style>

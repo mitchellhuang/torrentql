@@ -24,7 +24,7 @@ const GET_USER = gql`
 
 const Dashboard = () => (
   <Main title="Dashboard">
-    <div className="dashboard">
+    <div className="wrapper">
       <Query query={GET_USER}>
         {({ loading, error, data }) => {
           if (loading) {

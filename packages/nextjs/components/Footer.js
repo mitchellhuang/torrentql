@@ -17,7 +17,7 @@ const items = [{
 
 const Footer = () => (
   <div className="footer">
-    <div className="wrapper">
+    <div className="wrapper wrapper-v">
       <div className="logo">
         TorrentQL
         <div className="copy">
@@ -73,16 +73,17 @@ const Footer = () => (
         .wrapper {
           flex-direction: row;
           align-items: center;
-          padding-top: 35px;
-          padding-bottom: 35px;
         }
         .logo {
           font-size: 24px;
-          margin: 0 10px;
+          margin-bottom: 0;
         }
         .links li a {
           font-size: 16px;
-          margin: 10px;
+        }
+        .links li:not(:last-child) a {
+          margin-bottom: 0;
+          margin-right: 15px;
         }
         .links li {
           float: left;
