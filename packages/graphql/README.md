@@ -24,8 +24,9 @@ JWT_SECRET=
 
 1. `yarn install`
 2. `npx knex migrate:latest`
-3. `create a .env file based on .env.example`
-4. `yarn run dev`
+3. `npx knex seed:run`
+4. `create a .env file based on .env.example`
+5. `yarn run dev`
 
 ## Production build
 
