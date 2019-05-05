@@ -20,8 +20,8 @@ const typeDefs = gql`
     state: String
     progress: Float
     ratio: Float
-    uploadSpeed: BigInt
-    downloadSpeed: BigInt
+    uploadSpeed: Int
+    downloadSpeed: Int
     eta: Int
     numPeers: Int
     numSeeds: Int
