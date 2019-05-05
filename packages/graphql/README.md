@@ -26,7 +26,8 @@ JWT_SECRET=
 2. `npx knex migrate:latest`
 3. `npx knex seed:run`
 4. `create a .env file based on .env.example`
-5. `yarn run dev`
+5. `cd deploy/deluge && docker-compose up -d`
+6. `yarn run dev`
 
 ## Production build
 
