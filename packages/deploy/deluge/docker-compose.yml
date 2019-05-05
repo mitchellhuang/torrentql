@@ -4,12 +4,12 @@ services:
     image: "linuxserver/deluge"
     restart: "always"
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=0
+      - PUID=0
     ports:
       - "8112:8112"
       - "58846:58846"
       - "58946:58946"
       - "58946:58946/udp"
     volumes:
-      - "/storage/deluge:/downloads"
+      - "/Users/mitchell/Downloads:/root/Downloads"
