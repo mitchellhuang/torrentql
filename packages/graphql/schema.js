@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar BigInt
   type User {
     id: String
     email: String
@@ -19,16 +20,16 @@ const typeDefs = gql`
     name: String
     progress: Float
     ratio: Float
-    uploadSpeed: String
-    downloadSpeed: String
-    eta: String
-    connectedPeers: String
-    totalPeers: String
-    totalSeeds: String
-    totalSelected: String
-    totalSize: String
-    totalUploaded: String
-    totalDownloaded: String
+    uploadSpeed: BigInt
+    downloadSpeed: BigInt
+    eta: Int
+    connectedPeers: Int
+    totalPeers: Int
+    totalSeeds: Int
+    totalSelected: BigInt
+    totalSize: BigInt
+    totalUploaded: BigInt
+    totalDownloaded: BigInt
   }
   type Server {
     id: String

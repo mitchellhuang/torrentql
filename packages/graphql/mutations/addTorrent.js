@@ -22,11 +22,20 @@ const addTorrent = async (parent, { data }, context) => {
   let type;
   if (data.includes('magnet')) {
     type = 'magnet';
-    hash = parseTorrent(data).infoHash;
+    try {
+      hash = parseTorrent(data).infoHash;
+    } catch (err) {
+      throw new Error('Invalid magnet link');
+    }
     await deluge.addTorrentMagnet(data);
   } else {
     type = 'file';
-    hash = parseTorrent(Buffer.from(data, 'base64')).infoHash;
+    try {
+      hash = parseTorrent(Buffer.from(data, 'base64')).infoHash;
+    } catch (err) {
+      throw new Error('Invalid torrent file');
+    }
+    await deluge.addTorrent(data);
   }
   return Torrent.query().insert({
     id: uuid(),

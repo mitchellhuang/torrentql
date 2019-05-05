@@ -1,3 +1,4 @@
+const BigInt = require('graphql-bigint');
 const { Deluge } = require('@ctrl/deluge');
 const me = require('./queries/me');
 const login = require('./mutations/login');
@@ -25,11 +26,18 @@ const resolvers = {
         baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
         password: 'deluge',
       });
-      return deluge.getTorrent(torrent.hash);
+      let data;
+      try {
+        data = await deluge.getTorrent(torrent.hash);
+      } catch (err) {
+        data = null;
+      }
+      return data;
     },
     user: torrent => torrent.$relatedQuery('user'),
     server: torrent => torrent.$relatedQuery('server'),
   },
+  BigInt,
 };
 
 module.exports = resolvers;
