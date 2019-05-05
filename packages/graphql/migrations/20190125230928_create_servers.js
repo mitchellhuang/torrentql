@@ -5,6 +5,7 @@ exports.up = function (knex, Promise) {
       table.text('id').primary();
       table.text('host').notNullable();
       table.text('port').notNullable();
+      table.enum('protocol', ['http', 'https']).notNullable();
       table.enum('region', ['eu-west-1', 'ca-east-1']).index().notNullable();
       table.integer('cpu_load');
       table.integer('active_torrents');

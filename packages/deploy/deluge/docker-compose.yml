@@ -11,3 +11,5 @@ services:
       - "58846:58846"
       - "58946:58946"
       - "58946:58946/udp"
+    volumes:
+      - "/storage/deluge:/downloads"

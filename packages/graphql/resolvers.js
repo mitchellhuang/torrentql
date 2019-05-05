@@ -1,3 +1,4 @@
+const { Deluge } = require('@ctrl/deluge');
 const me = require('./queries/me');
 const login = require('./mutations/login');
 const createUser = require('./mutations/createUser');
@@ -15,17 +16,19 @@ const resolvers = {
     addTorrent,
   },
   User: {
-    torrents(user) {
-      return user.$relatedQuery('torrent');
-    },
+    torrents: user => user.$relatedQuery('torrent'),
   },
   Torrent: {
-    user(torrent) {
-      return torrent.$relatedQuery('user');
+    data: async (torrent) => {
+      const server = await torrent.$relatedQuery('server');
+      const deluge = new Deluge({
+        baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+        password: 'deluge',
+      });
+      return deluge.getTorrent(torrent.hash);
     },
-    server(torrent) {
-      return torrent.$relatedQuery('server');
-    },
+    user: torrent => torrent.$relatedQuery('user'),
+    server: torrent => torrent.$relatedQuery('server'),
   },
 };
 
