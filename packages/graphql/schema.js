@@ -17,18 +17,18 @@ const typeDefs = gql`
   type TorrentData {
     id: String
     name: String
-    progress: Int
+    progress: Float
     ratio: Float
-    uploadSpeed: Int
-    downloadSpeed: Int
-    eta: Int
-    connectedPeers: Int
-    totalPeers: Int
-    totalSeeds: Int
-    totalSelected: Int
-    totalSize: Int
-    totalUploaded: Int
-    totalDownloaded: Int
+    uploadSpeed: String
+    downloadSpeed: String
+    eta: String
+    connectedPeers: String
+    totalPeers: String
+    totalSeeds: String
+    totalSelected: String
+    totalSize: String
+    totalUploaded: String
+    totalDownloaded: String
   }
   type Server {
     id: String
