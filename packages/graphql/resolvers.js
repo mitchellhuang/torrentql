@@ -1,4 +1,5 @@
 const BigInt = require('graphql-bigint');
+const { GraphQLJSON } = require('graphql-type-json');
 const { Deluge } = require('@ctrl/deluge');
 const me = require('./queries/me');
 const login = require('./mutations/login');
@@ -30,9 +31,12 @@ const resolvers = {
         password: 'deluge',
       });
       let status;
+      let files;
       try {
         status = await deluge.getTorrentStatus(torrent.hash);
+        files = await deluge.getTorrentFiles(torrent.hash);
         status = status.result;
+        files = files.result;
         status = {
           name: status.name,
           state: status.state.toLowerCase(),
@@ -51,6 +55,7 @@ const resolvers = {
           tracker: status.tracker,
           trackerHost: status.tracker_host,
           trackerStatus: status.tracker_status,
+          files,
         };
       } catch (err) {
         status = null;
@@ -61,6 +66,7 @@ const resolvers = {
     server: torrent => torrent.$relatedQuery('server'),
   },
   BigInt,
+  JSON: GraphQLJSON,
 };
 
 module.exports = resolvers;

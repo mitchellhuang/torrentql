@@ -2,6 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   scalar BigInt
+  scalar JSON
   type User {
     id: String
     email: String
@@ -33,11 +34,10 @@ const typeDefs = gql`
     tracker: String
     trackerHost: String
     trackerStatus: String
+    files: JSON
   }
   type Server {
     id: String
-    host: String
-    port: String
     region: String
   }
   type Query {
