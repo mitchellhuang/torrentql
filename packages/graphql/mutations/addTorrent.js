@@ -39,10 +39,10 @@ const addTorrent = async (parent, { data }, context) => {
   }
   return Torrent.query().insert({
     id: uuid(),
+    is_active: true,
     hash,
     type,
     data,
-    status: 'active',
     server_id: server.id,
     user_id: context.user.id,
   });

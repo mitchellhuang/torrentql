@@ -20,19 +20,42 @@ const resolvers = {
     torrents: user => user.$relatedQuery('torrent'),
   },
   Torrent: {
-    data: async (torrent) => {
+    status: async (torrent) => {
+      if (!torrent.is_active) {
+        return null;
+      }
       const server = await torrent.$relatedQuery('server');
       const deluge = new Deluge({
         baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
         password: 'deluge',
       });
-      let data;
+      let status;
       try {
-        data = await deluge.getTorrent(torrent.hash);
+        status = await deluge.getTorrentStatus(torrent.hash);
+        status = status.result;
+        status = {
+          name: status.name,
+          state: status.state.toLowerCase(),
+          progress: status.progress,
+          ratio: status.ratio,
+          uploadSpeed: status.upload_payload_rate,
+          downloadSpeed: status.download_payload_rate,
+          eta: status.eta,
+          numPeers: status.num_peers,
+          numSeeds: status.num_seeds,
+          totalPeers: status.total_peers,
+          totalSeeds: status.total_seeds,
+          totalWanted: status.total_wanted,
+          totalUploaded: status.total_uploaded,
+          totalDownloaded: status.total_done,
+          tracker: status.tracker,
+          trackerHost: status.tracker_host,
+          trackerStatus: status.tracker_status,
+        };
       } catch (err) {
-        data = null;
+        status = null;
       }
-      return data;
+      return status;
     },
     user: torrent => torrent.$relatedQuery('user'),
     server: torrent => torrent.$relatedQuery('server'),

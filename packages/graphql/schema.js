@@ -10,26 +10,29 @@ const typeDefs = gql`
   }
   type Torrent {
     id: String
-    status: String
-    data: TorrentData
+    hash: String
+    status: TorrentStatus
     user: User
     server: Server
   }
-  type TorrentData {
-    id: String
+  type TorrentStatus {
     name: String
+    state: String
     progress: Float
     ratio: Float
     uploadSpeed: BigInt
     downloadSpeed: BigInt
     eta: Int
-    connectedPeers: Int
+    numPeers: Int
+    numSeeds: Int
     totalPeers: Int
     totalSeeds: Int
-    totalSelected: BigInt
-    totalSize: BigInt
+    totalWanted: BigInt
     totalUploaded: BigInt
     totalDownloaded: BigInt
+    tracker: String
+    trackerHost: String
+    trackerStatus: String
   }
   type Server {
     id: String
