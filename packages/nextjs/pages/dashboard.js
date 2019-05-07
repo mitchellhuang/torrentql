@@ -10,11 +10,9 @@ const GET_USER = gql`
       email
       torrents {
         id
-        magnet
-        file
+        hash
         server {
           id
-          hostname
           region
         }
       }
