@@ -17,6 +17,7 @@ const addTorrent = async (parent, { data }, context) => {
   const deluge = new Deluge({
     baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
     password: 'deluge',
+    timeout: 1000,
   });
   let hash;
   let type;

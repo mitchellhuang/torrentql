@@ -29,6 +29,7 @@ const resolvers = {
       const deluge = new Deluge({
         baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
         password: 'deluge',
+        timeout: 1000,
       });
       let status;
       let files;
