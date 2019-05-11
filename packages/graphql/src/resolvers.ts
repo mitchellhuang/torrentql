@@ -1,10 +1,12 @@
-import BigInt from 'graphql-bigint';
+import graphqlBigint from 'graphql-bigint';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Deluge } from '@ctrl/deluge';
-import me from './queries/me';
-import login from './mutations/login';
-import createUser from './mutations/createUser';
-import deleteUser from './mutations/deleteUser';
+import { GraphQLFieldResolver } from 'graphql';
+import { Context } from './lib/context';
+import { me } from './queries/me';
+import { login } from './mutations/login';
+import { createUser } from './mutations/createUser';
+import { deleteUser } from './mutations/deleteUser';
 import addTorrent from './mutations/addTorrent';
 import deleteTorrent from './mutations/deleteTorrent';
 
@@ -68,7 +70,7 @@ const resolvers = {
     user: torrent => torrent.$relatedQuery('user'),
     server: torrent => torrent.$relatedQuery('server'),
   },
-  BigInt,
+  BigInt: graphqlBigint,
   JSON: GraphQLJSON,
 };
 

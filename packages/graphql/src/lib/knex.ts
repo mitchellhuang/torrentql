@@ -1,7 +1,7 @@
 import knex from 'knex';
 import { Model } from 'objection';
 
-const Knex = knex({
+const knexClient = knex({
   client: 'pg',
   connection: {
     host: process.env.DB_HOST,
@@ -13,6 +13,6 @@ const Knex = knex({
   pool: { min: 1, max: 1 },
 });
 
-Model.knex(Knex);
+Model.knex(knexClient);
 
-export default Knex;
+export default knexClient;

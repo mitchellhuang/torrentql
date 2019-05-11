@@ -1,10 +1,11 @@
-import User from '../models/User';
+import { GraphQLFieldResolver } from 'graphql';
+import { Context } from '../lib/context';
+import { User } from '../entity/User';
 
-const me = async (parent, args, context) => {
+export const me: GraphQLFieldResolver<void, Context> = async (parent, args, context) => {
   if (!context.user) {
     throw new Error('You are not authenticated.');
   }
-  return User.query().findById(context.user.id);
+  const userRepository = context.connection.getRepository(User);
+  return userRepository.findOne(context.user.id);
 };
-
-export default me;
