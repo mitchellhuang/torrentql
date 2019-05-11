@@ -1,5 +1,7 @@
 import { Model } from 'objection';
 import { join } from 'path';
+import User from './User';
+import Server from './Server';
 
 class Torrent extends Model {
   id: string;
@@ -7,8 +9,8 @@ class Torrent extends Model {
   type: 'file' | 'magnet'
   data: string;
   is_active: boolean;
-  user_id: string;
-  server_id: string;
+  user: User;
+  server: Server;
 
   static tableName = 'torrents';
 

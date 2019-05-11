@@ -38,6 +38,7 @@
     "@types/jsonwebtoken": "^8.3.2",
     "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.126",
+    "@types/pg": "^7.4.14",
     "nodemon": "^1.18.11",
     "typescript": "^3.4.5"
   }

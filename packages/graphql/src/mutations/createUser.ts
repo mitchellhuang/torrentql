@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 import User from '../models/User';
-import jwt from '../lib/jwt';
+import * as jwt from '../lib/jwt';
 
 const createUser = async (parent, { email, password }) => {
   const user = await User.query().insert({
@@ -10,7 +10,7 @@ const createUser = async (parent, { email, password }) => {
   });
   return {
     ...user,
-    token: jwt(user.id, user.email),
+    token: jwt.encode(user.id, user.email),
   };
 };
 

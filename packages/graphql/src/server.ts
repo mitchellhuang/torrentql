@@ -1,27 +1,30 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import jwt from 'express-jwt';
 import knex from './lib/knex';
+import * as jwt from './lib/jwt';
 import typeDefs from './schema';
 import resolvers from './resolvers';
 
 const port = parseInt(process.env.PORT, 10) || 3001;
 
+interface AuthRequest extends express.Request {
+  user?: {
+    id: string,
+    email: string,
+  },
+}
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ user: req.user }),
+  context: ({ req }: {req: AuthRequest}) => ({ user: req.user }),
   introspection: true,
 });
 
 const app = express();
 
-app.use(jwt({
-  secret: process.env.JWT_SECRET,
-  credentialsRequired: false,
-}));
+app.use(jwt.decode());
 
 server.applyMiddleware({ app });
 

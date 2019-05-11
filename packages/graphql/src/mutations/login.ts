@@ -1,5 +1,5 @@
 import User from '../models/User';
-import jwt from '../lib/jwt';
+import * as jwt from '../lib/jwt';
 
 const login = async (parent, args) => {
   const { email, password } = args;
@@ -13,7 +13,7 @@ const login = async (parent, args) => {
   }
   return {
     ...user,
-    token: jwt(user.id, user.email),
+    token: jwt.encode(user.id, user.email),
   };
 };
 

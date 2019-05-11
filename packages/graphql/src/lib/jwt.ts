@@ -1,8 +1,12 @@
 import jsonwebtoken from 'jsonwebtoken';
+import expressJwt from 'express-jwt';
 
-const jwt = (id, email) => jsonwebtoken.sign({
-  id,
-  email,
+export const encode = (id: string, email: string) => jsonwebtoken.sign({
+	id,
+	email,
 }, process.env.JWT_SECRET);
 
-export default jwt;
+export const decode = () => expressJwt({
+  secret: process.env.JWT_SECRET,
+  credentialsRequired: false,
+});
