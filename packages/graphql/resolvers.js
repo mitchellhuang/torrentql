@@ -6,6 +6,7 @@ const login = require('./mutations/login');
 const createUser = require('./mutations/createUser');
 const deleteUser = require('./mutations/deleteUser');
 const addTorrent = require('./mutations/addTorrent');
+const deleteTorrent = require('./mutations/deleteTorrent');
 
 const resolvers = {
   Query: {
@@ -16,6 +17,7 @@ const resolvers = {
     createUser,
     deleteUser,
     addTorrent,
+    deleteTorrent,
   },
   User: {
     torrents: user => user.$relatedQuery('torrent'),

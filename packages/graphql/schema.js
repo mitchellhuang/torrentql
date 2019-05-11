@@ -48,6 +48,7 @@ const typeDefs = gql`
     createUser(email: String!, password: String!): User
     deleteUser: Boolean
     addTorrent(data: String!): Torrent
+    deleteTorrent(torrentId: String!): Boolean
   }
 `;
 

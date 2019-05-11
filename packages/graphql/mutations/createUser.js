@@ -2,8 +2,7 @@ const uuid = require('uuid/v4');
 const User = require('../models/User');
 const jwt = require('../lib/jwt');
 
-const createUser = async (parent, args) => {
-  const { email, password } = args;
+const createUser = async (parent, { email, password }) => {
   const user = await User.query().insert({
     id: uuid(),
     email,
