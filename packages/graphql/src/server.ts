@@ -1,7 +1,9 @@
 import 'dotenv/config';
+import 'reflect-metadata';
 import express from 'express';
+import { getConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express';
-import knex from './lib/knex';
+import * as db from './lib/db';
 import * as jwt from './lib/jwt';
 import typeDefs from './schema';
 import resolvers from './resolvers';
@@ -15,32 +17,41 @@ interface AuthRequest extends express.Request {
   },
 }
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({ req }: {req: AuthRequest}) => ({ user: req.user }),
-  introspection: true,
-});
+export const createServer = async () => {
+  await db.init();
 
-const app = express();
+  const apollo = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ req }: {req: AuthRequest}) => ({ user: req.user }),
+    introspection: true,
+  });
 
-app.use(jwt.decode());
+  const server = express();
 
-server.applyMiddleware({ app });
+  server.use(jwt.decode());
 
-app.get('/health', (req, res) => {
-  knex.raw('select 1+1 as result').then(() => {
+  apollo.applyMiddleware({ app: server });
+
+  server.get('/health', async (req, res) => {
+    try {
+      await getConnection().query('select 1+1 as result')
+    } catch (err) {
+      res.sendStatus(503);
+    }
     res.sendStatus(200);
-  }).catch(() => {
-    res.sendStatus(503);
   });
-});
 
-if (!process.env.LAMBDA) {
-  app.listen({ port }, () => {
-    // eslint-disable-next-line
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+  if (!process.env.LAMBDA) {
+    server.listen({ port }, () => {
+      // eslint-disable-next-line
+      console.log(`> Ready on http://localhost:${port}`);
+    });
+  }
+
+  return server
 }
 
-export default app;
+const server = createServer();
+
+export default server;

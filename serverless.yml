@@ -49,7 +49,7 @@ functions:
         - packages/nextjs/.next/**
         - packages/nextjs/lambda/**
   graphql:
-    handler: packages/graphql/lambda.handler
+    handler: packages/graphql/build/lambda.handler
     events:
       - http:
           method: ANY
