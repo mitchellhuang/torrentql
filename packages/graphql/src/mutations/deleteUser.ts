@@ -1,4 +1,4 @@
-const User = require('../models/User');
+import User from '../models/User';
 
 const deleteUser = async (parent, args, context) => {
   if (!context.user) {
@@ -8,4 +8,4 @@ const deleteUser = async (parent, args, context) => {
   return !!result;
 };
 
-module.exports = deleteUser;
+export default deleteUser;

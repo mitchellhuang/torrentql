@@ -1,4 +1,4 @@
-const User = require('../models/User');
+import User from '../models/User';
 
 const me = async (parent, args, context) => {
   if (!context.user) {
@@ -7,4 +7,4 @@ const me = async (parent, args, context) => {
   return User.query().findById(context.user.id);
 };
 
-module.exports = me;
+export default me;

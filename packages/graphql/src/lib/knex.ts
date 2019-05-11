@@ -1,5 +1,5 @@
-const knex = require('knex');
-const { Model } = require('objection');
+import knex from 'knex';
+import { Model } from 'objection';
 
 const knexClient = knex({
   client: 'pg',
@@ -15,4 +15,4 @@ const knexClient = knex({
 
 Model.knex(knexClient);
 
-module.exports = knexClient;
+export default knexClient;

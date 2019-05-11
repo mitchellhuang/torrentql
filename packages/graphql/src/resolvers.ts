@@ -1,12 +1,12 @@
-const BigInt = require('graphql-bigint');
-const { GraphQLJSON } = require('graphql-type-json');
-const { Deluge } = require('@ctrl/deluge');
-const me = require('./queries/me');
-const login = require('./mutations/login');
-const createUser = require('./mutations/createUser');
-const deleteUser = require('./mutations/deleteUser');
-const addTorrent = require('./mutations/addTorrent');
-const deleteTorrent = require('./mutations/deleteTorrent');
+import BigInt from 'graphql-bigint';
+import { GraphQLJSON } from 'graphql-type-json';
+import { Deluge } from '@ctrl/deluge';
+import me from './queries/me';
+import login from './mutations/login';
+import createUser from './mutations/createUser';
+import deleteUser from './mutations/deleteUser';
+import addTorrent from './mutations/addTorrent';
+import deleteTorrent from './mutations/deleteTorrent';
 
 const resolvers = {
   Query: {
@@ -72,4 +72,4 @@ const resolvers = {
   JSON: GraphQLJSON,
 };
 
-module.exports = resolvers;
+export default resolvers;

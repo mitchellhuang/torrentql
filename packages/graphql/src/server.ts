@@ -1,10 +1,11 @@
-require('dotenv').config();
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const jwt = require('express-jwt');
-const knex = require('./lib/knex');
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import jwt from 'express-jwt';
+import knex from './lib/knex';
+import typeDefs from './schema';
+import resolvers from './resolvers';
 
 const port = parseInt(process.env.PORT, 10) || 3001;
 
@@ -39,4 +40,4 @@ if (!process.env.LAMBDA) {
   });
 }
 
-module.exports = app;
+export default app;

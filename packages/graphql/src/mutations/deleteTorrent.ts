@@ -1,5 +1,5 @@
-const { Deluge } = require('@ctrl/deluge');
-const Torrent = require('../models/Torrent');
+import { Deluge } from '@ctrl/deluge';
+import Torrent from '../models/Torrent';
 
 const deleteTorrent = async (parent, { torrentId }, context) => {
   if (!context.user) {
@@ -29,4 +29,4 @@ const deleteTorrent = async (parent, { torrentId }, context) => {
   return true;
 };
 
-module.exports = deleteTorrent;
+export default deleteTorrent;

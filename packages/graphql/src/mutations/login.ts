@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const jwt = require('../lib/jwt');
+import User from '../models/User';
+import jwt from '../lib/jwt';
 
 const login = async (parent, args) => {
   const { email, password } = args;
@@ -17,4 +17,4 @@ const login = async (parent, args) => {
   };
 };
 
-module.exports = login;
+export default login;

@@ -1,9 +1,9 @@
-const _ = require('lodash');
-const uuid = require('uuid/v4');
-const { Deluge } = require('@ctrl/deluge');
-const parseTorrent = require('parse-torrent');
-const Torrent = require('../models/Torrent');
-const Server = require('../models/Server');
+import _ from 'lodash';
+import uuid from 'uuid/v4';
+import { Deluge } from '@ctrl/deluge';
+import parseTorrent from 'parse-torrent';
+import Torrent from '../models/Torrent';
+import Server from '../models/Server';
 
 const addTorrent = async (parent, { data }, context) => {
   if (!context.user) {
@@ -49,4 +49,4 @@ const addTorrent = async (parent, { data }, context) => {
   });
 };
 
-module.exports = addTorrent;
+export default addTorrent;

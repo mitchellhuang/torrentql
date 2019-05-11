@@ -1,6 +1,6 @@
-const uuid = require('uuid/v4');
-const User = require('../models/User');
-const jwt = require('../lib/jwt');
+import uuid from 'uuid/v4';
+import User from '../models/User';
+import jwt from '../lib/jwt';
 
 const createUser = async (parent, { email, password }) => {
   const user = await User.query().insert({
@@ -14,4 +14,4 @@ const createUser = async (parent, { email, password }) => {
   };
 };
 
-module.exports = createUser;
+export default createUser;
