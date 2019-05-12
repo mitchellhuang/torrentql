@@ -14,6 +14,9 @@ export const deleteTorrent: GraphQLFieldResolver<void, Context, DeleteTorrentArg
     }
     const torrentRepository = context.connection.getRepository(Torrent);
     const torrent = await torrentRepository.findOne(torrentId);
+    if (!torrent) {
+      throw new Error('Torrent not found.');
+    }
     const activeHashes = await torrentRepository.find({
       hash: torrent.hash,
       is_active: true,
@@ -22,7 +25,7 @@ export const deleteTorrent: GraphQLFieldResolver<void, Context, DeleteTorrentArg
       torrent.is_active = false;
       await torrentRepository.save(torrent);
     } else if (activeHashes.length === 1) {
-      const server = torrent.server;
+      const server = await torrent.server;
       const deluge = new Deluge({
         baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
         password: 'deluge',
