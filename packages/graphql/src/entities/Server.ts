@@ -1,9 +1,12 @@
 import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import { Field, ID, ObjectType } from 'type-graphql';
 import { Torrent } from './Torrent';
 
+@ObjectType()
 @Entity('servers')
 export class Server {
 
+  @Field(type => ID)
   @PrimaryColumn()
   id: string;
 
@@ -16,6 +19,7 @@ export class Server {
   @Column()
   protocol: string;
 
+  @Field()
   @Column()
   region: string;
 

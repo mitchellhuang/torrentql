@@ -32,7 +32,10 @@
       "pg": "^7.10.0",
       "reflect-metadata": "^0.1.10",
       "serverless-http": "^2.0.0",
+      "type-graphql": "^0.17.4",
+      "typedi": "^0.8.0",
       "typeorm": "0.2.17",
+      "typeorm-typedi-extensions": "^0.2.3",
       "uuid": "^3.3.2"
    },
    "devDependencies": {
@@ -44,6 +47,7 @@
       "@types/knex": "^0.16.1",
       "@types/lodash": "^4.14.126",
       "@types/node": "^8.0.29",
+      "@types/parse-torrent": "^5.8.3",
       "@types/pg": "^7.4.14",
       "nodemon": "^1.18.11",
       "ts-node": "3.3.0",

@@ -11,7 +11,7 @@ export const init = async () => {
     database: process.env.DB_DATABASE,
     ssl: process.env.DB_SSL === 'true',
     entities: [
-      join(__dirname, '../entity/*.js'),
+      join(__dirname, '../entities/*.js'),
     ],
     synchronize: true,
   });
