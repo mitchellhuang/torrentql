@@ -9,6 +9,7 @@ export const init = async () => {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
+    ssl: process.env.DB_SSL === 'true',
     entities: [
       join(__dirname, '../entity/*.js'),
     ],

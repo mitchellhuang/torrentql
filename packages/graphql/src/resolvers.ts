@@ -1,4 +1,4 @@
-import graphqlBigint from 'graphql-bigint';
+import BigInt from 'graphql-bigint';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Deluge } from '@ctrl/deluge';
 import { GraphQLFieldResolver } from 'graphql';
@@ -7,8 +7,10 @@ import { me } from './queries/me';
 import { login } from './mutations/login';
 import { createUser } from './mutations/createUser';
 import { deleteUser } from './mutations/deleteUser';
-import addTorrent from './mutations/addTorrent';
-import deleteTorrent from './mutations/deleteTorrent';
+import { addTorrent } from './mutations/addTorrent';
+import { deleteTorrent } from './mutations/deleteTorrent';
+import { User } from './entity/User';
+import { Torrent } from './entity/Torrent';
 
 const resolvers = {
   Query: {
@@ -22,14 +24,14 @@ const resolvers = {
     deleteTorrent,
   },
   User: {
-    torrents: user => user.$relatedQuery('torrent'),
+    torrents: (user: User) => user.torrents,
   },
   Torrent: {
-    status: async (torrent) => {
+    status: async (torrent: Torrent) => {
       if (!torrent.is_active) {
         return null;
       }
-      const server = await torrent.$relatedQuery('server');
+      const server = await torrent.server;
       const deluge = new Deluge({
         baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
         password: 'deluge',
@@ -67,10 +69,10 @@ const resolvers = {
       }
       return status;
     },
-    user: torrent => torrent.$relatedQuery('user'),
-    server: torrent => torrent.$relatedQuery('server'),
+    user: (torrent: Torrent) => torrent.user,
+    server: (torrent: Torrent) => torrent.server,
   },
-  BigInt: graphqlBigint,
+  BigInt,
   JSON: GraphQLJSON,
 };
 

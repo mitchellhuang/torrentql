@@ -10,7 +10,8 @@
       "build:watch": "tsc -w",
       "dev": "nodemon build/server.js",
       "start": "ts-node src/index.ts",
-      "lint": "tslint 'src/**/*.ts'"
+      "lint": "tslint 'src/**/*.ts'",
+      "sync": "node build/lib/sync.js"
    },
    "dependencies": {
       "@ctrl/deluge": "^1.5.0",

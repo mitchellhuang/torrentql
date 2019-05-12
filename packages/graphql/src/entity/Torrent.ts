@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { User } from './User';
+import { Server } from './Server';
 
 @Entity('torrents')
 export class Torrent {
@@ -17,5 +19,11 @@ export class Torrent {
 
   @Column()
   is_active: boolean;
+
+  @ManyToOne(type => User, user => user.torrents)
+  user: Promise<User>;
+
+  @ManyToOne(type => Server, server => server.torrents)
+  server: Promise<Server>;
 
 }

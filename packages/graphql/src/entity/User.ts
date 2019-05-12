@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Torrent } from './Torrent';
 
 @Entity('users')
@@ -12,5 +12,8 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(type => Torrent, torrent => torrent.user)
+  torrents: Promise<Torrent[]>;
 
 }
