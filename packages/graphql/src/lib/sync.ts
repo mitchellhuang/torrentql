@@ -10,7 +10,7 @@ const sync = async () => {
   await connection.manager.insert(User, {
     id: '08610184-31ec-462a-882e-76ba48a12d55',
     email: 'test@example.com',
-    password: 'example',
+    password: '$2a$10$IwpYVnIhBS3GJKHSfVIZduMgyHNxXVKI6tR9kuW8u2yhn0Azg8HlC',
   });
   await connection.manager.insert(Server, {
     id: 'gra001',

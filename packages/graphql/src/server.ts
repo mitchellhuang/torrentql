@@ -8,18 +8,11 @@ import { ApolloServer } from 'apollo-server-express';
 import { join } from 'path';
 import * as db from './lib/db';
 import * as jwt from './lib/jwt';
-import { Context } from './lib/context';
+import { createContext, authChecker } from './lib/context';
 
-const port = parseInt(process.env.PORT, 10) || 3001;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 useContainer(Container);
-
-interface AuthRequest extends express.Request {
-  user?: {
-    id: string;
-    email: string;
-  };
-}
 
 export const createServer = async () => {
   const connection = await db.init();
@@ -29,15 +22,12 @@ export const createServer = async () => {
       join(__dirname, './resolvers/*.js'),
     ],
     container: Container,
-  });
-
-  const context = ({ req }: {req: AuthRequest}): Context => ({
-    user: req.user,
+    authChecker,
   });
 
   const apollo = new ApolloServer({
     schema,
-    context,
+    context: createContext(connection),
     introspection: true,
   });
 

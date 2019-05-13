@@ -1,13 +1,22 @@
+import _ from 'lodash';
 import { Repository } from 'typeorm';
-import { Resolver, ResolverInterface, FieldResolver, Root, Mutation, Ctx, Arg } from 'type-graphql';
+import {
+  Resolver,
+  ResolverInterface,
+  FieldResolver,
+  Root,
+  Mutation,
+  Ctx,
+  Arg,
+  Authorized,
+} from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
-import _ from 'lodash';
 import { Context } from '../lib/context';
 import { Torrent } from '../entities/Torrent';
+import { TorrentStatus } from '../entities/TorrentStatus';
 import { Server } from '../entities/Server';
-import { User } from '../entities/User';
 
 @Resolver(Torrent)
 export class TorrentResolver implements ResolverInterface<Torrent> {
@@ -16,11 +25,12 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
     @InjectRepository(Server) private readonly serverRepository: Repository<Server>,
   ) {}
 
+  @Authorized()
   @Mutation(returns => Torrent)
   async addTorrent(
     @Arg('data') data: string,
     @Ctx() ctx: Context,
-  ): Promise<Torrent> {
+  ) {
     const servers = await this.serverRepository.find();
     const server = _.sample(servers);
     if (!server) {
@@ -50,25 +60,26 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
       }
       await deluge.addTorrent(data);
     }
-    const user = new User();
-    user.id = ctx.user.id;
     const torrent = new Torrent();
     torrent.is_active = true;
     torrent.hash = hash;
     torrent.type = type;
     torrent.data = data;
     torrent.server = Promise.resolve(server);
-    torrent.user = Promise.resolve(user);
+    torrent.user = Promise.resolve(ctx.user);
     return this.torrentRepository.save(torrent);
   }
 
+  @Authorized()
   @Mutation(returns => Boolean)
-  async deleteTorrent(
-    @Arg('id') id: string,
-  ): Promise<Boolean> {
+  async deleteTorrent(@Arg('id') id: string, @Ctx() ctx: Context) {
     const torrent = await this.torrentRepository.findOne(id);
     if (!torrent) {
       throw new Error('Torrent not found.');
+    }
+    const torrentUser = await torrent.user;
+    if (torrentUser.id !== ctx.user.id) {
+      throw new Error('Torrent does not belong to you.');
     }
     const activeHashes = await this.torrentRepository.find({
       hash: torrent.hash,
@@ -102,35 +113,31 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
       password: 'deluge',
       timeout: 1000,
     });
-    let status;
-    let files;
     try {
-      status = await deluge.getTorrentStatus(torrent.hash);
-      files = await deluge.getTorrentFiles(torrent.hash);
-      status = status.result;
-      files = files.result;
+      const status = await deluge.getTorrentStatus(torrent.hash);
+      const files = await deluge.getTorrentFiles(torrent.hash);
+      const torrentStatus = new TorrentStatus();
+      torrentStatus.name = status.result.name;
+      torrentStatus.state = status.result.state.toLowerCase();
+      torrentStatus.progress = status.result.progress;
+      torrentStatus.ratio = status.result.ratio;
+      torrentStatus.uploadSpeed = status.result.upload_payload_rate;
+      torrentStatus.downloadSpeed = status.result.download_payload_rate;
+      torrentStatus.eta = status.result.eta;
+      torrentStatus.numPeers = status.result.num_peers;
+      torrentStatus.numSeeds = status.result.num_seeds;
+      torrentStatus.totalPeers = status.result.total_peers;
+      torrentStatus.totalSeeds = status.result.total_seeds;
+      torrentStatus.totalWanted = status.result.total_wanted;
+      torrentStatus.totalUploaded = status.result.total_uploaded;
+      torrentStatus.totalDownloaded = status.result.total_done;
+      torrentStatus.tracker = status.result.tracker;
+      torrentStatus.trackerHost = status.result.tracker_host;
+      torrentStatus.trackerStatus = status.result.tracker_status;
+      torrentStatus.files = files.result;
+      return torrentStatus;
     } catch (err) {
       return null;
     }
-    return {
-      name: status.name,
-      state: status.state.toLowerCase(),
-      progress: status.progress,
-      ratio: status.ratio,
-      uploadSpeed: status.upload_payload_rate,
-      downloadSpeed: status.download_payload_rate,
-      eta: status.eta,
-      numPeers: status.num_peers,
-      numSeeds: status.num_seeds,
-      totalPeers: status.total_peers,
-      totalSeeds: status.total_seeds,
-      totalWanted: status.total_wanted,
-      totalUploaded: status.total_uploaded,
-      totalDownloaded: status.total_done,
-      tracker: status.tracker,
-      trackerHost: status.tracker_host,
-      trackerStatus: status.tracker_status,
-      files,
-    };
   }
 }

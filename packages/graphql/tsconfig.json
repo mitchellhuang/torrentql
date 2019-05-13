@@ -8,7 +8,9 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true
   },
   "include": [
     "./src/**/*"

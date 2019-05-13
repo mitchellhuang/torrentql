@@ -2,12 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 import { User } from './User';
 import { Server } from './Server';
-
-@ObjectType()
-export class TorrentStatus {
-  @Field()
-  name: string;
-}
+import { TorrentStatus } from './TorrentStatus';
 
 @ObjectType()
 @Entity('torrents')
@@ -31,7 +26,7 @@ export class Torrent {
   is_active: boolean;
 
   @Field(type => TorrentStatus, { nullable: true })
-  status: TorrentStatus;
+  status: TorrentStatus | null;
 
   @Field(type => User)
   @ManyToOne(type => User, user => user.torrents)

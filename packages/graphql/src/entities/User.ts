@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
+import bcrypt from 'bcryptjs';
 import { Torrent } from './Torrent';
 
 @ObjectType()
@@ -23,5 +31,18 @@ export class User {
 
   @Field({ nullable: true })
   token: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password) {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+  }
+
+  async verifyPassword(password: string) {
+    return bcrypt.compare(password, this.password);
+  }
 
 }
