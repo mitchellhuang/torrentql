@@ -2,6 +2,7 @@ import {
   Entity,
   PrimaryColumn,
   Column,
+  Index,
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
@@ -17,6 +18,15 @@ export class Server {
   @PrimaryColumn()
   id: string;
 
+  @Field()
+  @Index()
+  @Column({
+    type: 'enum',
+    enum: ['eu-west-1', 'ca-east-1'],
+    default: 'eu-west-1',
+  })
+  region: 'eu-west-1' | 'ca-east-1';
+
   @Column()
   host: string;
 
@@ -25,10 +35,6 @@ export class Server {
 
   @Column()
   protocol: string;
-
-  @Field()
-  @Column()
-  region: string;
 
   @Column({ nullable: true })
   cpuLoad: string;

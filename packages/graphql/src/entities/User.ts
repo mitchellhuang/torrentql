@@ -2,6 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  Index,
   OneToMany,
   BeforeInsert,
   BeforeUpdate,
@@ -21,6 +22,7 @@ export class User {
   id: string;
 
   @Field()
+  @Index()
   @Column()
   email: string;
 

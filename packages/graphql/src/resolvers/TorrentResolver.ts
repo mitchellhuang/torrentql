@@ -27,10 +27,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
 
   @Authorized()
   @Mutation(returns => Torrent)
-  async addTorrent(
-    @Arg('data') data: string,
-    @Ctx() ctx: Context,
-  ) {
+  async addTorrent(@Arg('data') data: string, @Ctx() ctx: Context) {
     const servers = await this.serverRepository.find();
     const server = _.sample(servers);
     if (!server) {

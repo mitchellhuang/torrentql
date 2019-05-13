@@ -2,6 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  Index,
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
@@ -20,15 +21,21 @@ export class Torrent {
   id: string;
 
   @Field()
+  @Index()
   @Column()
   hash: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: ['file', 'magnet'],
+    default: 'file',
+  })
   type: 'file' | 'magnet';
 
-  @Column()
+  @Column('text')
   data: string;
 
+  @Index()
   @Column()
   isActive: boolean;
 
