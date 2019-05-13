@@ -7,6 +7,10 @@ export interface Context {
   user: User;
 }
 
+export interface Context2 {
+  user?: User;
+}
+
 export interface AuthRequest extends Request {
   user?: {
     id: string;
@@ -15,19 +19,21 @@ export interface AuthRequest extends Request {
 }
 
 export const createContext = (connection: Connection) => {
-  return async ({ req }: {req: AuthRequest}): Promise<Context> => {
-    let user;
+  return async ({ req }: {req: AuthRequest}): Promise<Context2> => {
     if (req.user && req.user.id) {
       const userRepository = connection.getRepository(User);
-      user = await userRepository.findOne(req.user.id);
+      const user = await userRepository.findOne(req.user.id);
+      return {
+        user,
+      };
     }
     return {
-      user,
+      user: undefined,
     };
   };
 };
 
-export const authChecker: AuthChecker<Context> = (
+export const authChecker: AuthChecker<Context2> = (
   { root, args, context, info },
   roles,
 ) => {
