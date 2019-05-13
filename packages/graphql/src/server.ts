@@ -46,9 +46,13 @@ export const createServer = async () => {
     res.sendStatus(200);
   });
 
-  server.listen({ port }, () => {
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+  if (!process.env.LAMBDA) {
+    server.listen({ port }, () => {
+      console.log(`> Ready on http://localhost:${port}`);
+    });
+  }
+
+  return server;
 };
 
 createServer();
