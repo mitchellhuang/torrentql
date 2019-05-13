@@ -32,6 +32,7 @@ steps:
   - apk add --no-cache git
   - cd packages/graphql
   - yarn --production
+  - yarn build
   depends_on:
   - build-repo
   when:
