@@ -11,7 +11,7 @@ export class UserResolver {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  @Query(returns => User, { nullable: true })
+  @Query(returns => User)
   me(@Ctx() ctx: Context) {
     return this.userRepository.findOne(ctx.user.id);
   }

@@ -109,29 +109,28 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
       files = await deluge.getTorrentFiles(torrent.hash);
       status = status.result;
       files = files.result;
-      status = {
-        name: status.name,
-        state: status.state.toLowerCase(),
-        progress: status.progress,
-        ratio: status.ratio,
-        uploadSpeed: status.upload_payload_rate,
-        downloadSpeed: status.download_payload_rate,
-        eta: status.eta,
-        numPeers: status.num_peers,
-        numSeeds: status.num_seeds,
-        totalPeers: status.total_peers,
-        totalSeeds: status.total_seeds,
-        totalWanted: status.total_wanted,
-        totalUploaded: status.total_uploaded,
-        totalDownloaded: status.total_done,
-        tracker: status.tracker,
-        trackerHost: status.tracker_host,
-        trackerStatus: status.tracker_status,
-        files,
-      };
     } catch (err) {
-      status = null;
+      return null;
     }
-    return status;
+    return {
+      name: status.name,
+      state: status.state.toLowerCase(),
+      progress: status.progress,
+      ratio: status.ratio,
+      uploadSpeed: status.upload_payload_rate,
+      downloadSpeed: status.download_payload_rate,
+      eta: status.eta,
+      numPeers: status.num_peers,
+      numSeeds: status.num_seeds,
+      totalPeers: status.total_peers,
+      totalSeeds: status.total_seeds,
+      totalWanted: status.total_wanted,
+      totalUploaded: status.total_uploaded,
+      totalDownloaded: status.total_done,
+      tracker: status.tracker,
+      trackerHost: status.tracker_host,
+      trackerStatus: status.tracker_status,
+      files,
+    };
   }
 }

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
-import { useContainer, getConnection } from 'typeorm';
+import { useContainer } from 'typeorm';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
@@ -49,7 +49,7 @@ export const createServer = async () => {
 
   server.get('/health', async (req, res) => {
     try {
-      await getConnection().query('select 1+1 as result');
+      await connection.query('select 1+1 as result');
     } catch (err) {
       res.sendStatus(503);
     }
@@ -57,7 +57,6 @@ export const createServer = async () => {
   });
 
   server.listen({ port }, () => {
-    // eslint-disable-next-line
     console.log(`> Ready on http://localhost:${port}`);
   });
 };
