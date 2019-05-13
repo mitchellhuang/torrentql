@@ -12,24 +12,18 @@ A GraphQL API server for TorrentQL. This repo follows the [Twelve-Factor App](ht
 
 Create a `.env` file from `.env.example` to load environment variables from a file.
 
-```
-DB_HOST=
-DB_USER=
-DB_PASSWORD=
-DB_DATABASE=
-JWT_SECRET=
-```
-
 ## Installation
 
 1. `yarn install`
-4. `create a .env file based on .env.example`
-5. `cd deploy/deluge && docker-compose up -d`
-6. `yarn run dev`
+2. `create a .env file based on .env.example`
+3. `cd deploy/deluge && docker-compose up -d`
+4. `yarn build:watch`
+5. `yarn run dev`
 
 ## Production build
 
-1. `yarn start`
+1. `yarn build`
+2. `yarn start`
 
 ## Docker production build
 
