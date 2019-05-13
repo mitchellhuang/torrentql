@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 import { User } from './User';
 import { Server } from './Server';
@@ -23,7 +30,13 @@ export class Torrent {
   data: string;
 
   @Column()
-  is_active: boolean;
+  isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Field(type => TorrentStatus, { nullable: true })
   status: TorrentStatus | null;

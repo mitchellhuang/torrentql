@@ -1,4 +1,5 @@
 import { createConnection } from 'typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
 
 export const init = () => createConnection({
@@ -12,5 +13,6 @@ export const init = () => createConnection({
   entities: [
     join(__dirname, '../entities/*.js'),
   ],
+  namingStrategy: new SnakeNamingStrategy(),
   synchronize: true,
 });

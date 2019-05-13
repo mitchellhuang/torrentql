@@ -10,7 +10,7 @@
     "build:watch": "tsc -w",
     "dev": "nodemon build/server.js",
     "start": "ts-node src/index.ts",
-    "lint": "tslint 'src/**/*.ts'",
+    "lint": "tslint --project tsconfig.json",
     "sync": "node build/lib/sync.js"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "type-graphql": "^0.17.4",
     "typedi": "^0.8.0",
     "typeorm": "0.2.17",
+    "typeorm-naming-strategies": "^1.0.2",
     "typeorm-typedi-extensions": "^0.2.3"
   },
   "devDependencies": {

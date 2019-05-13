@@ -34,7 +34,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
     const servers = await this.serverRepository.find();
     const server = _.sample(servers);
     if (!server) {
-      throw new Error('No server available');
+      throw new Error('No server available.');
     }
     const deluge = new Deluge({
       baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
@@ -48,7 +48,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
       try {
         hash = parseTorrent(data).infoHash;
       } catch (err) {
-        throw new Error('Invalid magnet link');
+        throw new Error('Invalid magnet link.');
       }
       await deluge.addTorrentMagnet(data);
     } else {
@@ -56,12 +56,12 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
       try {
         hash = parseTorrent(Buffer.from(data, 'base64')).infoHash;
       } catch (err) {
-        throw new Error('Invalid torrent file');
+        throw new Error('Invalid torrent file.');
       }
       await deluge.addTorrent(data);
     }
     const torrent = new Torrent();
-    torrent.is_active = true;
+    torrent.isActive = true;
     torrent.hash = hash;
     torrent.type = type;
     torrent.data = data;
@@ -83,10 +83,10 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
     }
     const activeHashes = await this.torrentRepository.find({
       hash: torrent.hash,
-      is_active: true,
+      isActive: true,
     });
     if (activeHashes.length > 1) {
-      torrent.is_active = false;
+      torrent.isActive = false;
       await this.torrentRepository.save(torrent);
     } else if (activeHashes.length === 1) {
       const server = await torrent.server;
@@ -96,7 +96,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
         timeout: 1000,
       });
       await deluge.removeTorrent(torrent.hash, true);
-      torrent.is_active = false;
+      torrent.isActive = false;
       await this.torrentRepository.save(torrent);
     }
     return true;
@@ -104,7 +104,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
 
   @FieldResolver()
   async status(@Root() torrent: Torrent) {
-    if (!torrent.is_active) {
+    if (!torrent.isActive) {
       return null;
     }
     const server = await torrent.server;

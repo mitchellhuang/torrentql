@@ -1,4 +1,11 @@
-import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Torrent } from './Torrent';
 
@@ -24,28 +31,34 @@ export class Server {
   region: string;
 
   @Column({ nullable: true })
-  cpu_load: string;
+  cpuLoad: string;
 
   @Column({ nullable: true })
-  active_torrents: string;
+  activeTorrents: string;
 
   @Column({ nullable: true })
-  total_torrents: string;
+  totalTorrents: string;
 
   @Column({ nullable: true })
-  used_space: string;
+  usedSpace: string;
 
   @Column({ nullable: true })
-  total_space: string;
+  totalSpace: string;
 
   @Column({ nullable: true })
-  download_speed: string;
+  downloadSpeed: string;
 
   @Column({ nullable: true })
-  upload_speed: string;
+  uploadSpeed: string;
 
   @Column({ nullable: true })
-  port_speed: string;
+  portSpeed: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @OneToMany(type => Torrent, torrent => torrent.server)
   torrents: Promise<Torrent[]>;

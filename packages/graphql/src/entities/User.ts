@@ -5,6 +5,8 @@ import {
   OneToMany,
   BeforeInsert,
   BeforeUpdate,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 import bcrypt from 'bcryptjs';
@@ -25,12 +27,18 @@ export class User {
   @Column()
   password: string;
 
-  @Field(type => [Torrent])
-  @OneToMany(type => Torrent, torrent => torrent.user)
-  torrents: Promise<Torrent[]>;
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Field({ nullable: true })
   token: string;
+
+  @Field(type => [Torrent])
+  @OneToMany(type => Torrent, torrent => torrent.user)
+  torrents: Promise<Torrent[]>;
 
   @BeforeInsert()
   @BeforeUpdate()
