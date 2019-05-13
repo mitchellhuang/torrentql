@@ -5,5 +5,4 @@ export interface Context {
     id: string
     email: string,
   };
-  connection: Connection;
 }

@@ -5,11 +5,10 @@ import { useContainer, getConnection } from 'typeorm';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
+import { join } from 'path';
 import * as db from './lib/db';
 import * as jwt from './lib/jwt';
 import { Context } from './lib/context';
-import { UserResolver } from './resolvers/UserResolver';
-import { TorrentResolver } from './resolvers/TorrentResolver';
 
 const port = parseInt(process.env.PORT, 10) || 3001;
 
@@ -27,15 +26,13 @@ export const createServer = async () => {
 
   const schema = await buildSchema({
     resolvers: [
-      UserResolver,
-      TorrentResolver,
+      join(__dirname, './resolvers/*.js'),
     ],
     container: Container,
   });
 
   const context = ({ req }: {req: AuthRequest}): Context => ({
     user: req.user,
-    connection,
   });
 
   const apollo = new ApolloServer({
