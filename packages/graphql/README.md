@@ -16,7 +16,7 @@ Create a `.env` file from `.env.example` to load environment variables from a fi
 
 1. `yarn install`
 2. `create a .env file based on .env.example`
-3. `cd deploy/deluge && docker-compose up -d`
+3. `cd packages/deluge && docker-compose up -d`
 4. `yarn build:watch`
 5. `yarn run dev`
 
