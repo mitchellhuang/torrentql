@@ -43,3 +43,12 @@ kubectl apply -f metallb/layer2-config.yml
 helm install stable/nginx-ingress --set controller.service.externalTrafficPolicy=Local
 kubectl apply -f ingress/default.yml
 ```
+
+## Install registry-creds
+
+https://github.com/upmc-enterprises/registry-creds#how-to-setup-running-in-aws
+
+```
+kubectl apply -f registry/secret.yml
+kubectl apply -f registry/replicationController.yml
+```
