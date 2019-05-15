@@ -6,10 +6,14 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: s001.torrentql.com
+  - host: staging.torrentql.com
     http:
       paths:
       - path: /
         backend:
           serviceName: torrentql-nextjs
+          servicePort: 80
+      - path: /graphql
+        backend:
+          serviceName: torrentql-graphql
           servicePort: 80
