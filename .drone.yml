@@ -2,18 +2,28 @@ kind: pipeline
 name: default
 
 steps:
-- name: build-nextjs
-  image: plugins/ecr
-  settings:
-    registry: 392244324571.dkr.ecr.eu-west-1.amazonaws.com
-    region: eu-west-1
-    repo: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-nextjs
-    tags:
-      - latest
-      - "${DRONE_COMMIT_SHA:0:8}"
-    context: packages/nextjs/
-    dockerfile: packages/nextjs/Dockerfile
-    access_key:
-      from_secret: aws_access_key_id
-    secret_key:
-      from_secret: aws_secret_access_key
+# - name: build-nextjs
+#   image: plugins/ecr
+#   settings:
+#     registry: 392244324571.dkr.ecr.eu-west-1.amazonaws.com
+#     region: eu-west-1
+#     repo: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-nextjs
+#     tags:
+#       - latest
+#       - "${DRONE_COMMIT_SHA}"
+#     context: packages/nextjs/
+#     dockerfile: packages/nextjs/Dockerfile
+#     access_key:
+#       from_secret: aws_access_key_id
+#     secret_key:
+#       from_secret: aws_secret_access_key
+
+- name: deploy-nextjs
+  image: lachlanevenson/k8s-kubectl
+  environment:
+    KUBE_CONFIG_FILE:
+      from_secret: kube_config_file
+  commands:
+  - mkdir -p $HOME/.kube
+  - echo $KUBE_CONFIG_FILE > $HOME/.kube/config
+  - kubectl get pods
