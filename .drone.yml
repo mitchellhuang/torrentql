@@ -8,6 +8,9 @@ steps:
   - cd packages/deploy
   - export TAG=$DRONE_COMMIT_SHA
   - ./scripts/envsubst.sh kubernetes
+  when:
+    branch:
+    - master
 
 - name: build-graphql
   image: plugins/ecr
@@ -26,6 +29,9 @@ steps:
       from_secret: aws_secret_access_key
   depends_on:
   - envsubst
+  when:
+    branch:
+    - master
 
 - name: build-nextjs
   image: plugins/ecr
@@ -44,6 +50,9 @@ steps:
       from_secret: aws_secret_access_key
   depends_on:
   - envsubst
+  when:
+    branch:
+    - master
 
 - name: deploy-graphql
   image: lachlanevenson/k8s-kubectl
@@ -59,6 +68,9 @@ steps:
   depends_on:
   - build-graphql
   - build-nextjs
+  when:
+    branch:
+    - master
 
 - name: deploy-nextjs
   image: lachlanevenson/k8s-kubectl
@@ -73,3 +85,6 @@ steps:
   - kubectl rollout status deployment torrentql-nextjs
   depends_on:
   - deploy-graphql
+  when:
+    branch:
+    - master
