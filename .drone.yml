@@ -8,9 +8,9 @@ steps:
     registry: 392244324571.dkr.ecr.eu-west-1.amazonaws.com
     region: eu-west-1
     repo: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-nextjs
-    tags: latest
     context: packages/nextjs/
     dockerfile: packages/nextjs/Dockerfile
+    auto_tag: true
     access_key:
       from_secret: aws_access_key_id
     secret_key:
