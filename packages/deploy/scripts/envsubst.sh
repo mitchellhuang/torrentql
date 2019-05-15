@@ -2,6 +2,7 @@
 
 for file in $(find ${1} -regex '.*\.\(yml\|json\)')
 do
-envsubst < $file > "${file}.subst.yml"
+envsubst < $file > "${file}.tmp"
+mv "${file}.tmp" $file
 echo $file
 done

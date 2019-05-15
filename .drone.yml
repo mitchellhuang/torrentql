@@ -34,4 +34,5 @@ steps:
   commands:
   - mkdir -p $HOME/.kube
   - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
-  - kubectl get pods
+  - cd packages/deploy/kubernetes
+  - cat graphql/deploy.yml
