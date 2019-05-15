@@ -11,5 +11,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: whoami
+          serviceName: torrentql-nextjs
           servicePort: 80

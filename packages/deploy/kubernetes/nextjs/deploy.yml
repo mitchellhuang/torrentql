@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: torrentql-nextjs
+spec:
+  selector:
+    matchLabels:
+      app: torrentql
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: torrentql
+        tier: frontend
+    spec:
+      containers:
+      - name: nextjs
+        image: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-nextjs:latest
+        ports:
+        - name: http
+          containerPort: 3000
+      imagePullSecrets:
+        - name: awsecr-cred
