@@ -18,7 +18,7 @@ spec:
         - name: awsecr-cred
       containers:
       - name: graphql
-        image: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-graphql:latest
+        image: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-graphql:${TAG}
         ports:
           - containerPort: 3001
         envFrom:

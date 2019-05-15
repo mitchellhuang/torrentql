@@ -1,5 +1,7 @@
 #!/bin/sh
 
-envsubst < $1 > "${1}.tmp"
-mv "${1}.tmp" $1
-echo $1
+for file in $(find ${1} -regex '.*\.\(yml\|json\)')
+do
+envsubst < $file > "${file}.subst.yml"
+echo $file
+done

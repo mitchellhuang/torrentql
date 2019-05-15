@@ -2,6 +2,7 @@ kind: pipeline
 name: default
 
 steps:
+
 # - name: build-nextjs
 #   image: plugins/ecr
 #   settings:
@@ -17,6 +18,13 @@ steps:
 #       from_secret: aws_access_key_id
 #     secret_key:
 #       from_secret: aws_secret_access_key
+
+- name: deploy-envsubst
+  image: supinf/envsubst
+  commands:
+  - cd packages/deploy
+  - export TAG=$DRONE_COMMIT_SHA
+  - ./scripts/envsubst.sh kubernetes
 
 - name: deploy-nextjs
   image: lachlanevenson/k8s-kubectl
