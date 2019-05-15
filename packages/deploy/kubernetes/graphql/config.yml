@@ -6,9 +6,9 @@ metadata:
     app: torrentql
     tier: backend
 data:
-  NODE_ENV: production
-  DB_HOST: postgres.default.svc.cluster.local
-  DB_USER: torrentql
-  DB_PASSWORD: run
-  DB_DATABASE: torrentql
-  JWT_SECRET: abcdef
+  NODE_ENV: ""
+  DB_HOST: ""
+  DB_USER: ""
+  DB_PASSWORD: ""
+  DB_DATABASE: ""
+  JWT_SECRET: ""
