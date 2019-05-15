@@ -40,7 +40,7 @@ kubectl apply -f metallb/layer2-config.yml
 ## Install nginx-ingress
 
 ```
-helm install stable/nginx-ingress --set controller.service.externalTrafficPolicy=Local
+helm install -f nginx-ingress/values.yml stable/nginx-ingress
 kubectl apply -f ingress/default.yml
 ```
 

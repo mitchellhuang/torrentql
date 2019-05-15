@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deluge-pv
+  labels:
+    app: deluge
+spec:
+  capacity:
+    storage: 1000Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /data/deluge
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - s001

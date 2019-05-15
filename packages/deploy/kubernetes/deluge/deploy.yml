@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: deluge
+spec:
+  selector:
+    matchLabels:
+      app: torrentql
+      tier: deluge
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: torrentql
+        tier: deluge
+    spec:
+      containers:
+        - name: deluge
+          image: linuxserver/deluge
+          env:
+            - name: PUID
+              value: "0"
+            - name: PGID
+              value: "0"
+          ports:
+            - containerPort: 8112
+              protocol: TCP
+            - containerPort: 58846
+              protocol: TCP
+            - containerPort: 58946
+              protocol: TCP
+            - containerPort: 58946
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /root/Downloads
+              name: deluge-data
+      volumes:
+        - name: deluge-data
+          persistentVolumeClaim:
+            claimName: deluge-pvc
