@@ -2,73 +2,89 @@ kind: pipeline
 name: default
 
 steps:
-- name: build-repo
-  image: node:8-alpine
+- name: envsubst
+  image: supinf/envsubst
   commands:
-  - yarn --production
+  - cd packages/deploy
+  - export TAG=$DRONE_COMMIT_SHA
+  - ./scripts/envsubst.sh kubernetes
   when:
     branch:
     - master
-    - production
-
-- name: build-nextjs
-  image: node:8-alpine
-  commands:
-  - cd packages/nextjs
-  - yarn --production
-  - yarn build
-  - cd lambda
-  - yarn --production
-  depends_on:
-  - build-repo
-  when:
-    branch:
-    - master
-    - production
 
 - name: build-graphql
-  image: node:8-alpine
-  commands:
-  - apk add --no-cache git
-  - cd packages/graphql
-  - yarn
-  - yarn build
-  - yarn --production
-  depends_on:
-  - build-repo
-  when:
-    branch:
-    - master
-    - production
-
-- name: deploy-staging
-  image: node:8-alpine
-  commands:
-  - yarn serverless deploy
-  environment:
-    AWS_ACCESS_KEY_ID:
+  image: plugins/ecr
+  settings:
+    registry: 392244324571.dkr.ecr.eu-west-1.amazonaws.com
+    region: eu-west-1
+    repo: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-graphql
+    tags:
+      - latest
+      - "${DRONE_COMMIT_SHA}"
+    context: packages/graphql/
+    dockerfile: packages/graphql/Dockerfile
+    access_key:
       from_secret: aws_access_key_id
-    AWS_SECRET_ACCESS_KEY:
+    secret_key:
       from_secret: aws_secret_access_key
   depends_on:
-  - build-nextjs
-  - build-graphql
+  - envsubst
   when:
     branch:
     - master
 
-- name: deploy-production
-  image: node:8-alpine
-  commands:
-  - yarn serverless deploy --stage production --domain torrentql.com
-  environment:
-    AWS_ACCESS_KEY_ID:
+- name: build-nextjs
+  image: plugins/ecr
+  settings:
+    registry: 392244324571.dkr.ecr.eu-west-1.amazonaws.com
+    region: eu-west-1
+    repo: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-nextjs
+    tags:
+      - latest
+      - "${DRONE_COMMIT_SHA}"
+    context: packages/nextjs/
+    dockerfile: packages/nextjs/Dockerfile
+    access_key:
       from_secret: aws_access_key_id
-    AWS_SECRET_ACCESS_KEY:
+    secret_key:
       from_secret: aws_secret_access_key
   depends_on:
-  - build-nextjs
-  - build-graphql
+  - envsubst
   when:
     branch:
-    - production
+    - master
+
+- name: deploy-graphql
+  image: lachlanevenson/k8s-kubectl
+  environment:
+    KUBE_CONFIG_FILE:
+      from_secret: kube_config_file
+  commands:
+  - mkdir -p $HOME/.kube
+  - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
+  - cd packages/deploy/kubernetes
+  - kubectl apply -f graphql/deploy.yml
+  - kubectl rollout status deployment torrentql-graphql
+  depends_on:
+  - build-graphql
+  - build-nextjs
+  when:
+    branch:
+    - master
+
+- name: deploy-nextjs
+  image: lachlanevenson/k8s-kubectl
+  environment:
+    KUBE_CONFIG_FILE:
+      from_secret: kube_config_file
+  commands:
+  - mkdir -p $HOME/.kube
+  - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
+  - cd packages/deploy/kubernetes
+  - kubectl apply -f nextjs/deploy.yml
+  - kubectl rollout status deployment torrentql-nextjs
+  depends_on:
+  - deploy-graphql
+  when:
+    branch:
+    - master
