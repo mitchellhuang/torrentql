@@ -55,7 +55,7 @@ steps:
   - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
   - cd packages/deploy/kubernetes
   - kubectl apply -f graphql/deploy.yml
-  - kubectl rollout status torrentql-graphql
+  - kubectl rollout status deployment torrentql-graphql
   depends_on:
   - build-graphql
   - build-nextjs
@@ -70,6 +70,6 @@ steps:
   - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
   - cd packages/deploy/kubernetes
   - kubectl apply -f nextjs/deploy.yml
-  - kubectl rollout status torrentql-nextjs
+  - kubectl rollout status deployment torrentql-nextjs
   depends_on:
   - deploy-graphql
