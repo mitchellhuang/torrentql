@@ -381,7 +381,6 @@ imagePullSecrets: []
 # Ref: https://github.com/kubernetes/contrib/tree/master/ingress/controllers/nginx/examples/tcp
 ##
 tcp: {
-  58846: "default/deluge:58946",
   58946: "default/deluge:58946"
 }
 #  8080: "default/example-tcp-svc:9000"

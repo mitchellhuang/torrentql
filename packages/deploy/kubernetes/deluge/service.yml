@@ -11,16 +11,16 @@ spec:
     - protocol: TCP
       port: 8112
       targetPort: 8112
-      name: http
+      name: deluge-web
     - protocol: TCP
       port: 58846
       targetPort: 58846
-      name: deluge-0
+      name: deluge-admin
     - protocol: TCP
       port: 58946
       targetPort: 58946
-      name: deluge-1
+      name: deluge-seed-tcp
     - protocol: UDP
       port: 58946
       targetPort: 58946
-      name: deluge-2
+      name: deluge-seed-udp
