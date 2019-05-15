@@ -9,7 +9,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "dev": "nodemon build/server.js",
-    "start": "ts-node src/index.ts",
+    "start": "node build/server.js",
     "lint": "tslint --project tsconfig.json",
     "sync": "node build/lib/sync.js"
   },
@@ -28,7 +28,6 @@
     "parse-torrent": "^6.1.2",
     "pg": "^7.11.0",
     "reflect-metadata": "^0.1.10",
-    "serverless-http": "^2.0.1",
     "type-graphql": "^0.17.4",
     "typedi": "^0.8.0",
     "typeorm": "0.2.17",
