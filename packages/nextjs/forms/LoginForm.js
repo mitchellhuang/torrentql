@@ -1,15 +1,13 @@
 import React from 'react';
-import { Formik } from 'formik';
-import Link from 'next/link';
 import Router from 'next/router';
-import { Mutation } from 'react-apollo';
+import { Formik, Form } from 'formik';
 import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
 import cookie from 'cookie';
-import { adopt } from 'react-adopt';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const LOGIN = gql`
+const LOGIN_MUTATION = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
@@ -17,20 +15,16 @@ const LOGIN = gql`
   }
 `;
 
-const Composed = adopt({
-  apollo: ({ render }) => (
-    <Mutation mutation={LOGIN}>
-      {(mutation, result) => render({ mutation, result })}
-    </Mutation>
-  ),
-  formik: ({ apollo, render }) => (
+const LoginForm = () => {
+  const [login] = useMutation(LOGIN_MUTATION);
+  return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      onSubmit={async (values, { setSubmitting }) => {
-        const result = await apollo.mutation({
+      onSubmit={async ({ email, password }, { setSubmitting }) => {
+        const result = await login({
           variables: {
-            email: values.email,
-            password: values.password,
+            email,
+            password,
           },
         });
         const { data: { login: { token } } } = result;
@@ -38,30 +32,19 @@ const Composed = adopt({
         setSubmitting(false);
         Router.push('/dashboard');
       }}
-    >
-      {render}
-    </Formik>
-  ),
-});
-
-const LoginForm = () => (
-  <Composed>
-    {({ formik }) => {
-      const {
-        values,
+      render={({
+        values: { email, password },
         isSubmitting,
         handleChange,
         handleBlur,
-        handleSubmit,
-      } = formik;
-      return (
-        <form onSubmit={handleSubmit}>
+      }) => (
+        <Form>
           <Input
             id="email"
             label="Email"
             placeholder="Enter your email"
             type="text"
-            value={values.email}
+            value={email}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -70,7 +53,7 @@ const LoginForm = () => (
             label="Password"
             placeholder="Enter your password"
             type="password"
-            value={values.password}
+            value={password}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -81,10 +64,10 @@ const LoginForm = () => (
           >
             Log in
           </Button>
-        </form>
-      );
-    }}
-  </Composed>
-);
+        </Form>
+      )}
+    />
+  );
+};
 
 export default LoginForm;

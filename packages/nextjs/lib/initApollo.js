@@ -2,7 +2,12 @@ import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import fetch from 'isomorphic-fetch';
 import cookie from 'cookie';
+
+if (!process.browser) {
+  global.fetch = fetch;
+}
 
 export default function initApollo() {
   const httpLink = new HttpLink({

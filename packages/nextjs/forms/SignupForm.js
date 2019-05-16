@@ -1,62 +1,50 @@
 import React from 'react';
-import { Formik } from 'formik';
-import Link from 'next/link';
-import { Mutation } from 'react-apollo';
+import Router from 'next/router';
+import { Formik, Form } from 'formik';
 import gql from 'graphql-tag';
-import { adopt } from 'react-adopt';
+import { useMutation } from '@apollo/react-hooks';
+import cookie from 'cookie';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const SIGNUP = gql`
+const SIGNUP_MUTATION = gql`
   mutation createUser($email: String!, $password: String!) {
     createUser(email: $email, password: $password) {
-      id
+      token
     }
   }
 `;
 
-const Composed = adopt({
-  apollo: ({ render }) => (
-    <Mutation mutation={SIGNUP}>
-      {(mutation, result) => render({ mutation, result })}
-    </Mutation>
-  ),
-  formik: ({ apollo, render }) => (
+const SignupForm = () => {
+  const [signup] = useMutation(SIGNUP_MUTATION);
+  return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      onSubmit={async (values, { setSubmitting }) => {
-        await apollo.mutation({
+      onSubmit={async ({ email, password }, { setSubmitting }) => {
+        const result = await signup({
           variables: {
-            email: values.email,
-            password: values.password,
+            email,
+            password,
           },
         });
+        const { data: { createUser: { token } } } = result;
+        document.cookie = cookie.serialize('token', token);
         setSubmitting(false);
+        Router.push('/dashboard');
       }}
-    >
-      {render}
-    </Formik>
-  ),
-});
-
-const SignupForm = () => (
-  <Composed>
-    {({ formik }) => {
-      const {
-        values,
+      render={({
+        values: { email, password },
         isSubmitting,
         handleChange,
         handleBlur,
-        handleSubmit,
-      } = formik;
-      return (
-        <form onSubmit={handleSubmit}>
+      }) => (
+        <Form>
           <Input
             id="email"
             label="Email"
             placeholder="Enter your email"
             type="text"
-            value={values.email}
+            value={email}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -65,7 +53,7 @@ const SignupForm = () => (
             label="Password"
             placeholder="Enter your password"
             type="password"
-            value={values.password}
+            value={password}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -76,10 +64,10 @@ const SignupForm = () => (
           >
             Sign up
           </Button>
-        </form>
-      );
-    }}
-  </Composed>
-);
+        </Form>
+      )}
+    />
+  );
+};
 
 export default SignupForm;

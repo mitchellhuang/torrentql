@@ -1,9 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import Main from '../layouts/Main';
 
-const GET_USER = gql`
+const ME_QUERY = gql`
   {
     me {
       id
@@ -23,19 +23,26 @@ const GET_USER = gql`
 const Dashboard = () => (
   <Main title="Dashboard">
     <div className="wrapper">
-      <Query query={GET_USER}>
-        {({ loading, error, data }) => {
-          if (loading) {
-            return 'Loading...';
-          }
-          if (error) {
-            return `Error: ${error.message}`;
-          }
-          return JSON.stringify(data.me);
-        }}
-      </Query>
+      <Torrents />
     </div>
   </Main>
 );
+
+const Torrents = () => {
+  const { loading, data, error } = useQuery(ME_QUERY);
+  if (loading) {
+    return (
+      <div>
+        Loading...
+      </div>
+    );
+  }
+  return (
+    <div>
+      {JSON.stringify(error)}
+      {JSON.stringify(data)}
+    </div>
+  );
+};
 
 export default Dashboard;
