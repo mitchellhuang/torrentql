@@ -1,27 +1,42 @@
 import React from 'react';
+import Link from 'next/link';
 import Main from '../layouts/Main';
 import LoginForm from '../forms/LoginForm';
 
 const Login = () => (
-  <Main title="Log in">
+  <Main title="Log in" noFooter>
     <div className="wrapper">
       <div className="container">
-        <h1>Log in</h1>
+        <div className="header">
+          <h1>Log in</h1>
+        </div>
         <LoginForm />
+        <div className="helper">
+          Forgot your password? <Link><a href="/reset_password">Reset</a></Link>
+        </div>
+        <div className="helper">
+          Need an account? <Link><a href="/signup">Sign up</a></Link>
+        </div>
       </div>
     </div>
     <style jsx>{`
-      h1 {
+      .header {
         margin-bottom: 15px;
       }
       .container {
         width: 100%;
+      }
+      .helper {
+        margin-top: 15px;
       }
       @media(min-width: 768px) {
         .wrapper {
           align-items: center;
           max-width: 350px;
           margin-top: 75px;
+        }
+        .helper {
+          text-align: center;
         }
       }
     `}</style>

@@ -11,18 +11,6 @@ const Index = () => (
   </Main>
 );
 
-const mutationExample = `mutation {
-  addTorrent(uri: "magnet?x=123abc") {
-    id
-    torrent
-    status
-    files []
-    leechers
-    seeders
-    url
-  }
-}`;
-
 const Hero = () => (
   <div className="hero">
     <div className="info">
@@ -34,12 +22,7 @@ const Hero = () => (
       <Button href="/signup" animate>Sign up</Button>
       <Button href="/pricing" style={{ marginLeft: '10px' }} white animate>View pricing →</Button>
     </div>
-    <div className="example">
-      <pre
-        // eslint-disable-next-line
-        dangerouslySetInnerHTML={{ __html: mutationExample }}
-      />
-    </div>
+    <div className="example" />
     <style jsx>{`
       .hero {
         display: flex;
@@ -64,14 +47,10 @@ const Hero = () => (
         margin-bottom: 5px;
       }
       .example {
-        color: #fff;
-        background-color: #111;
+        background-color: #000;
+        width: 100%;
+        height: 200px;
         border-radius: 5px;
-        padding: 15px;
-      }
-      .example pre {
-        margin: 0;
-        font-size: 14px;
       }
       @media(min-width: 768px) {
         .hero {

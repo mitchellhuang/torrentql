@@ -9,10 +9,11 @@ const getButtonStyle = ({
 }) => css.resolve`
   .button {
     display: ${block ? 'block' : 'inline-block'};
+    width: ${block ? '100%' : null};
     padding: 10px;
     color: ${white ? '#000' : '#fff'};
-    background-color: ${white ? '#fff' : '#0366d6'};
-    box-shadow: 0 5px 10px rgba(0,0,0,0.12);
+    background-color: ${white ? '#fff' : '#138A36'};
+    box-shadow: ${animate ? '0 5px 10px rgba(0,0,0,0.12)' : null};
     border: 0;
     border-radius: 5px;
     outline: none;
@@ -25,6 +26,7 @@ const getButtonStyle = ({
   .button:hover {
     transform: ${animate ? 'translateY(-1px)' : null};
     box-shadow: ${animate ? '0 7px 20px rgba(0,0,0,0.12)' : null};
+    background-color: ${animate ? null : '#15993C'};
   }
 `;
 

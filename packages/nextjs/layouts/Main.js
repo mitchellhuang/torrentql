@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 const Main = ({
   title,
   children,
+  noFooter,
 }) => (
   <Global>
     <Head>
@@ -20,7 +21,7 @@ const Main = ({
       <div className="inner">
         {children}
       </div>
-      <Footer />
+      {!noFooter ? <Footer /> : null}
     </div>
     <style jsx>{`
       .outer {

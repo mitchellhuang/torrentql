@@ -11,16 +11,20 @@ const Global = ({
           Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
           'Segoe UI Emoji', 'Segoe UI Symbol';
         box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
       }
       h1, h2, h3, h4, h5 {
         margin: 0;
         font-weight: 600;
       }
       h1 {
+        font-size: 40px;
+      }
+      h2 {
         font-size: 36px;
       }
       a {
-        color: #0366d6;
+        color: #138A36;
         text-decoration: none;
       }
       .wrapper {
