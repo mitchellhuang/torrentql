@@ -2,26 +2,19 @@ import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import fetch from 'isomorphic-fetch';
+import cookie from 'cookie';
 
-let apolloClient = null;
-
-if (!process.browser) {
-  global.fetch = fetch;
-}
-
-function create(initialState, { getToken }) {
+export default function initApollo() {
   const httpLink = new HttpLink({
-    uri: process.browser ? '/graphql' : process.env.API_URI,
-    credentials: 'same-origin',
+    uri: '/graphql',
   });
   const authLink = setContext((_, { headers }) => {
-    const token = getToken();
+    const { token } = cookie.parse(document.cookie);
     if (token) {
       return {
         headers: {
           ...headers,
-          authorization: token ? `Bearer ${token}` : '',
+          authorization: token ? `bearer ${token}` : '',
         },
       };
     }
@@ -29,20 +22,7 @@ function create(initialState, { getToken }) {
   });
   return new ApolloClient({
     connectToDevTools: process.browser,
-    ssrMode: !process.browser,
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache().restore(initialState || {}),
+    cache: new InMemoryCache(),
   });
-}
-
-export default function initApollo(initialState, options) {
-  if (!process.browser) {
-    return create(initialState, options);
-  }
-
-  if (!apolloClient) {
-    apolloClient = create(initialState, options);
-  }
-
-  return apolloClient;
 }

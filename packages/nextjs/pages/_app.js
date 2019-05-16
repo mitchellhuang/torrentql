@@ -1,11 +1,13 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
-import withApollo from '../lib/withApollo';
+import initApollo from '../lib/initApollo';
+
+const apolloClient = initApollo();
 
 class TorrentQL extends App {
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, pageProps } = this.props;
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
@@ -16,4 +18,4 @@ class TorrentQL extends App {
   }
 }
 
-export default withApollo(TorrentQL);
+export default TorrentQL;
