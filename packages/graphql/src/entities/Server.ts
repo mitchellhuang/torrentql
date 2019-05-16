@@ -22,10 +22,10 @@ export class Server {
   @Index()
   @Column({
     type: 'enum',
-    enum: ['eu-west-1', 'ca-east-1'],
+    enum: ['eu-west-1'],
     default: 'eu-west-1',
   })
-  region: 'eu-west-1' | 'ca-east-1';
+  region: 'eu-west-1';
 
   @Column()
   host: string;
