@@ -12,10 +12,10 @@ const Login = () => (
         </div>
         <LoginForm />
         <div className="helper">
-          Forgot your password? <Link><a href="/reset_password">Reset</a></Link>
+          Forgot your password? <Link href="/reset_password"><a>Reset</a></Link>
         </div>
         <div className="helper">
-          Need an account? <Link><a href="/signup">Sign up</a></Link>
+          Need an account? <Link href="/signup"><a>Sign up</a></Link>
         </div>
       </div>
     </div>
