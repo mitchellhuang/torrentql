@@ -46,7 +46,7 @@ const Footer = () => (
         justify-content: space-between;
       }
       .logo {
-        color: #000;
+        color: var(--black);
         font-weight: 600;
         font-size: 24px;
         margin-bottom: 15px;

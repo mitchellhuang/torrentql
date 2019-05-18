@@ -1,17 +1,23 @@
 import React from 'react';
 
+import 'normalize.css';
+
 const Global = ({
   children,
 }) => (
   <>
     {children}
     <style jsx global>{`
+      :root {
+        --primary: #138A36;
+        --black: #111;
+        --white: #fff;
+      };
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-          Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-          'Segoe UI Emoji', 'Segoe UI Symbol';
+        font-family: system-ui;
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
+        color: var(--black);
       }
       h1, h2, h3, h4, h5 {
         margin: 0;
@@ -24,7 +30,7 @@ const Global = ({
         font-size: 36px;
       }
       a {
-        color: #138A36;
+        color: var(--primary);
         text-decoration: none;
       }
       .wrapper {

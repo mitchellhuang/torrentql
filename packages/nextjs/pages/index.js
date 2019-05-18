@@ -47,7 +47,7 @@ const Hero = () => (
         margin-bottom: 5px;
       }
       .example {
-        background-color: #000;
+        background-color: var(--black);
         width: 100%;
         height: 200px;
         border-radius: 5px;
@@ -124,7 +124,7 @@ const Features = (
       .image {
         width: 65px;
         height: 65px;
-        background-color: #000;
+        background-color: var(--black);
         border-radius: 5px;
       }
       .text {

@@ -1,15 +1,5 @@
 const withPlugins = require('next-compose-plugins');
+const withCSS = require('@zeit/next-css');
 const withImages = require('next-images');
 
-const baseConfig = {
-  webpack: (config) => {
-    // Fixes npm packages that depend on `fs` module
-    config.node = {
-      fs: 'empty',
-    };
-
-    return config;
-  },
-};
-
-module.exports = withPlugins([withImages], baseConfig);
+module.exports = withPlugins([withCSS, withImages]);

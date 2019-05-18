@@ -33,7 +33,7 @@ const Login = () => (
         .wrapper {
           align-items: center;
           max-width: 350px;
-          margin-top: 75px;
+          padding: 75px 0;
         }
         .helper {
           text-align: center;

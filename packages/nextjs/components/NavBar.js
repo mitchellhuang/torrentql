@@ -46,7 +46,7 @@ const NavBar = ({ router }) => (
         margin-bottom: 15px;
       }
       .logo a {
-        color: #111;
+        color: var(--black);
       }
       .tabs {
         list-style-type: none;
@@ -74,7 +74,7 @@ const NavBar = ({ router }) => (
           float: left;
         }
         .tabs li a {
-          color: #111;
+          color: var(--black);
           font-size: 16px;
         }
         .tabs li:not(:last-child) a {
