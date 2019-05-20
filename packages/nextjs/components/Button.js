@@ -7,14 +7,16 @@ const Button = ({
   block,
   white,
   animate,
+  className,
   children,
   ...props
 }) => {
-  const btnClass = classNames('button', {
+  let btnClass = classNames('button', {
     'button--block': block,
     'button--outline': white,
     'button--animate': animate,
   });
+  btnClass = className ? `${btnClass} ${className}` : btnClass;
   return (
     <>
       {href ? (
@@ -58,9 +60,8 @@ const Button = ({
         .button:hover {
         }
         .button--animate:hover {
-          transform: ${animate ? 'translateY(-1px)' : null};
-          box-shadow: ${animate ? '0 7px 20px rgba(0,0,0,0.12)' : null};
-          background-color: ${animate ? null : '#15993C'};
+          transform: translateY(-1px);
+          box-shadow: 0 7px 20px rgba(0,0,0,0.12);
         }
       `}</style>
     </>

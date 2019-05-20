@@ -20,7 +20,7 @@ const Hero = () => (
         <p className="tagline-price">Storage at $0.01 / GB / month.</p>
       </div>
       <Button href="/signup" animate>Sign up</Button>
-      <Button href="/pricing" style={{ marginLeft: '10px' }} white animate>View pricing →</Button>
+      <Button href="/pricing" className="ml-10" white animate>View pricing →</Button>
     </div>
     <div className="example" />
     <style jsx>{`

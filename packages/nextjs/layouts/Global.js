@@ -1,6 +1,7 @@
 import React from 'react';
 
 import 'normalize.css';
+import '@helpercss/helpercss/css/helper.css';
 
 const Global = ({
   children,
@@ -9,7 +10,7 @@ const Global = ({
     {children}
     <style jsx global>{`
       :root {
-        --primary: #138A36;
+        --primary: #138a36;
         --black: #111;
         --white: #fff;
       };
