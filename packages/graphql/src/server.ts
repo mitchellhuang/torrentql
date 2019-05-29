@@ -37,6 +37,10 @@ export const createServer = async () => {
 
   apollo.applyMiddleware({ app: server });
 
+  server.get('/', (req, res) => {
+    res.sendStatus(200);
+  });
+
   server.get('/health', async (req, res) => {
     try {
       await connection.query('select 1+1 as result');

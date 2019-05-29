@@ -1,7 +1,7 @@
 import React from 'react';
 
 import 'normalize.css';
-import '@helpercss/helpercss/css/helper.css';
+import 'bootstrap-spacing-utils';
 
 const Global = ({
   children,
@@ -10,7 +10,7 @@ const Global = ({
     {children}
     <style jsx global>{`
       :root {
-        --primary: #138a36;
+        --primary: #FF7A8A;
         --black: #111;
         --white: #fff;
       };
