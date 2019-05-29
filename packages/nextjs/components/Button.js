@@ -45,6 +45,10 @@ const Button = ({
           font-weight: 600;
           transition: all 0.15s ease;
         }
+        .button:disabled {
+          background-color: #aaa;
+          border-color: #aaa;
+        }
         .button--block {
           display: block;
           width: 100%;
@@ -56,8 +60,6 @@ const Button = ({
         }
         .button--animate {
           box-shadow: 0 5px 10px rgba(0,0,0,0.12);
-        }
-        .button:hover {
         }
         .button--animate:hover {
           transform: translateY(-1px);

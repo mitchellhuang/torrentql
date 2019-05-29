@@ -10,7 +10,7 @@ const Modal = ({
   <div className="modal">
     <a
       className="modal-overlay"
-      href="#modal"
+      href="#close-modal"
       onClick={toggle}
       aria-label="Close"
     />
@@ -19,7 +19,7 @@ const Modal = ({
         <h2>{title}</h2>
         <a
           className="modal-close-button"
-          href="#modal"
+          href="#close-modal"
           onClick={toggle}
           aria-label="Close"
         />
