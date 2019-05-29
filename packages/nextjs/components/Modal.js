@@ -55,6 +55,7 @@ const Modal = ({
         display: flex;
         flex-direction: column;
         background-color: #fff;
+        border-radius: 5px;
         max-height: 75vh;
         max-width: 640px;
         padding: 15px;

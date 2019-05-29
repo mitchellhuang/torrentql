@@ -28,7 +28,7 @@ const Input = ({
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       }
       input:focus {
-        border: 1px solid #138A36;
+        border: 1px solid var(--primary);
         outline: none;
       }
     `}</style>

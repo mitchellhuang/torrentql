@@ -30,6 +30,11 @@ const Global = ({
       h2 {
         font-size: 36px;
       }
+      h5 {
+        font-size: 14px;
+        color: #888;
+        text-transform: uppercase;
+      }
       a {
         color: var(--primary);
         text-decoration: none;
