@@ -36,7 +36,7 @@ const AddTorrentModal = ({
       toggle={toggle}
     >
       <Formik
-        initialValues={{ magnet: '', file: '' }}
+        initialValues={{ magnet: '', file: null }}
         onSubmit={async ({ magnet, file }, { setSubmitting }) => {
           if (magnet) {
             await addTorrent({
