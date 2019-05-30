@@ -57,9 +57,10 @@ const Modal = ({
         background-color: #fff;
         border-radius: 5px;
         max-height: 75vh;
-        max-width: 640px;
+        max-width: 550px;
         padding: 15px;
         width: 100%;
+        overflow: auto;
         z-index: 1;
       }
       .modal-header {

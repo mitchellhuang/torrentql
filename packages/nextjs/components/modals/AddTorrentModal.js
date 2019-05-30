@@ -26,6 +26,7 @@ const getFileBase64 = file => new Promise((resolve) => {
 const AddTorrentModal = ({
   active,
   toggle,
+  refetchQueries,
 }) => {
   const [addTorrent] = useMutation(ADD_TORRENT_MUTATION);
 
@@ -38,22 +39,20 @@ const AddTorrentModal = ({
       <Formik
         initialValues={{ magnet: '', file: null }}
         onSubmit={async ({ magnet, file }, { setSubmitting }) => {
+          let data;
           if (magnet) {
-            await addTorrent({
-              variables: {
-                data: magnet,
-              },
-            });
-            toggle();
+            data = magnet;
           } else if (file) {
             const file64 = await getFileBase64(file);
-            await addTorrent({
-              variables: {
-                data: file64,
-              },
-            });
-            toggle();
+            data = file64;
           }
+          await addTorrent({
+            variables: {
+              data,
+            },
+            refetchQueries,
+          });
+          toggle();
           setSubmitting(false);
         }}
         render={({

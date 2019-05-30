@@ -30,6 +30,9 @@ const Global = ({
       h2 {
         font-size: 36px;
       }
+      h3 {
+        font-size: 24px;
+      }
       h5 {
         font-size: 14px;
         color: #888;

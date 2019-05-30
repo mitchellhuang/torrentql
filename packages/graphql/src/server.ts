@@ -2,7 +2,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
 import { useContainer } from 'typeorm';
-import { buildSchema } from 'type-graphql';
+import { buildSchema, emitSchemaDefinitionFile } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
 import { join } from 'path';
@@ -24,6 +24,8 @@ export const createServer = async () => {
     container: Container,
     authChecker,
   });
+
+  await emitSchemaDefinitionFile('./schema.graphql', schema);
 
   const apollo = new ApolloServer({
     schema,
