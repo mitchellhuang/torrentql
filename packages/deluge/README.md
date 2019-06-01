@@ -19,7 +19,8 @@ services:
       - "58946:58946"
       - "58946:58946/udp"
     volumes:
-      - "/Users/<YOUR USER HERE>/Downloads:/root/Downloads"```
+      - "/Users/<YOUR USER HERE>/Downloads:/root/Downloads"
+```
 
 If you do not know how to determine your User enter the following commmand:
 
