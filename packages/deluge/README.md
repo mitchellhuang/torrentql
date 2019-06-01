@@ -24,7 +24,8 @@ services:
       - "58946:58946"
       - "58946:58946/udp"
     volumes:
-      - "/Users/mitchell/Downloads:/root/Downloads"```
+      - "/Users/mitchell/Downloads:/root/Downloads"
+```
 
 
 
