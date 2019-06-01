@@ -10,7 +10,7 @@ To download the deluge client please run the following command:
 
 Be sure to edit docker-compose.yml file volumes to absolute file path of your systems local torrentql/packages/deluge/docker-compose.yml pathfile.
 
-```volumes:                                                                           - "/Users/mitchell/Downloads:/root/Downloads"```
+```volumes:```                                                                           ```- "/Users/mitchell/Downloads:/root/Downloads"```
 
 
 
