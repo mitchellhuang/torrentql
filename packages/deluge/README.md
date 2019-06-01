@@ -1,11 +1,6 @@
 # Deluge Client Configuration Instructions and Guidelines
 
-## Deluge Client Installation
-
-### For Mac OSX
-To download the deluge client please run the following command:
-
-``` wget --no-check-certificate https://download.deluge-torrent.org/mac_osx/deluge-1.3.15.1-macosx-x64.dmg```
+## Deluge Client docker-compose.yml File Configuration 
 
 
 Be sure to edit docker-compose.yml file volumes to absolute file path of your systems local torrentql/packages/deluge/docker-compose.yml pathfile.
@@ -24,8 +19,12 @@ services:
       - "58946:58946"
       - "58946:58946/udp"
     volumes:
-      - "/Users/mitchell/Downloads:/root/Downloads"    #EDIT THIS PATHFILE TO LOCATION OF DELUGE CLIENT
-```
+      - "/Users/<YOUR USER HERE>/Downloads:/root/Downloads"```
 
+If you do not know how to determine your User enter the following commmand:
+
+```whoami```
+
+Substitute the value returned by the above command into your volumes pathfile.
 
 
