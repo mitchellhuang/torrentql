@@ -1,6 +1,6 @@
-# Deluge Client Configuration Instructions and Guidelines
+# Deluge
 
-## Deluge Client docker-compose.yml File Configuration 
+## Deluge docker-compose.yml Configuration 
 
 
 Be sure to edit docker-compose.yml file volumes to absolute file path of your systems local torrentql/packages/deluge/docker-compose.yml pathfile.
@@ -25,7 +25,9 @@ services:
 
 If you do not know how to determine your User enter the following commmand:
 
-```whoami```
+```
+whoami
+```
 
 Substitute the value returned by the above command into your volumes pathfile.
 
