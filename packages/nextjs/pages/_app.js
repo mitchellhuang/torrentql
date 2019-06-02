@@ -1,21 +1,22 @@
 import App, { Container } from 'next/app';
 import React from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import initApollo from '../lib/initApollo';
+import { ApolloProvider } from 'react-apollo-hooks';
+import withApollo from '../lib/withApollo';
 
-const apolloClient = initApollo();
+import 'normalize.css';
+import 'bootstrap-spacing-utils';
 
 class TorrentQL extends App {
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
+          <Component {...pageProps} client={apolloClient} />
         </ApolloProvider>
       </Container>
     );
   }
 }
 
-export default TorrentQL;
+export default withApollo(TorrentQL);
