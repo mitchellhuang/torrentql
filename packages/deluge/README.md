@@ -29,4 +29,14 @@ If you do not know how to determine your User enter the following commmand:
 
 Substitute the value returned by the above command into your volumes pathfile.
 
+## Deploying deluge client
+
+To launch the deleuge client using docker-compose.yml file run the following command:
+```
+docker-compose up -d
+```
+or to keep the process open and not run in detached mode enter the following: 
+```
+docker-compose up
+```
 
