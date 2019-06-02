@@ -16,8 +16,8 @@ function create(initialState, { getToken }) {
     uri: process.browser ? '/graphql' : process.env.API_URI,
     credentials: 'same-origin',
   });
-  const token = getToken();
   const authLink = setContext((_, { headers }) => {
+    const token = getToken();
     if (token) {
       return {
         headers: {
@@ -28,6 +28,7 @@ function create(initialState, { getToken }) {
     }
     return { headers };
   });
+  const token = getToken();
   const cache = new InMemoryCache().restore(initialState || {});
   cache.writeData({ data: { isLoggedIn: !!token } });
   return new ApolloClient({

@@ -1,8 +1,5 @@
 import React from 'react';
 
-import 'normalize.css';
-import 'bootstrap-spacing-utils';
-
 const Global = ({
   children,
 }) => (
