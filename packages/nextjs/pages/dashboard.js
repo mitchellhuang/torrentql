@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo-hooks';
 import Main from '../layouts/Main';
 import Button from '../components/Button';
 import Torrent from '../components/Torrent';
@@ -74,7 +74,10 @@ const ToolBar = () => {
 };
 
 const Torrents = () => {
-  const { loading, data, error } = useQuery(ME_QUERY);
+  const { loading, data, error } = useQuery(ME_QUERY, {
+    ssr: false,
+    pollInterval: 2000,
+  });
   if (loading) {
     return (
       <div>
@@ -88,6 +91,9 @@ const Torrents = () => {
         {JSON.stringify(error)}
       </div>
     );
+  }
+  if (!data) {
+    return null;
   }
   const { torrents } = data.me;
   if (!torrents.length) {

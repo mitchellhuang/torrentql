@@ -1,6 +1,6 @@
 import App, { Container } from 'next/app';
 import React from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from 'react-apollo-hooks';
 import withApollo from '../lib/withApollo';
 
 class TorrentQL extends App {

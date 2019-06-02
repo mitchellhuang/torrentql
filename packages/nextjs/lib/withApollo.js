@@ -3,7 +3,8 @@
 import React, { Component } from 'react'
 import cookie from 'cookie'
 import PropTypes from 'prop-types'
-import { getDataFromTree } from '@apollo/react-hooks'
+import { getMarkupFromTree } from 'react-apollo-hooks'
+import { renderToString } from 'react-dom/server';
 import Head from 'next/head'
 import initApollo from './initApollo'
 
@@ -52,14 +53,17 @@ export default App => {
         // and extract the resulting data
         try {
           // Run all GraphQL queries
-          await getDataFromTree(
-            <App
-              {...appProps}
-              Component={Component}
-              router={router}
-              apolloClient={apollo}
-            />
-          )
+          await getMarkupFromTree({
+            renderFunction: renderToString,
+            tree: (
+              <App
+                {...appProps}
+                Component={Component}
+                router={router}
+                apolloClient={apollo}
+              />
+            )
+          })
         } catch (error) {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
           // Handle them in components via the data.error prop:

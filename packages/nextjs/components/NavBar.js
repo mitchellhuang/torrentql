@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo-hooks';
 
 const IS_LOGGED_IN_QUERY = gql`
   query IsUserLoggedIn {

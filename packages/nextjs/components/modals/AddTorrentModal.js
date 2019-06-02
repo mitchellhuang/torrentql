@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo-hooks';
 import Modal from '../Modal';
 import Input from '../Input';
 import Button from '../Button';
@@ -28,7 +28,7 @@ const AddTorrentModal = ({
   toggle,
   refetchQueries,
 }) => {
-  const [addTorrent] = useMutation(ADD_TORRENT_MUTATION);
+  const addTorrent = useMutation(ADD_TORRENT_MUTATION);
 
   return (
     <Modal
