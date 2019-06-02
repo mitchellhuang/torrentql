@@ -22,7 +22,7 @@ services:
       - "/Users/<YOUR USER HERE>/Downloads:/root/Downloads"
 ```
 
-If you do not know how to determine your User enter the following commmand
+If you do not know how to determine your system enter the following commmand
 
 ```
 whoami
