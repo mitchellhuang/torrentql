@@ -3,8 +3,7 @@
 ## Deluge docker-compose.yml Configuration 
 
 
-Be sure to edit docker-compose.yml file volumes to absolute file path of your systems local torrentql/packages/deluge/docker-compose.yml pathfile
-
+You must edit the docker-compose.yml file volumes path to represent your current system user
 ```
 version: '3.3'
 services:
