@@ -37,7 +37,7 @@ To launch the deleuge client using docker-compose.yml file run the following com
 ```
 docker-compose up -d
 ```
-or to keep the process open and not run in detached mode enter the following
+Or to keep the process open and not run in detached mode enter the following
 ```
 docker-compose up
 ```
