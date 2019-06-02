@@ -5,7 +5,8 @@
 
 Be sure to edit docker-compose.yml file volumes to absolute file path of your systems local torrentql/packages/deluge/docker-compose.yml pathfile.
 
-```version: '3.3'
+```
+version: '3.3'
 services:
   deluge:
     image: "linuxserver/deluge"
