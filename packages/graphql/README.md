@@ -12,6 +12,15 @@ A GraphQL API server for TorrentQL. This repo follows the [Twelve-Factor App](ht
 
 Create a `.env` file from `.env.example` to load environment variables from a file.
 
+```DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_USER=torrentql
+DB_PASSWORD=password
+DB_DATABASE=torrentql
+DB_SSL=false
+JWT_SECRET=torrentql
+```
+
 ## Installation
 
 1. `yarn install`
