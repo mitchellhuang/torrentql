@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import cookie from 'cookie';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -16,7 +16,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 const LoginForm = () => {
-  const [login] = useMutation(LOGIN_MUTATION);
+  const login = useMutation(LOGIN_MUTATION);
+  const client = useApolloClient();
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -29,6 +30,7 @@ const LoginForm = () => {
         });
         const { data: { login: { token } } } = result;
         document.cookie = cookie.serialize('token', token);
+        client.writeData({ data: { isLoggedIn: true } });
         setSubmitting(false);
         Router.push('/dashboard');
       }}

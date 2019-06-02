@@ -22,6 +22,7 @@ const Main = ({
       </div>
       {!noFooter ? <Footer /> : null}
     </div>
+    <div id="modal-root" />
     <style jsx>{`
       .outer {
         display: flex;

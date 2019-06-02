@@ -1,8 +1,5 @@
 import React from 'react';
 
-import 'normalize.css';
-import '@helpercss/helpercss/css/helper.css';
-
 const Global = ({
   children,
 }) => (
@@ -10,7 +7,7 @@ const Global = ({
     {children}
     <style jsx global>{`
       :root {
-        --primary: #138a36;
+        --primary: #FF7A8A;
         --black: #111;
         --white: #fff;
       };
@@ -29,6 +26,14 @@ const Global = ({
       }
       h2 {
         font-size: 36px;
+      }
+      h3 {
+        font-size: 24px;
+      }
+      h5 {
+        font-size: 14px;
+        color: #888;
+        text-transform: uppercase;
       }
       a {
         color: var(--primary);

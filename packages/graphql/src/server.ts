@@ -2,7 +2,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
 import { useContainer } from 'typeorm';
-import { buildSchema } from 'type-graphql';
+import { buildSchema, emitSchemaDefinitionFile } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
 import { join } from 'path';
@@ -25,6 +25,8 @@ export const createServer = async () => {
     authChecker,
   });
 
+  await emitSchemaDefinitionFile('./schema.graphql', schema);
+
   const apollo = new ApolloServer({
     schema,
     context: createContext(connection),
@@ -36,6 +38,10 @@ export const createServer = async () => {
   server.use(jwt.decode());
 
   apollo.applyMiddleware({ app: server });
+
+  server.get('/', (req, res) => {
+    res.sendStatus(200);
+  });
 
   server.get('/health', async (req, res) => {
     try {

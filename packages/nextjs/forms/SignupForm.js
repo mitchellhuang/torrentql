@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo-hooks';
 import cookie from 'cookie';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -16,7 +16,7 @@ const SIGNUP_MUTATION = gql`
 `;
 
 const SignupForm = () => {
-  const [signup] = useMutation(SIGNUP_MUTATION);
+  const signup = useMutation(SIGNUP_MUTATION);
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
