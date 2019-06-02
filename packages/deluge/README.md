@@ -1,6 +1,6 @@
 # Deluge
 
-## Deluge docker-compose.yml Configuration 
+### Deluge docker-compose.yml Configuration 
 
 
 You must edit the docker-compose.yml file volumes path to represent your current system user
