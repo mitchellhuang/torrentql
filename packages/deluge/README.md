@@ -1,11 +1,11 @@
-# Deluge Client Configuration Instructions and Guidelines
+# Deluge
 
-## Deluge Client docker-compose.yml File Configuration 
+### Deluge docker-compose.yml Configuration 
 
 
-Be sure to edit docker-compose.yml file volumes to absolute file path of your systems local torrentql/packages/deluge/docker-compose.yml pathfile.
-
-```version: '3.3'
+You must edit the docker-compose.yml file volumes path to represent your current system user
+```
+version: '3.3'
 services:
   deluge:
     image: "linuxserver/deluge"
@@ -19,12 +19,25 @@ services:
       - "58946:58946"
       - "58946:58946/udp"
     volumes:
-      - "/Users/<YOUR USER HERE>/Downloads:/root/Downloads"```
+      - "/Users/<YOUR USER HERE>/Downloads:/root/Downloads"
+```
 
-If you do not know how to determine your User enter the following commmand:
+If you do not know how to determine your system enter the following commmand
 
-```whoami```
+```
+whoami
+```
 
-Substitute the value returned by the above command into your volumes pathfile.
+Substitute the value returned by the above command into your volumes pathfile
 
+## Deploying deluge client
+
+To launch the deleuge client using docker-compose.yml file run the following command
+```
+docker-compose up -d
+```
+Or to keep the process open and not run in detached mode enter the following
+```
+docker-compose up
+```
 
