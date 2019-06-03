@@ -7,7 +7,7 @@ const Global = ({
     {children}
     <style jsx global>{`
       :root {
-        --primary: #FF7A8A;
+        --primary: #51A4FB;
         --black: #111;
         --white: #fff;
       };
