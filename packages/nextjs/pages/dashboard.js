@@ -40,10 +40,9 @@ const ME_QUERY = gql`
     }
   }
 `;
-
+const progress = 20;
 const Dashboard = () => (
   //creating a temp variable
-  const progress = 20;
   <Main title="Dashboard">
     <div className="wrapper">
       <ProgressBar className="progress-bar" progress={progress.toString()} color="var(--primary)"/>
