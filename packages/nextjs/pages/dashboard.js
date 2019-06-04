@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import Torrent from '../components/Torrent';
 import useModal from '../lib/useModal';
 import AddTorrentModal from '../components/modals/AddTorrentModal';
+
 const ME_QUERY = gql`
   {
     me {
