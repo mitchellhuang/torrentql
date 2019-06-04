@@ -9,14 +9,13 @@ const ProgressBar = ({
   return (
     <div>
       <div className={progressBarClass}>
-        {progress}%
+        {progress.toFixed(2)}%
       </div>
       <style jsx>{`
         .progress-bar {
           width: ${progress}%;
           background-color: ${color || 'var(--primary)'};
           height: 20px;
-          margin-bottom: 7.5px;
           border-radius: 20px;
           text-align: center;
         }
