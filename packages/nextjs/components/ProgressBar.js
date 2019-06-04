@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 
 const ProgressBar = ({
   className,
@@ -7,9 +6,7 @@ const ProgressBar = ({
   secondaryColor,
   progress,
 }) => {
-  let progressBarClass = classNames('progress-bar', {
-  });
-  progressBarClass = className ? `${progressBarClass} ${className}` : progressBarClass;
+  const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
   // setting default value for color
   primaryColor = primaryColor || 'var(--primary)';
   secondaryColor = secondaryColor || 'var(--secondary)';
