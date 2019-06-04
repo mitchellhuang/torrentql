@@ -24,6 +24,7 @@ const ProgressBar = ({
           margin-top: -34.5px;
           margin-bottom: 7.5;
           border-radius: 20px;
+
         }
         .progress-value {
           text-align: center;
