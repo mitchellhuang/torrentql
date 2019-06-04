@@ -1,12 +1,12 @@
 import React from 'react';
-import ProgressBar from '../components/ProgressBar'
+import ProgressBar from './ProgressBar';
 
 const Torrent = ({
   torrent,
 }) => (
   <div className="torrent">
-    <ProgressBar className="progress-bar" progress={torrent.status.progress} color="var(--primary)"/>
-    {JSON.stringify(torrent)}
+    <ProgressBar className="progress-bar" progress={torrent.status.progress} color="var(--primary)" />
+    {JSON.stringify(torrent)}   
     <style jsx>{`
       .torrent {
         padding: 10px;
