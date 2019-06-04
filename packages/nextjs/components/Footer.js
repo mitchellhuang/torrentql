@@ -18,7 +18,7 @@ const items = [{
 
 const Footer = () => (
   <div className="footer">
-    <div className="wrapper wrapper-v">
+    <div className="wrapper">
       <div className="logo">
         <Logo />
         <div className="copy">
@@ -39,6 +39,7 @@ const Footer = () => (
     </div>
     <style jsx>{`
       .footer {
+        padding: 15px 0;
       }
       .wrapper {
         display: flex;

@@ -36,7 +36,7 @@ const NavBar = ({ router }) => {
   }
   return (
     <div className="navbar">
-      <div className="wrapper wrapper-v">
+      <div className="wrapper">
         <Logo className="logo" />
         <ul className="tabs">
           { items.map(item => (
@@ -51,6 +51,9 @@ const NavBar = ({ router }) => {
         </ul>
       </div>
       <style jsx>{`
+        .navbar {
+          padding: 15px 0;
+        }
         .wrapper {
           display: flex;
           flex-direction: column;
