@@ -10,6 +10,7 @@ const Torrent = ({
     <style jsx>{`
       .torrent {
         padding: 10px;
+        padding-top: 0px;
         border: 1px solid #ccc;
         border-radius: 5px;
         word-break: break-all;
