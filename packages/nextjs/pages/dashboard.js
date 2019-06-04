@@ -6,7 +6,6 @@ import Button from '../components/Button';
 import Torrent from '../components/Torrent';
 import useModal from '../lib/useModal';
 import AddTorrentModal from '../components/modals/AddTorrentModal';
-import ProgressBar from '../components/ProgressBar'
 const ME_QUERY = gql`
   {
     me {
@@ -40,15 +39,12 @@ const ME_QUERY = gql`
     }
   }
 `;
-const progress = 20;
+
 const Dashboard = () => (
-  //creating a temp variable
   <Main title="Dashboard">
     <div className="wrapper">
-      <ProgressBar className="progress-bar" progress={progress.toString()} color="var(--primary)"/>
       <ToolBar />
       <Torrents />
-
     </div>
   </Main>
 );

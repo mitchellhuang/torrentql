@@ -1,9 +1,11 @@
 import React from 'react';
+import ProgressBar from '../components/ProgressBar'
 
 const Torrent = ({
   torrent,
 }) => (
   <div className="torrent">
+    <ProgressBar className="progress-bar" progress={torrent.status.ratio} color="var(--primary)"/>
     {JSON.stringify(torrent)}
     <style jsx>{`
       .torrent {
