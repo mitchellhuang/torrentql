@@ -12,7 +12,7 @@ const ProgressBar = ({
   secondaryColor = secondaryColor || 'var(--secondary)';
   return (
     <div>
-      <p className="progress-value" style={{ textAlign: 'center' }}>
+      <p className="progress-value">
         {progress}%
       </p>
       <div className={progressBarClass} />
@@ -20,9 +20,10 @@ const ProgressBar = ({
         .progress-bar {
           width: ${progress}%; 
           background: linear-gradient(to right, ${primaryColor} ,${secondaryColor});
-          height: 1.35em;
-          margin-top: -2.2em;
-          border-radius: 0.375em;
+          height: 20px;
+          margin-top: -34.5px;
+          margin-bottom: 7.5;
+          border-radius: 20px;
         }
         .progress-value {
           text-align: center;
