@@ -25,12 +25,12 @@ const NavBar = ({ router }) => {
   }];
   if (data && data.isLoggedIn) {
     items.push({
-      name: 'Dashboard',
+      name: 'Dashboard →',
       url: '/dashboard',
     });
   } else {
     items.push({
-      name: 'Log in',
+      name: 'Log in →',
       url: '/login',
     });
   }
