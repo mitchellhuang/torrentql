@@ -13,147 +13,155 @@ const Index = () => (
 
 const Hero = () => (
   <div className="hero">
-    <div className="info">
-      <h1 className="tagline">Download and seed<br />torrents on a 1 Gb/s<br /> OVH network.</h1>
-      <div className="tagline-more">
-        <p className="tagline-price">Upload starting at $0.0075 / GB.</p>
-        <p className="tagline-price">Storage at $0.01 / GB / month.</p>
+    <div className="feature">
+      <div className="text">
+        <p className="tagline">Download and seed torrents on a 1 Gb/s OVH network.</p>
+        <div className="actions">
+          <Button href="/signup" animate>Sign up</Button>
+          <Button href="/pricing" className="ml-2" white animate>View pricing →</Button>
+        </div>
       </div>
-      <Button href="/signup" animate>Sign up</Button>
-      <Button href="/pricing" className="ml-2" white animate>View pricing →</Button>
+      <div className="image" />
     </div>
-    <div className="example" />
     <style jsx>{`
       .hero {
         display: flex;
+        flex-direction: column;
+        margin-bottom: 35px;
+      }
+      .feature {
+        display: flex;
         flex-direction: column-reverse;
-        margin-bottom: 25px;
       }
       .tagline {
         font-size: 24px;
-        margin-top: 15px;
-        margin-bottom: 15px;
         font-weight: 600;
-      }
-      .tagline-more {
-        display: none;
-        font-size: 18px;
+        line-height: 1.2;
         margin-bottom: 15px;
       }
-      .tagline-price {
-        margin: 0;
-      }
-      .tagline-price:not(:last-child) {
-        margin-bottom: 5px;
-      }
-      .example {
-        background-color: var(--black);
+      .image {
+        background-color: var(--lightGray);
         width: 100%;
-        height: 200px;
+        height: 225px;
         border-radius: 5px;
+      }
+      .text {
+        padding-top: 15px;
       }
       @media(min-width: 768px) {
         .hero {
-          flex-direction: row;
-          justify-content: center;
           align-items: center;
-          padding-top: 75px;
-          padding-bottom: 75px;
+        }
+        .feature {
+          flex-direction: row;
+          align-items: center;
+          margin-top: 75px;
+          margin-bottom: 75px;
+        }
+        .image {
+          width: 60%;
+        }
+        .text {
+          width: 40%;
+          padding-right: 15px;
         }
         .tagline {
           font-size: 32px;
-        }
-        .tagline-more {
-          margin: 15px 0;
-        }
-        .example {
-          width: 350px;
-          margin-left: 25px;
         }
       }
     `}</style>
   </div>
 );
 
+const features = [{
+  title: 'Easy to use dashboard',
+  description: `Use our dashboard to do pretty much everything
+    from viewing, adding, and deleting torrents, to
+    changing your account and security settings.`,
+}, {
+  title: 'Powerful GraphQL API',
+  description: `Build powerful applications with our easy to
+    use GraphQL API. Let us handle the heavy lifting when it comes
+    to downloading and seeding torrents.`,
+}, {
+  title: 'On-demand billing',
+  description: `Pay per gigabyte stored and uploaded instead of
+    a fixed cost per month. Download traffic is always free.`,
+}, {
+  title: 'Tier 1 network',
+  description: `We use a load balanced cluster of 1 Gb/s dedicated
+  servers in Gravelines, France. OVH has one of the best networks in
+  the world for peer to peer traffic.`,
+}];
+
 const Features = (
 ) => (
   <div className="features">
-    <h2 className="title">How it works</h2>
-    <div className="features-inner">
-      <div className="feature first">
+    {features.map(feature => (
+      <div key={feature.title} className="feature">
         <div className="image" />
-        <p className="text">
-          Add torrents using our dashboard or API.
-        </p>
+        <div className="text">
+          <h4 className="title">
+            {feature.title}
+          </h4>
+          <p className="description">
+            {feature.description}
+          </p>
+        </div>
       </div>
-      <div className="feature second">
-        <div className="image" />
-        <p className="text">
-           Our servers will download and seed your torrents.
-        </p>
-      </div>
-      <div className="feature third">
-        <div className="image" />
-        <p className="text">
-          Access your files over HTTPS, SFTP, or FUSE.
-        </p>
-      </div>
-    </div>
+    ))}
     <style jsx>{`
       .features {
-        display: flex;
-        flex-direction: column;
-      }
-      .title {
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 20px;
-      }
-      .features-inner {
         display: flex;
         flex-direction: column;
       }
       .feature {
         display: flex;
         flex-direction: column;
-        width: 200px;
       }
-      .feature:not(:last-child) {
-        margin-bottom: 5px;
+      .feature:not(last-child) {
+        margin-bottom: 25px;
       }
       .image {
-        width: 65px;
-        height: 65px;
-        background-color: var(--black);
+        background-color: var(--lightGray);
+        height: 200px;
         border-radius: 5px;
+        margin-bottom: 15px;
       }
-      .text {
-        margin-top: 15px;
+      .title {
+        margin-bottom: 15px;
       }
       @media(min-width: 768px) {
         .features {
           align-items: center;
-          padding: 50px 0;
-        }
-        .title {
-          font-size: 30px;
-          margin-bottom: 40px;
-        }
-        .features-inner {
-          flex-direction: row;
-          justify-content: center;
-          margin-bottom: 50px;
         }
         .feature {
-          width: 215px;
-          align-items: center;
+          flex-direction: row;
+          width: 100%;
         }
-        .feature:not(:last-child) {
-          margin-bottom: 0;
-          margin-right: 35px;
+        .feature:not(last-child) {
+          margin-bottom: 50px;
+        }
+        .feature:nth-child(2n) {
+          flex-direction: row-reverse;
         }
         .text {
-          text-align: center;
+          width: 50%;
+          padding-top: 15px;
+          padding-left: 25px;
+        }
+        .feature:nth-child(2n) .text {
+          padding-left: 0;
+          padding-right: 25px;
+        }
+        .image {
+          width: 50%;
+          margin-bottom: 0;
+        }
+      }
+      @media(min-width: 1024px) {
+        .feature {
+          width: 75%;
         }
       }
     `}</style>
