@@ -10,6 +10,7 @@ const Global = ({
         --primary: #51A4FB;
         --black: #111;
         --white: #fff;
+        --lightGray: #eee;
       };
       body {
         font-family: system-ui;
@@ -30,6 +31,9 @@ const Global = ({
       h3 {
         font-size: 24px;
       }
+      h4 {
+        font-size: 20px;
+      }
       h5 {
         font-size: 14px;
         color: #888;
@@ -38,6 +42,10 @@ const Global = ({
       a {
         color: var(--primary);
         text-decoration: none;
+      }
+      p {
+        margin: 0;
+        line-height: 1.4;
       }
       .wrapper {
         display: flex;
