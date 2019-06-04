@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
+import Logo from './Logo';
 
 const IS_LOGGED_IN_QUERY = gql`
   query IsUserLoggedIn {
@@ -13,32 +14,30 @@ const IS_LOGGED_IN_QUERY = gql`
 const NavBar = ({ router }) => {
   const { data } = useQuery(IS_LOGGED_IN_QUERY);
   const items = [{
-    name: 'Features',
-    url: '/features',
-  }, {
     name: 'Pricing',
     url: '/pricing',
+  }, {
+    name: 'Features',
+    url: '/features',
   }, {
     name: 'API',
     url: '/api',
   }];
   if (data && data.isLoggedIn) {
     items.push({
-      name: 'Dashboard',
+      name: 'Dashboard →',
       url: '/dashboard',
     });
   } else {
     items.push({
-      name: 'Log in',
+      name: 'Log in →',
       url: '/login',
     });
   }
   return (
     <div className="navbar">
       <div className="wrapper wrapper-v">
-        <div className="logo">
-          <Link href="/"><a>TorrentQL</a></Link>
-        </div>
+        <Logo className="logo" />
         <ul className="tabs">
           { items.map(item => (
             <li key={item.url}>
@@ -57,13 +56,8 @@ const NavBar = ({ router }) => {
           flex-direction: column;
           justify-content: space-between;
         }
-        .logo {
-          font-weight: 600;
-          font-size: 28px;
+        :global(.logo) {
           margin-bottom: 15px;
-        }
-        .logo a {
-          color: var(--black);
         }
         .tabs {
           list-style-type: none;
@@ -84,7 +78,7 @@ const NavBar = ({ router }) => {
             flex-direction: row;
             align-items: center;
           }
-          .logo {
+          :global(.logo) {
             margin-bottom: 0;
           }
           .tabs li {

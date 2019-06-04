@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Logo from './Logo';
 
 const items = [{
   name: 'FAQ',
@@ -19,7 +20,7 @@ const Footer = () => (
   <div className="footer">
     <div className="wrapper wrapper-v">
       <div className="logo">
-        TorrentQL
+        <Logo />
         <div className="copy">
           &copy; 2019 TorrentQL, LLC
         </div>
@@ -46,9 +47,6 @@ const Footer = () => (
         justify-content: space-between;
       }
       .logo {
-        color: var(--black);
-        font-weight: 600;
-        font-size: 24px;
         margin-bottom: 15px;
       }
       .copy {
@@ -77,7 +75,6 @@ const Footer = () => (
           padding-bottom: 35px;
         }
         .logo {
-          font-size: 24px;
           margin-bottom: 0;
         }
         .links li a {
