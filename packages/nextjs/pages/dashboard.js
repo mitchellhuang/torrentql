@@ -54,7 +54,7 @@ const ToolBar = () => {
   const { active, toggle } = useModal();
   return (
     <div className="toolbar">
-      <h3>DASHBOARD</h3>
+      <h3>Dashboard</h3>
       <Button onClick={toggle}>Add torrent</Button>
       <AddTorrentModal
         active={active}
