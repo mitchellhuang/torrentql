@@ -8,7 +8,6 @@ const Global = ({
     <style jsx global>{`
       :root {
         --primary: #FF7A8A;
-        --secondary: #FFC7CD;
         --black: #111;
         --white: #fff;
       };

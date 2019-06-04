@@ -2,31 +2,22 @@ import React from 'react';
 
 const ProgressBar = ({
   className,
-  primaryColor,
-  secondaryColor,
+  color,
   progress,
 }) => {
   const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
-  // setting default value for color
-  primaryColor = primaryColor || 'var(--primary)';
-  secondaryColor = secondaryColor || 'var(--secondary)';
   return (
     <div>
-      <p className="progress-value">
+      <div className={progressBarClass}>
         {progress}%
-      </p>
-      <div className={progressBarClass} />
+      </div>
       <style jsx>{`
         .progress-bar {
-          width: ${progress}%; 
-          background: linear-gradient(to right, ${primaryColor} ,${secondaryColor});
+          width: ${progress}%;
+          background-color: ${color || 'var(--primary)'};
           height: 20px;
-          margin-top: -34.5px;
-          margin-bottom: 7.5;
+          margin-bottom: 7.5px;
           border-radius: 20px;
-
-        }
-        .progress-value {
           text-align: center;
         }
      `}</style>

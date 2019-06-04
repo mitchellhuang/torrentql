@@ -5,12 +5,11 @@ const Torrent = ({
   torrent,
 }) => (
   <div className="torrent">
-    <ProgressBar progress={torrent.status.progress} color="var(--primary)" />
+    <ProgressBar progress={torrent.status.progress} />
     {JSON.stringify(torrent)}
     <style jsx>{`
       .torrent {
         padding: 10px;
-        padding-top: 0px;
         border: 1px solid #ccc;
         border-radius: 5px;
         word-break: break-all;
