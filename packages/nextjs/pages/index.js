@@ -59,10 +59,11 @@ const Hero = () => (
           margin-bottom: 75px;
         }
         .image {
-          width: 55%;
+          width: 60%;
         }
         .text {
-          width: 45%;
+          width: 40%;
+          padding-right: 15px;
         }
         .tagline {
           font-size: 32px;
