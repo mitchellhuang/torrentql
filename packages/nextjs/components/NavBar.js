@@ -14,11 +14,11 @@ const IS_LOGGED_IN_QUERY = gql`
 const NavBar = ({ router }) => {
   const { data } = useQuery(IS_LOGGED_IN_QUERY);
   const items = [{
-    name: 'Features',
-    url: '/features',
-  }, {
     name: 'Pricing',
     url: '/pricing',
+  }, {
+    name: 'Features',
+    url: '/features',
   }, {
     name: 'API',
     url: '/api',
