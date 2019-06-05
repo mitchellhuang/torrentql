@@ -49,15 +49,14 @@ const Dashboard = () => (
       <div className="mt-3">
         <Button href="/logout">Logout</Button>
       </div>
-    <style jsx>{`
-      .button{
-        display: flex;
-        align-items: right;
-        height: 0px;
-        width:200px;
-      }
-
-    `}</style>
+      <style jsx>{`
+        .button{
+          display: flex;
+          align-items: right;
+          height: 2.5px;
+          width: 35px;
+        }
+      `}</style>
     </div>
   </Main>
 );
