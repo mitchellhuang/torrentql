@@ -46,7 +46,7 @@ const Footer = () => (
       <div className="logo">
         <Logo />
         <div className="copy">
-          &copy; 2019 TorrentQL
+          Copyright &copy; 2019 TorrentQL LLC
         </div>
       </div>
       <div className="group get-started">

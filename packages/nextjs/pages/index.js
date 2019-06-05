@@ -15,7 +15,7 @@ const Hero = () => (
   <div className="hero">
     <div className="feature">
       <div className="text">
-        <p className="tagline">Download and seed torrents on a 1 Gb/s OVH network.</p>
+        <p className="tagline">Download and seed torrents on a 1 Gbit/s OVH network.</p>
         <div className="actions">
           <Button href="/signup" animate>Sign up</Button>
           <Button href="/pricing" className="ml-2" white animate>View pricing →</Button>
@@ -78,19 +78,17 @@ const features = [{
   and manage your account settings and API keys.`,
 }, {
   title: 'Powerful GraphQL API',
-  description: `Build robust applications with our easy to
-    use GraphQL API. Let us handle the heavy lifting when it
-    comes to torrents.`,
+  description: `Build robust applications with our modern
+    GraphQL API and let us handle the heavy lifting.`,
 }, {
   title: 'On-demand billing',
   description: `Pay per gigabyte stored and uploaded instead of
-    a fixed cost per month. Don't pay for resources you don't use.
-    Download traffic will always be free of charge.`,
+    a fixed cost per month. No need to pay for resources that you don't use.`,
 }, {
   title: 'Lightning fast network',
-  description: `We use a cluster of 1 Gb/s dedicated
-  servers in Gravelines, France. The OVH network is often regarded as
-  one of the best networks in the world for peer to peer traffic.`,
+  description: `Our cluster of 1 Gbit/s dedicated servers in Gravelines,
+  France is connected to the OVH network — often regarded as one of the best
+  networks in the world for peer to peer traffic.`,
 }];
 
 const Features = (

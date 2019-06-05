@@ -5,7 +5,8 @@ import Button from '../components/Button';
 const Settings = () => (
   <Dashboard title="Settings" noFooter>
     <div>
-      <Button href="/logout">
+      <div>Settings.</div>
+      <Button href="/logout" className="mt-3">
         Logout
       </Button>
     </div>
