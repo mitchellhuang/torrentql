@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import logo from '../static/icon-left-font.svg';
+import logo from '../static/icon-left-font.png';
 import logoAbove from '../static/icon-above-font.svg';
 
 export const Logo = ({

@@ -1,8 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
-import Main from './Main';
+import Global from './Global';
+import Head from '../components/Head';
 import ToolBar from '../components/ToolBar';
+import NavBar from '../components/NavBar';
 
 const tabs = [{
   name: 'Torrents',
@@ -34,18 +36,17 @@ const Tabs = ({
         list-style-type: none;
         padding: 0;
         margin: 0;
-        margin-right: 15px;
       }
       li a {
         display: block;
+        color: var(--black);
         font-size: 18px;
         font-weight: 600;
-        padding: 10px;
+        padding: 10px 0;
         border-radius: 5px;
       }
-      .active {
-        background-color: var(--primary);
-        color: var(--white);
+      li > .active {
+        color: #2d70b6;
       }
     `}</style>
   </ul>
@@ -54,9 +55,12 @@ const Tabs = ({
 const Dashboard = ({
   children,
   router,
+  title,
   ...props
 }) => (
-  <Main {...props}>
+  <Global backgroundColor="#e3e8ee" {...props}>
+    <Head title={title} />
+    <NavBar />
     <div className="wrapper">
       <ToolBar />
       <div className="main">
@@ -73,10 +77,12 @@ const Dashboard = ({
         display: flex;
         flex-direction: column;
       }
-      .tabs {
-      }
       .content {
+        background-color: var(--white);
+        border-radius: 5px;
+        padding: 15px;
         margin-top: 15px;
+        height: 100%;
       }
       @media(min-width: 768px) {
         .main {
@@ -86,12 +92,12 @@ const Dashboard = ({
           flex: 1;
         }
         .content {
-          flex: 3;
+          flex: 4;
           margin-top: 0;
         }
       }
     `}</style>
-  </Main>
+  </Global>
 );
 
 export default withRouter(Dashboard);

@@ -2,9 +2,11 @@ import React from 'react';
 
 const Global = ({
   children,
+  backgroundColor,
 }) => (
   <>
     {children}
+    <div id="modal-root" />
     <style jsx global>{`
       :root {
         --primary: #51A4FB;
@@ -17,6 +19,7 @@ const Global = ({
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
         color: var(--black);
+        background-color: ${backgroundColor || 'var(--white)'};
       }
       h1, h2, h3, h4, h5 {
         margin: 0;
