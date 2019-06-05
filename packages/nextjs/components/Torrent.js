@@ -5,7 +5,7 @@ const Torrent = ({
   torrent,
 }) => (
   <div className="torrent">
-    <ProgressBar className="mb-2" progress={torrent.status.progress} />
+    {torrent.status ? <ProgressBar className="mb-2" progress={torrent.status.progress} /> : null}
     {JSON.stringify(torrent)}
     <style jsx>{`
       .torrent {
