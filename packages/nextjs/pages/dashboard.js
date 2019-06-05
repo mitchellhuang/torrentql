@@ -46,6 +46,18 @@ const Dashboard = () => (
     <div className="wrapper">
       <ToolBar />
       <Torrents />
+      <div className="mt-3">
+        <Button href="/logout">Logout</Button>
+      </div>
+    <style jsx>{`
+      .button{
+        display: flex;
+        align-items: right;
+        height: 0px;
+        width:200px;
+      }
+
+    `}</style>
     </div>
   </Main>
 );
