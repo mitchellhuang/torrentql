@@ -21,7 +21,7 @@ const Tabs = ({
   <ul>
     { tabs.map(item => (
       <li key={item.url}>
-        <Link href={item.url}>
+        <Link prefetch href={item.url}>
           <a className={router.pathname === item.url ? 'active' : null}>
             {item.name}
           </a>
