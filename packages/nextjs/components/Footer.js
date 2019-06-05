@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Logo from './Logo';
+import { Logo } from './Logo';
 
 const getStarted = [{
   name: 'Log In',
