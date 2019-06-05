@@ -68,7 +68,7 @@ const NavBar = ({ router }) => {
           margin: 0;
         }
         .tabs li a {
-          display: block;
+          display: inline-block;
           font-size: 18px;
           font-weight: 600;
           border-radius: 5px;
