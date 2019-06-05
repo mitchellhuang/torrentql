@@ -1,8 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
-import Main from './Main';
+import Global from './Global';
+import Head from '../components/Head';
 import ToolBar from '../components/ToolBar';
+import NavBar from '../components/NavBar';
 
 const tabs = [{
   name: 'Torrents',
@@ -38,14 +40,14 @@ const Tabs = ({
       }
       li a {
         display: block;
+        color: var(--black);
         font-size: 18px;
         font-weight: 600;
-        padding: 10px;
+        padding: 10px 0;
         border-radius: 5px;
       }
-      .active {
-        background-color: var(--primary);
-        color: var(--white);
+      li > .active {
+        color: var(--primary);
       }
     `}</style>
   </ul>
@@ -54,9 +56,12 @@ const Tabs = ({
 const Dashboard = ({
   children,
   router,
+  title,
   ...props
 }) => (
-  <Main {...props}>
+  <Global backgroundColor="#e3e8ee" {...props}>
+    <Head title={title} />
+    <NavBar />
     <div className="wrapper">
       <ToolBar />
       <div className="main">
@@ -72,8 +77,6 @@ const Dashboard = ({
       .main {
         display: flex;
         flex-direction: column;
-      }
-      .tabs {
       }
       .content {
         margin-top: 15px;
@@ -91,7 +94,7 @@ const Dashboard = ({
         }
       }
     `}</style>
-  </Main>
+  </Global>
 );
 
 export default withRouter(Dashboard);

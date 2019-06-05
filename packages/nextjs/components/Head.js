@@ -1,14 +1,18 @@
 import React from 'react';
-import NextHead from 'next/head';
+import Head from 'next/head';
+import favicon16 from '../static/favicon-16x16.png';
+import favicon32 from '../static/favicon-32x32.png';
 
-const Head = ({
+const CustomHead = ({
   title,
 }) => (
-  <NextHead>
+  <Head>
     <meta charSet="UTF-8" />
-    <title>{title || 'TorrentQL'}</title>
+    <title>{title ? `${title} - TorrentQL` : 'TorrentQL'}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+    <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </NextHead>
+  </Head>
 );
 
-export default Head;
+export default CustomHead;
