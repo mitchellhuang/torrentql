@@ -107,7 +107,7 @@ const Footer = () => (
         align-items: flex-start;
       }
       .logo {
-        margin-bottom: 15px;
+        margin: 15px 0;
       }
       .copy {
         font-size: 12px;
@@ -143,6 +143,7 @@ const Footer = () => (
         }
         .logo {
           flex: 2;
+          margin: 0;
         }
         .group {
           flex: 1;

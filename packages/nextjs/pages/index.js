@@ -55,8 +55,7 @@ const Hero = () => (
         .feature {
           flex-direction: row;
           align-items: center;
-          margin-top: 75px;
-          margin-bottom: 75px;
+          margin: 100px 0;
         }
         .image {
           width: 60%;
