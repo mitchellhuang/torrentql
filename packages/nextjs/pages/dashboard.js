@@ -42,7 +42,7 @@ const ME_QUERY = gql`
 `;
 
 const Dashboard = () => (
-  <Main title="Dashboard">
+  <Main title="Dashboard" noFooter>
     <div className="wrapper">
       <ToolBar />
       <Torrents />
