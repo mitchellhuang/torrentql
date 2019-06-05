@@ -30,7 +30,7 @@ const SignupForm = () => {
         const { data: { createUser: { token } } } = result;
         document.cookie = cookie.serialize('token', token);
         setSubmitting(false);
-        Router.push('/dashboard');
+        Router.push('/torrents');
       }}
       render={({
         values: { email, password },

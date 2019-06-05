@@ -26,7 +26,7 @@ const NavBar = ({ router }) => {
   if (data && data.isLoggedIn) {
     items.push({
       name: 'Dashboard →',
-      url: '/dashboard',
+      url: '/torrents',
     });
   } else {
     items.push({

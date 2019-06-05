@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { Logo } from './Logo';
 
 const getStarted = [{
-  name: 'Log In',
+  name: 'Log in',
   url: '/login',
 }, {
-  name: 'Sign Up',
+  name: 'Sign up',
   url: '/signup',
 }, {
   name: 'FAQ',
@@ -25,13 +25,13 @@ const productItems = [{
 }];
 
 const companyItems = [{
-  name: 'Contact Us',
+  name: 'Contact us',
   url: '/contact',
 }, {
-  name: 'Terms of Service',
+  name: 'Terms of service',
   url: '/terms',
 }, {
-  name: 'Privacy Policy',
+  name: 'Privacy policy',
   url: '/privacy',
 }, {
   name: 'DMCA',
@@ -44,7 +44,7 @@ const Footer = () => (
       <div className="logo">
         <Logo />
         <div className="copy">
-          &copy; 2019 TorrentQL, LLC
+          &copy; 2019 TorrentQL
         </div>
       </div>
       <div className="group get-started">
@@ -138,7 +138,8 @@ const Footer = () => (
       }
       @media(min-width: 768px) {
         .wrapper {
-          padding: 50px 0;
+          padding-top: 50px;
+          padding-bottom: 50px;
           flex-direction: row;
         }
         .logo {

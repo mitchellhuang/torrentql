@@ -32,7 +32,7 @@ const LoginForm = () => {
         document.cookie = cookie.serialize('token', token);
         client.writeData({ data: { isLoggedIn: true } });
         setSubmitting(false);
-        Router.push('/dashboard');
+        Router.push('/torrents');
       }}
       render={({
         values: { email, password },

@@ -74,23 +74,23 @@ const Hero = () => (
 
 const features = [{
   title: 'Easy to use dashboard',
-  description: `Use our dashboard to do pretty much everything
-    from viewing, adding, and deleting torrents, to
-    changing your account and security settings.`,
+  description: `Use our dashboard to view, add, and delete torrents
+  and manage your account settings and API keys.`,
 }, {
   title: 'Powerful GraphQL API',
-  description: `Build powerful applications with our easy to
-    use GraphQL API. Let us handle the heavy lifting when it comes
-    to downloading and seeding torrents.`,
+  description: `Build robust applications with our easy to
+    use GraphQL API. Let us handle the heavy lifting when it
+    comes to torrents.`,
 }, {
   title: 'On-demand billing',
   description: `Pay per gigabyte stored and uploaded instead of
-    a fixed cost per month. Download traffic is always free.`,
+    a fixed cost per month. Don't pay for resources you don't use.
+    Download traffic will always be free of charge.`,
 }, {
-  title: 'Tier 1 network',
-  description: `We use a load balanced cluster of 1 Gb/s dedicated
-  servers in Gravelines, France. OVH has one of the best networks in
-  the world for peer to peer traffic.`,
+  title: 'Lightning fast network',
+  description: `We use a cluster of 1 Gb/s dedicated
+  servers in Gravelines, France. The OVH network is often regarded as
+  one of the best networks in the world for peer to peer traffic.`,
 }];
 
 const Features = (
