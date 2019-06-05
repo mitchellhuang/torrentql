@@ -34,7 +34,7 @@ const Hero = () => (
         flex-direction: column-reverse;
       }
       .tagline {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 600;
         line-height: 1.2;
         margin-bottom: 15px;
@@ -55,8 +55,7 @@ const Hero = () => (
         .feature {
           flex-direction: row;
           align-items: center;
-          margin-top: 75px;
-          margin-bottom: 75px;
+          margin: 100px 0;
         }
         .image {
           width: 60%;
@@ -66,7 +65,7 @@ const Hero = () => (
           padding-right: 15px;
         }
         .tagline {
-          font-size: 32px;
+          font-size: 30px;
         }
       }
     `}</style>
@@ -138,6 +137,7 @@ const Features = (
         .feature {
           flex-direction: row;
           width: 100%;
+          max-width: 960px;
         }
         .feature:not(last-child) {
           margin-bottom: 50px;
@@ -157,11 +157,6 @@ const Features = (
         .image {
           width: 50%;
           margin-bottom: 0;
-        }
-      }
-      @media(min-width: 1024px) {
-        .feature {
-          width: 75%;
         }
       }
     `}</style>

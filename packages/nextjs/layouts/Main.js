@@ -19,25 +19,14 @@ const Main = ({
       <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
-    <div className="outer">
+    <div className="main">
       <NavBar />
-      <div className="inner">
+      <div className="content">
         {children}
       </div>
       {!noFooter ? <Footer /> : null}
     </div>
     <div id="modal-root" />
-    <style jsx>{`
-      .outer {
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-      }
-      .inner {
-        display: flex;
-        flex: 1;
-      }
-    `}</style>
   </Global>
 );
 
