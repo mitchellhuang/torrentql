@@ -36,7 +36,6 @@ const Tabs = ({
         list-style-type: none;
         padding: 0;
         margin: 0;
-        margin-right: 15px;
       }
       li a {
         display: block;
@@ -47,7 +46,7 @@ const Tabs = ({
         border-radius: 5px;
       }
       li > .active {
-        color: var(--primary);
+        color: #2d70b6;
       }
     `}</style>
   </ul>
@@ -79,7 +78,11 @@ const Dashboard = ({
         flex-direction: column;
       }
       .content {
+        background-color: var(--white);
+        border-radius: 5px;
+        padding: 15px;
         margin-top: 15px;
+        height: 100%;
       }
       @media(min-width: 768px) {
         .main {
@@ -89,7 +92,7 @@ const Dashboard = ({
           flex: 1;
         }
         .content {
-          flex: 3;
+          flex: 4;
           margin-top: 0;
         }
       }
