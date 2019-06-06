@@ -15,7 +15,7 @@ const Modal = ({
     />
     <div className="modal-container">
       <div className="modal-header">
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <a
           className="modal-close-button"
           onClick={toggle}
