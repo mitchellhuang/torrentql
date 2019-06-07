@@ -27,10 +27,10 @@ export class Torrent {
 
   @Column({
     type: 'enum',
-    enum: ['file', 'magnet'],
+    enum: ['magnet', 'url', 'file'],
     default: 'file',
   })
-  type: 'file' | 'magnet';
+  type: 'magnet' | 'url' | 'file';
 
   @Column('text')
   data: string;
