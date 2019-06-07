@@ -17,8 +17,8 @@ scalar JSON
 type Mutation {
   addTorrent(data: String!): Torrent!
   deleteTorrent(id: String!): Boolean!
-  createUser(password: String!, email: String!): User!
-  login(password: String!, email: String!): User!
+  createUser(email: String!, password: String!): User!
+  login(email: String!, password: String!): User!
   deleteUser: Boolean!
 }
 
