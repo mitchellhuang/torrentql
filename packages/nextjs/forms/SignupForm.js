@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
 import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import cookie from 'cookie';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -17,6 +17,7 @@ const SIGNUP_MUTATION = gql`
 
 const SignupForm = () => {
   const signup = useMutation(SIGNUP_MUTATION);
+  const client = useApolloClient();
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -29,6 +30,7 @@ const SignupForm = () => {
         });
         const { data: { createUser: { token } } } = result;
         document.cookie = cookie.serialize('token', token);
+        client.writeData({ data: { isLoggedIn: true } });
         setSubmitting(false);
         Router.push('/torrents');
       }}

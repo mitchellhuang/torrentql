@@ -6,8 +6,8 @@ import { useQuery } from 'react-apollo-hooks';
 import { Logo } from './Logo';
 
 const IS_LOGGED_IN_QUERY = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
+  query isLoggedIn {
+    isLoggedIn @client(always: true)
   }
 `;
 
