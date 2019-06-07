@@ -9,9 +9,6 @@ import Head from 'next/head'
 import initApollo from './initApollo'
 
 function parseCookies (req, options = {}) {
-  if (!req && !process.browser) {
-    return {}
-  }
   return cookie.parse(req ? req.headers.cookie || '' : document.cookie, options)
 }
 
@@ -81,7 +78,8 @@ export default App => {
 
       return {
         ...appProps,
-        apolloState
+        apolloState,
+        getToken: () => parseCookies(req).token,
       }
     }
 
@@ -89,9 +87,8 @@ export default App => {
       super(props)
       // `getDataFromTree` renders the component first, the client is passed off as a property.
       // After that rendering is done using Next's normal rendering pipeline
-      // console.log('heem')
       this.apolloClient = initApollo(props.apolloState, {
-        getToken: () => parseCookies().token
+        getToken: process.browser ? () => parseCookies().token : props.getToken,
       })
     }
 
