@@ -7,14 +7,13 @@ import {
   Root,
   Mutation,
   Ctx,
-  Arg,
   Args,
   Field,
   ArgsType,
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { Validator, MinLength } from 'class-validator';
+import { Validator, MinLength, IsUUID } from 'class-validator';
 import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
@@ -30,6 +29,13 @@ class AddTorrentInput {
   @Field()
   @MinLength(1)
   data: string;
+}
+
+@ArgsType()
+class DeleteTorrentInput {
+  @Field()
+  @IsUUID()
+  id: string;
 }
 
 @Resolver(Torrent)
@@ -96,7 +102,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
 
   @Authorized()
   @Mutation(returns => Boolean)
-  async deleteTorrent(@Arg('id') id: string, @Ctx() ctx: Context) {
+  async deleteTorrent(@Args() { id }: DeleteTorrentInput, @Ctx() ctx: Context) {
     const torrent = await this.torrentRepository.findOne(id);
     if (!torrent) {
       throw new Error('Torrent not found.');
