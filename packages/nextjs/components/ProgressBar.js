@@ -25,7 +25,6 @@ const ProgressBar = ({
           border-radius: 15px;
         }
         .status{
-          width: 100vmin;
           border: 2px solid lightgray;
         }
      `}</style>

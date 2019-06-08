@@ -4,63 +4,58 @@ import ProgressBar from './ProgressBar';
 const Torrent = ({
   torrent,
 }) => {
-  if (!torrent.status) {
-    return (
-      <div>
-        Invalid torrent.
+  const isValidTorrent = Math.random() > .5;
+  const SeedingInfo = (props) => {
+    const seedingInfoList = [
+      `Status: ${props.status.state}`,
+      `Peers: ${props.status.numPeers}/${props.status.totalPeers}`,
+      `Seeds: ${props.status.numSeeds}/${props.status.totalSeeds}`
+    ];
+    return <div className="seeding-info-name">
+        <span className="name">
+          {props.status.name}
+        </span>
+        <div className="seeding-info">
+          {seedingInfoList.map(ele => <span>{ele}</span>)}
+        </div>
+        <style jsx>{`
+          .seeding-info-name {
+            display: flex;
+            justify-content: space-between;
+          }
+          .name {
+            margin-left: 3px;
+          }
+          .seeding-info {
+            margin-right: 5px;
+          }
+          .seeding-info > span {
+            margin-left: 10px;
+          }
+        `}</style>
       </div>
-    );
+  }
+  const Invalid = (props) => {
+    return <div>
+      Torrent unavailable.
+      <style jsx>{`
+        div {
+          padding: 4px;
+          color: slategray;
+        }
+    `}</style></div>;
   }
   return (
-    <div className="torrent">
-      <div className="torrent-info">
-        <span className="name">
-          {torrent.status.name}
-        </span>
-        <div className="state">
-           Status: {torrent.status.state}
-        </div>
-        <div className="peers">
-          Peers: {torrent.status.numPeers}/{torrent.status.totalPeers}
-        </div>
-        <div className="seeds">
-          Seeds: {torrent.status.numSeeds}/{torrent.status.totalSeeds}
-        </div>
-      </div>
-      <ProgressBar progress={torrent.status.progress} />
+    <div className="torrent mb-2 p-2">
+      {!isValidTorrent && <Invalid/>}
+      {isValidTorrent && <SeedingInfo status={torrent.status} />}
+      {isValidTorrent && <ProgressBar progress={torrent.status.progress} />}
       <style jsx>{`
         .torrent {
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
+          border: 2px solid lightgray;
+          border-radius: 10px;
+          font-size: 10pt;
           word-break: break-all;
-        }
-        .torrent:not(:last-child) {
-          margin-bottom: 15px;
-        }
-        .name {
-          font-size: 14px;
-        }
-        .state {
-          display: inline;
-          float: right;
-          margin-left: 10px;
-          font-size: 14px;
-        }
-        .seeds {
-          display: inline;
-          float: right;
-          margin-left: 10px;
-          margin-top: 0px;
-          font-size: 14px;
-        }
-        .peers {
-          display: inline;
-          float: right;
-          margin-left: 10px;
-          margin-top: 0px;
-          top-padding: 0px;
-          font-size: 14px;
         }
       `}</style>
     </div>
