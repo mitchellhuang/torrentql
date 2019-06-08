@@ -13,7 +13,7 @@ const Torrent = ({
   }
   return (
     <div className="torrent">
-      <div className="torrentInfo">
+      <div className="torrent-info">
         <div className="name">
           {torrent.status.name}
         </div>
@@ -62,9 +62,6 @@ const Torrent = ({
           margin-top: 0px;
           top-padding: 0px;
           font-size: 14px;
-        }
-        .progressBar {
-          float: left;
         }
       `}</style>
     </div>
