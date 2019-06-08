@@ -12,6 +12,7 @@ const CustomHead = ({
     <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
     <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/static/chrome-fix.js" />
   </Head>
 );
 
