@@ -27,7 +27,7 @@ const Torrent = ({
           Seeds: {torrent.status.numSeeds}/{torrent.status.totalSeeds}
         </div>
       </div>
-      <ProgressBar className="mb-2" progress={torrent.status.progress} />
+      <ProgressBar progress={30} />
       <style jsx>{`
         .torrent {
           padding: 10px;

@@ -7,8 +7,8 @@ const ProgressBar = ({
 }) => {
   const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
   return (
-    <div className="status">
-      <div className={progressBarClass}>
+    <div className="status rounded mt-1">
+      <div className={`${progressBarClass} rounded`}>
         <span>
           {progress.toFixed(2)}%
         </span>
@@ -20,11 +20,13 @@ const ProgressBar = ({
           height: 20px;
           text-align: center;
           min-width: 50px;
-          border-radius: 25px;
+        }
+        .rounded {
+          border-radius: 15px;
         }
         .status{
-          width: 200px;
-          display: inline;
+          width: 100vmin;
+          border: 2px solid lightgray;
         }
      `}</style>
     </div>
