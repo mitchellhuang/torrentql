@@ -9,7 +9,9 @@ const ProgressBar = ({
   return (
     <div>
       <div className={progressBarClass}>
-        {progress.toFixed(2)}%
+        <div className="status">
+          {progress.toFixed(2)}%
+        </div>
       </div>
       <style jsx>{`
         .progress-bar {
@@ -23,5 +25,6 @@ const ProgressBar = ({
     </div>
   );
 };
+
 
 export default ProgressBar;
