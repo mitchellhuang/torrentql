@@ -13,19 +13,21 @@ const Torrent = ({
   }
   return (
     <div className="torrent">
-      <div className="name">
-        {torrent.status.name}
+      <div className="torrentInfo">
+        <div className="name">
+          {torrent.status.name}
+        </div>
+        <div className="state">
+           Status: {torrent.status.state}
+        </div>
+        <div className="peers">
+          Peers: {torrent.status.numPeers}/{torrent.status.totalPeers}
+        </div>
+        <div className="seeds">
+          Seeds: {torrent.status.numSeeds}/{torrent.status.totalSeeds}
+        </div>
       </div>
-      <div className="state">
-         Status: {torrent.status.state}
-      </div>
-      <div className="peers">
-        Peers: {torrent.status.numPeers}/{torrent.status.totalPeers}
-      </div>
-      <div className="seeds">
-        Seeds: {torrent.status.numSeeds}/{torrent.status.totalSeeds}
-      </div>
-      {torrent.status ? <ProgressBar className="mb-2" progress={torrent.status.progress} /> : null}
+      <ProgressBar className="mb-2" progress={torrent.status.progress} />
       <style jsx>{`
         .torrent {
           padding: 10px;
@@ -42,20 +44,20 @@ const Torrent = ({
         }
         .state {
           display: inline;
-          float: left;
+          float: right;
           margin-left: 10px;
           font-size: 14px;
         }
         .seeds {
           display: inline;
-          float: left;
+          float: right;
           margin-left: 10px;
           margin-top: 0px;
           font-size: 14px;
         }
         .peers {
           display: inline;
-          float: left;
+          float: right;
           margin-left: 10px;
           margin-top: 0px;
           top-padding: 0px;
