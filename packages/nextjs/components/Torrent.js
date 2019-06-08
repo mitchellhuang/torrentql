@@ -10,10 +10,6 @@ const Torrent = ({
         Invalid torrent.
       </div>
     );
-  } if (!torrent.status.name) {
-    return (<div>Unknown Title</div>);
-  } if (!torrent.status.name) {
-    return (<div>Unknown Title</div>);
   }
   return (
     <div className="torrent">
@@ -40,27 +36,24 @@ const Torrent = ({
         .torrent:not(:last-child) {
           margin-bottom: 15px;
         }
-        .name{
+        .name {
           dislplay: block;
           font-size: 14px;
         }
-        .state{
+        .state {
           display: inline;
           float: left;
           margin-left: 10px;
           font-size: 14px;
-
         }
-        .seeds{
+        .seeds {
           display: inline;
           float: left;
           margin-left: 10px;
           margin-top: 0px;
-
           font-size: 14px;
-
         }
-        .peers{
+        .peers {
           display: inline;
           float: left;
           margin-left: 10px;
@@ -68,7 +61,7 @@ const Torrent = ({
           top-padding: 0px;
           font-size: 14px;
         }
-        .progressBar{
+        .progressBar {
           float: left;
         }
       `}</style>
