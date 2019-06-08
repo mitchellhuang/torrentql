@@ -11,7 +11,7 @@ const Torrent = ({
     <div className="torrent mb-2 p-2">
       {!isValidTorrent && <Invalid/>}
       {isValidTorrent && <SeedingInfo status={torrent.status} />}
-      {isValidTorrent && <ProgressBar progress={torrent.status.progress} />}
+      {isValidTorrent && torrent.status.progress < 100 && <ProgressBar progress={torrent.status.progress} />}
       <style jsx>{`
         .torrent {
           border: 2px solid lightgray;
@@ -28,31 +28,28 @@ const Invalid = () => {
     Torrent unavailable.
       <style jsx>{`
         div {
-          padding: 4px;
+          padding: 0 4px;
           color: slategray;
         }
     `}</style></div>;
 }
 
-const StateIcon = (props) => {
-  const path = props.state === 'seeding' ? seedingSVG : downloadingSVG;
-  return <span>
-    <img src={path} style={{ height: 15, marginBottom: -3 }} />
-  </span>
-}
-
 const SeedingInfo = (props) => {
-  const seedingInfoList = [
-    <StateIcon state={props.status.state} />,
-    `Peers: ${props.status.numPeers}/${props.status.totalPeers}`,
-    `Seeds: ${props.status.numSeeds}/${props.status.totalSeeds}`
-  ];
+  const path = props.status.state === 'seeding' ? seedingSVG : downloadingSVG;
   return <div className="seeding-info-name">
     <span className="name">
       {props.status.name}
     </span>
     <div className="seeding-info">
-      {seedingInfoList.map((ele, idx) => <span key={idx}>{ele}</span>)}
+      <span className="icon">
+        <img src={path} style={{ height: 15, marginBottom: -3 }} />
+      </span>
+      <span className="peer">
+        {`Peers: ${props.status.numPeers}/${props.status.totalPeers}`}
+      </span>
+      <span className="seed">
+        {`Seeds: ${props.status.numSeeds}/${props.status.totalSeeds}`}
+      </span>
     </div>
     <style jsx>{`
           .seeding-info-name {
@@ -65,8 +62,15 @@ const SeedingInfo = (props) => {
           .seeding-info {
             margin-right: 5px;
           }
-          .seeding-info > span {
-            margin-left: 10px;
+          div.seeding-info > span {
+            text-align: right;
+            float: left;
+          }
+          .seed {
+            min-width: 100px;
+          }
+          .peer {
+            min-width: 80px;
           }
         `}</style>
   </div>
