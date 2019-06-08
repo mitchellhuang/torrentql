@@ -7,16 +7,36 @@ import {
   Root,
   Mutation,
   Ctx,
-  Arg,
+  Args,
+  Field,
+  ArgsType,
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Validator, MinLength, IsUUID } from 'class-validator';
 import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
+import axios from 'axios';
 import { Context } from '../lib/context';
 import { Torrent } from '../entities/Torrent';
 import { TorrentStatus } from '../entities/TorrentStatus';
 import { Server } from '../entities/Server';
+
+const validator = new Validator();
+
+@ArgsType()
+class AddTorrentInput {
+  @Field()
+  @MinLength(1)
+  data: string;
+}
+
+@ArgsType()
+class DeleteTorrentInput {
+  @Field()
+  @IsUUID()
+  id: string;
+}
 
 @Resolver(Torrent)
 export class TorrentResolver implements ResolverInterface<Torrent> {
@@ -27,7 +47,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
 
   @Authorized()
   @Mutation(returns => Torrent)
-  async addTorrent(@Arg('data') data: string, @Ctx() ctx: Context) {
+  async addTorrent(@Args() { data }: AddTorrentInput, @Ctx() ctx: Context) {
     const servers = await this.serverRepository.find();
     const server = _.sample(servers);
     if (!server) {
@@ -40,22 +60,35 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
     });
     let hash;
     let type;
-    if (data.includes('magnet')) {
+    const isUrl = validator.isURL(data);
+    if (isUrl) {
+      type = 'url';
+      try {
+        const result = await axios.get<Buffer>(data, {
+          maxContentLength: 1000 * 1000,
+          responseType: 'arraybuffer',
+        });
+        hash = parseTorrent(result.data).infoHash;
+        await deluge.addTorrent(result.data);
+      } catch (error) {
+        throw new Error('Invalid torrent file URL.');
+      }
+    } else if (data.includes('magnet')) {
       type = 'magnet';
       try {
         hash = parseTorrent(data).infoHash;
+        await deluge.addTorrentMagnet(data);
       } catch (err) {
         throw new Error('Invalid magnet link.');
       }
-      await deluge.addTorrentMagnet(data);
     } else {
       type = 'file';
       try {
         hash = parseTorrent(Buffer.from(data, 'base64')).infoHash;
+        await deluge.addTorrent(data);
       } catch (err) {
         throw new Error('Invalid torrent file.');
       }
-      await deluge.addTorrent(data);
     }
     const torrent = new Torrent();
     torrent.isActive = true;
@@ -69,7 +102,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
 
   @Authorized()
   @Mutation(returns => Boolean)
-  async deleteTorrent(@Arg('id') id: string, @Ctx() ctx: Context) {
+  async deleteTorrent(@Args() { id }: DeleteTorrentInput, @Ctx() ctx: Context) {
     const torrent = await this.torrentRepository.findOne(id);
     if (!torrent) {
       throw new Error('Torrent not found.');

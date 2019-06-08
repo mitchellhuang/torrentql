@@ -1,18 +1,10 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
+import { ADD_TORRENT_MUTATION } from '../../apollo/mutations';
 import Modal from '../Modal';
 import Input from '../Input';
 import Button from '../Button';
-
-const ADD_TORRENT_MUTATION = gql`
-  mutation addTorrent($data: String!) {
-    addTorrent(data: $data) {
-      id
-    }
-  }
-`;
 
 const getFileBase64 = file => new Promise((resolve) => {
   const reader = new FileReader();
