@@ -9,21 +9,21 @@ const ProgressBar = ({
   return (
     <div className="status">
       <div className={progressBarClass}>
-        <div className="status">
+        <span>
           {progress.toFixed(2)}%
-        </div>
+        </span>
       </div>
       <style jsx>{`
         .progress-bar {
           width: ${progress}%;
           background-color: ${color || 'var(--primary)'};
           height: 20px;
-          border-radius: 20px;
           text-align: center;
-          display: inline;
+          min-width: 50px;
+          border-radius: 25px;
         }
         .status{
-          width: 100%;
+          width: 200px;
           display: inline;
         }
      `}</style>

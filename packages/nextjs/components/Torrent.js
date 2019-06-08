@@ -14,9 +14,9 @@ const Torrent = ({
   return (
     <div className="torrent">
       <div className="torrent-info">
-        <div className="name">
+        <span className="name">
           {torrent.status.name}
-        </div>
+        </span>
         <div className="state">
            Status: {torrent.status.state}
         </div>
@@ -39,7 +39,6 @@ const Torrent = ({
           margin-bottom: 15px;
         }
         .name {
-          dislplay: block;
           font-size: 14px;
         }
         .state {
