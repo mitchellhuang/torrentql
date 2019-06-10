@@ -1,9 +1,11 @@
 import React from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
+  import Link from 'next/link';
 import { withRouter } from 'next/router';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
 import { Logo } from './Logo';
+import NavBarBurger from './NavBarBurger';
 
 const IS_LOGGED_IN_QUERY = gql`
   query isLoggedIn {
@@ -13,32 +15,30 @@ const IS_LOGGED_IN_QUERY = gql`
 
 const NavBar = ({ router }) => {
   const { data } = useQuery(IS_LOGGED_IN_QUERY);
-  const items = [{
-    name: 'Pricing',
-    url: '/pricing',
-  }, {
-    name: 'Features',
-    url: '/features',
-  }, {
-    name: 'API',
-    url: '/api',
-  }];
-  if (data && data.isLoggedIn) {
-    items.push({
-      name: 'Dashboard →',
-      url: '/torrents',
-    });
-  } else {
-    items.push({
-      name: 'Log in →',
-      url: '/login',
-    });
-  }
+  const [open, setOpen] = useState(false);
+  const toggle = () => {
+    setOpen(!open);
+    console.log(open);
+  };
+  const items = [
+    { name: 'Pricing', url: '/pricing'},
+    { name: 'Features', url: '/features'},
+    { name: 'API', url: '/api'}
+  ];
+  const finalItem = (data && data.isLoggedIn) ?
+    { name: 'Dashboard →', url: '/torrents' } :
+    { name: 'Log in →', url: '/login' };
+  items.push(finalItem);
   return (
     <div className="navbar">
       <div className="wrapper">
-        <Logo className="logo" />
-        <ul className="tabs">
+        <div className="burger-logo-wrapper">
+          <Logo className="logo" />
+          <div className="burger-wrapper" onClick={toggle.bind(this)}>
+            <NavBarBurger open={open} />
+          </div>
+        </div>
+        <ul className={open ? "tabs pb-1" : "tabs hidden pb-1"}>
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
@@ -52,20 +52,19 @@ const NavBar = ({ router }) => {
       </div>
       <style jsx>{`
         .navbar {
-          padding: 15px 0;
+          position: sticky;
+          top: 0;
+          min-height: 50px;
+          background: rgb(238, 238, 238, .5);
         }
         .wrapper {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         }
-        :global(.logo) {
-          margin-bottom: 15px;
-        }
         .tabs {
           list-style-type: none;
-          padding: 0;
-          margin: 0;
+          margin: -8px 0 0 0;
         }
         .tabs li a {
           display: inline-block;
@@ -76,7 +75,14 @@ const NavBar = ({ router }) => {
         .tabs li:not(:last-child) a {
           margin-bottom: 5px;
         }
+        .hidden {
+          visibility: hidden;
+          height: 0;
+        }
         @media(min-width: 768px) {
+          .hidden {
+            visibility: visible;
+          }
           .wrapper {
             flex-direction: row;
             align-items: center;
@@ -95,6 +101,14 @@ const NavBar = ({ router }) => {
             margin-bottom: 0;
             margin-right: 15px;
           }
+        }
+        .burger-logo-wrapper {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .burger-wrapper {
+          margin: 25px 37px 0 0;
         }
       `}</style>
     </div>
