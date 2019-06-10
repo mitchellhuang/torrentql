@@ -109,7 +109,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
     }
     const torrentUser = await torrent.user;
     if (torrentUser.id !== ctx.user.id) {
-      throw new Error('Torrent does not belong to you.');
+      throw new Error('Torrent not found.');
     }
     const activeHashes = await this.torrentRepository.find({
       hash: torrent.hash,
