@@ -1,21 +1,20 @@
 import { Repository } from 'typeorm';
-import { Resolver, Query, Args, ArgsType, Field, Mutation, Ctx, Authorized } from 'type-graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  ArgsType,
+  InputType,
+  Field,
+  Mutation,
+  Ctx,
+  Authorized,
+} from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
 import { Context } from '../lib/context';
 import { User } from '../entities/User';
 import * as jwt from '../lib/jwt';
-
-@ArgsType()
-class CreateUserInput {
-  @Field()
-  @IsEmail()
-  email: string;
-
-  @Field()
-  @MinLength(8)
-  password: string;
-}
 
 @ArgsType()
 class LoginInput {
@@ -28,6 +27,47 @@ class LoginInput {
   password: string;
 }
 
+@ArgsType()
+class CreateUserInput {
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @MinLength(8)
+  password: string;
+}
+
+@InputType()
+class UpdatePasswordInput {
+  type: 'password';
+
+  @Field()
+  oldPassword: string;
+
+  @Field()
+  @MinLength(8)
+  newPassword: string;
+}
+
+@InputType()
+class UpdateEmailInput {
+  type: 'email';
+
+  @Field()
+  @IsEmail()
+  newEmail: string;
+}
+
+@ArgsType()
+class UpdateUserInput {
+  @Field({ nullable: true })
+  updatePasswordInput?: UpdatePasswordInput;
+
+  @Field({ nullable: true })
+  updateEmailInput?: UpdateEmailInput;
+}
+
 @Resolver(User)
 export class UserResolver {
   constructor(
@@ -38,18 +78,6 @@ export class UserResolver {
   @Query(returns => User)
   me(@Ctx() ctx: Context) {
     return ctx.user;
-  }
-
-  @Mutation(returns => User)
-  async createUser(
-    @Args() { email, password }: CreateUserInput,
-  ) {
-    const user = new User();
-    user.email = email;
-    user.password = password;
-    await this.userRepository.save(user);
-    user.token = jwt.encode(user.id, user.email);
-    return user;
   }
 
   @Mutation(returns => User)
@@ -66,6 +94,43 @@ export class UserResolver {
     }
     user.token = jwt.encode(user.id, user.email);
     return user;
+  }
+
+  @Mutation(returns => User)
+  async createUser(
+    @Args() { email, password }: CreateUserInput,
+  ) {
+    const user = new User();
+    user.email = email;
+    user.password = password;
+    await this.userRepository.save(user);
+    user.token = jwt.encode(user.id, user.email);
+    return user;
+  }
+
+  @Authorized()
+  @Mutation(returns => User)
+  async updateUser(
+    @Args() { updateEmailInput, updatePasswordInput }: UpdateUserInput,
+    @Ctx() ctx: Context,
+  ) {
+    const input = updateEmailInput || updatePasswordInput;
+    if (!input) {
+      throw new Error('Invalid input.');
+    }
+    if (input.type === 'email') {
+      const user = ctx.user;
+      user.email = input.newEmail;
+      return this.userRepository.save(user);
+    } else if (input.type === 'password') { // tslint:disable-line
+      const user = ctx.user;
+      const valid = await user.verifyPassword(input.oldPassword);
+      if (!valid) {
+        throw new Error('Invalid old password.');
+      }
+      user.password = input.newPassword;
+      return this.userRepository.save(user);
+    }
   }
 
   @Authorized()
