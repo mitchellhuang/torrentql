@@ -1,19 +1,11 @@
 import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
-import gql from 'graphql-tag';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import cookie from 'cookie';
+import { SIGNUP_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Button from '../components/Button';
-
-const SIGNUP_MUTATION = gql`
-  mutation createUser($email: String!, $password: String!) {
-    createUser(email: $email, password: $password) {
-      token
-    }
-  }
-`;
 
 const SignupForm = () => {
   const signup = useMutation(SIGNUP_MUTATION);

@@ -1,5 +1,11 @@
 import gql from 'graphql-tag';
 
+export const IS_LOGGED_IN_QUERY = gql`
+  query isLoggedIn {
+    isLoggedIn @client(always: true)
+  }
+`;
+
 export const ME_QUERY = gql`
   {
     me {
