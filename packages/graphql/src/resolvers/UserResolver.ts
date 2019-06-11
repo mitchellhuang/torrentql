@@ -103,7 +103,14 @@ export class UserResolver {
     const user = new User();
     user.email = email;
     user.password = password;
-    await this.userRepository.save(user);
+    try {
+      await this.userRepository.save(user);
+    } catch (err) {
+      if (err.routine === '_bt_check_unique') {
+        throw new Error('Email already exists.');
+      }
+      throw new Error('An unknown error occured.');
+    }
     user.token = jwt.encode(user.id, user.email);
     return user;
   }

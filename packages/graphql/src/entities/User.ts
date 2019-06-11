@@ -23,7 +23,7 @@ export class User {
 
   @Field()
   @Index()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
