@@ -22,7 +22,6 @@ export class User {
   id: string;
 
   @Field()
-  @Index()
   @Column({ unique: true })
   email: string;
 
