@@ -78,6 +78,14 @@ const NavBar = ({ router }) => {
         .hidden {
           visibility: hidden;
           height: 0;
+        } 
+        .burger-logo-wrapper {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .burger-wrapper {
+          margin: 25px 37px 0 0;
         }
         @media(min-width: 768px) {
           .hidden {
@@ -101,14 +109,6 @@ const NavBar = ({ router }) => {
             margin-bottom: 0;
             margin-right: 15px;
           }
-        }
-        .burger-logo-wrapper {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-        }
-        .burger-wrapper {
-          margin: 25px 37px 0 0;
         }
       `}</style>
     </div>
