@@ -7,14 +7,17 @@ import ToolBar from '../components/ToolBar';
 import NavBar from '../components/NavBar';
 
 const tabs = [{
+  name: 'Home',
+  url: '/dashboard',
+}, {
   name: 'Torrents',
-  url: '/torrents',
+  url: '/dashboard/torrents',
 }, {
   name: 'Downloads',
-  url: '/downloads',
+  url: '/dashboard/downloads',
 }, {
-  name: 'Settings',
-  url: '/settings',
+  name: 'Account',
+  url: '/dashboard/account',
 }];
 
 const Tabs = ({

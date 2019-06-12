@@ -1,11 +1,11 @@
 import React from 'react';
-import Dashboard from '../layouts/Dashboard';
-import Button from '../components/Button';
-import UpdateEmailForm from '../forms/UpdateEmailForm';
-import UpdatePasswordForm from '../forms/UpdatePasswordForm';
+import Dashboard from '../../layouts/Dashboard';
+import Button from '../../components/Button';
+import UpdateEmailForm from '../../forms/UpdateEmailForm';
+import UpdatePasswordForm from '../../forms/UpdatePasswordForm';
 
-const Settings = () => (
-  <Dashboard title="Settings" noFooter>
+const Account = () => (
+  <Dashboard title="Account" noFooter>
     <div>
       <h3 className="mb-3">Update email</h3>
       <UpdateEmailForm />
@@ -19,4 +19,4 @@ const Settings = () => (
   </Dashboard>
 );
 
-export default Settings;
+export default Account;
