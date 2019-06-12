@@ -8,16 +8,20 @@ const Torrent = ({
   const isValidTorrent = torrent.status;
   return (
     <div className="torrent">
-      {!isValidTorrent && <Invalid />}
-      {isValidTorrent && <Info status={torrent.status} />}
-      {isValidTorrent && torrent.status.progress < 100 && <ProgressBar progress={torrent.status.progress} />}
+      {!isValidTorrent ? <Invalid /> : isValidTorrent && <Info status={torrent.status} />}
+      {isValidTorrent
+        && torrent.status.progress < 100
+        && <ProgressBar progress={torrent.status.progress} />}
       <style jsx>{`
         .torrent {
-          padding: 5px;
+          padding: 10px;
           border: 2px solid lightgray;
           border-radius: 10px;
           font-size: 10pt;
           margin-bottom: 6px;
+        }
+        .torrent:last-child { 
+          margin-bottom: 0
         }
       `}</style>
     </div>
@@ -39,7 +43,6 @@ const Invalid = () => {
 };
 
 const Info = (props) => {
-  const path = props.status.state === 'seeding' ? seedingSVG : downloadingSVG;
   return (
     <div className="seeding-info-name">
       <span className="name">
@@ -47,13 +50,13 @@ const Info = (props) => {
       </span>
       <div className="seeding-info">
         <span className="icon">
-          <img className="icon" src={path} />
+          <img className="icon" src={props.status.state === 'seeding' ? seedingSVG : downloadingSVG} />
         </span>
         <span className="peer">
-          {`Peers: ${props.status.numPeers}/${props.status.totalPeers}`}
+          Peers: {props.status.numPeers}/{props.status.totalPeers}
         </span>
         <span className="seed">
-          {`Seeds: ${props.status.numSeeds}/${props.status.totalSeeds}`}
+          Seeds: {props.status.numSeeds}/{props.status.totalSeeds}
         </span>
       </div>
       <style jsx>{`
@@ -122,7 +125,6 @@ const ProgressBar = ({
         .rounded {
           border-radius: 15px;
           margin-top: 1px;
-
         }
         .status{
           border: 2px solid lightgray;
