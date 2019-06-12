@@ -36,17 +36,27 @@ const Tabs = ({
         list-style-type: none;
         padding: 0;
         margin: 0;
+        border-bottom: 1px solid #999;
+      }
+      li {
+        float: left;
       }
       li a {
         display: block;
-        color: var(--black);
+        color: var(--primary);
         font-size: 18px;
         font-weight: 600;
-        padding: 10px 0;
+        padding: 10px 15px;
+        border: 1px solid transparent;
         border-radius: 5px;
+        margin-bottom: -1px;
       }
       li > .active {
-        color: #2d70b6;
+        color: var(--black);
+        border: 1px solid var(--gray);
+        border-bottom-color: var(--white);
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
     `}</style>
   </ul>
@@ -58,15 +68,13 @@ const Dashboard = ({
   title,
   ...props
 }) => (
-  <Global backgroundColor="#e3e8ee" {...props}>
+  <Global {...props}>
     <Head title={title} />
     <NavBar />
     <div className="wrapper">
       <ToolBar />
       <div className="main">
-        <div className="tabs">
-          <Tabs router={router} />
-        </div>
+        <Tabs router={router} />
         <div className="content">
           {children}
         </div>
@@ -78,23 +86,9 @@ const Dashboard = ({
         flex-direction: column;
       }
       .content {
-        background-color: var(--white);
         border-radius: 5px;
-        padding: 15px;
-        margin-top: 15px;
+        padding: 25px 0;
         height: 100%;
-      }
-      @media(min-width: 768px) {
-        .main {
-          flex-direction: row;
-        }
-        .tabs {
-          flex: 1;
-        }
-        .content {
-          flex: 4;
-          margin-top: 0;
-        }
       }
     `}</style>
   </Global>
