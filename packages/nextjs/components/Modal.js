@@ -8,19 +8,13 @@ const Modal = ({
   children,
 }) => active ? ReactDOM.createPortal(
   <div className="modal">
-    <a
-      className="modal-overlay"
-      onClick={toggle}
-      aria-label="Close"
-    />
+    <a className="modal-overlay" onClick={toggle} aria-label="Close" />
     <div className="modal-container">
       <div className="modal-header">
-        <h3>{title}</h3>
-        <a
-          className="modal-close-button"
-          onClick={toggle}
-          aria-label="Close"
-        />
+        <h3>
+          {title}
+        </h3>
+        <a className="modal-close-button" onClick={toggle} aria-label="Close" />
       </div>
       <div>
         {children}

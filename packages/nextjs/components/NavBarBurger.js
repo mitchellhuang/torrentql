@@ -1,8 +1,9 @@
 import React from 'react';
 
 const NavBarBurger = ({ open }) => {
-  return (<div>
-      <a className={open ? "nav-toggle active" : "nav-toggle"} href="#">
+  return (
+    <div>
+      <a className={open ? 'nav-toggle active' : 'nav-toggle'} href="#">
         <span />
       </a>
       <style jsx>{`
@@ -19,8 +20,8 @@ const NavBarBurger = ({ open }) => {
         .nav-toggle span:before {
           top: -10px;
         }
-          .nav-toggle span:after {
-          bottom: -10px;
+        .nav-toggle span:after {
+        bottom: -10px;
         }
         .nav-toggle span, .nav-toggle span:before, .nav-toggle span:after {
           transition: all 500ms ease-in-out;

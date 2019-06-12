@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-  import Link from 'next/link';
+import Link from 'next/link';
 import { withRouter } from 'next/router';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
@@ -21,13 +21,13 @@ const NavBar = ({ router }) => {
     console.log(open);
   };
   const items = [
-    { name: 'Pricing', url: '/pricing'},
-    { name: 'Features', url: '/features'},
-    { name: 'API', url: '/api'}
+    { name: 'Pricing', url: '/pricing' },
+    { name: 'Features', url: '/features' },
+    { name: 'API', url: '/api' },
   ];
-  const finalItem = (data && data.isLoggedIn) ?
-    { name: 'Dashboard →', url: '/torrents' } :
-    { name: 'Log in →', url: '/login' };
+  const finalItem = (data && data.isLoggedIn)
+    ? { name: 'Dashboard →', url: '/torrents' }
+    : { name: 'Log in →', url: '/login' };
   items.push(finalItem);
   return (
     <div className="navbar">
@@ -38,7 +38,7 @@ const NavBar = ({ router }) => {
             <NavBarBurger open={open} />
           </div>
         </div>
-        <ul className={open ? "tabs pb-1" : "tabs hidden pb-1"}>
+        <ul className={open ? 'tabs pb-1' : 'tabs hidden pb-1'}>
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
