@@ -9,7 +9,7 @@ const Torrent = ({
   const isValidTorrent = torrent.status;
   return (
     <div className="torrent mb-2 p-2">
-      {isValidTorrent && <Invalid />}
+      {!isValidTorrent && <Invalid/>}
       {isValidTorrent && <Info status={torrent.status} />}
       {isValidTorrent && torrent.status.progress < 100 && <ProgressBar progress={torrent.status.progress} />}
       <style jsx>{`
@@ -46,7 +46,7 @@ const Info = (props) => {
       </span>
       <div className="seeding-info">
         <span className="icon">
-      <img src={path} style={{ height: 15, marginBottom: -3 }} />
+          <img src={path} style={{ height: 15, marginBottom: -3 }} />
         </span>
         <span className="peer">
           {`Peers: ${props.status.numPeers}/${props.status.totalPeers}`}
@@ -56,26 +56,27 @@ const Info = (props) => {
         </span>
       </div>
       <style jsx>{`
-        .seeding-info-name {
-          display: flex;
-          justify-content: space-between;
-        }
-        .name {
-          margin-left: 3px;
-        }
-        .seeding-info {
-          margin-right: 5px;
-        }
-        div.seeding-info > span {
-          text-align: right;
-          float: left;
-        }
-        .seed {
-          min-width: 100px;
-        }
-        .peer {
-          min-width: 80px;
-        }
+          .seeding-info-name {
+            display: flex;
+            justify-content: space-between;
+          }
+          .name {
+            margin-left: 3px;
+          }
+          .seeding-info {
+            margin-right: 5px;
+          }
+          div.seeding-info > span {
+            text-align: right;
+            float: left;
+          }
+          .seed  {
+            min-width: 100px;
+          }
+          .peer {
+            min-width: 80px;
+          }
+
         `}</style>
     </div>
   );
