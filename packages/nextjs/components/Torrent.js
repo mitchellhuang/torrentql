@@ -8,10 +8,13 @@ const Torrent = ({
   const isValidTorrent = torrent.status;
   return (
     <div className="torrent">
-      {!isValidTorrent ? <Invalid /> : isValidTorrent && <Info status={torrent.status} />}
       {isValidTorrent
-        && torrent.status.progress < 100
-        && <ProgressBar progress={torrent.status.progress} />}
+        ? (
+          <>
+            <Info status={torrent.status} />
+            {torrent.status.progress < 100 && <ProgressBar progress={torrent.status.progress} />}
+          </>
+        ) : <Invalid />}
       <style jsx>{`
         .torrent {
           padding: 10px;
