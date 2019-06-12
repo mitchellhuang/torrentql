@@ -5,7 +5,9 @@ import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import cookie from 'cookie';
 import { LOGIN_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
+import Error from '../components/Error';
 import Button from '../components/Button';
+import transformErrors from '../lib/transformErrors';
 
 const LoginForm = () => {
   const login = useMutation(LOGIN_MUTATION);
@@ -13,21 +15,28 @@ const LoginForm = () => {
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      onSubmit={async ({ email, password }, { setSubmitting }) => {
-        const result = await login({
-          variables: {
-            email,
-            password,
-          },
-        });
-        const { data: { login: { token } } } = result;
-        document.cookie = cookie.serialize('token', token);
-        client.writeData({ data: { isLoggedIn: true } });
-        setSubmitting(false);
-        Router.push('/torrents');
+      initialStatus={{}}
+      onSubmit={async ({ email, password }, { setSubmitting, setStatus }) => {
+        try {
+          const result = await login({
+            variables: {
+              email,
+              password,
+            },
+          });
+          const { data: { login: { token } } } = result;
+          document.cookie = cookie.serialize('token', token);
+          client.writeData({ data: { isLoggedIn: true } });
+          setSubmitting(false);
+          Router.push('/torrents');
+        } catch (err) {
+          setStatus(transformErrors(err));
+          setSubmitting(false);
+        }
       }}
       render={({
         values: { email, password },
+        status,
         isSubmitting,
         handleChange,
         handleBlur,
@@ -41,6 +50,7 @@ const LoginForm = () => {
             value={email}
             onChange={handleChange}
             onBlur={handleBlur}
+            errors={status.email}
           />
           <Input
             id="password"
@@ -50,7 +60,9 @@ const LoginForm = () => {
             value={password}
             onChange={handleChange}
             onBlur={handleBlur}
+            errors={status.password}
           />
+          <Error error={status.error} />
           <Button
             type="submit"
             disabled={isSubmitting}
