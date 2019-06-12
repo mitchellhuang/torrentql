@@ -16,15 +16,21 @@ export const CREATE_USER_MUTATION = gql`
   }
 `;
 
-export const UPDATE_USER_MUTATION = gql`
-  mutation updateUser($updateEmailInput: UpdateEmailInput, $updatePasswordInput: UpdatePasswordInput) {
-    updateUser(updateEmailInput: $updateEmailInput, updatePasswordInput: $updatePasswordInput) {
-      id
+export const UPDATE_USER_EMAIL_MUTATION = gql`
+  mutation updateUserEmail($email: String!) {
+    updateUserEmail(email: $email) {
       email
     }
   }
 `;
 
+export const UPDATE_USER_PASSWORD_MUTATION = gql`
+  mutation updateUserPassword($oldPassword: String!, $password: String!) {
+    updateUserPassword(oldPassword: $oldPassword, password: $password) {
+      id
+    }
+  }
+`;
 
 export const ADD_TORRENT_MUTATION = gql`
   mutation addTorrent($data: String!) {

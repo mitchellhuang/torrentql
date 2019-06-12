@@ -1,14 +1,14 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { useMutation } from 'react-apollo-hooks';
-import { UPDATE_USER_MUTATION } from '../apollo/mutations';
+import { UPDATE_USER_PASSWORD_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
 
 const UpdatePasswordForm = () => {
-  const updateUser = useMutation(UPDATE_USER_MUTATION);
+  const updateUser = useMutation(UPDATE_USER_PASSWORD_MUTATION);
   return (
     <Formik
       initialValues={{ oldPassword: '', password: '' }}
@@ -16,10 +16,8 @@ const UpdatePasswordForm = () => {
         try {
           await updateUser({
             variables: {
-              updatePasswordInput: {
-                oldPassword,
-                password,
-              },
+              oldPassword,
+              password,
             },
           });
           setSubmitting(false);

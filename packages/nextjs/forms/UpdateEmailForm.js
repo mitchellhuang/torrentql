@@ -1,24 +1,22 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { useMutation } from 'react-apollo-hooks';
-import { UPDATE_USER_MUTATION } from '../apollo/mutations';
+import { UPDATE_USER_EMAIL_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
 
 const UpdateEmailForm = () => {
-  const updateUser = useMutation(UPDATE_USER_MUTATION);
+  const updateUserEmail = useMutation(UPDATE_USER_EMAIL_MUTATION);
   return (
     <Formik
       initialValues={{ email: '' }}
       onSubmit={async ({ email }, { setSubmitting, setStatus }) => {
         try {
-          await updateUser({
+          await updateUserEmail({
             variables: {
-              updateEmailInput: {
-                email,
-              },
+              email,
             },
           });
           setSubmitting(false);

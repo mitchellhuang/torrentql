@@ -2,10 +2,8 @@ import { Repository } from 'typeorm';
 import {
   Resolver,
   Query,
-  Arg,
   Args,
   ArgsType,
-  InputType,
   Field,
   Mutation,
   Ctx,
@@ -39,21 +37,21 @@ class CreateUserInput {
   password: string;
 }
 
-@InputType()
-class UpdatePasswordInput {
+@ArgsType()
+class UpdateUserEmailInput {
+  @Field()
+  @IsEmail()
+  email: string;
+}
+
+@ArgsType()
+class UpdateUserPasswordInput {
   @Field()
   oldPassword: string;
 
   @Field()
   @MinLength(8)
   password: string;
-}
-
-@InputType()
-class UpdateEmailInput {
-  @Field()
-  @IsEmail()
-  email: string;
 }
 
 @Resolver(User)
@@ -105,28 +103,36 @@ export class UserResolver {
 
   @Authorized()
   @Mutation(returns => User)
-  async updateUser(
-    @Arg('updateEmailInput', { nullable: true }) updateEmailInput: UpdateEmailInput,
-    @Arg('updatePasswordInput', { nullable: true }) updatePasswordInput: UpdatePasswordInput,
+  async updateUserEmail(
+    @Args() { email }: UpdateUserEmailInput,
     @Ctx() ctx: Context,
   ) {
-    const input = updateEmailInput || updatePasswordInput;
-    if (!input) {
-      throw new Error('Invalid input.');
-    }
-    if ((input as any).email) {
-      const user = ctx.user;
-      user.email = input.email;
-      return this.userRepository.save(user);
-    } else if ((input as any).password) { // tslint:disable-line
-      const user = ctx.user;
-      const valid = await user.verifyPassword((input as any).oldPassword);
-      if (!valid) {
-        throw new Error('Invalid old password.');
+    const user = ctx.user;
+    user.email = email;
+    try {
+      await this.userRepository.save(user);
+    } catch (err) {
+      if (err.routine === '_bt_check_unique') {
+        throw new Error('Email already exists.');
       }
-      user.password = (input as any).password;
-      return this.userRepository.save(user);
+      throw new Error('An unknown error occured.');
     }
+    return user;
+  }
+
+  @Authorized()
+  @Mutation(returns => User)
+  async updateUserPassword(
+    @Args() { oldPassword, password }: UpdateUserPasswordInput,
+    @Ctx() ctx: Context,
+  ) {
+    const user = ctx.user;
+    const valid = await user.verifyPassword(oldPassword);
+    if (!valid) {
+      throw new Error('Invalid old password.');
+    }
+    user.password = password;
+    return this.userRepository.save(user);
   }
 
   @Authorized()

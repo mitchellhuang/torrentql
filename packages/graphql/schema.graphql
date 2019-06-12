@@ -19,7 +19,8 @@ type Mutation {
   deleteTorrent(id: String!): Boolean!
   login(email: String!, password: String!): User!
   createUser(email: String!, password: String!): User!
-  updateUser(updatePasswordInput: UpdatePasswordInput, updateEmailInput: UpdateEmailInput): User!
+  updateUserEmail(email: String!): User!
+  updateUserPassword(oldPassword: String!, password: String!): User!
   deleteUser: Boolean!
 }
 
@@ -59,15 +60,6 @@ type TorrentStatus {
   trackerHost: String!
   trackerStatus: String!
   files: JSON!
-}
-
-input UpdateEmailInput {
-  email: String!
-}
-
-input UpdatePasswordInput {
-  oldPassword: String!
-  password: String!
 }
 
 type User {
