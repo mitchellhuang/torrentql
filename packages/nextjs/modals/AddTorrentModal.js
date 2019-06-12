@@ -1,10 +1,13 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { useMutation } from 'react-apollo-hooks';
-import { ADD_TORRENT_MUTATION } from '../../apollo/mutations';
-import Modal from '../Modal';
-import Input from '../Input';
-import Button from '../Button';
+import { ADD_TORRENT_MUTATION } from '../apollo/mutations';
+import { ME_QUERY } from '../apollo/queries';
+import Modal from '../components/Modal';
+import Input from '../components/Input';
+import Error from '../components/Error';
+import Button from '../components/Button';
+import transformErrors from '../lib/transformErrors';
 
 const getFileBase64 = file => new Promise((resolve) => {
   const reader = new FileReader();
@@ -18,10 +21,8 @@ const getFileBase64 = file => new Promise((resolve) => {
 const AddTorrentModal = ({
   active,
   toggle,
-  refetchQueries,
 }) => {
   const addTorrent = useMutation(ADD_TORRENT_MUTATION);
-
   return (
     <Modal
       title="Add torrent"
@@ -30,7 +31,7 @@ const AddTorrentModal = ({
     >
       <Formik
         initialValues={{ magnet: '', file: null }}
-        onSubmit={async ({ magnet, file }, { setSubmitting }) => {
+        onSubmit={async ({ magnet, file }, { setSubmitting, setStatus }) => {
           let data;
           if (magnet) {
             data = magnet;
@@ -38,24 +39,30 @@ const AddTorrentModal = ({
             const file64 = await getFileBase64(file);
             data = file64;
           }
-          await addTorrent({
-            variables: {
-              data,
-            },
-            refetchQueries,
-          });
-          toggle();
-          setSubmitting(false);
+          try {
+            await addTorrent({
+              variables: {
+                data,
+              },
+              refetchQueries: [{ query: ME_QUERY }],
+            });
+            toggle();
+            setSubmitting(false);
+          } catch (err) {
+            setStatus(transformErrors(err));
+            setSubmitting(false);
+          }
         }}
         render={({
           values: { magnet },
+          status,
           isSubmitting,
           handleChange,
           handleBlur,
           setFieldValue,
         }) => (
           <Form>
-            <h5 className="mb-2">Magnet link or Torrent URL</h5>
+            <h5 className="mb-3">Magnet link or Torrent URL</h5>
             <Input
               id="magnet"
               type="text"
@@ -64,7 +71,7 @@ const AddTorrentModal = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <h5 className="mb-2">Torrent file</h5>
+            <h5 className="mb-3">Torrent file</h5>
             <Input
               id="file"
               type="file"
@@ -72,6 +79,7 @@ const AddTorrentModal = ({
               onChange={e => setFieldValue('file', e.target.files[0])}
               onBlur={handleBlur}
             />
+            <Error error={status && status.error} />
             <Button
               type="submit"
               disabled={isSubmitting}

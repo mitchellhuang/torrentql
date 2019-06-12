@@ -1,41 +1,41 @@
 import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
-import gql from 'graphql-tag';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import cookie from 'cookie';
+import { CREATE_USER_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
+import Error from '../components/Error';
 import Button from '../components/Button';
-
-const SIGNUP_MUTATION = gql`
-  mutation createUser($email: String!, $password: String!) {
-    createUser(email: $email, password: $password) {
-      token
-    }
-  }
-`;
+import transformErrors from '../lib/transformErrors';
 
 const SignupForm = () => {
-  const signup = useMutation(SIGNUP_MUTATION);
+  const createUser = useMutation(CREATE_USER_MUTATION);
   const client = useApolloClient();
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      onSubmit={async ({ email, password }, { setSubmitting }) => {
-        const result = await signup({
-          variables: {
-            email,
-            password,
-          },
-        });
-        const { data: { createUser: { token } } } = result;
-        document.cookie = cookie.serialize('token', token);
-        client.writeData({ data: { isLoggedIn: true } });
-        setSubmitting(false);
-        Router.push('/torrents');
+      onSubmit={async ({ email, password }, { setSubmitting, setStatus }) => {
+        try {
+          const result = await createUser({
+            variables: {
+              email,
+              password,
+            },
+          });
+          const { data: { createUser: { token } } } = result;
+          document.cookie = cookie.serialize('token', token);
+          client.writeData({ data: { isLoggedIn: true } });
+          setSubmitting(false);
+          Router.push('/torrents');
+        } catch (err) {
+          setStatus(transformErrors(err));
+          setSubmitting(false);
+        }
       }}
       render={({
         values: { email, password },
+        status,
         isSubmitting,
         handleChange,
         handleBlur,
@@ -49,6 +49,7 @@ const SignupForm = () => {
             value={email}
             onChange={handleChange}
             onBlur={handleBlur}
+            errors={status && status.email}
           />
           <Input
             id="password"
@@ -58,7 +59,9 @@ const SignupForm = () => {
             value={password}
             onChange={handleChange}
             onBlur={handleBlur}
+            errors={status && status.password}
           />
+          <Error error={status && status.error} />
           <Button
             type="submit"
             disabled={isSubmitting}

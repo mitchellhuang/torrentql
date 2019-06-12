@@ -11,8 +11,9 @@ const Global = ({
       :root {
         --primary: #51A4FB;
         --black: #111;
-        --white: #fff;
-        --lightGray: #eee;
+        --white: #FFF;
+        --lightGray: #EEE;
+        --error: #FF0000;
       };
       body {
         font-family: system-ui;

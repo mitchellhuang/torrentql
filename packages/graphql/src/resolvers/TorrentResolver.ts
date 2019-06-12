@@ -70,7 +70,7 @@ export class TorrentResolver implements ResolverInterface<Torrent> {
         });
         hash = parseTorrent(result.data).infoHash;
         await deluge.addTorrent(result.data);
-      } catch (error) {
+      } catch (err) {
         throw new Error('Invalid torrent file URL.');
       }
     } else if (data.includes('magnet')) {
