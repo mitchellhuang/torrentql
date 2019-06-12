@@ -62,12 +62,12 @@ type TorrentStatus {
 }
 
 input UpdateEmailInput {
-  newEmail: String!
+  email: String!
 }
 
 input UpdatePasswordInput {
   oldPassword: String!
-  newPassword: String!
+  password: String!
 }
 
 type User {

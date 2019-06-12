@@ -2,6 +2,7 @@ import { Repository } from 'typeorm';
 import {
   Resolver,
   Query,
+  Arg,
   Args,
   ArgsType,
   InputType,
@@ -40,32 +41,19 @@ class CreateUserInput {
 
 @InputType()
 class UpdatePasswordInput {
-  type: 'password';
-
   @Field()
   oldPassword: string;
 
   @Field()
   @MinLength(8)
-  newPassword: string;
+  password: string;
 }
 
 @InputType()
 class UpdateEmailInput {
-  type: 'email';
-
   @Field()
   @IsEmail()
-  newEmail: string;
-}
-
-@ArgsType()
-class UpdateUserInput {
-  @Field({ nullable: true })
-  updatePasswordInput?: UpdatePasswordInput;
-
-  @Field({ nullable: true })
-  updateEmailInput?: UpdateEmailInput;
+  email: string;
 }
 
 @Resolver(User)
@@ -118,24 +106,25 @@ export class UserResolver {
   @Authorized()
   @Mutation(returns => User)
   async updateUser(
-    @Args() { updateEmailInput, updatePasswordInput }: UpdateUserInput,
+    @Arg('updateEmailInput', { nullable: true }) updateEmailInput: UpdateEmailInput,
+    @Arg('updatePasswordInput', { nullable: true }) updatePasswordInput: UpdatePasswordInput,
     @Ctx() ctx: Context,
   ) {
     const input = updateEmailInput || updatePasswordInput;
     if (!input) {
       throw new Error('Invalid input.');
     }
-    if (input.type === 'email') {
+    if ((input as any).email) {
       const user = ctx.user;
-      user.email = input.newEmail;
+      user.email = input.email;
       return this.userRepository.save(user);
-    } else if (input.type === 'password') { // tslint:disable-line
+    } else if ((input as any).password) { // tslint:disable-line
       const user = ctx.user;
-      const valid = await user.verifyPassword(input.oldPassword);
+      const valid = await user.verifyPassword((input as any).oldPassword);
       if (!valid) {
         throw new Error('Invalid old password.');
       }
-      user.password = input.newPassword;
+      user.password = (input as any).password;
       return this.userRepository.save(user);
     }
   }

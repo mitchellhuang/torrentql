@@ -8,13 +8,23 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
-export const SIGNUP_MUTATION = gql`
+export const CREATE_USER_MUTATION = gql`
   mutation createUser($email: String!, $password: String!) {
     createUser(email: $email, password: $password) {
       token
     }
   }
 `;
+
+export const UPDATE_USER_MUTATION = gql`
+  mutation updateUser($updateEmailInput: UpdateEmailInput, $updatePasswordInput: UpdatePasswordInput) {
+    updateUser(updateEmailInput: $updateEmailInput, updatePasswordInput: $updatePasswordInput) {
+      id
+      email
+    }
+  }
+`;
+
 
 export const ADD_TORRENT_MUTATION = gql`
   mutation addTorrent($data: String!) {

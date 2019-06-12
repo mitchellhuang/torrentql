@@ -3,18 +3,18 @@ import Router from 'next/router';
 import { Formik, Form } from 'formik';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import cookie from 'cookie';
-import { SIGNUP_MUTATION } from '../apollo/mutations';
+import { CREATE_USER_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
 const SignupForm = () => {
-  const signup = useMutation(SIGNUP_MUTATION);
+  const createUser = useMutation(CREATE_USER_MUTATION);
   const client = useApolloClient();
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
       onSubmit={async ({ email, password }, { setSubmitting }) => {
-        const result = await signup({
+        const result = await createUser({
           variables: {
             email,
             password,
