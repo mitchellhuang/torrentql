@@ -12,6 +12,7 @@ const Global = ({
         --primary: #51A4FB;
         --black: #111;
         --white: #FFF;
+        --gray: #999;
         --lightGray: #EEE;
         --error: #FF0000;
       };

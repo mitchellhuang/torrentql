@@ -34,7 +34,7 @@ const Input = ({
           outline: none;
         }
         .input--text {
-          border: 1px solid #999;
+          border: 1px solid var(--gray);
           border-radius: 3px;
           padding: 10px;
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;

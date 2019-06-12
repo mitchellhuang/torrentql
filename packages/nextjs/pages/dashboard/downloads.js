@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '../layouts/Dashboard';
+import Dashboard from '../../layouts/Dashboard';
 
 const Downloads = () => (
   <Dashboard title="Downloads" noFooter>
