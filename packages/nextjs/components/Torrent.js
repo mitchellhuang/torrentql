@@ -7,12 +7,13 @@ const Torrent = ({
 }) => {
   const isValidTorrent = torrent.status;
   return (
-    <div className="torrent p-2">
-      {!isValidTorrent && <Invalid/>}
+    <div className="torrent">
+      {!isValidTorrent && <Invalid />}
       {isValidTorrent && <Info status={torrent.status} />}
       {isValidTorrent && torrent.status.progress < 100 && <ProgressBar progress={torrent.status.progress} />}
       <style jsx>{`
         .torrent {
+          padding: 5px;
           border: 2px solid lightgray;
           border-radius: 10px;
           font-size: 10pt;
@@ -92,7 +93,7 @@ const ProgressBar = ({
 }) => {
   const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
   return (
-    <div className="status rounded mt-1">
+    <div className="status rounded">
       <div className={`${progressBarClass} rounded`}>
         <span>
           {progress.toFixed(2)}%
@@ -120,9 +121,12 @@ const ProgressBar = ({
         }
         .rounded {
           border-radius: 15px;
+          margin-top: 1px;
+
         }
         .status{
           border: 2px solid lightgray;
+          margin-top: 1px;
         }
      `}</style>
     </div>
