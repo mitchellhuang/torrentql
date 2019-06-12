@@ -31,7 +31,6 @@ const AddTorrentModal = ({
     >
       <Formik
         initialValues={{ magnet: '', file: null }}
-        initialStatus={{}}
         onSubmit={async ({ magnet, file }, { setSubmitting, setStatus }) => {
           let data;
           if (magnet) {
@@ -63,7 +62,7 @@ const AddTorrentModal = ({
           setFieldValue,
         }) => (
           <Form>
-            <h5 className="mb-2">Magnet link or Torrent URL</h5>
+            <h5 className="mb-3">Magnet link or Torrent URL</h5>
             <Input
               id="magnet"
               type="text"
@@ -72,7 +71,7 @@ const AddTorrentModal = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <h5 className="mb-2">Torrent file</h5>
+            <h5 className="mb-3">Torrent file</h5>
             <Input
               id="file"
               type="file"
@@ -80,7 +79,7 @@ const AddTorrentModal = ({
               onChange={e => setFieldValue('file', e.target.files[0])}
               onBlur={handleBlur}
             />
-            <Error error={status.error} />
+            <Error error={status && status.error} />
             <Button
               type="submit"
               disabled={isSubmitting}

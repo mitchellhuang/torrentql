@@ -12,7 +12,6 @@ const UpdateEmailForm = () => {
   return (
     <Formik
       initialValues={{ email: '' }}
-      initialStatus={{}}
       onSubmit={async ({ email }, { setSubmitting, setStatus }) => {
         try {
           await updateUser({
@@ -44,9 +43,9 @@ const UpdateEmailForm = () => {
             value={email}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status.email}
+            errors={status && status.email}
           />
-          <Error error={status.error} />
+          <Error error={status && status.error} />
           <Button
             type="submit"
             disabled={isSubmitting}

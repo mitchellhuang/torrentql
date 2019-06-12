@@ -12,7 +12,6 @@ const UpdatePasswordForm = () => {
   return (
     <Formik
       initialValues={{ oldPassword: '', password: '' }}
-      initialStatus={{}}
       onSubmit={async ({ oldPassword, password }, { setSubmitting, setStatus }) => {
         try {
           await updateUser({
@@ -45,7 +44,7 @@ const UpdatePasswordForm = () => {
             value={oldPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status.oldPassword}
+            errors={status && status.oldPassword}
           />
           <Input
             id="password"
@@ -55,9 +54,9 @@ const UpdatePasswordForm = () => {
             value={password}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status.password}
+            errors={status && status.password}
           />
-          <Error error={status.error} />
+          <Error error={status && status.error} />
           <Button
             type="submit"
             disabled={isSubmitting}

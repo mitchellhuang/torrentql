@@ -15,7 +15,6 @@ const SignupForm = () => {
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      initialStatus={{}}
       onSubmit={async ({ email, password }, { setSubmitting, setStatus }) => {
         try {
           const result = await createUser({
@@ -50,7 +49,7 @@ const SignupForm = () => {
             value={email}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status.email}
+            errors={status && status.email}
           />
           <Input
             id="password"
@@ -60,9 +59,9 @@ const SignupForm = () => {
             value={password}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status.password}
+            errors={status && status.password}
           />
-          <Error error={status.error} />
+          <Error error={status && status.error} />
           <Button
             type="submit"
             disabled={isSubmitting}
