@@ -70,7 +70,7 @@ const Info = (props) => {
         .seeding-info {
           margin-right: 5px;
         }
-        div.seeding-info > span {
+        .seeding-info > span {
           text-align: right;
           float: left;
         }
