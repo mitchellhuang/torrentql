@@ -5,15 +5,15 @@ import downloadingSVG from '../static/downloading.svg';
 const Torrent = ({
   torrent,
 }) => {
-  const isValidTorrent = torrent.status;
+  const isValidTorrent = torrent.name;
   return (
     <div className="torrent">
       {isValidTorrent
         ? (
           <>
-            <Info status={torrent.status} />
-            {torrent.status.progress < 100
-              && <ProgressBar progress={torrent.status.progress} state={torrent.status.state} />}
+            <Info torrent={torrent} />
+            {torrent.progress < 100
+              && <ProgressBar progress={torrent.progress} state={torrent.state} />}
           </>
         ) : <Invalid />}
       <style jsx>{`
@@ -41,22 +41,24 @@ const Invalid = () => (
   </div>
 );
 
-const Info = props => (
+const Info = ({
+  torrent,
+}) => (
   <div className="info">
     <div className="name">
       <span className="icon">
-        <img className="icon" src={props.status.state === 'seeding' ? seedingSVG : downloadingSVG} alt={props.status.state} />
+        <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
       </span>
       <span>
-        {props.status.name}
+        {torrent.name}
       </span>
     </div>
     <div className="seeding-info">
       <span className="peers">
-        Peers: {props.status.numPeers} / {props.status.totalPeers}
+        Peers: {torrent.numPeers} / {torrent.totalPeers}
       </span>
       <span className="seeds">
-        Seeds: {props.status.numSeeds} / {props.status.totalSeeds}
+        Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
       </span>
     </div>
     <style jsx>{`
@@ -70,7 +72,7 @@ const Info = props => (
       .icon {
         height: 15px;
         margin-bottom: -2px;
-        margin-right: 3px;
+        margin-right: 2px;
       }
     `}</style>
   </div>
@@ -85,9 +87,10 @@ const ProgressBar = ({
   const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
   return (
     <div className={progressBarClass}>
-      <div className="progress-bar-inner">
+      <div className="progress-bar-status">
         {state} {progress.toFixed(2)}%
       </div>
+      <div className="progress-bar-inner" />
       <style jsx>{`
         .progress-bar {
           border: 1px solid var(--gray);
@@ -95,14 +98,18 @@ const ProgressBar = ({
           overflow: hidden;
           margin-top: 5px;
         }
-        .progress-bar-inner {
+        .progress-bar-status {
           display: flex;
           align-items: center;
+          height: 22px;
+          position: absolute;
+          padding: 0 5px;
           text-transform: capitalize;
+        }
+        .progress-bar-inner {
           width: ${progress}%;
           background-color: ${color || 'var(--gray)'};
           height: 22px;
-          padding: 0 5px;
         }
      `}</style>
     </div>
