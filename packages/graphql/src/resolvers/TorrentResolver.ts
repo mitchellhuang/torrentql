@@ -38,7 +38,7 @@ class DeleteTorrentInput {
   id: string;
 }
 
-@Resolver(Torrent)
+@Resolver(of => Torrent)
 export class TorrentResolver implements ResolverInterface<Torrent> {
   constructor(
     @InjectRepository(Torrent) private readonly torrentRepository: Repository<Torrent>,
