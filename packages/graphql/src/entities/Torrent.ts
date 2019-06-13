@@ -7,10 +7,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType, Int, Float } from 'type-graphql';
+import BigInt from 'graphql-bigint';
+import { GraphQLJSON } from 'graphql-type-json';
 import { User } from './User';
 import { Server } from './Server';
-import { TorrentStatus } from './TorrentStatus';
 
 @ObjectType()
 @Entity('torrents')
@@ -39,14 +40,59 @@ export class Torrent {
   @Column()
   isActive: boolean;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Field()
+  name: string;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Field()
+  state: string;
 
-  @Field(type => TorrentStatus, { nullable: true })
-  status: TorrentStatus | null;
+  @Field(type => Float)
+  progress: number;
+
+  @Field(type => Float)
+  ratio: number;
+
+  @Field(type => Int)
+  uploadSpeed: number;
+
+  @Field(type => Int)
+  downloadSpeed: number;
+
+  @Field(type => Int)
+  eta: number;
+
+  @Field(type => Int)
+  numPeers: number;
+
+  @Field(type => Int)
+  numSeeds: number;
+
+  @Field(type => Int)
+  totalPeers: number;
+
+  @Field(type => Int)
+  totalSeeds: number;
+
+  @Field(type => BigInt)
+  totalWanted: number;
+
+  @Field(type => BigInt)
+  totalUploaded: number;
+
+  @Field(type => BigInt)
+  totalDownloaded: number;
+
+  @Field()
+  tracker: string;
+
+  @Field()
+  trackerHost: string;
+
+  @Field()
+  trackerStatus: string;
+
+  @Field(type => GraphQLJSON)
+  files: Object;
 
   @Field(type => User)
   @ManyToOne(type => User, user => user.torrents)
@@ -55,5 +101,11 @@ export class Torrent {
   @Field(type => Server)
   @ManyToOne(type => Server, server => server.torrents)
   server: Promise<Server>;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
 }

@@ -60,13 +60,13 @@ export class Server {
   @Column({ nullable: true })
   portSpeed: string;
 
+  @OneToMany(type => Torrent, torrent => torrent.server)
+  torrents: Promise<Torrent[]>;
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToMany(type => Torrent, torrent => torrent.server)
-  torrents: Promise<Torrent[]>;
 
 }

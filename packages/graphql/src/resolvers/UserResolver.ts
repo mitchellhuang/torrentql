@@ -13,6 +13,7 @@ import {
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
+import { mapDelugeToTorrent } from '../lib/deluge';
 import { Context } from '../lib/context';
 import { User } from '../entities/User';
 import { Torrent } from '../entities/Torrent';
@@ -72,12 +73,14 @@ export class UserResolver {
 
   @FieldResolver()
   async torrents(@Root() user: User) {
-    return this.torrentRepository.find({
+    const torrents = await this.torrentRepository.find({
       where: {
         user: { id: user.id },
         isActive: true,
       },
     });
+    await Promise.all(torrents.map(mapDelugeToTorrent));
+    return torrents;
   }
 
   @Mutation(returns => User)

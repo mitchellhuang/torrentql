@@ -36,7 +36,24 @@ type Server {
 type Torrent {
   id: ID!
   hash: String!
-  status: TorrentStatus
+  name: String!
+  state: String!
+  progress: Float!
+  ratio: Float!
+  uploadSpeed: Int!
+  downloadSpeed: Int!
+  eta: Int!
+  numPeers: Int!
+  numSeeds: Int!
+  totalPeers: Int!
+  totalSeeds: Int!
+  totalWanted: BigInt!
+  totalUploaded: BigInt!
+  totalDownloaded: BigInt!
+  tracker: String!
+  trackerHost: String!
+  trackerStatus: String!
+  files: JSON!
   user: User!
   server: Server!
 }
