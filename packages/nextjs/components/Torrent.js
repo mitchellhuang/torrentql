@@ -12,126 +12,97 @@ const Torrent = ({
         ? (
           <>
             <Info status={torrent.status} />
-            {torrent.status.progress < 100 && <ProgressBar progress={torrent.status.progress} />}
+            {torrent.status.progress < 100
+              && <ProgressBar progress={torrent.status.progress} state={torrent.status.state} />}
           </>
         ) : <Invalid />}
       <style jsx>{`
         .torrent {
           padding: 10px;
-          border: 2px solid lightgray;
-          border-radius: 10px;
-          font-size: 10pt;
-          margin-bottom: 6px;
+          border: 1px solid var(--gray);
+          border-radius: 5px;
         }
-        .torrent:last-child { 
-          margin-bottom: 0
+        .torrent:not(:last-child) { 
+          margin-bottom: 6px;
         }
       `}</style>
     </div>
   );
 };
 
-const Invalid = () => {
-  return (
-    <div>
-      Torrent unavailable.
-      <style jsx> {`
-        div {
-          padding: 0 4px;
-          color: slategray;
-        }
+const Invalid = () => (
+  <div>
+    Torrent unavailable.
+    <style jsx> {`
+      div {
+        padding: 3px 0;
+      }
     `}</style>
-    </div>
-  );
-};
+  </div>
+);
 
-const Info = (props) => {
-  return (
-    <div className="seeding-info-name">
-      <span className="name">
+const Info = props => (
+  <div className="info">
+    <div className="name">
+      <span className="icon">
+        <img className="icon" src={props.status.state === 'seeding' ? seedingSVG : downloadingSVG} alt={props.status.state} />
+      </span>
+      <span>
         {props.status.name}
       </span>
-      <div className="seeding-info">
-        <span className="icon">
-          <img className="icon" src={props.status.state === 'seeding' ? seedingSVG : downloadingSVG} />
-        </span>
-        <span className="peer">
-          Peers: {props.status.numPeers}/{props.status.totalPeers}
-        </span>
-        <span className="seed">
-          Seeds: {props.status.numSeeds}/{props.status.totalSeeds}
-        </span>
-      </div>
-      <style jsx>{`
-        .seeding-info-name {
-          display: flex;
-          justify-content: space-between;
-        }
-        .name {
-          margin-left: 3px;
-        }
-        .seeding-info {
-          margin-right: 5px;
-        }
-        .seeding-info > span {
-          text-align: right;
-          float: left;
-        }
-        .seed  {
-          min-width: 100px;
-        }
-        .peer {
-          min-width: 80px;
-        }
-        .icon {
-          height: 15px;
-          margin-bottom: -3px;
-        }
-        `}</style>
     </div>
-  );
-};
+    <div className="seeding-info">
+      <span className="peers">
+        Peers: {props.status.numPeers} / {props.status.totalPeers}
+      </span>
+      <span className="seeds">
+        Seeds: {props.status.numSeeds} / {props.status.totalSeeds}
+      </span>
+    </div>
+    <style jsx>{`
+      .info {
+        display: flex;
+        justify-content: space-between;
+      }
+      .peers {
+        margin-right: 15px;
+      }
+      .icon {
+        height: 15px;
+        margin-bottom: -2px;
+        margin-right: 3px;
+      }
+    `}</style>
+  </div>
+);
 
 const ProgressBar = ({
-  className,
   color,
   progress,
+  state,
+  className,
 }) => {
   const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
   return (
-    <div className="status rounded">
-      <div className={`${progressBarClass} rounded`}>
-        <span>
-          {progress.toFixed(2)}%
-        </span>
+    <div className={progressBarClass}>
+      <div className="progress-bar-inner">
+        {state} {progress.toFixed(2)}%
       </div>
       <style jsx>{`
         .progress-bar {
-          width: ${progress}%;
-          background-color: ${color || 'var(--primary)'};
-          height: 20px;
-          background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
-          background-size: 1rem 1rem;
-          animation-name: progress-bar-stripes;
-          animation-duration: 3s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          text-align: center;
-          min-width: 50px;
+          border: 1px solid var(--gray);
+          border-radius: 5px;
+          overflow: hidden;
+          margin-top: 5px;
+        }
+        .progress-bar-inner {
           display: flex;
-          flex-direction: row;
-        }
-        @keyframes progress-bar-stripes {
-          from { background-position: 115px 0; }
-          to { background-position: 0 0; }
-        }
-        .rounded {
-          border-radius: 15px;
-          margin-top: 1px;
-        }
-        .status{
-          border: 2px solid lightgray;
-          margin-top: 1px;
+          align-items: center;
+          text-transform: capitalize;
+          width: ${progress}%;
+          background-color: ${color || 'var(--gray)'};
+          height: 22px;
+          padding: 0 5px;
         }
      `}</style>
     </div>
