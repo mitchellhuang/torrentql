@@ -1,5 +1,6 @@
 import React from 'react';
 import Dashboard from '../../layouts/Dashboard';
+import withAuth from '../../lib/withAuth';
 
 const Home = () => (
   <Dashboard title="Dashboard" noFooter>
@@ -9,4 +10,4 @@ const Home = () => (
   </Dashboard>
 );
 
-export default Home;
+export default withAuth(Home);

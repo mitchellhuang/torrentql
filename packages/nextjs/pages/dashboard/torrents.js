@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import Dashboard from '../../layouts/Dashboard';
+import withAuth from '../../lib/withAuth';
 import Torrent from '../../components/Torrent';
 import { ME_QUERY } from '../../apollo/queries';
 
@@ -47,4 +48,4 @@ const Torrents = () => (
   </Dashboard>
 );
 
-export default Torrents;
+export default withAuth(Torrents);

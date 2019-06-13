@@ -1,5 +1,6 @@
 import React from 'react';
 import Dashboard from '../../layouts/Dashboard';
+import withAuth from '../../lib/withAuth';
 import Button from '../../components/Button';
 import UpdateEmailForm from '../../forms/UpdateEmailForm';
 import UpdatePasswordForm from '../../forms/UpdatePasswordForm';
@@ -46,4 +47,4 @@ const Account = () => (
   </Dashboard>
 );
 
-export default Account;
+export default withAuth(Account);
