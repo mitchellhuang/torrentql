@@ -88,3 +88,13 @@ steps:
   when:
     branch:
     - master
+
+- name: notify-slack
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: slack_webhook
+    channel: alerts
+  depends_on:
+  - deploy-graphql
+  - deploy-nextjs

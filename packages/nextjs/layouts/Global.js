@@ -11,11 +11,15 @@ const Global = ({
       :root {
         --primary: #51A4FB;
         --black: #111;
-        --white: #fff;
-        --lightGray: #eee;
+        --white: #FFF;
+        --gray: #999;
+        --lightGray: #EEE;
+        --error: #FF0000;
       };
       body {
-        font-family: system-ui;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol";
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
         color: var(--black);
