@@ -1,11 +1,9 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
 import { Logo } from './Logo';
-import NavBarBurger from './NavBarBurger';
 
 const IS_LOGGED_IN_QUERY = gql`
   query isLoggedIn {
@@ -18,7 +16,6 @@ const NavBar = ({ router }) => {
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
-    console.log(open);
   };
   const items = [
     { name: 'Pricing', url: '/pricing' },
@@ -34,11 +31,11 @@ const NavBar = ({ router }) => {
       <div className="wrapper">
         <div className="burger-logo-wrapper">
           <Logo className="logo" />
-          <div className="burger-wrapper" onClick={toggle.bind(this)}>
+          <button type="button" onClick={() => toggle()}>
             <NavBarBurger open={open} />
-          </div>
+          </button>
         </div>
-        <ul className={open ? 'tabs pb-1' : 'tabs hidden pb-1'}>
+        <ul className={open ? 'tabs' : 'tabs hidden'}>
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
@@ -52,19 +49,24 @@ const NavBar = ({ router }) => {
       </div>
       <style jsx>{`
         .navbar {
+          min-height: 50px;
+          background: white;
           position: sticky;
           top: 0;
-          min-height: 50px;
-          background: rgb(238, 238, 238, .5);
+          margin: 0;
+          width: 100vw;
+          box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
         }
         .wrapper {
+          padding: 10px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         }
         .tabs {
           list-style-type: none;
-          margin: -8px 0 0 0;
+          margin: 0;
+          padding: 0;
         }
         .tabs li a {
           display: inline-block;
@@ -78,18 +80,40 @@ const NavBar = ({ router }) => {
         .hidden {
           visibility: hidden;
           height: 0;
-        } 
+        }
         .burger-logo-wrapper {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
         }
-        .burger-wrapper {
-          margin: 25px 37px 0 0;
+        button {
+          background: none;
+          border: none;
+          outline: none;
+        }
+        @media(max-width: 767px) {
+          .tabs {
+            text-align: center;
+          }
+          .tabs li {
+            border: 2px solid var(--lightGray);
+            border-radius: 5px;
+            padding: 8px;
+            margin: 8px;
+          }
+          .tabs li:last-child {
+            background-color: var(--primary);
+          }
+          .tabs li:last-child a {
+            color: white;
+          }
         }
         @media(min-width: 768px) {
           .hidden {
             visibility: visible;
+          }
+          button {
+            padding: 0;
           }
           .wrapper {
             flex-direction: row;
@@ -98,12 +122,16 @@ const NavBar = ({ router }) => {
           :global(.logo) {
             margin-bottom: 0;
           }
+          .tabs {
+            display: flex;
+            align-items: center;
+          }
           .tabs li {
             float: left;
           }
           .tabs li a {
             color: var(--black);
-            font-size: 16px;
+            font-size: 20px;
           }
           .tabs li:not(:last-child) a {
             margin-bottom: 0;
@@ -114,5 +142,51 @@ const NavBar = ({ router }) => {
     </div>
   );
 };
+
+const NavBarBurger = ({ open }) => (
+  <div className="burger">
+    <div className={open ? 'open bar' : 'bar'} />
+    <div className={open ? 'open bar' : 'bar'} />
+    <style jsx>{`
+      .burger {
+        margin-right: -9px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+      }
+      .bar {
+        width: 22px;
+        height: 1px;
+        content: "";
+        background: black;
+        transition-timing-function: ease;
+        transition-duration: 550ms;
+        transition-property: transform;
+      }
+      .bar:first-child {
+        transform: translateY(-4px) rotate(0deg);
+      }
+      .bar:last-child {
+        transform: translateY(4px) rotate(0deg);
+      }
+      .open:first-child {
+        transform: translateY(1px) rotate(45deg);
+      }
+      .open:last-child {
+        transform: translateY(0px) rotate(-45deg);
+      }
+      @media(min-width: 768px) {
+        .bar {
+          visibility: hidden;
+          height: 0;
+        }
+      }
+    `}</style>
+  </div>
+);
 
 export default withRouter(NavBar);
