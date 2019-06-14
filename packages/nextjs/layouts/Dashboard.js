@@ -39,10 +39,12 @@ const Tabs = ({
         list-style-type: none;
         padding: 0;
         margin: 0;
-        border-bottom: 1px solid #999;
+        border-bottom: 1px solid var(--gray);
+        overflow: auto;
+        white-space: nowrap;
       }
       li {
-        float: left;
+        display: inline-block;
       }
       li a {
         display: block;
@@ -51,15 +53,19 @@ const Tabs = ({
         font-weight: 600;
         padding: 10px 15px;
         border: 1px solid transparent;
-        border-radius: 5px;
         margin-bottom: -1px;
       }
       li > .active {
         color: var(--black);
-        border: 1px solid var(--gray);
+        background: var(--white);
+        border-color: var(--gray);
+        border-radius: 5px 5px 0 0;
         border-bottom-color: var(--white);
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
+      }
+      @media(min-width: 768px) {
+        ul {
+          overflow: visible;
+        }
       }
     `}</style>
   </ul>
