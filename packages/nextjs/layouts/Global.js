@@ -8,7 +8,6 @@ const Global = ({
     {children}
     <div id="modal-root" />
     <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
       :root {
         --primary: #51A4FB;
         --black: #111;
@@ -16,7 +15,7 @@ const Global = ({
         --lightGray: #eee;
       };
       body {
-        font-family: 'Source Sans Pro', sans-serif, system-ui;
+        font-family: system-ui;
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
         color: var(--black);
