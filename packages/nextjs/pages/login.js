@@ -5,7 +5,7 @@ import LoginForm from '../forms/LoginForm';
 
 const Login = () => (
   <Main title="Log in" noFooter>
-    <div className="wrapper">
+    <div className="wrapper wrapper-v">
       <div className="container">
         <div className="header">
           <h1>Log in</h1>
