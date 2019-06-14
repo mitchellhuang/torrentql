@@ -74,7 +74,7 @@ const Dashboard = ({
   <Global {...props}>
     <Head title={title} />
     <NavBar />
-    <div className="wrapper">
+    <div className="wrapper wrapper-v">
       <ToolBar />
       <div className="main">
         <Tabs router={router} />

@@ -4,7 +4,7 @@ import Button from '../components/Button';
 
 const Index = () => (
   <Main>
-    <div className="wrapper">
+    <div className="wrapper wrapper-v">
       <Hero />
       <Features />
     </div>
@@ -55,7 +55,7 @@ const Hero = () => (
         .feature {
           flex-direction: row;
           align-items: center;
-          margin: 100px 0;
+          padding: calc(100px - 15px) 0 100px 0;
         }
         .image {
           width: 60%;

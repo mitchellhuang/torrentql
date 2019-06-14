@@ -61,10 +61,13 @@ const Global = ({
         max-width: 1280px;
         flex: 1;
       }
+      .wrapper-v {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
       @media(min-width: 768px) {
         .wrapper {
           margin: 0 auto;
-          padding: 0 25px;
         }
       }
     `}</style>
