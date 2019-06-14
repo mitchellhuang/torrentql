@@ -79,8 +79,9 @@ export class UserResolver {
         isActive: true,
       },
     });
-    await Promise.all(torrents.map(mapDelugeToTorrent));
-    return torrents;
+    const torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
+    const torrentsWithDelugeNotNull = torrentsWithDeluge.filter(torrent => torrent !== null);
+    return torrentsWithDelugeNotNull;
   }
 
   @Mutation(returns => User)

@@ -5,10 +5,16 @@ export const mapDelugeToTorrent = async (torrent) => {
   const deluge = new Deluge({
     baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
     password: 'deluge',
-    timeout: 1000,
+    timeout: 100,
   });
-  const status = await deluge.getTorrentStatus(torrent.hash);
-  const files = await deluge.getTorrentFiles(torrent.hash);
+  let status;
+  let files;
+  try {
+    status = await deluge.getTorrentStatus(torrent.hash);
+    files = await deluge.getTorrentFiles(torrent.hash);
+  } catch (err) {
+    return null;
+  }
   torrent.name = status.result.name;
   torrent.state = status.result.state.toLowerCase();
   torrent.progress = status.result.progress;

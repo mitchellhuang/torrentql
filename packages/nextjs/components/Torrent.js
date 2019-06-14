@@ -4,38 +4,19 @@ import downloadingSVG from '../static/downloading.svg';
 
 const Torrent = ({
   torrent,
-}) => {
-  const isValidTorrent = torrent.name;
-  return (
-    <div className="torrent">
-      {isValidTorrent
-        ? (
-          <>
-            <Info torrent={torrent} />
-            {torrent.progress < 100
-              && <ProgressBar progress={torrent.progress} state={torrent.state} />}
-          </>
-        ) : <Invalid />}
-      <style jsx>{`
-        .torrent {
-          padding: 10px;
-          border: 1px solid var(--gray);
-          border-radius: 5px;
-        }
-        .torrent:not(:last-child) { 
-          margin-bottom: 6px;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-const Invalid = () => (
-  <div>
-    Torrent unavailable.
-    <style jsx> {`
-      div {
-        padding: 3px 0;
+}) => (
+  <div className="torrent">
+    <Info torrent={torrent} />
+    {torrent.progress < 100
+      && <ProgressBar progress={torrent.progress} state={torrent.state} />}
+    <style jsx>{`
+      .torrent {
+        padding: 10px;
+        border: 1px solid var(--gray);
+        border-radius: 5px;
+      }
+      .torrent:not(:last-child) {
+        margin-bottom: 6px;
       }
     `}</style>
   </div>
