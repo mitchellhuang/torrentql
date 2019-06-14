@@ -27,18 +27,18 @@ export class User {
   @Column()
   password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
   @Field({ nullable: true })
   token: string;
 
   @Field(type => [Torrent])
   @OneToMany(type => Torrent, torrent => torrent.user)
   torrents: Promise<Torrent[]>;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @BeforeInsert()
   @BeforeUpdate()
