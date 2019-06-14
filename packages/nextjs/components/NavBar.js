@@ -22,7 +22,7 @@ const NavBar = ({ router }) => {
   items.push(finalItem);
   return (
     <div className="navbar">
-      <div className="wrapper">
+      <div className={open ? 'wrapper wrapper-open' : 'wrapper'}>
         <div className="logo-burger-wrapper">
           <Logo />
           <NavBarBurger
@@ -57,6 +57,9 @@ const NavBar = ({ router }) => {
           flex-direction: column;
           justify-content: space-between;
           padding: 10px 15px;
+        }
+        .wrapper-open {
+          padding-bottom: 15px;
         }
         .logo-burger-wrapper {
           display: flex;
@@ -102,6 +105,9 @@ const NavBar = ({ router }) => {
           .wrapper {
             flex-direction: row;
             align-items: center;
+          }
+          .wrapper-open {
+            padding-bottom: 10px;
           }
           .logo-burger-wrapper :global(.burger) {
             display: none;

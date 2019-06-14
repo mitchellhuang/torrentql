@@ -13,6 +13,7 @@ const Torrent = ({
         padding: 10px;
         border: 1px solid var(--gray);
         border-radius: 5px;
+        min-width: 768px;
       }
       .torrent:not(:last-child) {
         margin-bottom: 6px;
@@ -75,8 +76,8 @@ const ProgressBar = ({
         .progress-bar {
           border: 1px solid var(--gray);
           border-radius: 5px;
-          overflow: hidden;
           margin-top: 5px;
+          position: relative;
         }
         .progress-bar-status {
           display: flex;

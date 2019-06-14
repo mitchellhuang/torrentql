@@ -62,7 +62,7 @@ const AddTorrentModal = ({
           setFieldValue,
         }) => (
           <Form>
-            <h5 className="mb-3">Magnet link or Torrent URL</h5>
+            <h5 className="mb-2">Magnet link or Torrent URL</h5>
             <Input
               id="magnet"
               type="text"
@@ -71,7 +71,7 @@ const AddTorrentModal = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <h5 className="mb-3">Torrent file</h5>
+            <h5 className="mb-2">Torrent file</h5>
             <Input
               id="file"
               type="file"
