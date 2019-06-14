@@ -7,8 +7,7 @@ const Torrent = ({
 }) => (
   <div className="torrent">
     <Info torrent={torrent} />
-    {torrent.progress < 100
-      && <ProgressBar progress={torrent.progress} state={torrent.state} />}
+    <ProgressBar progress={torrent.progress} state={torrent.state} />
     <style jsx>{`
       .torrent {
         padding: 10px;
