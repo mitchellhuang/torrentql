@@ -17,17 +17,18 @@ const NavBar = ({ router }) => {
     { name: 'API', url: '/api' },
   ];
   const finalItem = (data && data.isLoggedIn)
-    ? { name: 'Dashboard →', url: '/torrents' }
+    ? { name: 'Dashboard →', url: '/dashboard' }
     : { name: 'Log in →', url: '/login' };
   items.push(finalItem);
   return (
     <div className="navbar">
       <div className="wrapper">
-        <div className="burger-logo-wrapper">
-          <Logo className="logo" />
-          <button type="button" onClick={() => toggle()}>
-            <NavBarBurger open={open} />
-          </button>
+        <div className="logo-burger-wrapper">
+          <Logo />
+          <NavBarBurger
+            open={open}
+            onClick={() => toggle()}
+          />
         </div>
         <ul className={open ? 'tabs' : 'tabs hidden'}>
           { items.map(item => (
@@ -43,7 +44,7 @@ const NavBar = ({ router }) => {
       </div>
       <style jsx>{`
         .navbar {
-          min-height: 50px;
+          display: block;
           background: white;
           position: sticky;
           top: 0;
@@ -52,85 +53,84 @@ const NavBar = ({ router }) => {
           box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
         }
         .wrapper {
-          padding: 10px;
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
+          padding: 10px 15px;
+        }
+        .logo-burger-wrapper {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
           justify-content: space-between;
         }
         .tabs {
           list-style-type: none;
           margin: 0;
           padding: 0;
+          margin-top: 10px;
+        }
+        .tabs li {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid var(--lightGray);
+          border-radius: 5px;
+          padding: 8px;
+        }
+        .tabs li:not(:last-child) {
+          margin-bottom: 8px;
+        }
+        .tabs li:last-child {
+          background-color: var(--primary);
+          border-color: var(--primary);
+        }
+        .tabs li:last-child a {
+          color: var(--white);
         }
         .tabs li a {
           display: inline-block;
+          color: var(--black);
           font-size: 18px;
           font-weight: 600;
           border-radius: 5px;
         }
-        .tabs li:not(:last-child) a {
-          margin-bottom: 5px;
-        }
         .hidden {
-          visibility: hidden;
-          height: 0;
-        }
-        .burger-logo-wrapper {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-        }
-        button {
-          background: none;
-          border: none;
-          outline: none;
-        }
-        @media(max-width: 767px) {
-          .tabs {
-            text-align: center;
-          }
-          .tabs li {
-            border: 2px solid var(--lightGray);
-            border-radius: 5px;
-            padding: 8px;
-            margin: 8px;
-          }
-          .tabs li:last-child {
-            background-color: var(--primary);
-            margin-bottom: 0;
-          }
-          .tabs li:last-child a {
-            color: white;
-          }
+          display: none;
         }
         @media(min-width: 768px) {
-          .hidden {
-            visibility: visible;
-          }
-          button {
-            padding: 0;
-          }
           .wrapper {
             flex-direction: row;
             align-items: center;
           }
-          :global(.logo) {
-            margin-bottom: 0;
+          .logo-burger-wrapper :global(.burger) {
+            display: none;
           }
           .tabs {
             display: flex;
             align-items: center;
+            margin-top: 0;
           }
           .tabs li {
-            float: left;
+            display: inline-block;
+            border: none;
+            padding: 0;
           }
-          .tabs li a {
-            color: var(--black);
-            font-size: 20px;
-          }
-          .tabs li:not(:last-child) a {
+          .tabs li:not(:last-child) {
             margin-bottom: 0;
             margin-right: 15px;
+          }
+          .tabs li:last-child {
+            background-color: var(--white);
+          }
+          .tabs li:last-child a {
+            color: var(--black);
+          }
+          .tabs li a {
+            font-size: 18px;
+          }
+          .hidden {
+            display: block;
           }
         }
       `}</style>
@@ -138,20 +138,30 @@ const NavBar = ({ router }) => {
   );
 };
 
-const NavBarBurger = ({ open }) => (
-  <div className="burger">
+const NavBarBurger = ({
+  open,
+  onClick,
+}) => (
+  <div
+    className="burger"
+    onClick={onClick}
+    onKeyPress={onClick}
+    role="button"
+    tabIndex="0"
+  >
     <div className={open ? 'open bar' : 'bar'} />
     <div className={open ? 'open bar' : 'bar'} />
     <style jsx>{`
       .burger {
-        margin-right: -9px;
-        width: 40px;
-        height: 40px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
+        width: 40px;
+        height: 40px;
+        margin-right: -9px;
+        outline: 0;
       }
       .bar {
         width: 22px;
@@ -170,12 +180,6 @@ const NavBarBurger = ({ open }) => (
       }
       .open:last-child {
         transform: rotate(-45deg);
-      }
-      @media(min-width: 768px) {
-        .bar {
-          visibility: hidden;
-          height: 0;
-        }
       }
     `}</style>
   </div>
