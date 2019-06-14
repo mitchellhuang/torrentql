@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
-import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
+import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
 import { Logo } from './Logo';
-
-const IS_LOGGED_IN_QUERY = gql`
-  query isLoggedIn {
-    isLoggedIn @client(always: true)
-  }
-`;
 
 const NavBar = ({ router }) => {
   const { data } = useQuery(IS_LOGGED_IN_QUERY);

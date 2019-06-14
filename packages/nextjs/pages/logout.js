@@ -3,8 +3,9 @@ import cookie from 'cookie';
 import Router from 'next/router';
 
 class Logout extends Component {
-  static getInitialProps({ res }) {
+  static async getInitialProps({ res, apolloClient }) {
     if (!process.browser) {
+      await apolloClient.resetStore();
       res.clearCookie('token');
       res.redirect('/login');
     }
@@ -12,8 +13,8 @@ class Logout extends Component {
   }
 
   async componentDidMount() {
-    const { client } = this.props;
-    await client.resetStore();
+    const { apolloClient } = this.props;
+    await apolloClient.resetStore();
     document.cookie = cookie.serialize('token', '', { expires: new Date(0) });
     Router.push('/login');
   }

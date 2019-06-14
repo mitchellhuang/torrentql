@@ -2,7 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  Index,
   OneToMany,
   BeforeInsert,
   BeforeUpdate,
@@ -22,8 +21,7 @@ export class User {
   id: string;
 
   @Field()
-  @Index()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()

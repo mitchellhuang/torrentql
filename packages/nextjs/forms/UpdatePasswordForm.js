@@ -1,40 +1,33 @@
 import React from 'react';
-import Router from 'next/router';
 import { Formik, Form } from 'formik';
-import { useMutation, useApolloClient } from 'react-apollo-hooks';
-import cookie from 'cookie';
-import { CREATE_USER_MUTATION } from '../apollo/mutations';
+import { useMutation } from 'react-apollo-hooks';
+import { UPDATE_USER_PASSWORD_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
 
-const SignupForm = () => {
-  const createUser = useMutation(CREATE_USER_MUTATION);
-  const client = useApolloClient();
+const UpdatePasswordForm = () => {
+  const updateUser = useMutation(UPDATE_USER_PASSWORD_MUTATION);
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
-      onSubmit={async ({ email, password }, { setSubmitting, setStatus }) => {
+      initialValues={{ oldPassword: '', password: '' }}
+      onSubmit={async ({ oldPassword, password }, { setSubmitting, setStatus }) => {
         try {
-          const result = await createUser({
+          await updateUser({
             variables: {
-              email,
+              oldPassword,
               password,
             },
           });
-          const { data: { createUser: { token } } } = result;
-          document.cookie = cookie.serialize('token', token);
-          client.writeData({ data: { isLoggedIn: true } });
           setSubmitting(false);
-          Router.push('/dashboard');
         } catch (err) {
           setStatus(transformErrors(err));
           setSubmitting(false);
         }
       }}
       render={({
-        values: { email, password },
+        values: { oldPassword, password },
         status,
         isSubmitting,
         handleChange,
@@ -42,19 +35,19 @@ const SignupForm = () => {
       }) => (
         <Form>
           <Input
-            id="email"
-            label="Email"
-            placeholder="Enter your email"
-            type="text"
-            value={email}
+            id="oldPassword"
+            label="Old password"
+            placeholder="Enter your old password"
+            type="password"
+            value={oldPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status && status.email}
+            errors={status && status.oldPassword}
           />
           <Input
             id="password"
-            label="Password"
-            placeholder="Enter your password"
+            label="New password"
+            placeholder="Enter your new password"
             type="password"
             value={password}
             onChange={handleChange}
@@ -67,7 +60,7 @@ const SignupForm = () => {
             disabled={isSubmitting}
             block
           >
-            Sign up
+            Update password
           </Button>
         </Form>
       )}
@@ -75,4 +68,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default UpdatePasswordForm;

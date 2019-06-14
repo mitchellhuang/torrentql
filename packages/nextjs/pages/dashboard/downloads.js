@@ -1,5 +1,6 @@
 import React from 'react';
-import Dashboard from '../layouts/Dashboard';
+import Dashboard from '../../layouts/Dashboard';
+import withAuth from '../../lib/withAuth';
 
 const Downloads = () => (
   <Dashboard title="Downloads" noFooter>
@@ -9,4 +10,4 @@ const Downloads = () => (
   </Dashboard>
 );
 
-export default Downloads;
+export default withAuth(Downloads);

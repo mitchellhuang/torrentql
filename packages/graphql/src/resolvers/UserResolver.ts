@@ -1,10 +1,30 @@
 import { Repository } from 'typeorm';
-import { Resolver, Query, Args, ArgsType, Field, Mutation, Ctx, Authorized } from 'type-graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  ArgsType,
+  Field,
+  Mutation,
+  Ctx,
+  Authorized,
+} from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
 import { Context } from '../lib/context';
 import { User } from '../entities/User';
 import * as jwt from '../lib/jwt';
+
+@ArgsType()
+class LoginInput {
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @MinLength(8)
+  password: string;
+}
 
 @ArgsType()
 class CreateUserInput {
@@ -18,10 +38,16 @@ class CreateUserInput {
 }
 
 @ArgsType()
-class LoginInput {
+class UpdateUserEmailInput {
   @Field()
   @IsEmail()
   email: string;
+}
+
+@ArgsType()
+class UpdateUserPasswordInput {
+  @Field()
+  oldPassword: string;
 
   @Field()
   @MinLength(8)
@@ -41,18 +67,6 @@ export class UserResolver {
   }
 
   @Mutation(returns => User)
-  async createUser(
-    @Args() { email, password }: CreateUserInput,
-  ) {
-    const user = new User();
-    user.email = email;
-    user.password = password;
-    await this.userRepository.save(user);
-    user.token = jwt.encode(user.id, user.email);
-    return user;
-  }
-
-  @Mutation(returns => User)
   async login(
     @Args() { email, password }: LoginInput,
   ) {
@@ -66,6 +80,59 @@ export class UserResolver {
     }
     user.token = jwt.encode(user.id, user.email);
     return user;
+  }
+
+  @Mutation(returns => User)
+  async createUser(
+    @Args() { email, password }: CreateUserInput,
+  ) {
+    const user = new User();
+    user.email = email;
+    user.password = password;
+    try {
+      await this.userRepository.save(user);
+    } catch (err) {
+      if (err.routine === '_bt_check_unique') {
+        throw new Error('Email already exists.');
+      }
+      throw new Error('An unknown error occured.');
+    }
+    user.token = jwt.encode(user.id, user.email);
+    return user;
+  }
+
+  @Authorized()
+  @Mutation(returns => User)
+  async updateUserEmail(
+    @Args() { email }: UpdateUserEmailInput,
+    @Ctx() ctx: Context,
+  ) {
+    const user = ctx.user;
+    user.email = email;
+    try {
+      await this.userRepository.save(user);
+    } catch (err) {
+      if (err.routine === '_bt_check_unique') {
+        throw new Error('Email already exists.');
+      }
+      throw new Error('An unknown error occured.');
+    }
+    return user;
+  }
+
+  @Authorized()
+  @Mutation(returns => User)
+  async updateUserPassword(
+    @Args() { oldPassword, password }: UpdateUserPasswordInput,
+    @Ctx() ctx: Context,
+  ) {
+    const user = ctx.user;
+    const valid = await user.verifyPassword(oldPassword);
+    if (!valid) {
+      throw new Error('Invalid old password.');
+    }
+    user.password = password;
+    return this.userRepository.save(user);
   }
 
   @Authorized()

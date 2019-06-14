@@ -12,7 +12,7 @@ class TorrentQL extends App {
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} client={apolloClient} />
+          <Component {...pageProps} apolloClient={apolloClient} />
         </ApolloProvider>
       </Container>
     );

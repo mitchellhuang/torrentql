@@ -52,6 +52,7 @@ const Button = ({
         .button--block {
           display: block;
           width: 100%;
+          box-sizing: border-box;
         }
         .button--outline {
           color: var(--primary);

@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from './Button';
 import useModal from '../lib/useModal';
-import AddTorrentModal from './modals/AddTorrentModal';
-import { ME_QUERY } from '../apollo/queries';
+import AddTorrentModal from '../modals/AddTorrentModal';
 
 const ToolBar = () => {
   const { active, toggle } = useModal();
@@ -13,7 +12,6 @@ const ToolBar = () => {
       <AddTorrentModal
         active={active}
         toggle={toggle}
-        refetchQueries={[{ query: ME_QUERY }]}
       />
       <style jsx>{`
         .toolbar {
