@@ -103,6 +103,7 @@ const NavBar = ({ router }) => {
           }
           .tabs li:last-child {
             background-color: var(--primary);
+            margin-bottom: 0;
           }
           .tabs li:last-child a {
             color: white;
@@ -161,23 +162,20 @@ const NavBarBurger = ({ open }) => (
       .bar {
         width: 22px;
         height: 1px;
-        content: "";
-        background: black;
-        transition-timing-function: ease;
-        transition-duration: 550ms;
-        transition-property: transform;
+        background: var(--black);
+        transition: transform 550ms ease;
       }
       .bar:first-child {
-        transform: translateY(-4px) rotate(0deg);
+        transform: translateY(-4px);
       }
       .bar:last-child {
-        transform: translateY(4px) rotate(0deg);
+        transform: translateY(4px);
       }
       .open:first-child {
         transform: translateY(1px) rotate(45deg);
       }
       .open:last-child {
-        transform: translateY(0px) rotate(-45deg);
+        transform: rotate(-45deg);
       }
       @media(min-width: 768px) {
         .bar {
