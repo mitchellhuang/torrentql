@@ -4,7 +4,7 @@ import Button from '../components/Button';
 
 const Index = () => (
   <Main>
-    <div className="wrapper wrapper-v">
+    <div className="wrapper">
       <Hero />
       <Features />
     </div>
@@ -15,7 +15,7 @@ const Hero = () => (
   <div className="hero">
     <div className="feature">
       <div className="text">
-        <p className="tagline">Download and seed torrents on a 1 Gbit/s OVH network.</p>
+        <p className="tagline">Download and seed torrents on a 1 Gbit/s network.</p>
         <div className="actions">
           <Button href="/signup" animate>Sign up</Button>
           <Button href="/pricing" className="ml-2" white animate>View pricing →</Button>
@@ -65,7 +65,7 @@ const Hero = () => (
           padding-right: 15px;
         }
         .tagline {
-          font-size: 30px;
+          font-size: 32px;
         }
       }
     `}</style>
@@ -87,8 +87,7 @@ const features = [{
 }, {
   title: 'Lightning fast network',
   description: `Our cluster of 1 Gbit/s dedicated servers in Gravelines,
-  France is connected to the OVH network — often regarded as one of the best
-  networks in the world for peer to peer traffic.`,
+  France is connected to the OVH network.`,
 }];
 
 const Features = (

@@ -32,6 +32,7 @@ const Input = ({
           box-sizing: border-box;
           width: 100%;
           outline: none;
+          appearance: none;
         }
         .input--text {
           border: 1px solid var(--gray);

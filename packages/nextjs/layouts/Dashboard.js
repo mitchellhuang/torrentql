@@ -74,7 +74,7 @@ const Dashboard = ({
   <Global {...props}>
     <Head title={title} />
     <NavBar />
-    <div className="wrapper wrapper-v">
+    <div className="wrapper">
       <ToolBar />
       <div className="main">
         <Tabs router={router} />
@@ -90,7 +90,7 @@ const Dashboard = ({
       }
       .content {
         border-radius: 5px;
-        padding: 25px 0;
+        padding: 15px 0;
         height: 100%;
       }
     `}</style>

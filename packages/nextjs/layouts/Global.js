@@ -57,13 +57,9 @@ const Global = ({
       .wrapper {
         display: flex;
         flex-direction: column;
-        padding: 0 15px;
+        padding: 15px;
         max-width: 1280px;
         flex: 1;
-      }
-      .wrapper-v {
-        padding-top: 15px;
-        padding-bottom: 15px;
       }
       @media(min-width: 768px) {
         .wrapper {

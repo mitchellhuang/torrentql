@@ -99,9 +99,6 @@ const Footer = () => (
       </div>
     </div>
     <style jsx>{`
-      .footer {
-        padding: 15px 0;
-      }
       .wrapper {
         display: flex;
         border-top: 1px solid var(--lightGray);

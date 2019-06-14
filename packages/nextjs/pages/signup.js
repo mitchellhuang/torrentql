@@ -5,7 +5,7 @@ import SignupForm from '../forms/SignupForm';
 
 const Signup = () => (
   <Main title="Sign up" noFooter>
-    <div className="wrapper wrapper-v">
+    <div className="wrapper">
       <div className="container">
         <div className="header">
           <h1>Sign up</h1>
