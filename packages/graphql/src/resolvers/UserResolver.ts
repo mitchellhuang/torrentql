@@ -5,14 +5,18 @@ import {
   Args,
   ArgsType,
   Field,
+  FieldResolver,
+  Root,
   Mutation,
   Ctx,
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
+import { mapDelugeToTorrent } from '../lib/deluge';
 import { Context } from '../lib/context';
 import { User } from '../entities/User';
+import { Torrent } from '../entities/Torrent';
 import * as jwt from '../lib/jwt';
 
 @ArgsType()
@@ -54,16 +58,30 @@ class UpdateUserPasswordInput {
   password: string;
 }
 
-@Resolver(User)
+@Resolver(of => User)
 export class UserResolver {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Torrent) private readonly torrentRepository: Repository<Torrent>,
   ) {}
 
   @Authorized()
   @Query(returns => User)
   me(@Ctx() ctx: Context) {
     return ctx.user;
+  }
+
+  @FieldResolver()
+  async torrents(@Root() user: User) {
+    const torrents = await this.torrentRepository.find({
+      where: {
+        user: { id: user.id },
+        isActive: true,
+      },
+    });
+    const torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
+    const torrentsWithDelugeNotNull = torrentsWithDeluge.filter(torrent => torrent !== null);
+    return torrentsWithDelugeNotNull;
   }
 
   @Mutation(returns => User)
