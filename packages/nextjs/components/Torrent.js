@@ -28,6 +28,9 @@ const Info = ({
   <div className="info">
     <div className="name">
       <span className="icon">
+        <img className="icon" src="../static/delete.png" alt={torrent.state}/>
+      </span>
+      <span className="icon">
         <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
       </span>
       <span>
