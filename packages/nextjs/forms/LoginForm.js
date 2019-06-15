@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
-import cookie from 'cookie';
+import jsCookie from 'js-cookie';
 import { LOGIN_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';
@@ -24,7 +24,7 @@ const LoginForm = () => {
             },
           });
           const { data: { login: { token } } } = result;
-          document.cookie = cookie.serialize('token', token);
+          jsCookie.set('token', token, { expires: 365 });
           client.writeData({ data: { isLoggedIn: true } });
           setSubmitting(false);
           Router.push('/dashboard');

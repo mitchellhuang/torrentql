@@ -10,7 +10,7 @@ const TorrentsWithData = () => {
     ssr: false,
     pollInterval: 2000,
   });
-  if (loading) {
+  if (loading || !process.browser) {
     return (
       <div>
         Loading...

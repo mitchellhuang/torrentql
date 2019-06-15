@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import cookie from 'cookie';
+import jsCookie from 'js-cookie';
 import Router from 'next/router';
 
 class Logout extends Component {
@@ -8,15 +8,12 @@ class Logout extends Component {
       await apolloClient.resetStore();
       res.clearCookie('token');
       res.redirect('/login');
+    } else {
+      await apolloClient.resetStore();
+      jsCookie.remove('token');
+      Router.push('/login');
     }
     return {};
-  }
-
-  async componentDidMount() {
-    const { apolloClient } = this.props;
-    await apolloClient.resetStore();
-    document.cookie = cookie.serialize('token', '', { expires: new Date(0) });
-    Router.push('/login');
   }
 
   render() {
