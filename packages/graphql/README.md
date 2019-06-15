@@ -28,7 +28,14 @@ JWT_SECRET=torrentql
 2. `create a .env file based on .env.example`
 3. `cd packages/deluge && docker-compose up -d`
 4. `yarn build:watch`
-5. `yarn run dev`
+5. `yarn sync`
+
+Expected output looks as follows:
+
+![Sample output](https://i.imgur.com/Jn9GYvV.png "Sample output")
+
+
+6. `yarn run dev`
 
 ## Production build
 
