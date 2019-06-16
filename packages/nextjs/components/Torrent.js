@@ -1,6 +1,7 @@
 import React from 'react';
 import seedingSVG from '../static/seeding.svg';
 import downloadingSVG from '../static/downloading.svg';
+import deleteSVG from '../static/delete.svg';
 
 const Torrent = ({
   torrent,
@@ -29,10 +30,10 @@ const Info = ({
 }) => (
   <div className="info">
     <div className="name">
-      <span className="icon">
-        <button onClick={() => onDeleteClick()} type="button">
-          <img className="icon" src="../static/delete.png" alt={torrent.state} />
-        </button>
+      <span onClick={() => onDeleteClick()} onKeyPress={() => onDeleteClick()} role="button" tabIndex="0">
+        <span className="icon">
+          <img className="icon" src={deleteSVG} alt="delete" />
+        </span>
       </span>
       <span className="icon">
         <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />

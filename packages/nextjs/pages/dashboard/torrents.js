@@ -15,8 +15,8 @@ const TorrentsViewChild = ({ data }) => {
       </div>
     );
   }
-  const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
   async function deleteTorrent(id) {
+    const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
     await useDeleteMutation({
       variables: {
         id,
@@ -26,7 +26,13 @@ const TorrentsViewChild = ({ data }) => {
   }
   return (
     <div>
-      {torrents.map(torrent => <Torrent onDeleteClick={() => deleteTorrent(torrent.id)} key={torrent.id} torrent={torrent} />)}
+      {torrents.map(torrent => (
+        <Torrent
+          onDeleteClick={() => deleteTorrent(torrent.id)}
+          key={torrent.id}
+          torrent={torrent}
+        />
+      ))}
     </div>
   );
 };
