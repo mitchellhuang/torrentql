@@ -6,7 +6,7 @@ import withAuth from '../../lib/withAuth';
 import Torrent from '../../components/Torrent';
 import { ME_QUERY } from '../../apollo/queries';
 
-const TorrentsViewChild = ({ data }) => {
+const Torrents = ({ data }) => {
   const [torrents, setTorrents] = useState(data.me.torrents);
   if (!torrents || !torrents.length) {
     return (
@@ -24,17 +24,13 @@ const TorrentsViewChild = ({ data }) => {
       refetchQueries: setTorrents(torrents.filter(torrent => torrent.id !== id)),
     });
   }
-  return (
-    <div>
-      {torrents.map(torrent => (
-        <Torrent
-          onDeleteClick={() => deleteTorrent(torrent.id)}
-          key={torrent.id}
-          torrent={torrent}
-        />
-      ))}
-    </div>
-  );
+  return torrents.map(torrent => (
+    <Torrent
+      onDeleteClick={() => deleteTorrent(torrent.id)}
+      key={torrent.id}
+      torrent={torrent}
+    />
+  ));
 };
 
 const TorrentsWithData = () => {
@@ -63,17 +59,13 @@ const TorrentsWithData = () => {
       </div>
     );
   }
-  return (
-    <div>
-      <TorrentsViewChild data={data} />
-    </div>
-  );
+  return <Torrents data={data} />;
 };
 
-const Torrents = () => (
+const TorrentsDashboard = () => (
   <Dashboard title="Torrents" noFooter>
     <TorrentsWithData />
   </Dashboard>
 );
 
-export default withAuth(Torrents);
+export default withAuth(TorrentsDashboard);
