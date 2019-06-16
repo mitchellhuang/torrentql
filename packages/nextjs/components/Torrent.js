@@ -1,14 +1,13 @@
 import React from 'react';
 import seedingSVG from '../static/seeding.svg';
 import downloadingSVG from '../static/downloading.svg';
-import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
-import { useMutation } from 'react-apollo-hooks';
 
 const Torrent = ({
   torrent,
+  onDeleteClick,
 }) => (
   <div className="torrent">
-    <Info torrent={torrent} />
+    <Info torrent={torrent} onDeleteClick={() => onDeleteClick(torrent.id)} />
     <ProgressBar progress={torrent.progress} state={torrent.state} />
     <style jsx>{`
       .torrent {
@@ -24,22 +23,16 @@ const Torrent = ({
   </div>
 );
 
-async function deleteTorrent(id) {
-  const deleteMutation = useMutation(DELETE_TORRENT_MUTATION);
-  const result = await deleteMutation({
-    variables: {
-      id,
-    },
-  });
-}
-
 const Info = ({
   torrent,
+  onDeleteClick,
 }) => (
   <div className="info">
     <div className="name">
       <span className="icon">
-        <img onClick={()=>deleteTorrent(torrent.id)} className="icon" src="../static/delete.png" alt={torrent.state} />
+        <button onClick={() => onDeleteClick()} type="button">
+          <img className="icon" src="../static/delete.png" alt={torrent.state} />
+        </button>
       </span>
       <span className="icon">
         <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
