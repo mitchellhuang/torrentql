@@ -1,14 +1,16 @@
 import React from 'react';
+import { useMutation } from 'react-apollo-hooks';
 import seedingSVG from '../static/seeding.svg';
 import downloadingSVG from '../static/downloading.svg';
 import deleteSVG from '../static/delete.svg';
+import { ME_QUERY } from '../apollo/queries';
+import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
 const Torrent = ({
   torrent,
-  onDeleteClick,
 }) => (
   <div className="torrent">
-    <Info torrent={torrent} onDeleteClick={() => onDeleteClick(torrent.id)} />
+    <Info torrent={torrent} />
     <ProgressBar progress={torrent.progress} state={torrent.state} />
     <style jsx>{`
       .torrent {
@@ -24,48 +26,55 @@ const Torrent = ({
   </div>
 );
 
+
 const Info = ({
   torrent,
-  onDeleteClick,
-}) => (
-  <div className="info">
-    <div className="name">
-      <span onClick={() => onDeleteClick()} onKeyPress={() => onDeleteClick()} role="button" tabIndex="0">
-        <span className="icon">
+}) => {
+  const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
+  async function deleteTorrent(id) {
+    await useDeleteMutation({
+      variables: {
+        id,
+      },
+      refetchQueries: [{ query: ME_QUERY }],
+    });
+  }
+  return (
+    <div className="info">
+      <div className="name">
+        <span onClick={() => deleteTorrent(torrent.id)} onKeyPress={() => deleteTorrent(torrent.id)} role="button" tabIndex="0">
           <img className="icon" src={deleteSVG} alt="delete" />
         </span>
-      </span>
-      <span className="icon">
         <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
-      </span>
-      <span>
-        {torrent.name}
-      </span>
-    </div>
-    <div className="seeding-info">
+        <span>
+          {torrent.name}
+        </span>
+      </div>
+      <div className="seeding-info">
       <span className="peers">
         Peers: {torrent.numPeers} / {torrent.totalPeers}
       </span>
       <span className="seeds">
         Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
       </span>
+      </div>
+      <style jsx>{`
+        .info {
+          display: flex;
+          justify-content: space-between;
+        }
+        .peers {
+          margin-right: 15px;
+        }
+        .icon {
+          height: 15px;
+          margin-bottom: -2px;
+          margin-right: 2px;
+        }
+      `}</style>
     </div>
-    <style jsx>{`
-      .info {
-        display: flex;
-        justify-content: space-between;
-      }
-      .peers {
-        margin-right: 15px;
-      }
-      .icon {
-        height: 15px;
-        margin-bottom: -2px;
-        margin-right: 2px;
-      }
-    `}</style>
-  </div>
-);
+  );
+};
 
 const ProgressBar = ({
   color,

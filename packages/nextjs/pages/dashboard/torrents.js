@@ -1,37 +1,9 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation } from 'react-apollo-hooks';
-import { DELETE_TORRENT_MUTATION } from '../../apollo/mutations';
+import React from 'react';
+import { useQuery } from 'react-apollo-hooks';
 import Dashboard from '../../layouts/Dashboard';
 import withAuth from '../../lib/withAuth';
 import Torrent from '../../components/Torrent';
 import { ME_QUERY } from '../../apollo/queries';
-
-const Torrents = ({ data }) => {
-  const [torrents, setTorrents] = useState(data.me.torrents);
-  if (!torrents || !torrents.length) {
-    return (
-      <div>
-        No torrents.
-      </div>
-    );
-  }
-  async function deleteTorrent(id) {
-    const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
-    await useDeleteMutation({
-      variables: {
-        id,
-      },
-      refetchQueries: setTorrents(torrents.filter(torrent => torrent.id !== id)),
-    });
-  }
-  return torrents.map(torrent => (
-    <Torrent
-      onDeleteClick={() => deleteTorrent(torrent.id)}
-      key={torrent.id}
-      torrent={torrent}
-    />
-  ));
-};
 
 const TorrentsWithData = () => {
   const { loading, data, error } = useQuery(ME_QUERY, {
@@ -59,13 +31,17 @@ const TorrentsWithData = () => {
       </div>
     );
   }
-  return <Torrents data={data} />;
+  return (
+    <div>
+      {data.me.torrents.map(torrent => <Torrent key={torrent.id} torrent={torrent} />)}
+    </div>
+  );
 };
 
-const TorrentsDashboard = () => (
+const Torrents = () => (
   <Dashboard title="Torrents" noFooter>
     <TorrentsWithData />
   </Dashboard>
 );
 
-export default withAuth(TorrentsDashboard);
+export default withAuth(Torrents);
