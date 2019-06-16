@@ -36,7 +36,7 @@ const Info = ({
       variables: {
         id,
       },
-      refetchQueries: [{ query: ME_QUERY }],
+      update: [{ query: ME_QUERY }],
     });
   }
   return (
@@ -46,17 +46,15 @@ const Info = ({
           <img className="icon" src={deleteSVG} alt="delete" />
         </span>
         <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
-        <span>
-          {torrent.name}
-        </span>
+        {torrent.name}
       </div>
       <div className="seeding-info">
-      <span className="peers">
-        Peers: {torrent.numPeers} / {torrent.totalPeers}
-      </span>
-      <span className="seeds">
-        Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
-      </span>
+        <span className="peers">
+          Peers: {torrent.numPeers} / {torrent.totalPeers}
+        </span>
+        <span className="seeds">
+          Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
+        </span>
       </div>
       <style jsx>{`
         .info {
