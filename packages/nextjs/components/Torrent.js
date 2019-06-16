@@ -2,6 +2,7 @@ import React from 'react';
 import { useMutation } from 'react-apollo-hooks';
 import seedingSVG from '../static/seeding.svg';
 import downloadingSVG from '../static/downloading.svg';
+import { Row, Col } from '../layouts/Structures';
 import deleteSVG from '../static/delete.svg';
 import { ME_QUERY } from '../apollo/queries';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
@@ -9,21 +10,28 @@ import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 const Torrent = ({
   torrent,
 }) => (
-  <div className="torrent">
-    <Info torrent={torrent} />
-    <ProgressBar progress={torrent.progress} state={torrent.state} />
+  <Row className="torrent">
+    <Col className="torrent-name">
+      {torrent.name}
+    </Col>
+    <Col>
+      <ProgressBar progress={torrent.progress} state={torrent.state} />
+    </Col>
+    <Col>
+      {torrent.uploadSpeed}
+    </Col>
+    <Col>
+      {torrent.downloadSpeed}
+    </Col>
+    <Col>
+      {torrent.numPeers} / {torrent.totalPeers}
+    </Col>
+    <Col>
+      {torrent.numSeeds} / {torrent.totalSeeds}
+    </Col>
     <style jsx>{`
-      .torrent {
-        padding: 10px;
-        border: 1px solid var(--gray);
-        border-radius: 5px;
-        min-width: 768px;
-      }
-      .torrent:not(:last-child) {
-        margin-bottom: 6px;
-      }
     `}</style>
-  </div>
+  </Row>
 );
 
 const Info = ({
@@ -97,7 +105,6 @@ const ProgressBar = ({
         .progress-bar {
           border: 1px solid var(--gray);
           border-radius: 5px;
-          margin-top: 5px;
           position: relative;
         }
         .progress-bar-status {
