@@ -10,10 +10,13 @@ const Global = ({
     <style jsx global>{`
       :root {
         --primary: #51A4FB;
+        --secondary: #7B51FB;
         --black: #111;
         --white: #FFF;
         --gray: #999;
-        --lightGray: #EEE;
+        --green: #8BC34A;
+        --lightGray: #F5F5F5;
+        --darkGray: #696969;
         --error: #FF0000;
       };
       body {

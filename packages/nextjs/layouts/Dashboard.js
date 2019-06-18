@@ -77,7 +77,7 @@ const Dashboard = ({
   title,
   ...props
 }) => (
-  <Global {...props}>
+  <Global {...props} backgroundColor="var(--lightGray)">
     <Head title={title} />
     <NavBar />
     <div className="wrapper">
