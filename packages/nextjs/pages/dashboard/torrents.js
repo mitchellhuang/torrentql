@@ -8,7 +8,7 @@ import { ME_QUERY } from '../../apollo/queries';
 const TorrentsWithData = () => {
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
-    pollInterval: 2000,
+    // pollInterval: 2000,
   });
   if (loading || !process.browser) {
     return (
