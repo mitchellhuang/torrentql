@@ -13,11 +13,11 @@ const NoTableText = ({ message }) => (
 
 const TableHeader = () => {
   const columnHeaderNames = [
-    'Name', 'Up Speed', 'Down Speed', 'Peers', 'Seeds', 'Progress',
+    'Name', 'Progress', '⬆ Speed', '⬇ Speed', 'Peers', 'Seeds',
   ];
   return (
     <TRow className="header">
-      {columnHeaderNames.map(ele => {
+      {columnHeaderNames.map((ele) => {
         switch (ele) {
           case 'Name':
             return <TCell key={ele} className="torrent-name">{ele}</TCell>;
@@ -60,7 +60,7 @@ const TorrentsWithData = () => {
         .torrents-table {
           background-color: var(--lightGray);
         }
-       `}</style>
+      `}</style>
     </div>
   );
 };
