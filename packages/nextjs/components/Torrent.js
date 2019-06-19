@@ -112,20 +112,20 @@ const Torrent = ({
           <span className="name">
           {torrent.name}
         </span>
-        </TCell>
-        <TCell minWidth="170px" className="progress-bar-cell">
-          <ProgressBar progress={torrent.progress} state={torrent.state} color="var(--green)" />
-        </TCell>
-        <TCell>
-          {prettyBytes(torrent.uploadSpeed)}
-          <span className="state-icon">
-          {torrent.state === 'seeding' && torrent.uploadSpeed < 0 && <img src={seedingSVG} alt="seeding" />}
+      </TCell>
+      <TCell minWidth="170px" className="progress-bar-cell">
+        <ProgressBar progress={torrent.progress} state={torrent.state} color="var(--green)" />
+      </TCell>
+      <TCell minWidth="130px">
+        {prettyBytes(torrent.uploadSpeed)}
+        <span className="state-icon">
+          {torrent.uploadSpeed > 0 && <img src={seedingSVG} alt="seeding" />}
         </span>
-        </TCell>
-        <TCell>
-          {prettyBytes(torrent.downloadSpeed)}
-          <span className="state-icon">
-          {torrent.state === 'downloading' && torrent.downloadSpeed < 0 && <img src={downloadingSVG} alt="seeding" />}
+      </TCell>
+      <TCell minWidth="130px">
+        {prettyBytes(torrent.downloadSpeed)}
+        <span className="state-icon">
+          {torrent.downloadSpeed > 0 && <img src={downloadingSVG} alt="seeding" />}
         </span>
         </TCell>
         <TCell>
@@ -152,6 +152,13 @@ const Torrent = ({
         }
         .state-icon img {
           height: 20px;
+          opacity: 1;
+          animation: fade 2.5s infinite alternate;
+        }
+        @keyframes fade {
+          from { 
+            opacity: 0; 
+          }
         }
       `}</style>
       </TRow>

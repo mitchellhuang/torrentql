@@ -23,6 +23,9 @@ const TableHeader = () => {
             return <TCell key={ele} className="torrent-name">{ele}</TCell>;
           case 'Progress':
             return <TCell key={ele} minWidth="170px">{ele}</TCell>;
+          case '⬆ Speed':
+          case '⬇ Speed':
+            return <TCell key={ele} minWidth="130px">{ele}</TCell>;
           default:
             return <TCell key={ele}>{ele}</TCell>;
         }
