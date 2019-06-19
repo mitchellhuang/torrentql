@@ -35,12 +35,10 @@ const Info = ({
       variables: {
         id,
       },
-      update: (store, { data: { deleteTorrent } }) => {
-        if (!deleteTorrent) {
-          const data = store.readQuery({ query: ME_QUERY });
-          data.me.torrents.filter(torrent => torrent.id !== id);
-          store.writeQuery({ query: DELETE_TORRENT_MUTATION });
-        }
+      update: (store) => {
+        const data = store.readQuery({ query: ME_QUERY });
+        data.me.torrents = data.me.torrents.filter(tor => tor.id !== id);
+        store.writeQuery({ query: DELETE_TORRENT_MUTATION });
       },
     });
   }
