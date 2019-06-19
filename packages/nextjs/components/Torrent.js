@@ -117,13 +117,13 @@ const Torrent = ({
         <ProgressBar progress={torrent.progress} state={torrent.state} color="var(--green)" />
       </TCell>
       <TCell minWidth="130px">
-        {prettyBytes(torrent.uploadSpeed)}
+        {prettyBytes(torrent.uploadSpeed)}/s
         <span className="state-icon">
           {torrent.uploadSpeed > 0 && <img src={seedingSVG} alt="seeding" />}
         </span>
       </TCell>
       <TCell minWidth="130px">
-        {prettyBytes(torrent.downloadSpeed)}
+        {prettyBytes(torrent.downloadSpeed)}/s
         <span className="state-icon">
           {torrent.downloadSpeed > 0 && <img src={downloadingSVG} alt="seeding" />}
         </span>
