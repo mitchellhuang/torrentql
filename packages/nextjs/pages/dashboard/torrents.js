@@ -5,64 +5,52 @@ import withAuth from '../../lib/withAuth';
 import Torrent, { TRow, TCell } from '../../components/Torrent';
 import { ME_QUERY } from '../../apollo/queries';
 
-const NoTableText = ({ message }) => (
+const Unstyled = ({ message }) => (
   <div>
     {message}
   </div>
 );
 
-const TableHeader = () => {
-  const columnHeaderNames = [
-    'Name', 'Progress', '⬆ Speed', '⬇ Speed', 'Peers', 'Seeds',
-  ];
-  return (
-    <TRow className="header">
-      {columnHeaderNames.map((ele) => {
-        switch (ele) {
-          case 'Name':
-            return <TCell key={ele} className="torrent-name">{ele}</TCell>;
-          case 'Progress':
-            return <TCell key={ele} minWidth="170px">{ele}</TCell>;
-          case '⬆ Speed':
-          case '⬇ Speed':
-            return <TCell key={ele} minWidth="130px">{ele}</TCell>;
-          default:
-            return <TCell key={ele}>{ele}</TCell>;
-        }
-      })}
-    </TRow>
-  );
-};
+const TorrentTableHeader = () => (
+  <TRow header>
+    <TCell flex={5}>Name</TCell>
+    <TCell flex={2}>Progress</TCell>
+    <TCell flex={1}>Down Speed</TCell>
+    <TCell flex={1}>Up speed</TCell>
+    <TCell flex={1}>Peers</TCell>
+    <TCell flex={1}>Seeds</TCell>
+  </TRow>
+);
 
 const TorrentsWithData = () => {
-  const [selectedTorrent, setSelectedTorrent] = useState({});
+  const [selected, selectTorrent] = useState({});
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
     pollInterval: 2000,
   });
   if (loading || !process.browser) {
-    return <NoTableText message="Loading ..." />;
+    return <Unstyled message="Loading..." />;
   }
   if (error) {
-    return <NoTableText message={JSON.stringify(error)} />;
+    return <Unstyled message={JSON.stringify(error)} />;
   }
   if (!data.me.torrents.length) {
-    return <NoTableText message="No torrents." />;
+    return <Unstyled message="No torrents." />;
   }
   return (
-    <div className="torrents-table">
-      <TableHeader />
-      {data.me.torrents.map(tor => (
+    <div className="torrents">
+      <TorrentTableHeader />
+      {data.me.torrents.map(torrent => (
         <Torrent
-          torrent={tor}
-          selected={tor.id === selectedTorrent.id}
-          onTorrentSelected={() => setSelectedTorrent(tor.id !== selectedTorrent.id ? tor : {})}
-          key={tor.id}
+          torrent={torrent}
+          selected={torrent.id === selected.id}
+          onClick={() => selectTorrent(torrent.id !== selected.id ? torrent : {})}
+          key={torrent.id}
         />
       ))}
       <style jsx>{`
-        .torrents-table {
-          background-color: var(--lightGray);
+        .torrents {
+          min-width: 1024px;
         }
       `}</style>
     </div>

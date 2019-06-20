@@ -16,6 +16,7 @@ const Global = ({
         --green: #8CD087;
         --lightGray: #F5F5F5;
         --darkGray: #696969;
+        --dashboardBg: #F5F5F5;
         --error: #FF0000;
       };
       body {

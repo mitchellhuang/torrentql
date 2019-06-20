@@ -57,10 +57,10 @@ const Tabs = ({
       }
       li > .active {
         color: var(--black);
-        background: var(--white);
+        background: var(--dashboardBg);
         border-color: var(--gray);
         border-radius: 5px 5px 0 0;
-        border-bottom-color: var(--white);
+        border-bottom-color: var(--dashboardBg);
       }
       @media(min-width: 768px) {
         ul {
@@ -77,7 +77,7 @@ const Dashboard = ({
   title,
   ...props
 }) => (
-  <Global backgroundColor="var(--lightGray)" {...props}>
+  <Global backgroundColor="var(--dashboardBg)" {...props}>
     <Head title={title} />
     <NavBar />
     <div className="wrapper">
@@ -97,7 +97,7 @@ const Dashboard = ({
       .content {
         border-radius: 5px;
         padding-top: 15px;
-        height: 100%;
+        overflow: auto;
       }
     `}</style>
   </Global>
