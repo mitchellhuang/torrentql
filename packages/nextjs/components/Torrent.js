@@ -1,6 +1,10 @@
 import React from 'react';
+import { useMutation } from 'react-apollo-hooks';
 import seedingSVG from '../static/seeding.svg';
 import downloadingSVG from '../static/downloading.svg';
+import deleteSVG from '../static/delete.svg';
+import { ME_QUERY } from '../apollo/queries';
+import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
 const Torrent = ({
   torrent,
@@ -24,40 +28,57 @@ const Torrent = ({
 
 const Info = ({
   torrent,
-}) => (
-  <div className="info">
-    <div className="name">
-      <span className="icon">
+}) => {
+  const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
+  async function deleteTorrent(id) {
+    await useDeleteMutation({
+      variables: {
+        id,
+      },
+      update: (store) => {
+        const data = store.readQuery({ query: ME_QUERY });
+        data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
+        store.writeQuery({
+          query: ME_QUERY,
+          data,
+        });
+      },
+    });
+  }
+  return (
+    <div className="info">
+      <div className="name">
+        <span onClick={() => deleteTorrent(torrent.id)} onKeyPress={() => deleteTorrent(torrent.id)} role="button" tabIndex="0">
+          <img className="icon" src={deleteSVG} alt="delete" />
+        </span>
         <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
-      </span>
-      <span>
         {torrent.name}
-      </span>
+      </div>
+      <div className="seeding-info">
+        <span className="peers">
+          Peers: {torrent.numPeers} / {torrent.totalPeers}
+        </span>
+        <span className="seeds">
+          Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
+        </span>
+      </div>
+      <style jsx>{`
+        .info {
+          display: flex;
+          justify-content: space-between;
+        }
+        .peers {
+          margin-right: 15px;
+        }
+        .icon {
+          height: 15px;
+          margin-bottom: -2px;
+          margin-right: 2px;
+        }
+      `}</style>
     </div>
-    <div className="seeding-info">
-      <span className="peers">
-        Peers: {torrent.numPeers} / {torrent.totalPeers}
-      </span>
-      <span className="seeds">
-        Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
-      </span>
-    </div>
-    <style jsx>{`
-      .info {
-        display: flex;
-        justify-content: space-between;
-      }
-      .peers {
-        margin-right: 15px;
-      }
-      .icon {
-        height: 15px;
-        margin-bottom: -2px;
-        margin-right: 2px;
-      }
-    `}</style>
-  </div>
-);
+  );
+};
 
 const ProgressBar = ({
   color,
