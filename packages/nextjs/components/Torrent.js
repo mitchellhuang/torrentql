@@ -78,21 +78,19 @@ const Torrent = ({
 }) => {
   const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
   // eslint-disable-next-line no-unused-vars
-  async function handleDeleteTorrent(id) {
-    await deleteTorrent({
-      variables: {
-        id,
-      },
-      update: (store) => {
-        const data = store.readQuery({ query: ME_QUERY });
-        data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
-        store.writeQuery({
-          query: ME_QUERY,
-          data,
-        });
-      },
-    });
-  }
+  const handleDeleteTorrent = id => deleteTorrent({
+    variables: {
+      id,
+    },
+    update: (store) => {
+      const data = store.readQuery({ query: ME_QUERY });
+      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
+      store.writeQuery({
+        query: ME_QUERY,
+        data,
+      });
+    },
+  });
   return (
     <TRow key={torrent.id} selected={selected} onClick={onClick}>
       <TCell flex={5}>
