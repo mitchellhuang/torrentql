@@ -13,7 +13,7 @@ const TRow = ({
   onClick,
 }) => (
   <div
-    className={className ? `row ${className}` : 'row selected'}
+    className={className ? `row ${className}` : 'row'}
     onClick={onClick}
     onKeyPress={onClick}
     role="button"
