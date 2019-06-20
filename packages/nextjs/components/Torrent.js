@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
 import prettyBytes from 'pretty-bytes';
+import { useMutation } from 'react-apollo-hooks';
 import seedingSVG from '../static/seeding.svg';
 import downloadingSVG from '../static/downloading.svg';
 import checkSVG from '../static/check-mark.svg';
-mport { useMutation } from 'react-apollo-hooks';
-import { Row, Col } from '../layouts/Structures';
-import deleteSVG from '../static/delete.svg';
 import { ME_QUERY } from '../apollo/queries';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
@@ -85,6 +83,7 @@ const Torrent = ({
   onTorrentSelected,
 }) => {
   const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
+  // eslint-disable-next-line no-unused-vars
   async function deleteTorrent(id) {
     await useDeleteMutation({
       variables: {
@@ -100,33 +99,31 @@ const Torrent = ({
       },
     });
   }
-  // eslint-disable-next-line max-len
-  // TODO: add this to an element () => deleteTorrent(torrent.id)} onKeyPress={() => deleteTorrent(torrent.id)} role="button" tabIndex="0"
   return (
-    <Fragment key={torrent.id}>
-      <TRow className={selected ? 'torrent selected' : 'torrent'} onClick={onTorrentSelected}>
+    <Fragment>
+      <TRow className={selected ? 'torrent selected' : 'torrent'} onClick={onTorrentSelected} key={torrent.id}>
         <TCell className="torrent-name">
           {selected
             ? <img className="icon" src={checkSVG} alt="selected icon" />
             : <span className="empty-circle" />}
           <span className="name">
-          {torrent.name}
-        </span>
-      </TCell>
-      <TCell minWidth="170px" className="progress-bar-cell">
-        <ProgressBar progress={torrent.progress} state={torrent.state} color="var(--green)" />
-      </TCell>
-      <TCell minWidth="130px">
-        {prettyBytes(torrent.uploadSpeed)}/s
-        <span className="state-icon">
-          {torrent.uploadSpeed > 0 && <img src={seedingSVG} alt="seeding" />}
-        </span>
-      </TCell>
-      <TCell minWidth="130px">
-        {prettyBytes(torrent.downloadSpeed)}/s
-        <span className="state-icon">
-          {torrent.downloadSpeed > 0 && <img src={downloadingSVG} alt="seeding" />}
-        </span>
+            {torrent.name}
+          </span>
+        </TCell>
+        <TCell minWidth="170px" className="progress-bar-cell">
+          <ProgressBar progress={torrent.progress} state={torrent.state} color="var(--green)" />
+        </TCell>
+        <TCell minWidth="130px">
+          {prettyBytes(torrent.uploadSpeed)}/s
+          <span className="state-icon">
+            {torrent.uploadSpeed > 0 && <img src={seedingSVG} alt="seeding" />}
+          </span>
+        </TCell>
+        <TCell minWidth="130px">
+          {prettyBytes(torrent.downloadSpeed)}/s
+          <span className="state-icon">
+            {torrent.downloadSpeed > 0 && <img src={downloadingSVG} alt="seeding" />}
+          </span>
         </TCell>
         <TCell>
           {torrent.numPeers} / {torrent.totalPeers}
