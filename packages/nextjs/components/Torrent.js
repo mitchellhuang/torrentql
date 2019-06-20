@@ -37,9 +37,9 @@ const Info = ({
       },
       update: (store) => {
         const data = store.readQuery({ query: ME_QUERY });
-        data.me.torrents = data.me.torrents.filter(tor => tor.id !== id);
+        data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
         store.writeQuery({
-          query: DELETE_TORRENT_MUTATION,
+          query: ME_QUERY,
           data,
         });
       },
