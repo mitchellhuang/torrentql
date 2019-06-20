@@ -57,6 +57,7 @@ const TorrentsWithData = () => {
           torrent={tor}
           selected={tor.id === selectedTorrent.id}
           onTorrentSelected={() => setSelectedTorrent(tor.id !== selectedTorrent.id ? tor : {})}
+          key={tor.id}
         />
       ))}
       <style jsx>{`
