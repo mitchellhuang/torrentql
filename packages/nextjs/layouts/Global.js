@@ -64,6 +64,7 @@ const Global = ({
       @media(min-width: 768px) {
         .wrapper {
           margin: 0 auto;
+          padding: 15px 25px;
         }
       }
     `}</style>
