@@ -58,27 +58,6 @@ type Torrent {
   server: Server!
 }
 
-type TorrentStatus {
-  name: String!
-  state: String!
-  progress: Float!
-  ratio: Float!
-  uploadSpeed: Int!
-  downloadSpeed: Int!
-  eta: Int!
-  numPeers: Int!
-  numSeeds: Int!
-  totalPeers: Int!
-  totalSeeds: Int!
-  totalWanted: BigInt!
-  totalUploaded: BigInt!
-  totalDownloaded: BigInt!
-  tracker: String!
-  trackerHost: String!
-  trackerStatus: String!
-  files: JSON!
-}
-
 type User {
   id: ID!
   email: String!
