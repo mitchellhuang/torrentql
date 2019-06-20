@@ -45,9 +45,6 @@ const Footer = () => (
     <div className="wrapper">
       <div className="logo">
         <Logo />
-        <div className="copy">
-          Copyright &copy; 2019 TorrentQL LLC
-        </div>
       </div>
       <div className="group get-started">
         <h4 className="header">
@@ -106,12 +103,7 @@ const Footer = () => (
         align-items: flex-start;
       }
       .logo {
-        margin: 15px 0;
-      }
-      .copy {
-        font-size: 12px;
-        font-weight: 400;
-        margin-top: 5px;
+        margin-bottom: 15px;
       }
       .group:not(:last-child) {
         margin-bottom: 15px;
@@ -142,8 +134,8 @@ const Footer = () => (
           flex-direction: row;
         }
         .logo {
-          flex: 2;
-          margin: 0;
+          flex: 3;
+          margin-bottom: 0;
         }
         .group {
           flex: 1;

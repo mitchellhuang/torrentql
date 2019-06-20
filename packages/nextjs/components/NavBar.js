@@ -49,14 +49,14 @@ const NavBar = ({ router }) => {
           position: sticky;
           top: 0;
           margin: 0;
-          width: 100vw;
           box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
         }
         .wrapper {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding: 10px 15px;
+          padding-top: 10px;
+          padding-bottom: 10px;
         }
         .wrapper-open {
           padding-bottom: 15px;
