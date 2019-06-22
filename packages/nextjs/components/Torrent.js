@@ -1,121 +1,155 @@
 import React from 'react';
+import prettyBytes from 'pretty-bytes';
+import classNames from 'classnames';
 import { useMutation } from 'react-apollo-hooks';
-import seedingSVG from '../static/seeding.svg';
-import downloadingSVG from '../static/downloading.svg';
-import deleteSVG from '../static/delete.svg';
 import { ME_QUERY } from '../apollo/queries';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
-const Torrent = ({
-  torrent,
+const TRow = ({
+  children,
+  className,
+  header,
+  selected,
+  onClick,
 }) => (
-  <div className="torrent">
-    <Info torrent={torrent} />
-    <ProgressBar progress={torrent.progress} state={torrent.state} />
+  <div
+    className={classNames('row', { header, selected, [className]: className })}
+    onClick={onClick}
+    onKeyPress={onClick}
+    role="button"
+    tabIndex="0"
+  >
+    {children}
     <style jsx>{`
-      .torrent {
-        padding: 10px;
-        border: 1px solid var(--gray);
-        border-radius: 5px;
-        min-width: 768px;
+      .row {
+        display: flex;
+        flex-direction: row;
+        box-sizing: border-box;
+        color: var(--black);
+        background-color: var(--white);
+        padding: 10px 0;
+        border: 2px solid transparent;
+        border-radius: 4px;
+        width: 100%;
+        cursor: pointer;
+        outline: none;
       }
-      .torrent:not(:last-child) {
-        margin-bottom: 6px;
+      .row:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      .selected {
+        border-color: var(--green);
+      }
+      .header {
+        color: var(--lightGray);
+        background-color: var(--primary);
+        cursor: default;
       }
     `}</style>
   </div>
 );
 
-const Info = ({
+const TCell = ({
+  flex,
+  className,
+  children,
+}) => (
+  <div className={classNames('t-cell', { [className]: className })}>
+    {children}
+    <style jsx>{`
+      .t-cell {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+        flex: ${flex || 1};
+        overflow: auto;
+        white-space: nowrap;
+        padding: 0 10px;
+      }
+    `}</style>
+  </div>
+);
+
+const Torrent = ({
   torrent,
+  selected,
+  onClick,
 }) => {
-  const useDeleteMutation = useMutation(DELETE_TORRENT_MUTATION);
-  async function deleteTorrent(id) {
-    await useDeleteMutation({
-      variables: {
-        id,
-      },
-      update: (store) => {
-        const data = store.readQuery({ query: ME_QUERY });
-        data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
-        store.writeQuery({
-          query: ME_QUERY,
-          data,
-        });
-      },
-    });
-  }
+  const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
+  // eslint-disable-next-line no-unused-vars
+  const handleDeleteTorrent = id => deleteTorrent({
+    variables: {
+      id,
+    },
+    update: (store) => {
+      const data = store.readQuery({ query: ME_QUERY });
+      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
+      store.writeQuery({
+        query: ME_QUERY,
+        data,
+      });
+    },
+  });
   return (
-    <div className="info">
-      <div className="name">
-        <span onClick={() => deleteTorrent(torrent.id)} onKeyPress={() => deleteTorrent(torrent.id)} role="button" tabIndex="0">
-          <img className="icon" src={deleteSVG} alt="delete" />
-        </span>
-        <img className="icon" src={torrent.state === 'seeding' ? seedingSVG : downloadingSVG} alt={torrent.state} />
+    <TRow key={torrent.id} selected={selected} onClick={onClick}>
+      <TCell flex={5}>
         {torrent.name}
-      </div>
-      <div className="seeding-info">
-        <span className="peers">
-          Peers: {torrent.numPeers} / {torrent.totalPeers}
-        </span>
-        <span className="seeds">
-          Seeds: {torrent.numSeeds} / {torrent.totalSeeds}
-        </span>
-      </div>
-      <style jsx>{`
-        .info {
-          display: flex;
-          justify-content: space-between;
-        }
-        .peers {
-          margin-right: 15px;
-        }
-        .icon {
-          height: 15px;
-          margin-bottom: -2px;
-          margin-right: 2px;
-        }
-      `}</style>
-    </div>
+      </TCell>
+      <TCell flex={2}>
+        <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)" />
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.downloadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.uploadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numPeers} / {torrent.totalPeers}
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numSeeds} / {torrent.totalSeeds}
+      </TCell>
+    </TRow>
   );
 };
 
 const ProgressBar = ({
   color,
-  progress,
   state,
+  progress,
   className,
-}) => {
-  const progressBarClass = className ? `progress-bar ${className}` : 'progress-bar';
-  return (
-    <div className={progressBarClass}>
-      <div className="progress-bar-status">
-        {state} {progress.toFixed(2)}%
-      </div>
-      <div className="progress-bar-inner" />
-      <style jsx>{`
-        .progress-bar {
-          border: 1px solid var(--gray);
-          border-radius: 5px;
-          margin-top: 5px;
-          position: relative;
-        }
-        .progress-bar-status {
-          display: flex;
-          align-items: center;
-          height: 22px;
-          position: absolute;
-          padding: 0 5px;
-          text-transform: capitalize;
-        }
-        .progress-bar-inner {
-          width: ${progress}%;
-          background-color: ${color || 'var(--gray)'};
-          height: 22px;
-        }
-     `}</style>
+}) => (
+  <div className={classNames('progress-bar', { [className]: className })}>
+    <div className="progress-bar-status">
+      {state} {progress.toFixed(2)}%
     </div>
-  );
-};
+    <div className="progress-bar-inner" />
+    <style jsx>{`
+      .progress-bar {
+        display: inline-block;
+        position: relative;
+        padding-right: 15px;
+        width: 100%;
+      }
+      .progress-bar-status {
+        display: flex;
+        align-items: center;
+        height: 22px;
+        margin-left: 5px;
+        position: absolute;
+        padding: 0 5px;
+        text-transform: capitalize;
+      }
+      .progress-bar-inner {
+        width: ${progress}%;
+        background-color: ${color || 'var(--gray)'};
+        border-radius: 5px;
+        height: 22px;
+      }
+   `}</style>
+  </div>
+);
 
-export default Torrent;
+export { Torrent as default, TRow, TCell };

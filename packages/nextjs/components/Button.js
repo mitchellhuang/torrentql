@@ -11,12 +11,12 @@ const Button = ({
   children,
   ...props
 }) => {
-  let btnClass = classNames('button', {
+  const btnClass = classNames('button', {
     'button--block': block,
     'button--outline': white,
     'button--animate': animate,
+    [className]: className,
   });
-  btnClass = className ? `${btnClass} ${className}` : btnClass;
   return (
     <>
       {href ? (
