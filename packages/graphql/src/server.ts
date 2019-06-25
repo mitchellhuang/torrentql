@@ -40,8 +40,13 @@ export const createServer = async () => {
   server.use(jwt.decode());
 
   if (dev) {
-    const FILES_PATH = process.env.FILES_PATH || '.';
-    server.use('/files', express.static(FILES_PATH), serveIndex(FILES_PATH, { icons: true }));
+    if (process.env.FILES_PATH) {
+      server.use(
+        '/files',
+        express.static(process.env.FILES_PATH),
+        serveIndex(process.env.FILES_PATH, { icons: true }),
+      );
+    }
   }
 
   apollo.applyMiddleware({ app: server });
