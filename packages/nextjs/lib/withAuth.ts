@@ -27,7 +27,9 @@ const withAuth = ComposedComponent => (
     }
 
     render() {
+      // @ts-ignore
       const { isLoggedIn } = this.props;
+      // @ts-ignore
       return isLoggedIn ? <ComposedComponent /> : null;
     }
   }

@@ -42,6 +42,6 @@ export const ADD_TORRENT_MUTATION = gql`
 
 export const DELETE_TORRENT_MUTATION = gql`
   mutation deleteTorrent($id: String!) {
-    deleteTorrent(id: $id) 
+    deleteTorrent(id: $id)
   }
 `;

@@ -1,7 +1,9 @@
 {
   "presets": [
-    ["@babel/preset-typescript",
-      { "isTSX": true,
+    [
+      "@babel/preset-typescript",
+      {
+        "isTSX": true,
         "allExtensions": true
       }
     ],
@@ -9,7 +11,9 @@
       "next/babel",
       {
         "styled-jsx": {
-          "plugins": ["styled-jsx-plugin-postcss"]
+          "plugins": [
+            "styled-jsx-plugin-postcss"
+          ]
         }
       }
     ]
