@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+/* tslint:disable */
+
+import { Component } from 'react';
 import Router from 'next/router';
 import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
 
@@ -27,12 +29,12 @@ const withAuth = ComposedComponent => (
     }
 
     render() {
-      // @ts-ignore
       const { isLoggedIn } = this.props;
-      // @ts-ignore
       return isLoggedIn ? <ComposedComponent /> : null;
     }
   }
 );
 
 export default withAuth;
+
+/* tslint:enable */
