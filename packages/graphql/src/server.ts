@@ -1,15 +1,17 @@
 import 'dotenv/config';
 import 'reflect-metadata';
+import { join } from 'path';
 import express from 'express';
+import serveIndex from 'serve-index';
 import { useContainer } from 'typeorm';
 import { buildSchema, emitSchemaDefinitionFile } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
-import { join } from 'path';
 import * as db from './lib/db';
 import * as jwt from './lib/jwt';
 import { createContext, authChecker } from './lib/context';
 
+const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 useContainer(Container);
@@ -36,6 +38,11 @@ export const createServer = async () => {
   const server = express();
 
   server.use(jwt.decode());
+
+  if (dev) {
+    const FILES_PATH = process.env.FILES_PATH || '.';
+    server.use('/files', express.static(FILES_PATH), serveIndex(FILES_PATH, { icons: true }));
+  }
 
   apollo.applyMiddleware({ app: server });
 
