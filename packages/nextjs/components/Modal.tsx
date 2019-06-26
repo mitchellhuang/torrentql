@@ -77,7 +77,7 @@ const Modal = ({
       }
     `}</style>
   </div>,
-  document.getElementById('modal-root'),
+  document.getElementById('modal-root') as Element,
 ) : null;
 
 export default Modal;

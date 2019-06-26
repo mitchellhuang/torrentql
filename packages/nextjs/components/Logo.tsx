@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { StatelessComponent } from 'react';
 import Link from 'next/link';
 import logo from '../static/icon-left-font.png';
 import logoAbove from '../static/icon-above-font.svg';
 
-export const Logo = ({
+export const Logo: StatelessComponent<{ className?: string }> = ({
   className,
 }) => (
   <Link href="/">
@@ -22,7 +22,7 @@ export const Logo = ({
   </Link>
 );
 
-export const LogoAbove = ({
+export const LogoAbove: StatelessComponent<{ className?: string }> = ({
   className,
 }) => (
   <Link href="/">

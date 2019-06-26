@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { StatelessComponent } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 
-const Button = ({
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement & HTMLAnchorElement>  {
+  children: string;
+  href?: string;
+  block?: boolean;
+  white?: boolean;
+  animate?: boolean;
+  className?: string;
+}
+
+const Button: StatelessComponent<ButtonProps> = ({
+  children,
   href,
   block,
   white,
   animate,
   className,
-  children,
   ...props
 }) => {
   const btnClass = classNames('button', {
