@@ -2,5 +2,13 @@ const withPlugins = require('next-compose-plugins');
 const withCSS = require('@zeit/next-css');
 const withImages = require('next-images');
 const withTypeScript = require("@zeit/next-typescript");
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-module.exports = withPlugins([withCSS, withImages, withTypeScript]);
+const nextConfig = {
+  webpack(config, options) {
+    if (options.isServer) config.plugins.push(new ForkTsCheckerWebpackPlugin());
+    return config;
+  },
+};
+
+module.exports = withPlugins([withCSS, withImages, withTypeScript], nextConfig);
