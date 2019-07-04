@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import Dashboard from '../../layouts/Dashboard';
 import withAuth from '../../lib/withAuth';
 import Torrent, { TRow, TCell } from '../../components/Torrent';
 import { ME_QUERY } from '../../apollo/queries';
+import { DELETE_TORRENT_MUTATION } from '../../apollo/mutations';
+import deleteIcon from '../../static/delete.png';
 
 const Unstyled = ({ message }) => (
   <div>
@@ -22,7 +24,7 @@ const TorrentTableHeader = () => (
   </TRow>
 );
 
-const Fieldset = ({title, content, className}) => (
+const Fieldset = ({ title, content, className }) => (
   <div className={className}>
     <span className="title">
       {title}
@@ -36,44 +38,70 @@ const Fieldset = ({title, content, className}) => (
       }
     `}</style>
   </div>
-)
+);
 
-const SelectedTorrentInfo = ({torrent}) => (
-  <div>
-    <div className="selected-torrent-info">
-      <div className="torrent-name">{torrent.name}</div>
-      <div className="col">
-        <div className="row">
-          <div className="cell"><Fieldset title="Ratio: " content={torrent.ratio} /></div>
-          <div className="cell"><Fieldset title="ETA: " content={torrent.eta} /></div>
-          <div className="cell"><Fieldset title="Hash: " content={torrent.hash} /></div>
+const SelectedTorrentInfo = ({ torrent }) => {
+  const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
+  const handleDeleteTorrent = id => deleteTorrent({
+    variables: {
+      id,
+    },
+    update: (store) => {
+      const data = store.readQuery({ query: ME_QUERY });
+      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
+      store.writeQuery({
+        query: ME_QUERY,
+        data,
+      });
+    },
+  });
+  return (
+    <div>
+      <div className="selected-torrent-info">
+        <div className="header">
+          <div className="torrent-name">{torrent.name}</div>
+          <img src={deleteIcon} alt="delete" onClick={() => handleDeleteTorrent(torrent.id)} />
         </div>
-        <div className="row">
-          <div className="cell"><Fieldset title="Tracker: " content={torrent.tracker} /></div>
-          <div className="cell"><Fieldset title="Tracker Host: " content={torrent.trackerHost} /></div>
-          <div className="cell"><Fieldset title="Tracker Status: " content={torrent.trackerStatus} /></div>
-        </div>
-        <div className="row">
-          <div className="cell"><Fieldset title="Total Downloaded: " content={torrent.totalDownloaded} /></div>
-          <div className="cell"><Fieldset title="Total Wanted: " content={torrent.totalWanted} /></div>
-          <div className="cell"><Fieldset title="Total Uploaded: " content={torrent.totalUploaded} /></div>
-        </div>
-        <div className="row">
-          <div className="cell"><Fieldset title="Server Id: " content={torrent.server.id} /></div>
-          <div className="cell"><Fieldset title="Server Region: " content={torrent.server.region} /></div>
-          <div className="cell"></div>
+        <div className="col">
+          <div className="row">
+            <div className="cell"><Fieldset title="Ratio: " content={torrent.ratio} /></div>
+            <div className="cell"><Fieldset title="ETA: " content={torrent.eta} /></div>
+            <div className="cell"><Fieldset title="Hash: " content={torrent.hash} /></div>
+          </div>
+          <div className="row">
+            <div className="cell"><Fieldset title="Tracker: " content={torrent.tracker} /></div>
+            <div className="cell"><Fieldset title="Tracker Host: " content={torrent.trackerHost} /></div>
+            <div className="cell"><Fieldset title="Tracker Status: " content={torrent.trackerStatus} /></div>
+          </div>
+          <div className="row">
+            <div className="cell"><Fieldset title="Total Downloaded: " content={torrent.totalDownloaded} /></div>
+            <div className="cell"><Fieldset title="Total Wanted: " content={torrent.totalWanted} /></div>
+            <div className="cell"><Fieldset title="Total Uploaded: " content={torrent.totalUploaded} /></div>
+          </div>
+          <div className="row">
+            <div className="cell"><Fieldset title="Server Id: " content={torrent.server.id} /></div>
+            <div className="cell"><Fieldset title="Server Region: " content={torrent.server.region} /></div>
+            <div className="cell" />
+          </div>
         </div>
       </div>
-    </div>
-    <style jsx>{`
+      <style jsx>{`
       .torrent-name {
-        background-color: var(--primary);
         color: white;
         font-size: 14pt;
+        align-self: center;
+        margin-bottom: 5px;
+        padding: 5px;
+      }
+      img {
+        height: 35px;
+      }
+      .header {
+        width: 100%;
+        background-color: var(--primary);
         display: flex;
         justify-content: center;
-        margin-bottom: 15px;
-        padding: 5px;
+        flex-direction: row;
       }
       .row {
         display: flex;
@@ -100,13 +128,14 @@ const SelectedTorrentInfo = ({torrent}) => (
         width: 100vw;
         box-shadow: 0px 0px 15px rgba(0,0,0,.2);
         position: fixed;
-        height: 200px;
+        height: 185px;
         bottom: 0;
         left: 0;
       }
     `}</style>
-  </div>
-);
+    </div>
+  );
+};
 
 const TorrentsWithData = () => {
   const [selected, selectTorrent] = useState({});

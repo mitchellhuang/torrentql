@@ -75,21 +75,6 @@ const Torrent = ({
   selected,
   onClick,
 }) => {
-  const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
-  // @ts-ignore
-  const handleDeleteTorrent = id => deleteTorrent({
-    variables: {
-      id,
-    },
-    update: (store) => {
-      const data : any = store.readQuery({ query: ME_QUERY });
-      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
-      store.writeQuery({
-        query: ME_QUERY,
-        data,
-      });
-    },
-  });
   return (
     <TRow key={torrent.id} selected={selected} onClick={onClick}>
       <TCell flex={5}>
