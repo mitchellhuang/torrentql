@@ -12,8 +12,8 @@ export const Logo: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorEleme
           background: url(${logo}) no-repeat;
           background-position: -30px 50%;
           background-size: cover;
-          width: 240px;
-          height: 50px;
+          width: 225px;
+          height: 40px;
         }
       `}</style>
     </a>

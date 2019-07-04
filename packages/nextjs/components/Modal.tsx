@@ -71,6 +71,7 @@ const Modal = ({
       .modal-close-button {
         padding: 5px;
         font-size: 20px;
+        cursor: pointer;
       }
       .modal-close-button::before {
         content: "\\2715";

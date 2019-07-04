@@ -49,7 +49,7 @@ const Tabs = ({
       li a {
         display: block;
         color: var(--primary);
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         padding: 10px 15px;
         border: 1px solid transparent;

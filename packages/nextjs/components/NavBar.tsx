@@ -55,8 +55,8 @@ const NavBar = ({ router }) => {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding-top: 10px;
-          padding-bottom: 10px;
+          padding-top: 12.5px;
+          padding-bottom: 12.5px;
         }
         .wrapper-open {
           padding-bottom: 15px;
@@ -133,7 +133,7 @@ const NavBar = ({ router }) => {
             color: var(--black);
           }
           .tabs li a {
-            font-size: 18px;
+            font-size: 16px;
           }
           .hidden {
             display: block;
