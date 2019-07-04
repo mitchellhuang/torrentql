@@ -13,6 +13,7 @@ const Global: React.StatelessComponent<{
     <style jsx global>{`
       :root {
         --primary: #51A4FB;
+        --secondary: #9ecdff;
         --black: #111;
         --white: #FFF;
         --gray: #999;
