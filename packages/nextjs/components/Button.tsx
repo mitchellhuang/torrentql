@@ -1,17 +1,16 @@
-import React, { StatelessComponent } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement & HTMLAnchorElement>  {
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement & HTMLAnchorElement> {
   children: string;
   href?: string;
   block?: boolean;
   white?: boolean;
   animate?: boolean;
-  className?: string;
 }
 
-const Button: StatelessComponent<ButtonProps> = ({
+const Button: React.StatelessComponent<ButtonProps> = ({
   children,
   href,
   block,
@@ -24,7 +23,7 @@ const Button: StatelessComponent<ButtonProps> = ({
     'button--block': block,
     'button--outline': white,
     'button--animate': animate,
-    [className]: className,
+    [className as string]: className,
   });
   return (
     <>

@@ -4,10 +4,10 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'isomorphic-fetch';
 
-let apolloClient = null;
+let apolloClient;
 
 if (!process.browser) {
-  global.fetch = fetch;
+  (global as any).fetch = fetch;
 }
 
 function create(initialState, { getToken }) {

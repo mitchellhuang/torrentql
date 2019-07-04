@@ -1,9 +1,9 @@
-import React, { StatelessComponent } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import logo from '../static/icon-left-font.png';
 import logoAbove from '../static/icon-above-font.svg';
 
-export const Logo: StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
+export const Logo: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
   <Link href="/">
     <a {...props}>
       <style jsx>{`
@@ -20,7 +20,7 @@ export const Logo: StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> =
   </Link>
 );
 
-export const LogoAbove: StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
+export const LogoAbove: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
   <Link href="/">
     <a {...props}>
       <style jsx>{`
