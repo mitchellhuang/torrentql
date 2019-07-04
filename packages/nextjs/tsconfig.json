@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "es2017"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "jsx": "react"
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ]
+}

@@ -3,11 +3,9 @@ import Link from 'next/link';
 import logo from '../static/icon-left-font.png';
 import logoAbove from '../static/icon-above-font.svg';
 
-export const Logo = ({
-  className,
-}) => (
+export const Logo: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
   <Link href="/">
-    <a className={className}>
+    <a {...props}>
       <style jsx>{`
         a {
           display: inline-block;
@@ -22,11 +20,9 @@ export const Logo = ({
   </Link>
 );
 
-export const LogoAbove = ({
-  className,
-}) => (
+export const LogoAbove: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
   <Link href="/">
-    <a className={className}>
+    <a {...props}>
       <style jsx>{`
         a {
           display: inline-block;

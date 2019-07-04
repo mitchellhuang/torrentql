@@ -1,7 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const Input = ({
+interface InputProps extends React.HTMLAttributes<HTMLInputElement>  {
+  id: string;
+  type: string;
+  value: string;
+  label?: string;
+  errors?: string[];
+}
+
+const Input: React.StatelessComponent<InputProps> = ({
   id,
   label,
   type,
@@ -17,7 +25,7 @@ const Input = ({
       className={classNames('input', {
         'input--text': ['text', 'password'].includes(type),
         'input--file': type === 'file',
-        [className]: className,
+        [className as string]: className,
       })}
       {...props}
     />

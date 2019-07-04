@@ -17,7 +17,7 @@ const TRow = ({
     onClick={onClick}
     onKeyPress={onClick}
     role="button"
-    tabIndex="0"
+    tabIndex={0}
   >
     {children}
     <style jsx>{`
@@ -51,10 +51,9 @@ const TRow = ({
 
 const TCell = ({
   flex,
-  className,
   children,
 }) => (
-  <div className={classNames('t-cell', { [className]: className })}>
+  <div className="t-cell">
     {children}
     <style jsx>{`
       .t-cell {
@@ -77,13 +76,13 @@ const Torrent = ({
   onClick,
 }) => {
   const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
-  // eslint-disable-next-line no-unused-vars
+  // @ts-ignore
   const handleDeleteTorrent = id => deleteTorrent({
     variables: {
       id,
     },
     update: (store) => {
-      const data = store.readQuery({ query: ME_QUERY });
+      const data : any = store.readQuery({ query: ME_QUERY });
       data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
       store.writeQuery({
         query: ME_QUERY,
@@ -119,9 +118,8 @@ const ProgressBar = ({
   color,
   state,
   progress,
-  className,
 }) => (
-  <div className={classNames('progress-bar', { [className]: className })}>
+  <div className="progress-bar">
     <div className="progress-bar-status">
       {state} {progress.toFixed(2)}%
     </div>

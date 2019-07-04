@@ -34,7 +34,7 @@ const NavBar = ({ router }) => {
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
-                <a className={router.pathname === item.url ? 'active' : null}>
+                <a className={router.pathname === item.url ? 'active' : undefined}>
                   {item.name}
                 </a>
               </Link>
@@ -153,7 +153,7 @@ const NavBarBurger = ({
     onClick={onClick}
     onKeyPress={onClick}
     role="button"
-    tabIndex="0"
+    tabIndex={0}
   >
     <div className={open ? 'open bar' : 'bar'} />
     <div className={open ? 'open bar' : 'bar'} />

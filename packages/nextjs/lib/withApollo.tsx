@@ -1,40 +1,41 @@
-/* eslint-disable */
+/* tslint:disable */
 
-import React, { Component } from 'react'
-import cookie from 'cookie'
-import PropTypes from 'prop-types'
-import { getMarkupFromTree } from 'react-apollo-hooks'
+import { Component } from 'react';
+import cookie from 'cookie';
+import PropTypes from 'prop-types';
+import { getMarkupFromTree } from 'react-apollo-hooks';
 import { renderToString } from 'react-dom/server';
-import Head from 'next/head'
-import initApollo from './initApollo'
+import Head from 'next/head';
+import initApollo from './initApollo';
+import App from "next/app";
 
-function parseCookies (req, options = {}) {
+function parseCookies(req, options = {}) {
   return cookie.parse(req ? req.headers.cookie || '' : document.cookie, options)
 }
 
 export default App => {
   return class WithApollo extends Component {
-    static displayName = `WithApollo(${App.displayName})`
+    static displayName = `WithApollo(${App.displayName})`;
     static propTypes = {
       apolloState: PropTypes.object.isRequired
-    }
+    };
 
     static async getInitialProps (ctx) {
       const {
         Component,
         router,
         ctx: { req, res }
-      } = ctx
+      } = ctx;
       const apollo = initApollo(
         {},
         {
           getToken: () => parseCookies(req).token
         }
-      )
+      );
 
-      ctx.ctx.apolloClient = apollo
+      ctx.ctx.apolloClient = apollo;
 
-      let appProps = {}
+      let appProps = {};
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx)
       }
@@ -60,7 +61,7 @@ export default App => {
                 apolloClient={apollo}
               />
             )
-          })
+          });
         } catch (error) {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
           // Handle them in components via the data.error prop:
@@ -74,7 +75,7 @@ export default App => {
       }
 
       // Extract query data from the Apollo's store
-      const apolloState = apollo.cache.extract()
+      const apolloState = apollo.cache.extract();
 
       return {
         ...appProps,
@@ -84,7 +85,7 @@ export default App => {
     }
 
     constructor (props) {
-      super(props)
+      super(props);
       // `getDataFromTree` renders the component first, the client is passed off as a property.
       // After that rendering is done using Next's normal rendering pipeline
       this.apolloClient = initApollo(props.apolloState, {
@@ -97,3 +98,4 @@ export default App => {
     }
   }
 }
+/* tslint:enable */
