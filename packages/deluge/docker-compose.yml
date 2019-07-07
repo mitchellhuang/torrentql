@@ -2,6 +2,7 @@ version: '3.3'
 services:
   deluge:
     image: "linuxserver/deluge"
+    restart: "always"
     environment:
       - PGID=0
       - PUID=0
@@ -11,4 +12,4 @@ services:
       - "58946:58946"
       - "58946:58946/udp"
     volumes:
-      - "/Users/jofsky/Downloads:/root/Downloads"
+      - "/Users/mitchell/Downloads:/root/Downloads"
