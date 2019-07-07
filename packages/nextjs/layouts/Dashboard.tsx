@@ -11,13 +11,13 @@ const tabs = [{
   url: '/dashboard',
 }, {
   name: 'Torrents',
-  url: '/dashboard/torrents',
+  url: '/torrents',
 }, {
   name: 'Downloads',
-  url: '/dashboard/downloads',
+  url: '/downloads',
 }, {
   name: 'Account',
-  url: '/dashboard/account',
+  url: '/account',
 }];
 
 const Tabs = ({

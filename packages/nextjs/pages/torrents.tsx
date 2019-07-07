@@ -7,6 +7,7 @@ import { ME_QUERY } from '../../apollo/queries';
 import { DELETE_TORRENT_MUTATION } from '../../apollo/mutations';
 import deleteIcon from '../../static/delete.png';
 
+
 const Unstyled = ({ message }) => (
   <div>
     {message}
