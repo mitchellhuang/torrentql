@@ -23,7 +23,7 @@ const TorrentTableHeader = () => (
 );
 
 const TorrentsWithData = () => {
-  const [selected, selectTorrent] = useState({});
+  const [selected, selectTorrent] = useState<{ id?: string }>({});
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
     pollInterval: 2000,

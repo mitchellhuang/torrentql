@@ -5,11 +5,9 @@ import { Logo } from './Logo';
 const getStarted = [{
   name: 'Log in',
   url: '/login',
-  prefetch: true,
 }, {
   name: 'Sign up',
   url: '/signup',
-  prefetch: true,
 }, {
   name: 'FAQ',
   url: '/faq',
@@ -53,7 +51,7 @@ const Footer = () => (
         <ul className="links">
           { getStarted.map(item => (
             <li key={item.url}>
-              <Link prefetch={item.prefetch} href={item.url}>
+              <Link href={item.url}>
                 <a>
                   {item.name}
                 </a>
