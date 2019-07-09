@@ -1,9 +1,9 @@
-import Markdown from 'markdown-to-jsx';
 import React from 'react';
+import Markdown from 'markdown-to-jsx';
 // @ts-ignore
 import terms from './terms.md';
 
-const termsAndConditions = () => (
+const Terms = () => (
   <div id="terms">
     <Markdown children={terms} />
     <style jsx>{`
@@ -17,4 +17,4 @@ const termsAndConditions = () => (
   </div>
 );
 
-export default termsAndConditions;
+export default Terms;
