@@ -1,7 +1,7 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 // @ts-ignore
-import terms from './terms.md';
+import terms from './legal/terms.md';
 
 const Terms = () => (
   <div id="terms">

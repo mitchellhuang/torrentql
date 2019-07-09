@@ -31,7 +31,7 @@ const companyItems = [{
   url: '/contact',
 }, {
   name: 'Terms of service',
-  url: '/legal/terms',
+  url: '/terms',
 }, {
   name: 'Privacy policy',
   url: '/privacy',
