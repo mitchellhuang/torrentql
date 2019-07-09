@@ -1,5 +1,6 @@
-# Terms and Conditions <hr/>
-###Traffic Usage
+# Terms of Service
+
+### Traffic Usage
 
 All account plans come with a predetermined amount of 
 traffic allowance. We monitor all accounts and may suspend
@@ -197,7 +198,7 @@ customers, affiliates or subsidiaries engage in the following
 prohibited activities and is grounds for immediate termination of
 services without refund:
 
-#### Spamming:
+#### Spamming
 
 TorrentQL has a zero tolerancy policy against spamming, 
 in case of TorrentQL's service being used for sending out 
@@ -215,7 +216,7 @@ TorrentQL reserves the right to prosecute for this violation.
 A $1.00 charge will be assessed PER EMAIL sent should TorrentQL 
 choose to pursue and prosecute.
 
-#### Obscene Speech or Materials: 
+#### Obscene Speech or Materials
 
 Using TorrentQL’s network to advertise, transmit, store, post, 
 display, or otherwise make available child pornography or obscene 
@@ -224,7 +225,7 @@ notify law enforcement agencies when it becomes aware of the
 presence of child pornography on or being transmitted through 
 its network.
 
-#### Defamatory or Abusive Language: 
+#### Defamatory or Abusive Language
 
 Using TorrentQL’s network as a means to transmit or post negative,
 defamatory, harassing, abusive or threatening language.
@@ -234,12 +235,12 @@ defamatory, harassing, abusive or threatening language.
 Forging or misrepresenting message headers, whether in whole or 
 in part, to mask the originator of the message.
 
-#### Filehosts/Streaming sites: 
+#### Filehosts/Streaming sites
 
 Hosting a public filesharing site or streaming site which 
 negatively hurt the reputation of TorrentQL
 
-#### Illegal or Unauthorized Access to Other Computers or Networks: 
+#### Illegal or Unauthorized Access to Other Computers or Networks
 
 Accessing, illegally or without authorization, computers, 
 accounts or networks belonging to another party, or attempting 
@@ -258,7 +259,7 @@ disrupt the use of or interfere with the ability of others to
 effectively use the network or any connected network, system, 
 service or equipment.
 
-#### Facilitation a Violation of this AUP: 
+#### Facilitation a Violation of this AUP
 
 Advertising, transmitting or otherwise making available any 
 software, program, product or service that is designed to violate 
@@ -266,20 +267,20 @@ this AUP, which includes the facilitation of the means to spam,
 initiation of pinging, flooding, mail bombing, denial of service 
 attacks and piracy of software.
 
-#### Other Illegal Activities: 
+#### Other Illegal Activities
 
 Engaging in activities that are determined to be illegal, 
 including, but not limited to, advertising, transmitting or 
 otherwise making available ponzi schemes, pyramid schemes, 
 fraudulently charging credit cards and pirating software.
 
-#### Other Activities:
+#### Other Activities
 
 Engaging in activities, whether lawful or unlawful, that TorrentQL 
 determines to be harmful to its subscribers, operations, reputation, 
 goodwill or customer relations.
 
-### Public Trackers:
+### Public Trackers
 
 Public Trackers are allowed on our seedboxes.
 
@@ -345,4 +346,4 @@ awarded against TorrentQL, plus costs and reasonable attorney’s fees.
 We hope this AUP is helpful in clarifying the obligations of Internet
 users, including TorrentQL and its subscribers, as responsible members 
 of the Internet. Any complaints about a subscriber’s violation of 
-this AUP should be sent to mail [@] TorrentQL.
+this AUP should be sent to support@torrentql.com.
