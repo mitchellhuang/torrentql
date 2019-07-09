@@ -81,7 +81,6 @@ const Dashboard = ({
     <Head title={title} />
     <NavBar />
     <div className="wrapper">
-      <ToolBar />
       <div className="main">
         <Tabs router={router} />
         <div className="content">
@@ -96,7 +95,7 @@ const Dashboard = ({
       }
       .content {
         border-radius: 5px;
-        padding-top: 15px;
+        padding-top: 10px;
         overflow: auto;
       }
     `}</style>
