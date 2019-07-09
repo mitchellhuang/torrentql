@@ -1,9 +1,11 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
+import Main from '../layouts/Main';
 // @ts-ignore
-import terms from './legal/terms.md';
+import terms from '../legal/terms.md';
 
 const Terms = () => (
+<Main title="Terms and Services" noFooter>
   <div id="terms">
     <Markdown children={terms} />
     <style jsx>{`
@@ -15,6 +17,7 @@ const Terms = () => (
       }
     `}</style>
   </div>
+</Main>
 );
 
 export default Terms;

@@ -1,12 +1,11 @@
-# Terms and Conditions
-
-## Traffic Usage
+# Terms and Conditions <hr/>
+###Traffic Usage
 
 All account plans come with a predetermined amount of 
 traffic allowance. We monitor all accounts and may suspend
 services in case of overusage.
 
-## Server Abuse
+### Server Abuse
 
 Any attempt to undermine or cause harm to a server or 
 customer of TorrentQL is strictly prohibited. As our 
@@ -14,7 +13,7 @@ customer you are responsible for all your accounts.
 Should you violate the Terms of Services outlined within, 
 your account will be cancelled without the option of refund.
 
-## Refusal of Service
+### Refusal of Service
 
 We reserve the right to refuse, cancel or suspend service,
 at our sole discretion.
@@ -24,7 +23,7 @@ servers of TorrentQL must adhere to the above policies,
 with the exception of system resources in respect to dedicated 
 servers.
 
-## Billing
+### Billing
 
 By the Account Activation, TorrentQL shall either:
 
@@ -51,7 +50,7 @@ Filing a dispute/chargeback for any paid sum will void
 any rights to hold a service with TorrentQL - All active 
 services will be terminated without the option of getting a refund.
 
-## Service Fees
+### Service Fees
 
 Certain services carry a setup fee charged by TorrentQL to 
 client, which must be paid by client in order to have use 
@@ -67,24 +66,24 @@ on the 15th day of a particular month, the client will be responsible
 for service fees for the entire month, and such fees will not be
 pro-rated or refunded.
 
-## Refund policy
+### Refund policy
 
 No refunds are issued for setup charges, add-on charges, 
 domain-registrations, add-on purchases, SSL certificates 
 overage charges, or any other services provided by TorrentQL.
 
-## Account Deactivations
+### Account Deactivations
 
 Any account deactivated due to non-payment will require a 
 reactivation fee of $10.00 prior to reactivation.
 
-## Cancellation Refunds
+### Cancellation Refunds
 
 As previously stated, We do not refund credit to accounts. 
 Additionally TorrentQL exercises a strict no 
 refund policy for all cancellation actions.
 
-## Limitation of Liability
+### Limitation of Liability
 
 TorrentQL shall not be responsible for any claimed damages,
 including incidental and consequential damages, which may 
@@ -96,7 +95,7 @@ from the corruption or deletion of any web site from one of
 TorrentQL‘s servers. All damages shall be limited to the 
 immediate termination of service.
 
-## Violations
+### Violations
 
 Violations of these Acceptable Use Policies should
 be referred to abuse [at] TorrentQL. All complaints 
@@ -104,7 +103,7 @@ will be investigated promptly. Failure to follow any
 term or condition will be grounds for immediate account 
 deactivation.
 
-## Disclaimer
+### Disclaimer
 
 TorrentQL cannot be held liable for system down time, 
 crashes or data loss. We cannot be held liable for any 
@@ -119,7 +118,7 @@ the automatic deactivation of the account in question. We reserve
 the right to remove any account, without advance notice for any 
 reason without restitution, as TorrentQL sees fit.
 
-## Account Activation
+### Account Activation
 
 By activating your account with TorrentQL, you agree to 
 the above policies and disclaimer. Upon requesting activation
@@ -133,7 +132,7 @@ with these terms, no refunds will be given. We will, however,
 advise you by e-mail or phone prior to taking any action to 
 provide you with an opportunity to correct the problem.
 
-## Server Uptime Guarantee
+### Server Uptime Guarantee
 
 Although TorrentQL has an excellent record for reliability, 
 we do not offer an uptime guarantee. However, our network 
@@ -145,7 +144,7 @@ above policies, guidelines and disclaimer without notification.
 We also retain the right to increase any pricing and make 
 changes to our account plans without notification.
 
-## Acceptable Use Policy
+### Acceptable Use Policy
 
 As a provider of web site hosting and other Internet-related 
 services, TorrentQL offers its customer (also known as “Subscribers”)
@@ -198,7 +197,7 @@ customers, affiliates or subsidiaries engage in the following
 prohibited activities and is grounds for immediate termination of
 services without refund:
 
-### Spamming:
+#### Spamming:
 
 TorrentQL has a zero tolerancy policy against spamming, 
 in case of TorrentQL's service being used for sending out 
@@ -216,7 +215,7 @@ TorrentQL reserves the right to prosecute for this violation.
 A $1.00 charge will be assessed PER EMAIL sent should TorrentQL 
 choose to pursue and prosecute.
 
-### Obscene Speech or Materials: 
+#### Obscene Speech or Materials: 
 
 Using TorrentQL’s network to advertise, transmit, store, post, 
 display, or otherwise make available child pornography or obscene 
@@ -225,22 +224,22 @@ notify law enforcement agencies when it becomes aware of the
 presence of child pornography on or being transmitted through 
 its network.
 
-### Defamatory or Abusive Language: 
+#### Defamatory or Abusive Language: 
 
 Using TorrentQL’s network as a means to transmit or post negative,
 defamatory, harassing, abusive or threatening language.
 
-### Forging of Headers:
+#### Forging of Headers:
 
 Forging or misrepresenting message headers, whether in whole or 
 in part, to mask the originator of the message.
 
-### Filehosts/Streaming sites: 
+#### Filehosts/Streaming sites: 
 
 Hosting a public filesharing site or streaming site which 
 negatively hurt the reputation of TorrentQL
 
-### Illegal or Unauthorized Access to Other Computers or Networks: 
+#### Illegal or Unauthorized Access to Other Computers or Networks: 
 
 Accessing, illegally or without authorization, computers, 
 accounts or networks belonging to another party, or attempting 
@@ -250,8 +249,7 @@ as a precursor to an attempted system penetration
 (i.e., port scan, stealth scan or other 
 information-gathering activity).
 
-### Distribution of Internet Viruses, Worms, Trojan Horses or 
-Other Destructive Activities: 
+#### Distribution of Internet Viruses, Worms, Trojan Horses or Other Destructive Activities: 
 
 Distributing information regarding the creation of and sending 
 Internet viruses, worms, Trojan horses, pinging, flooding, mail 
@@ -260,7 +258,7 @@ disrupt the use of or interfere with the ability of others to
 effectively use the network or any connected network, system, 
 service or equipment.
 
-### Facilitation a Violation of this AUP: 
+#### Facilitation a Violation of this AUP: 
 
 Advertising, transmitting or otherwise making available any 
 software, program, product or service that is designed to violate 
@@ -268,20 +266,20 @@ this AUP, which includes the facilitation of the means to spam,
 initiation of pinging, flooding, mail bombing, denial of service 
 attacks and piracy of software.
 
-### Other Illegal Activities: 
+#### Other Illegal Activities: 
 
 Engaging in activities that are determined to be illegal, 
 including, but not limited to, advertising, transmitting or 
 otherwise making available ponzi schemes, pyramid schemes, 
 fraudulently charging credit cards and pirating software.
 
-### Other Activities: 
+#### Other Activities:
 
 Engaging in activities, whether lawful or unlawful, that TorrentQL 
 determines to be harmful to its subscribers, operations, reputation, 
 goodwill or customer relations.
 
-## Public Trackers:
+### Public Trackers:
 
 Public Trackers are allowed on our seedboxes.
 
