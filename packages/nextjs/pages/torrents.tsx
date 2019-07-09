@@ -5,7 +5,7 @@ import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
 import { ME_QUERY } from '../apollo/queries';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
-import deleteIcon from '../static/delete.png';
+import deleteIcon from '../static/delete.svg';
 
 const Unstyled = ({ message }) => (
   <div>
