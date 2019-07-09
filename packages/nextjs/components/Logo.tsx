@@ -3,7 +3,7 @@ import Link from 'next/link';
 import logo from '../static/icon-left-font.png';
 import logoAbove from '../static/icon-above-font.svg';
 
-export const Logo: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
+export const Logo: React.StatelessComponent<React.HTMLProps<HTMLAnchorElement>> = props => (
   <Link href="/">
     <a {...props}>
       <style jsx>{`
@@ -12,15 +12,15 @@ export const Logo: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorEleme
           background: url(${logo}) no-repeat;
           background-position: -30px 50%;
           background-size: cover;
-          width: 240px;
-          height: 50px;
+          width: 225px;
+          height: 40px;
         }
       `}</style>
     </a>
   </Link>
 );
 
-export const LogoAbove: React.StatelessComponent<React.HTMLAttributes<HTMLAnchorElement>> = props => (
+export const LogoAbove: React.StatelessComponent<React.HTMLProps<HTMLAnchorElement>> = props => (
   <Link href="/">
     <a {...props}>
       <style jsx>{`

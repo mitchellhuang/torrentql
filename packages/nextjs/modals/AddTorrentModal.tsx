@@ -11,7 +11,7 @@ import transformErrors from '../lib/transformErrors';
 
 const getFileBase64 = file => new Promise((resolve) => {
   const reader = new FileReader();
-  reader.onload = (e) => {
+  reader.onload = (e: any) => {
     const binaryString = e.target.result;
     resolve(btoa(binaryString));
   };
@@ -75,8 +75,9 @@ const AddTorrentModal = ({
             <Input
               id="file"
               type="file"
+              value={undefined}
               placeholder="Add a torrent file"
-              onChange={e => setFieldValue('file', e.target.files[0])}
+              onChange={(e: any) => setFieldValue('file', e.target.files[0])}
               onBlur={handleBlur}
             />
             <Error error={status && status.error} />

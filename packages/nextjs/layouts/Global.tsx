@@ -1,6 +1,9 @@
 import React from 'react';
 
-const Global = ({
+const Global: React.StatelessComponent<{
+  children: React.ReactNode
+  backgroundColor?: string;
+}> = ({
   children,
   backgroundColor,
 }) => (

@@ -1,5 +1,3 @@
-/* tslint:disable */
-
 import React from 'react';
 import Router from 'next/router';
 import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
@@ -13,7 +11,7 @@ const getIsLoggedIn = async (apolloClient) => {
 };
 
 const withAuth = (Component: React.ComponentType) => (
-  class withAuth extends React.Component<{isLoggedIn: boolean}> {
+  class WithAuth extends React.Component<{ isLoggedIn: boolean }> {
     static async getInitialProps({ res, apolloClient }) {
       const isLoggedIn = await getIsLoggedIn(apolloClient);
       if (!isLoggedIn) {
@@ -36,5 +34,3 @@ const withAuth = (Component: React.ComponentType) => (
 );
 
 export default withAuth;
-
-/* tslint:enable */

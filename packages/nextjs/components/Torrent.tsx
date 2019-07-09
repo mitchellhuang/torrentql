@@ -5,7 +5,12 @@ import { useMutation } from 'react-apollo-hooks';
 import { ME_QUERY } from '../apollo/queries';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
-const TRow = ({
+interface ITRow extends React.HTMLProps<HTMLDivElement> {
+  header?: boolean;
+  selected?: boolean;
+}
+
+const TRow: React.StatelessComponent<ITRow> = ({
   children,
   className,
   header,
@@ -15,7 +20,7 @@ const TRow = ({
   <div
     className={classNames('row', { header, selected, [className]: className })}
     onClick={onClick}
-    onKeyPress={onClick}
+    onKeyPress={onClick as any}
     role="button"
     tabIndex={0}
   >
