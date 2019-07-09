@@ -1,7 +1,6 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 import Main from '../layouts/Main';
-// @ts-ignore
 import terms from '../legal/terms.md';
 
 const Terms = () => (
