@@ -2,15 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement & HTMLAnchorElement> {
-  children: string;
+interface IButton extends React.HTMLProps<HTMLButtonElement & HTMLAnchorElement> {
+  type?: any;
   href?: string;
   block?: boolean;
   white?: boolean;
   animate?: boolean;
 }
 
-const Button: React.StatelessComponent<ButtonProps> = ({
+const Button: React.StatelessComponent<IButton> = ({
   children,
   href,
   block,

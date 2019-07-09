@@ -1,5 +1,3 @@
-/* tslint:disable */
-
 import { Component } from 'react';
 import cookie from 'cookie';
 import PropTypes from 'prop-types';
@@ -7,7 +5,6 @@ import { getMarkupFromTree } from 'react-apollo-hooks';
 import { renderToString } from 'react-dom/server';
 import Head from 'next/head';
 import initApollo from './initApollo';
-import App from "next/app";
 
 function parseCookies(req, options = {}) {
   return cookie.parse(req ? req.headers.cookie || '' : document.cookie, options)
@@ -98,4 +95,3 @@ export default App => {
     }
   }
 }
-/* tslint:enable */

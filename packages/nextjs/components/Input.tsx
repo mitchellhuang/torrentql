@@ -1,15 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface InputProps extends React.HTMLAttributes<HTMLInputElement>  {
-  id: string;
-  type: string;
-  value: string;
+interface IInput extends React.HTMLProps<HTMLInputElement>  {
   label?: string;
   errors?: string[];
 }
 
-const Input: React.StatelessComponent<InputProps> = ({
+const Input: React.StatelessComponent<IInput> = ({
   id,
   label,
   type,

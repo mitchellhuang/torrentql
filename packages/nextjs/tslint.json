@@ -12,12 +12,19 @@
       true,
       "allow-pascal-case",
       "allow-leading-underscore"
+    ],
+    "max-line-length": [
+      true,
+      {
+        "limit": 120
+      }
     ]
   },
   "rulesDirectory": [],
   "linterOptions": {
     "exclude": [
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/*.js"
     ]
   }
 }

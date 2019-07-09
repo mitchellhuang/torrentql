@@ -4,9 +4,15 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 
-const Main = ({
-  title,
+interface IMain {
+  children: React.ReactNode;
+  title?: string;
+  noFooter?: boolean;
+}
+
+const Main: React.StatelessComponent<IMain> = ({
   children,
+  title,
   noFooter,
 }) => (
   <Global>
