@@ -22,7 +22,7 @@ const NavBar = ({ router }) => {
   items.push(finalItem);
   return (
     <div className="navbar">
-      <div className={open ? 'wrapper wrapper-open' : 'wrapper'}>
+      <div className="wrapper">
         <div className="logo-burger-wrapper">
           <Logo />
           <NavBarBurger
@@ -30,7 +30,7 @@ const NavBar = ({ router }) => {
             onClick={() => toggle()}
           />
         </div>
-        <ul className={open ? 'tabs' : 'tabs hidden'}>
+        <ul className="tabs">
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
@@ -55,11 +55,8 @@ const NavBar = ({ router }) => {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding-top: 12.5px;
-          padding-bottom: 12.5px;
-        }
-        .wrapper-open {
-          padding-bottom: 15px;
+          padding-top: 12px;
+          padding-bottom: 12px;
         }
         .logo-burger-wrapper {
           display: flex;
@@ -68,38 +65,28 @@ const NavBar = ({ router }) => {
           justify-content: space-between;
         }
         .tabs {
+          display: ${open ? 'block' : 'none'};
           list-style-type: none;
           margin: 0;
           padding: 0;
-          margin-top: 10px;
+          margin-top: 12px;
         }
-        .tabs li {
+        .tabs li a {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 2px solid var(--lightGray);
+          color: var(--black);
+          background-color: var(--white);
+          border: 1px solid var(--gray);
           border-radius: 5px;
           padding: 8px;
-        }
-        .tabs li:not(:last-child) {
+          font-weight: 600;
+          border-radius: 5px;
           margin-bottom: 8px;
-        }
-        .tabs li:last-child {
-          background-color: var(--primary);
-          border-color: var(--primary);
         }
         .tabs li:last-child a {
           color: var(--white);
-        }
-        .tabs li a {
-          display: inline-block;
-          color: var(--black);
-          font-size: 18px;
-          font-weight: 600;
-          border-radius: 5px;
-        }
-        .hidden {
-          display: none;
+          background-color: var(--primary);
+          border-color: var(--primary);
+          margin-bottom: 0;
         }
         @media(min-width: 768px) {
           .wrapper {
@@ -117,26 +104,20 @@ const NavBar = ({ router }) => {
             align-items: center;
             margin-top: 0;
           }
-          .tabs li {
+          .tabs li a {
             display: inline-block;
-            border: none;
+            border: 0;
+            color: var(--black);
+            background-color: var(--white);
             padding: 0;
-          }
-          .tabs li:not(:last-child) {
             margin-bottom: 0;
             margin-right: 15px;
           }
-          .tabs li:last-child {
-            background-color: var(--white);
-          }
           .tabs li:last-child a {
             color: var(--black);
-          }
-          .tabs li a {
-            font-size: 16px;
-          }
-          .hidden {
-            display: block;
+            background-color: var(--white);
+            margin-bottom: 0;
+            margin-right: 0;
           }
         }
       `}</style>
@@ -168,6 +149,7 @@ const NavBarBurger = ({
         height: 40px;
         margin-right: -9px;
         outline: 0;
+        cursor: pointer;
       }
       .bar {
         width: 22px;
