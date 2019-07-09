@@ -16,6 +16,7 @@ const H2 = ({ children }) => (
     {children}
     <style jsx>{`
       h2 {
+        font-size: 24px;
         margin-bottom: 15px;
       }
     `}</style>
@@ -27,6 +28,7 @@ const H3 = ({ children }) => (
     {children}
     <style jsx>{`
       h3 {
+        font-size: 18px;
         margin-bottom: 15px;
       }
     `}</style>
@@ -38,6 +40,7 @@ const H4 = ({ children }) => (
     {children}
     <style jsx>{`
       h4 {
+        font-size: 16px;
         margin-bottom: 15px;
       }
     `}</style>
@@ -49,6 +52,7 @@ const H5 = ({ children }) => (
     {children}
     <style jsx>{`
       h5 {
+        font-size: 14px;
         margin-bottom: 15px;
       }
     `}</style>
