@@ -4,25 +4,25 @@ import AddTorrentModal from '../modals/AddTorrentModal';
 import { useMutation } from 'react-apollo-hooks';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 import { ME_QUERY } from '../apollo/queries';
-import deleteIcon from '../static/trash-2.svg';
-import addIcon from '../static/plus.svg';
+import { Trash2, Plus } from 'react-feather';
 
-const ToolBarButton = ({ children, onClick, src, alt }) => (
+const ToolBarButton = ({ children, onClick, icon }) => (
   <button onClick={onClick}>
-    <img src={src} alt={alt} />
-    {children}
+    {icon}
+    <div className="children">
+      {children}
+    </div>
     <style jsx>{`
       button {
         display: flex;
         justify-content: center;
+        align-items: center;
         padding: 6px 10px;
         background-color: whiteSmoke;
         border-radius: 6px;
       }
-      img {
-        margin-right: 3px;
-        height: 15px;
-        width: 15px;
+      .children {
+        margin-left: 3px;
       }
     `}</style>
   </button>
@@ -42,12 +42,13 @@ const ToolBar = ({ selected }) => {
       });
     },
   });
+  const iconSize = 18;
   return (
     <div className="toolbar">
-      <ToolBarButton onClick={toggle} src={addIcon} alt="add">
+      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>}>
         Add
       </ToolBarButton>
-      <ToolBarButton onClick={() => handleDeleteTorrent(selected.id)} src={deleteIcon} alt="delete">
+      <ToolBarButton onClick={() => handleDeleteTorrent(selected.id)} icon={<Trash2 size={iconSize}/>}>
         Delete
       </ToolBarButton>
       <AddTorrentModal active={active} toggle={toggle} />

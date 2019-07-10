@@ -1,9 +1,6 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
-import { useMutation } from 'react-apollo-hooks';
-import { ME_QUERY } from '../apollo/queries';
-import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
