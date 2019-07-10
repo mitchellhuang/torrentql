@@ -31,10 +31,13 @@ const ToolBarButton = ({ children, onClick, icon }) => (
 const ToolBar = ({ selected }) => {
   const { active, toggle } = useModal();
   const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
+  // @ts-ignore
   const handleDeleteTorrent = id => deleteTorrent({
-    variables: { id },
+    variables: {
+      id,
+    },
     update: (store) => {
-      const data = store.readQuery({ query: ME_QUERY });
+      const data : any = store.readQuery({ query: ME_QUERY });
       data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
       store.writeQuery({
         query: ME_QUERY,
