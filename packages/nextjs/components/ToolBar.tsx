@@ -1,10 +1,9 @@
 import React from 'react';
-import Button from './Button';
 import useModal from '../lib/useModal';
 import AddTorrentModal from '../modals/AddTorrentModal';
-import {useMutation} from 'react-apollo-hooks';
-import {DELETE_TORRENT_MUTATION} from '../apollo/mutations';
-import {ME_QUERY} from '../apollo/queries';
+import { useMutation } from 'react-apollo-hooks';
+import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
+import { ME_QUERY } from '../apollo/queries';
 import deleteIcon from '../static/trash-2.svg';
 import addIcon from '../static/plus.svg';
 
@@ -17,7 +16,7 @@ const ToolBarButton = ({ children, onClick, src, alt }) => (
         display: flex;
         justify-content: center;
         padding: 6px 10px;
-          background-color: whiteSmoke;
+        background-color: whiteSmoke;
         border-radius: 6px;
       }
       img {
@@ -29,14 +28,11 @@ const ToolBarButton = ({ children, onClick, src, alt }) => (
   </button>
 );
 
-
 const ToolBar = ({ selected }) => {
   const { active, toggle } = useModal();
   const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
   const handleDeleteTorrent = id => deleteTorrent({
-    variables: {
-      id,
-    },
+    variables: { id },
     update: (store) => {
       const data = store.readQuery({ query: ME_QUERY });
       data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
@@ -46,7 +42,6 @@ const ToolBar = ({ selected }) => {
       });
     },
   });
-  // Need to figure out how to get torrent.id
   return (
     <div className="toolbar">
       <ToolBarButton onClick={toggle} src={addIcon} alt="add">
@@ -55,10 +50,7 @@ const ToolBar = ({ selected }) => {
       <ToolBarButton onClick={() => handleDeleteTorrent(selected.id)} src={deleteIcon} alt="delete">
         Delete
       </ToolBarButton>
-      <AddTorrentModal
-        active={active}
-        toggle={toggle}
-      />
+      <AddTorrentModal active={active} toggle={toggle} />
       <style jsx>{`
         .toolbar {
           display: flex;

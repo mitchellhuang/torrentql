@@ -177,13 +177,6 @@ const TorrentsWithData = () => {
       <style jsx>{`
         .torrents {
           min-width: 1024px;
-          max-height: 748px;
-        }
-        #footer {
-          position: sticky;
-          width: inherit;
-          bottom: 0;
-          left: 0;
         }
       `}</style>
     </div>
