@@ -96,8 +96,12 @@ const Torrent = ({
     },
   });
   return (
-    <TRow key={torrent.id} selected={selected} onClick={onClick}>
+    <TRow key={torrent.id} selected={selected}>
       <TCell flex={5}>
+        <label>
+          <input type="checkbox" checked={selected} onClick={onClick} />
+          <span className="checkmark" />
+        </label>
         {torrent.name}
       </TCell>
       <TCell flex={2}>
@@ -115,6 +119,16 @@ const Torrent = ({
       <TCell flex={1}>
         {torrent.numSeeds} / {torrent.totalSeeds}
       </TCell>
+      <style jsx>{`
+        label {
+          margin-right: 5px;
+        }
+        input {
+          width: 20px;
+          height: 20px;
+          background-color: pink;
+        }
+      `}</style>
     </TRow>
   );
 };
