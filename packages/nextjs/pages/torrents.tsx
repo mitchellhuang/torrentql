@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo-hooks';
+import { useQuery } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
 import { ME_QUERY } from '../apollo/queries';
-import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 import ToolBar from "../components/ToolBar";
-import closeIcon from "../static/x-circle.svg";
 
 const Unstyled = ({ message }) => (
   <div>
@@ -41,27 +39,13 @@ const Fieldset = ({ title, content, className = '' }) => (
   </div>
 );
 
-const SelectedTorrentInfo = ({ torrent }) => {
-  const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
-  const handleDeleteTorrent = id => deleteTorrent({
-    variables: {
-      id,
-    },
-    update: (store) => {
-      const data = store.readQuery({ query: ME_QUERY });
-      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
-      store.writeQuery({
-        query: ME_QUERY,
-        data,
-      });
-    },
-  });
+const SelectedTorrentInfo = ({ torrent, onClose }) => {
   return (
     <div>
       <div className="selected-torrent-info">
         <div className="header">
           <div className="torrent-name"><b>Currently Selected: </b>{torrent.name}</div>
-          <img src={deleteIcon} alt="delete" onClick={() => handleDeleteTorrent(torrent.id)} />
+          <img src={closeIcon} alt="close" id="close-icon" onClick={onClose} />
         </div>
         <div className="col">
           <div className="row">
@@ -107,6 +91,11 @@ const SelectedTorrentInfo = ({ torrent }) => {
         </div>
       </div>
       <style jsx>{`
+      .selected-torrent-info {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0,0,0,.2);
+        height: 195px;
+      }
       .torrent-name {
         color: white;
         font-size: 14pt;
@@ -114,15 +103,19 @@ const SelectedTorrentInfo = ({ torrent }) => {
         margin: 5px;
         padding: 5px;
       }
-      img {
-        height: 35px;
-        margin: 5px;
+      #close-icon {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
       }
       .header {
         width: 100%;
         background-color: var(--primary);
         display: flex;
+        border-radius: 6px;
         flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
       }
       .row {
         display: flex;
@@ -143,15 +136,6 @@ const SelectedTorrentInfo = ({ torrent }) => {
       .cell {
         padding: 10px;
         flex: 1;
-      }
-      .selected-torrent-info {
-        background-color: white;
-        width: 100vw;
-        box-shadow: 0px 0px 15px rgba(0,0,0,.2);
-        position: fixed;
-        height: 195px;
-        bottom: 0;
-        left: 0;
       }
     `}</style>
     </div>
@@ -176,7 +160,7 @@ const TorrentsWithData = () => {
         <ToolBar selected={selected} />
         <Unstyled message="No torrents."/>
       </>
-      )
+    );
   }
   return (
     <div className="torrents">
