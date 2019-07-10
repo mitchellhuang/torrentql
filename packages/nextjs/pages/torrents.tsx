@@ -171,7 +171,12 @@ const TorrentsWithData = () => {
     return <Unstyled message={JSON.stringify(error)} />;
   }
   if (!data.me.torrents.length) {
-    return <Unstyled message="No torrents." />;
+    return (
+      <>
+        <ToolBar selected={selected} />
+        <Unstyled message="No torrents."/>
+      </>
+      )
   }
   return (
     <div className="torrents">
