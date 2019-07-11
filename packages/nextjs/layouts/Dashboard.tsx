@@ -94,7 +94,7 @@ const Dashboard = ({
       }
       .content {
         border-radius: 5px;
-        padding-top: 10px;
+        padding-top: 15px;
         overflow: auto;
       }
     `}</style>
