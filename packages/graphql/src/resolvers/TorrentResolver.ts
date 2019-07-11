@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { Repository } from 'typeorm';
 import {
   Resolver,
+  Query,
   Mutation,
   Ctx,
   Args,
@@ -15,10 +16,18 @@ import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
 import { Context } from '../lib/context';
+import { mapDelugeToTorrent } from '../lib/deluge';
 import { Torrent } from '../entities/Torrent';
 import { Server } from '../entities/Server';
 
 const validator = new Validator();
+
+@ArgsType()
+class GetTorrentInput {
+  @Field()
+  @IsUUID()
+  id: string;
+}
 
 @ArgsType()
 class AddTorrentInput {
@@ -40,6 +49,24 @@ export class TorrentResolver {
     @InjectRepository(Torrent) private readonly torrentRepository: Repository<Torrent>,
     @InjectRepository(Server) private readonly serverRepository: Repository<Server>,
   ) {}
+
+  @Authorized()
+  @Query(returns => Torrent)
+  async getTorrent(@Args() { id }: GetTorrentInput, @Ctx() ctx: Context) {
+    const torrent = await this.torrentRepository.findOne(id);
+    if (!torrent) {
+      throw new Error('Torrent not found.');
+    }
+    const user = await torrent.user;
+    if (ctx.user.id !== user.id) {
+      throw new Error('Torrent not found.');
+    }
+    const torrentsWithDeluge = mapDelugeToTorrent(torrent);
+    if (!torrentsWithDeluge) {
+      throw new Error('Could not connect to remote torrent client.');
+    }
+    return torrentsWithDeluge;
+  }
 
   @Authorized()
   @Mutation(returns => Torrent)
