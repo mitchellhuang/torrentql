@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import Global from './Global';
 import Head from '../components/Head';
-import ToolBar from '../components/ToolBar';
 import NavBar from '../components/NavBar';
 
 const tabs = [{
@@ -81,7 +80,6 @@ const Dashboard = ({
     <Head title={title} />
     <NavBar />
     <div className="wrapper">
-      <ToolBar />
       <div className="main">
         <Tabs router={router} />
         <div className="content">
