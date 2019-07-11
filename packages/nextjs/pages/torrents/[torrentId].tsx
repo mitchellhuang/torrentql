@@ -8,7 +8,7 @@ import { Unstyled } from '../torrents';
 import Main from '../../layouts/Main';
 import Link from 'next/link';
 
-const Torrents = () => {
+const Torrent = () => {
   const router = useRouter();
   const { loading, data, error } = useQuery(GET_TORRENT_QUERY, {
     ssr: false,
@@ -53,4 +53,4 @@ const Torrents = () => {
   );
 };
 
-export default withAuth(Torrents);
+export default withAuth(Torrent);
