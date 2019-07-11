@@ -1,6 +1,6 @@
 {
-  "name": "torrentql-nextjs",
-  "version": "0.1.0",
+  "name": "@torrentql/nextjs",
+  "version": "1.0.0",
   "main": "server.js",
   "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
   "license": "MIT",
@@ -40,7 +40,6 @@
     "react-apollo-hooks": "^0.4.5",
     "react-dom": "^16.8.6",
     "react-feather": "^2.0.3",
-    "typescript": "^3.5.3",
     "webpack": "^4.35.3"
   },
   "devDependencies": {
@@ -52,8 +51,6 @@
     "@types/styled-jsx": "^2.2.8",
     "postcss-color-function": "^4.1.0",
     "postcss-preset-env": "^6.7.0",
-    "styled-jsx-plugin-postcss": "^2.0.1",
-    "tslint": "^5.18.0",
-    "tslint-config-airbnb": "^5.11.1"
+    "styled-jsx-plugin-postcss": "^2.0.1"
   }
 }

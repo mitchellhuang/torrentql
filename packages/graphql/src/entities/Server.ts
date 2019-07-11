@@ -10,6 +10,8 @@ import {
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Torrent } from './Torrent';
 
+export const hello = 'world';
+
 @ObjectType()
 @Entity('servers')
 export class Server {

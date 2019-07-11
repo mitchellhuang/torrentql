@@ -23,7 +23,7 @@ const SignupForm = () => {
               password,
             },
           });
-          const { data: { createUser: { token } } } = result;
+          const { data: { createUser: { token } } } = result as any;
           jsCookie.set('token', token, { expires: 365 });
           client.writeData({ data: { isLoggedIn: true } });
           setSubmitting(false);

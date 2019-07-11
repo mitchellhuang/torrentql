@@ -1,0 +1,21 @@
+{
+  "name": "@torrentql/billing",
+  "version": "1.0.0",
+  "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "dev": "nodemon dist/server.js",
+    "start": "NODE_ENV=production node build/server.js",
+    "lint": "tslint --project tsconfig.json"
+  },
+  "dependencies": {
+    "@torrentql/graphql": "1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

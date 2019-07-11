@@ -27,7 +27,7 @@ FILES_PATH=/User/mitchell/Downloads
 
 1. `yarn install`
 2. `create a .env file based on .env.example`
-3. `cd packages/deluge && docker-compose up -d`
+3. `cd deluge && docker-compose up -d`
 4. `yarn build:watch`
 5. `yarn sync`
 

@@ -1,18 +1,23 @@
 {
   "name": "torrentql",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Torrent as a service",
   "main": "index.js",
   "author": "mitchell@mitchellhuang.net",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "rimraf packages/*/node_modules",
-    "clean-lock": "rimraf packages/*/yarn.lock"
+    "bootstrap": "lerna bootstrap"
   },
   "dependencies": {
-    "lerna": "^3.13.3",
-    "rimraf": "^2.6.3"
+    "lerna": "^3.15.0"
+  },
+  "devDependencies": {
+    "tslint": "^5.18.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.5.3"
   }
 }
