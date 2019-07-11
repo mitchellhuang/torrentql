@@ -39,6 +39,7 @@
     "react": "^16.8.6",
     "react-apollo-hooks": "^0.4.5",
     "react-dom": "^16.8.6",
+    "react-feather": "^2.0.3",
     "typescript": "^3.5.3",
     "webpack": "^4.35.3"
   },

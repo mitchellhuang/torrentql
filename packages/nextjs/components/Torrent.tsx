@@ -1,9 +1,6 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
-import { useMutation } from 'react-apollo-hooks';
-import { ME_QUERY } from '../apollo/queries';
-import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -34,13 +31,16 @@ const TRow: React.StatelessComponent<ITRow> = ({
         background-color: var(--white);
         padding: 10px 0;
         border: 2px solid transparent;
-        border-radius: 4px;
+        border-radius: 5px;
         width: 100%;
         cursor: pointer;
         outline: none;
       }
       .row:not(:last-child) {
         margin-bottom: 10px;
+      }
+      .row:hover {
+        background-color: var(--buttonHover);
       }
       .selected {
         border-color: var(--green);
@@ -49,6 +49,9 @@ const TRow: React.StatelessComponent<ITRow> = ({
         color: var(--lightGray);
         background-color: var(--primary);
         cursor: default;
+      }
+      .header:hover {
+        background-color: var(--primary);
       }
     `}</style>
   </div>
@@ -80,21 +83,6 @@ const Torrent = ({
   selected,
   onClick,
 }) => {
-  const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
-  // @ts-ignore
-  const handleDeleteTorrent = id => deleteTorrent({
-    variables: {
-      id,
-    },
-    update: (store) => {
-      const data : any = store.readQuery({ query: ME_QUERY });
-      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
-      store.writeQuery({
-        query: ME_QUERY,
-        data,
-      });
-    },
-  });
   return (
     <TRow key={torrent.id} selected={selected} onClick={onClick}>
       <TCell flex={5}>

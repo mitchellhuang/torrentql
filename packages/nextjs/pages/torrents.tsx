@@ -4,6 +4,7 @@ import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
 import { ME_QUERY } from '../apollo/queries';
+import ToolBar from '../components/ToolBar';
 
 const Unstyled = ({ message }) => (
   <div>
@@ -16,7 +17,7 @@ const TorrentTableHeader = () => (
     <TCell flex={5}>Name</TCell>
     <TCell flex={2}>Progress</TCell>
     <TCell flex={1}>Down Speed</TCell>
-    <TCell flex={1}>Up speed</TCell>
+    <TCell flex={1}>Up Speed</TCell>
     <TCell flex={1}>Peers</TCell>
     <TCell flex={1}>Seeds</TCell>
   </TRow>
@@ -35,10 +36,16 @@ const TorrentsWithData = () => {
     return <Unstyled message={JSON.stringify(error)} />;
   }
   if (!data.me.torrents.length) {
-    return <Unstyled message="No torrents." />;
+    return (
+      <>
+        <ToolBar selected={selected} />
+        <Unstyled message="No torrents."/>
+      </>
+    );
   }
   return (
     <div className="torrents">
+      <ToolBar selected={selected} />
       <TorrentTableHeader />
       {data.me.torrents.map(torrent => (
         <Torrent
