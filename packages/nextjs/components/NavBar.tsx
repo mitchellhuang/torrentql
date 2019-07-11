@@ -55,8 +55,8 @@ const NavBar = ({ router }) => {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding-top: 12px;
-          padding-bottom: 12px;
+          padding-top: 15px;
+          padding-bottom: 15px;
         }
         .logo-burger-wrapper {
           display: flex;
@@ -69,7 +69,7 @@ const NavBar = ({ router }) => {
           list-style-type: none;
           margin: 0;
           padding: 0;
-          margin-top: 12px;
+          margin-top: 15px;
         }
         .tabs li a {
           display: flex;
