@@ -1,6 +1,7 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
+import Link from "next/link";
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -86,7 +87,11 @@ const Torrent = ({
   return (
     <TRow key={torrent.id} selected={selected} onClick={onClick}>
       <TCell flex={5}>
-        {torrent.name}
+        <Link href={`/torrents/${torrent.id}`}>
+          <a>
+            {torrent.name}
+          </a>
+        </Link>
       </TCell>
       <TCell flex={2}>
         <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)" />
