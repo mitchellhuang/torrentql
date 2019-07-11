@@ -25,6 +25,7 @@ type Mutation {
 }
 
 type Query {
+  getTorrent(id: String!): Torrent!
   me: User!
 }
 

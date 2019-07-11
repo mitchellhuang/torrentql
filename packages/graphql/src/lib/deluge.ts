@@ -1,11 +1,12 @@
 import { Deluge } from '@ctrl/deluge';
+import { Torrent } from '../entities/Torrent';
 
-export const mapDelugeToTorrent = async (torrent) => {
+export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | null> => {
   const server = await torrent.server;
   const deluge = new Deluge({
     baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
     password: 'deluge',
-    timeout: 100,
+    timeout: 1000,
   });
   let status;
   let files;
