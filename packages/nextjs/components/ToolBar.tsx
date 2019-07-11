@@ -6,8 +6,17 @@ import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 import { ME_QUERY } from '../apollo/queries';
 import { Trash2, Plus } from 'react-feather';
 
-const ToolBarButton = ({ children, onClick, icon }) => (
-  <button onClick={onClick}>
+interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
+  icon: React.ReactElement;
+}
+
+const ToolBarButton: React.StatelessComponent<IToolBarButton> = ({
+  children,
+  onClick,
+  icon,
+  className,
+}) => (
+  <button onClick={onClick} className={className}>
     {icon}
     <div className="children">
       {children}
@@ -17,12 +26,16 @@ const ToolBarButton = ({ children, onClick, icon }) => (
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 6px 10px;
+        padding: 5px 10px;
         background-color: whiteSmoke;
-        border-radius: 6px;
+        border-radius: 5px;
+        outline: none;
+      }
+      button:hover {
+        background-color: var(--buttonHover);
       }
       .children {
-        margin-left: 3px;
+        margin-left: 5px;
       }
     `}</style>
   </button>
@@ -31,7 +44,6 @@ const ToolBarButton = ({ children, onClick, icon }) => (
 const ToolBar = ({ selected }) => {
   const { active, toggle } = useModal();
   const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
-  // @ts-ignore
   const handleDeleteTorrent = id => deleteTorrent({
     variables: {
       id,
@@ -51,7 +63,7 @@ const ToolBar = ({ selected }) => {
       <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>}>
         Add
       </ToolBarButton>
-      <ToolBarButton onClick={() => handleDeleteTorrent(selected.id)} icon={<Trash2 size={iconSize}/>}>
+      <ToolBarButton className="ml-2" onClick={() => handleDeleteTorrent(selected.id)} icon={<Trash2 size={iconSize}/>}>
         Delete
       </ToolBarButton>
       <AddTorrentModal active={active} toggle={toggle} />

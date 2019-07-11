@@ -17,7 +17,7 @@ const TorrentTableHeader = () => (
     <TCell flex={5}>Name</TCell>
     <TCell flex={2}>Progress</TCell>
     <TCell flex={1}>Down Speed</TCell>
-    <TCell flex={1}>Up speed</TCell>
+    <TCell flex={1}>Up Speed</TCell>
     <TCell flex={1}>Peers</TCell>
     <TCell flex={1}>Seeds</TCell>
   </TRow>

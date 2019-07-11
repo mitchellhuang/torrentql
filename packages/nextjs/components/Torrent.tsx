@@ -31,7 +31,7 @@ const TRow: React.StatelessComponent<ITRow> = ({
         background-color: var(--white);
         padding: 10px 0;
         border: 2px solid transparent;
-        border-radius: 6px;
+        border-radius: 5px;
         width: 100%;
         cursor: pointer;
         outline: none;
@@ -40,7 +40,7 @@ const TRow: React.StatelessComponent<ITRow> = ({
         margin-bottom: 10px;
       }
       .row:hover {
-        background-color: var(--lightGray);
+        background-color: var(--buttonHover);
       }
       .selected {
         border-color: var(--green);
