@@ -3,6 +3,7 @@ import { Torrent } from '../entities/Torrent';
 
 export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | null> => {
   const server = await torrent.server;
+  console.log(server);
   const deluge = new Deluge({
     baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
     password: 'deluge',
