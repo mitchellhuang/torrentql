@@ -1,11 +1,11 @@
 # @torrentql/nextjs
 
-Next.js frontend for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
+Next.js frontend for TorrentQL.
 
 ## Requirements
 
-1. Node.js >= 10.15.0
-2. Yarn >= 1.13.0
+1. Node.js >= 10
+2. Yarn >= 1
 
 ## Environment variables
 
@@ -31,10 +31,3 @@ FILES_PATH=http://localhost:3001/files
 
 1. `docker build -t nextjs .`
 2. `docker run -p 3000:3000 nextjs`
-
-## Style guidelines
-
-1. 2 spaces indentation
-2. Newline at the end of each file
-3. Async await instead of promises
-4. Trailing commas

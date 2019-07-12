@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import * as db from './db';
-import { User } from '../entities/User';
-import { Server } from '../entities/Server';
+import { User } from '@torrentql/common/dist/entities/User';
+import { Server } from '@torrentql/common/dist/entities/Server';
 
 const sync = async () => {
   const connection = await db.init();

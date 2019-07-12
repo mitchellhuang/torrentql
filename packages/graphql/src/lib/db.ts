@@ -1,6 +1,9 @@
 import { createConnection, getConnectionManager, Connection } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { join } from 'path';
+
+import { User } from '@torrentql/common/dist/entities/User';
+import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { Server } from '@torrentql/common/dist/entities/Server';
 
 export const init = async () => {
   let connection: Connection;
@@ -17,7 +20,9 @@ export const init = async () => {
       database: process.env.DB_DATABASE,
       ssl: process.env.DB_SSL === 'true',
       entities: [
-        join(__dirname, '../entities/*.js'),
+        User,
+        Torrent,
+        Server,
       ],
       namingStrategy: new SnakeNamingStrategy(),
       synchronize: true,

@@ -1,12 +1,12 @@
 # @torrentql/billing
 
-Billing daemon for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
+Billing daemon for TorrentQL.
 
 ## Requirements
 
-1. Node.js >= 10.15.0
-2. Yarn >= 1.13.0
-3. PostgreSQL >= 10.5
+1. Node.js >= 10
+2. Yarn >= 1
+3. PostgreSQL >= 10
 
 ## Environment variables
 
@@ -37,10 +37,3 @@ DB_SSL=false
 
 1. `docker build -t billing .`
 2. `docker run -p 3001:3001 billing`
-
-## Style guidelines
-
-1. 2 spaces indentation
-2. Newline at the end of each file
-3. Async await instead of promises
-4. Trailing commas

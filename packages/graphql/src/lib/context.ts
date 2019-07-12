@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Connection } from 'typeorm';
 import { AuthChecker } from 'type-graphql';
-import { User } from '../entities/User';
+import { User } from '@torrentql/common/dist/entities/User';
 
 export interface Context {
   user: User;

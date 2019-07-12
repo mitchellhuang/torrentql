@@ -16,9 +16,9 @@ import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
 import { Context } from '../lib/context';
-import { mapDelugeToTorrent } from '../lib/deluge';
-import { Torrent } from '../entities/Torrent';
-import { Server } from '../entities/Server';
+import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
+import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { Server } from '@torrentql/common/dist/entities/Server';
 
 const validator = new Validator();
 
