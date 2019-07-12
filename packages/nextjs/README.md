@@ -1,6 +1,6 @@
-# nextjs
+# @torrentql/nextjs
 
-A Next.js frontend for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
+Next.js frontend for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
 
 ## Requirements
 

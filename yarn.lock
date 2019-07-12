@@ -1813,7 +1813,14 @@
     "@types/node" "*"
     "@types/tough-cookie" "*"
 
-"@types/graphql@^14.2.0":
+"@types/graphql-type-json@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@types/graphql-type-json/-/graphql-type-json-0.3.0.tgz#e1f4c94c89238407842a106d2d87b1afb5430ddb"
+  integrity sha512-Qu2dkjikNAQg63w0VoE7/hMZn/hRdfCgXSW84NmuWV3EboRVEVgrtqKBCFdZRY6n3ksd+vaYm9StmRWWuJUIZw==
+  dependencies:
+    "@types/graphql" "*"
+
+"@types/graphql@*", "@types/graphql@^14.2.0":
   version "14.2.2"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.2.2.tgz#10f197e6f8559c11b16d630c5e9c10c3c8e61c5e"
   integrity sha512-okXbUmdZFMO3AYBEJCcpJFPFDkKmIiZZBqWD5TmPtAv+GHfjD2qLZEI0PvZ8IWMU4ozoK2HV2lDxWjw4LbVlnw==

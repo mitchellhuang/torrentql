@@ -6,13 +6,13 @@
   "password": "",
   "database": "torrentql",
   "entities": [
-    "build/entities/*.js"
+    "dist/entities/*.js"
   ],
   "subscribers": [
-    "build/subscriber/*.js"
+    "dist/subscriber/*.js"
   ],
   "migrations": [
-    "build/migration/*.js"
+    "dist/migration/*.js"
   ],
   "cli": {
     "entitiesDir": "src/entities",

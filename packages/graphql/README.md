@@ -1,6 +1,6 @@
-# graphql
+# @torrentql/graphql
 
-A GraphQL API server for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
+GraphQL API server for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
 
 ## Requirements
 
@@ -30,13 +30,7 @@ FILES_PATH=/User/mitchell/Downloads
 3. `cd deluge && docker-compose up -d`
 4. `yarn build:watch`
 5. `yarn sync`
-
-Expected output looks as follows:
-
-![Sample output](https://i.imgur.com/Jn9GYvV.png "Sample output")
-
-
-6. `yarn run dev`
+6. `yarn dev`
 
 ## Production build
 

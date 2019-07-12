@@ -1,18 +1,16 @@
 {
   "name": "@torrentql/graphql",
   "version": "1.0.0",
-  "main": "build/server.js",
-  "typings": "build/index.d.js",
-  "author": "mitchell@mitchellhuang.net",
+  "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
   "license": "MIT",
   "private": true,
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "dev": "nodemon build/server.js",
-    "start": "NODE_ENV=production node build/server.js",
+    "dev": "nodemon dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "lint": "tslint --project tsconfig.json",
-    "sync": "node build/lib/sync.js"
+    "sync": "node dist/lib/sync.js"
   },
   "dependencies": {
     "@ctrl/deluge": "^1.7.1",
@@ -45,6 +43,7 @@
     "@types/express": "^4.17.0",
     "@types/express-jwt": "^0.0.42",
     "@types/graphql": "^14.2.0",
+    "@types/graphql-type-json": "^0.3.0",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/lodash": "^4.14.134",
     "@types/parse-torrent": "^5.8.3",

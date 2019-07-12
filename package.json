@@ -13,11 +13,11 @@
     "bootstrap": "lerna bootstrap"
   },
   "dependencies": {
-    "lerna": "^3.15.0"
+    "lerna": "^3.15.0",
+    "typescript": "^3.5.3"
   },
   "devDependencies": {
     "tslint": "^5.18.0",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.5.3"
+    "tslint-config-airbnb": "^5.11.1"
   }
 }

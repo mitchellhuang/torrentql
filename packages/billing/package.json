@@ -4,12 +4,11 @@
   "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
   "license": "MIT",
   "private": true,
-  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
     "dev": "nodemon dist/server.js",
-    "start": "NODE_ENV=production node build/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "lint": "tslint --project tsconfig.json"
   },
   "dependencies": {

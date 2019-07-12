@@ -82,7 +82,7 @@ export class TorrentResolver {
       timeout: 1000,
     });
     let hash;
-    let type;
+    let type: 'url' | 'magnet' | 'file';
     const isUrl = validator.isURL(data);
     if (isUrl) {
       type = 'url';
@@ -112,6 +112,9 @@ export class TorrentResolver {
       } catch (err) {
         throw new Error('Invalid torrent file.');
       }
+    }
+    if (!hash || !type) {
+      throw new Error('Could not parse torrent file.');
     }
     const torrent = new Torrent();
     torrent.isActive = true;
