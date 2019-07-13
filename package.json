@@ -17,6 +17,7 @@
     "typescript": "^3.5.3"
   },
   "devDependencies": {
+    "nodemon": "^1.19.1",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1"
   }
