@@ -12,7 +12,8 @@
     "lint": "tslint --project tsconfig.json"
   },
   "dependencies": {
-    "@torrentql/common": "1.0.0"
+    "@torrentql/common": "1.0.0",
+    "dotenv": "^8.0.0"
   },
   "devDependencies": {}
 }
