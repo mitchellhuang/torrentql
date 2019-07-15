@@ -6,7 +6,7 @@ import Torrent, { TRow, TCell } from '../components/Torrent';
 import { ME_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
 
-const Unstyled = ({ message }) => (
+export const Unstyled = ({ message }) => (
   <div>
     {message}
   </div>

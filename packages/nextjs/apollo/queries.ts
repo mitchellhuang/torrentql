@@ -38,3 +38,33 @@ export const ME_QUERY = gql`
     }
   }
 `;
+
+export const GET_TORRENT_QUERY = gql`
+  query GetTorrent($id: String!) {
+    getTorrent(id: $id) {
+      id
+      hash
+      name
+      state
+      progress
+      ratio
+      uploadSpeed
+      downloadSpeed
+      eta
+      numPeers
+      numSeeds
+      totalPeers
+      totalSeeds
+      totalWanted
+      totalUploaded
+      totalDownloaded
+      tracker
+      trackerHost
+      trackerStatus
+      server {
+        id
+        region
+      }
+    }
+  }
+`;
