@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useRouter } from 'next/router';
 import withAuth from '../../lib/withAuth';
@@ -27,7 +26,7 @@ const Torrent = () => {
   return (
     <Main title={torrent.name}>
       <div className="wrapper">
-        <Link href="/torrents">
+        <Link href="../torrents">
           <a>Back to torrents</a>
         </Link>
         <h2 className="name">{torrent.name}</h2>
@@ -38,9 +37,6 @@ const Torrent = () => {
           </div>
         ))}
         <style jsx>{`
-        .torrent {
-          padding: 15px;
-        }
         .name {
           margin-bottom: 15px;
         }
