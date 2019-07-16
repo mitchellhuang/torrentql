@@ -4,49 +4,26 @@ import Main from '../layouts/Main';
 const Pricing: React.FC<null> = () => (
   <Main title="Pricing">
     <div className="wrapper">
-      <h1 className="mb-2">TorrentQL Pricing</h1>
-      <span className="mb-2">
+      <h1 className="mb-3">Pricing</h1>
+      <p className="mb-3">
         Pay only for what you use. There is no minimum fee. Estimate your monthly bill using our
         <a href="/calculator"> billing calculator »</a>
-      </span>
-      <h3 className="mb-2">TorrentQL Free Usage Tier*</h3>
-      <div className="mb-2">
-        As part of the TorrentQL Free Usage Tier, you can retrieve up to 10 GB of data uploaded per month free<b>*</b>.
-        The free tier allowance can be used at any time during the month and applies to Standard retrievals.
-      </div>
-      <h3 className="mb-2">Storage pricing</h3>
-      <div className="mb-2">
-        Seeding torrents will be charged <b>$.005</b> per GB per month.
-      </div>
-      <h3 className="mb-2">
-        Torrent Data Storage Pricing
-      </h3>
+      </p>
+      <h3 className="mb-3">Free Usage Tier</h3>
+      <p className="mb-3">
+        As part of the Free Usage Tier, you can retrieve up to 10 GB of data uploaded per month free. Restrictions
+        apply; see offer terms for more details.
+      </p>
+      <h3 className="mb-3">Standard Pricing</h3>
       <div className="pricing">
         <div className="column">
-          <h5 className="info">Service</h5>
+          <h5 className="info">Tier</h5>
         </div>
         <div className="column">
-          <h5 className="info">Up to 10 GB / Month</h5>
+          <h5 className="info">Standard (Hetzner)</h5>
         </div>
         <div className="column">
-          <h5 className="info">Next 9.9 GB / Month</h5>
-        </div>
-        <div className="column">
-          <h5 className="info">Next 40 GB / Month</h5>
-        </div>
-      </div>
-      <div className="pricing">
-        <div className="column">
-          <h5 className="info">torrents downloaded</h5>
-        </div>
-        <div className="column">
-          <h5>FREE</h5>
-        </div>
-        <div className="column">
-          <h5>FREE</h5>
-        </div>
-        <div className="column">
-          <h5>FREE</h5>
+          <h5 className="info">Premium (OVH)</h5>
         </div>
       </div>
       <div className="pricing">
@@ -59,28 +36,47 @@ const Pricing: React.FC<null> = () => (
         <div className="column">
           <h5>FREE</h5>
         </div>
+      </div>
+      <div className="pricing">
         <div className="column">
-          <h5>FREE</h5>
+          <h5 className="info">data transfer out</h5>
+        </div>
+        <div className="column">
+          <h5>$0.005 / GB</h5>
+        </div>
+        <div className="column">
+          <h5>$0.01 / GB</h5>
         </div>
       </div>
       <div className="pricing">
         <div className="column">
-          <h5 className="info">pricing rate</h5>
+          <h5 className="info">storage</h5>
         </div>
         <div className="column">
-          <h5>$0 per GB</h5>
+          <h5>$0.005 / GB / Month</h5>
         </div>
         <div className="column">
-          <h5>$0.05 per GB</h5>
-        </div>
-        <div className="column">
-          <h5>$0.07 per GB</h5>
+          <h5>$0.01 / GB / Month</h5>
         </div>
       </div>
-      <div className="disclaimer">
-        * Your usage for the free tier is calculated each month and will automatically be applied to your bill – unused
-        monthly usage will not roll over. Restrictions apply; see offer terms for more details.
-      </div>
+      <h3 className="mb-3 mt-3">FAQ</h3>
+      <h4 className="mb-3">What is the difference between standard and premium?</h4>
+      <p className="mb-3">
+        Our standard network uses a cluster of 1Gb/s Hetzner servers in Germany. Our premium network uses a cluster of
+        1Gb/s OVH servers in France. We do not allow public torrent seeding for the standard network.
+      </p>
+      <h4 className="mb-3">What is data transfer in?</h4>
+      <p className="mb-3">
+        Data transfer in is the amount of bandwidth used when leeching torrents.
+      </p>
+      <h4 className="mb-3">What is data transfer out?</h4>
+      <p className="mb-3">
+        Data transfer out is the amount of bandwidth used when seeding torrents and downloading files over HTTP.
+      </p>
+      <h4 className="mb-3">What is storage pricing?</h4>
+      <p className="mb-3">
+        Storage pricing is how much disk space you are using.
+      </p>
     </div>
     <style jsx>{`
       .wrapper {
@@ -93,6 +89,12 @@ const Pricing: React.FC<null> = () => (
         display: flex;
         width: 100%;
         align-items: center;
+      }
+      .column:first-child {
+        margin-left: -3px;
+      }
+      .column:last-child {
+        margin-right: -3px;
       }
       .pricing {
         background-color: var(--white);
@@ -109,11 +111,10 @@ const Pricing: React.FC<null> = () => (
         color: var(--darkGray);
       }
       .disclaimer {
-        margin-top: 15px;
         font-size: 10px;
         font-weight: bold;
       }
-      .column:nth-child(even) {
+      .column:first-child {
         background-color: #F5F7FA;
       }
     `}</style>
