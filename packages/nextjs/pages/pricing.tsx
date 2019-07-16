@@ -37,7 +37,7 @@ const Pricing: React.FC<null> = () => (
       </div>
       <div className="pricing">
         <div className="column">
-          <h5 className="info">Torrents downloaded</h5>
+          <h5 className="info">torrents downloaded</h5>
         </div>
         <div className="column">
           <h5>FREE</h5>
@@ -51,7 +51,7 @@ const Pricing: React.FC<null> = () => (
       </div>
       <div className="pricing">
         <div className="column">
-          <h5 className="info">All data transfer in</h5>
+          <h5 className="info">data transfer in</h5>
         </div>
         <div className="column">
           <h5>FREE</h5>
@@ -65,7 +65,7 @@ const Pricing: React.FC<null> = () => (
       </div>
       <div className="pricing">
         <div className="column">
-          <h5 className="info">Pricing Rate</h5>
+          <h5 className="info">pricing rate</h5>
         </div>
         <div className="column">
           <h5>$0 per GB</h5>
@@ -106,6 +106,7 @@ const Pricing: React.FC<null> = () => (
       }
       .info {
         font-weight: bolder;
+        color: var(--darkGray);
       }
       .disclaimer {
         margin-top: 15px;
