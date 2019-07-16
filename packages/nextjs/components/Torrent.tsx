@@ -79,38 +79,38 @@ const TCell = ({
   </div>
 );
 
+const constrainRange = (x : string) : number => Math.max(parseInt(x, 10), 0);
+
 const Torrent = ({
   torrent,
   selected,
   onClick,
-}) => {
-  return (
-    <TRow key={torrent.id} selected={selected} onClick={onClick}>
-      <TCell flex={5}>
-        <Link href={`/torrents/${torrent.id}`}>
-          <a>
-            {torrent.name}
-          </a>
-        </Link>
-      </TCell>
-      <TCell flex={2}>
-        <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)" />
-      </TCell>
-      <TCell flex={1}>
-        {prettyBytes(torrent.downloadSpeed)}/s
-      </TCell>
-      <TCell flex={1}>
-        {prettyBytes(torrent.uploadSpeed)}/s
-      </TCell>
-      <TCell flex={1}>
-        {torrent.numPeers} / {torrent.totalPeers}
-      </TCell>
-      <TCell flex={1}>
-        {torrent.numSeeds} / {torrent.totalSeeds}
-      </TCell>
-    </TRow>
-  );
-};
+}) => (
+  <TRow key={torrent.id} selected={selected} onClick={onClick}>
+    <TCell flex={5}>
+      <Link href={`/torrents/${torrent.id}`}>
+        <a>
+          {torrent.name}
+        </a>
+      </Link>
+    </TCell>
+    <TCell flex={2}>
+      <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)" />
+    </TCell>
+    <TCell flex={1}>
+      {prettyBytes(torrent.downloadSpeed)}/s
+    </TCell>
+    <TCell flex={1}>
+      {prettyBytes(torrent.uploadSpeed)}/s
+    </TCell>
+    <TCell flex={1}>
+      {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
+    </TCell>
+    <TCell flex={1}>
+      {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
+    </TCell>
+  </TRow>
+);
 
 const ProgressBar = ({
   color,
