@@ -61,6 +61,7 @@ export const GET_TORRENT_QUERY = gql`
       tracker
       trackerHost
       trackerStatus
+      files
       server {
         id
         region
