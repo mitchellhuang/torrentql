@@ -1,7 +1,7 @@
 import React from 'react';
 import Main from '../layouts/Main';
 
-const Pricing: React.FC<null> = () => (
+const Pricing: React.FunctionComponent<{}> = () => (
   <Main title="Pricing">
     <div className="wrapper">
       <h1 className="mb-3">Pricing</h1>
