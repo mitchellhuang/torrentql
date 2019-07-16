@@ -14,6 +14,9 @@ const getStarted = [{
 }];
 
 const productItems = [{
+  name: 'Pricing',
+  url: '/pricing',
+}, {
   name: 'API',
   url: '/api',
 }];
