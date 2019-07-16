@@ -20,16 +20,16 @@ const Error = ({ statusCode }) => {
       </div>
       <style jsx>{`
         @media(min-width: 768px) {
-        .wrapper {
-          height: calc(100vh - 500px);
-          align-items: center;
-          max-width: 768px;
-          padding: 75px 0;
+          .wrapper {
+            height: calc(100vh - 500px);
+            align-items: center;
+            max-width: 768px;
+            padding: 75px 0;
+          }
+          .error {
+            text-align: center;
+          }
         }
-        .error {
-          text-align: center;
-        }
-      }
       `}</style>
     </Main>
   );
