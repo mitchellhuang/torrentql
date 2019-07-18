@@ -9,8 +9,7 @@ https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos
 ## Authenticate kubectl
 
 ```
-mkdir ~/.kube
-cp ~/admin.conf ~/.kube/config
+doctl kubernetes cluster kubeconfig save tql-k8s-staging
 kubectl get nodes -o wide
 ```
 
@@ -30,17 +29,10 @@ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"templat
 helm init --service-account tiller --upgrade
 ```
 
-## Install metallb
-
-```
-kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-kubectl apply -f metallb/layer2-config.yml
-```
-
 ## Install nginx-ingress
 
 ```
-helm install -f nginx-ingress/values.yml stable/nginx-ingress
+helm install stable/nginx-ingress
 kubectl apply -f ingress/default.yml
 ```
 
