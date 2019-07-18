@@ -52,6 +52,9 @@ export class Torrent {
   @Field(type => Float)
   ratio: number;
 
+  @Field(type => BigInt)
+  totalSize: number;
+
   @Field(type => Int)
   uploadSpeed: number;
 

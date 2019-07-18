@@ -20,6 +20,7 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   torrent.state = status.result.state.toLowerCase();
   torrent.progress = status.result.progress;
   torrent.ratio = status.result.ratio;
+  torrent.totalSize = status.result.total_size;
   torrent.uploadSpeed = status.result.upload_payload_rate;
   torrent.downloadSpeed = status.result.download_payload_rate;
   torrent.eta = status.result.eta;
