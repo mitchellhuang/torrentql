@@ -1,0 +1,28 @@
+{
+  "name": "@torrentql/common",
+  "version": "1.0.0",
+  "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "dev": "nodemon dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
+    "lint": "tslint --project tsconfig.json"
+  },
+  "dependencies": {
+    "@ctrl/deluge": "^2.0.1",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^14.4.2",
+    "graphql-bigint": "^1.0.0",
+    "graphql-type-json": "^0.3.0",
+    "type-graphql": "^0.17.4",
+    "typeorm": "^0.2.18"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/graphql": "^14.2.2",
+    "@types/graphql-type-json": "^0.3.0"
+  }
+}

@@ -8,11 +8,11 @@ Download and seed torrents on-demand.
 
 * nextjs (frontend)
 * graphql (backend)
-* deploy (ci)
+* common (common code)
+* billing (billing daemon)
 
-## Install and link packages
+## Install
 
 ```
 yarn install
-yarn bootstrap
 ```

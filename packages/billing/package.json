@@ -1,0 +1,19 @@
+{
+  "name": "@torrentql/billing",
+  "version": "1.0.0",
+  "author": "Mitchell Huang <mitchell@mitchellhuang.net>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "dev": "nodemon dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
+    "lint": "tslint --project tsconfig.json"
+  },
+  "dependencies": {
+    "@torrentql/common": "1.0.0",
+    "dotenv": "^8.0.0"
+  },
+  "devDependencies": {}
+}

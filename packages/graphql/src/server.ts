@@ -7,7 +7,7 @@ import { useContainer } from 'typeorm';
 import { buildSchema, emitSchemaDefinitionFile } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
-import * as db from './lib/db';
+import { createConnectionFromEnv } from '@torrentql/common/dist/lib/db';
 import * as jwt from './lib/jwt';
 import { createContext, authChecker } from './lib/context';
 
@@ -16,8 +16,8 @@ const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 useContainer(Container);
 
-export const createServer = async () => {
-  const connection = await db.init();
+const createServer = async () => {
+  const connection = await createConnectionFromEnv();
 
   const schema = await buildSchema({
     resolvers: [

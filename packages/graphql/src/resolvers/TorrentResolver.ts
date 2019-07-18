@@ -16,9 +16,9 @@ import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
 import { Context } from '../lib/context';
-import { mapDelugeToTorrent } from '../lib/deluge';
-import { Torrent } from '../entities/Torrent';
-import { Server } from '../entities/Server';
+import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
+import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { Server } from '@torrentql/common/dist/entities/Server';
 
 const validator = new Validator();
 
@@ -82,7 +82,7 @@ export class TorrentResolver {
       timeout: 1000,
     });
     let hash;
-    let type;
+    let type: 'url' | 'magnet' | 'file';
     const isUrl = validator.isURL(data);
     if (isUrl) {
       type = 'url';
@@ -112,6 +112,9 @@ export class TorrentResolver {
       } catch (err) {
         throw new Error('Invalid torrent file.');
       }
+    }
+    if (!hash || !type) {
+      throw new Error('Could not parse torrent file.');
     }
     const torrent = new Torrent();
     torrent.isActive = true;

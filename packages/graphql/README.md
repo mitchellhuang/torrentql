@@ -1,12 +1,12 @@
-# graphql
+# @torrentql/graphql
 
-A GraphQL API server for TorrentQL. This repo follows the [Twelve-Factor App](https://12factor.net/) guidelines.
+GraphQL API server for TorrentQL.
 
 ## Requirements
 
-1. Node.js >= 10.15.0
-2. Yarn >= 1.13.0
-3. PostgreSQL >= 10.5
+1. Node.js >= 10
+2. Yarn >= 1
+3. PostgreSQL >= 10
 
 ## Environment variables
 
@@ -27,16 +27,10 @@ FILES_PATH=/User/mitchell/Downloads
 
 1. `yarn install`
 2. `create a .env file based on .env.example`
-3. `cd packages/deluge && docker-compose up -d`
+3. `cd deluge && docker-compose up -d`
 4. `yarn build:watch`
 5. `yarn sync`
-
-Expected output looks as follows:
-
-![Sample output](https://i.imgur.com/Jn9GYvV.png "Sample output")
-
-
-6. `yarn run dev`
+6. `yarn dev`
 
 ## Production build
 
@@ -53,10 +47,3 @@ Expected output looks as follows:
 Authentication against the GraphQL API is done with the `login(email: String, password: String)` mutation.
 This mutation returns a `User` type with a JSON web token in the `token` field. Then, to make
 authenticated requests, we add the JWT to our HTTP header in the format: `Authorization: Bearer <jwt>`.
-
-## Style guidelines
-
-1. 2 spaces indentation
-2. Newline at the end of each file
-3. Async await instead of promises
-4. Trailing commas

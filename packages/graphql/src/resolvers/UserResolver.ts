@@ -13,11 +13,11 @@ import {
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
-import { mapDelugeToTorrent } from '../lib/deluge';
-import { Context } from '../lib/context';
-import { User } from '../entities/User';
-import { Torrent } from '../entities/Torrent';
+import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
+import { User } from '@torrentql/common/dist/entities/User';
+import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import * as jwt from '../lib/jwt';
+import { Context } from '../lib/context';
 
 @ArgsType()
 class LoginInput {

@@ -1,26 +1,32 @@
-# @torrentql/nextjs
+# @torrentql/billing
 
-Next.js frontend for TorrentQL.
+Billing daemon for TorrentQL.
 
 ## Requirements
 
 1. Node.js >= 10
 2. Yarn >= 1
+3. PostgreSQL >= 10
 
 ## Environment variables
 
 Create a `.env` file from `.env.example` to load environment variables from a file.
 
 ```
-API_URI=http://localhost:3001/graphql
-FILES_PATH=http://localhost:3001/files
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_USER=torrentql
+DB_PASSWORD=password
+DB_DATABASE=torrentql
+DB_SSL=false
 ```
 
 ## Installation
 
 1. `yarn install`
 2. `create a .env file based on .env.example`
-3. `yarn run dev`
+4. `yarn build:watch`
+6. `yarn dev`
 
 ## Production build
 
@@ -29,5 +35,5 @@ FILES_PATH=http://localhost:3001/files
 
 ## Docker production build
 
-1. `docker build -t nextjs .`
-2. `docker run -p 3000:3000 nextjs`
+1. `docker build -t billing .`
+2. `docker run -p 3001:3001 billing`
