@@ -21,7 +21,7 @@ steps:
     tags:
       - latest
       - "${DRONE_COMMIT_SHA}"
-    context: packages/graphql/
+    context: ./
     dockerfile: packages/graphql/Dockerfile
     access_key:
       from_secret: aws_access_key_id
@@ -42,7 +42,7 @@ steps:
     tags:
       - latest
       - "${DRONE_COMMIT_SHA}"
-    context: packages/nextjs/
+    context: ./
     dockerfile: packages/nextjs/Dockerfile
     access_key:
       from_secret: aws_access_key_id

@@ -2,10 +2,11 @@ FROM node:10-alpine
 
 WORKDIR /usr/src/app
 
-COPY package.json yarn.lock ./
-RUN yarn --silent
 COPY ./ ./
-RUN yarn build
+RUN yarn --silent
+RUN npx lerna run --scope @torrentql/common build
+RUN npx lerna run --scope @torrentql/billing build
 
-EXPOSE 3002
+WORKDIR packages/billing
+
 CMD ["yarn", "start"]
