@@ -9,8 +9,7 @@ https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos
 ## Authenticate kubectl
 
 ```
-mkdir ~/.kube
-cp ~/admin.conf ~/.kube/config
+doctl kubernetes cluster kubeconfig save tql-k8s-staging
 kubectl get nodes -o wide
 ```
 
@@ -30,18 +29,20 @@ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"templat
 helm init --service-account tiller --upgrade
 ```
 
-## Install metallb
-
-```
-kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-kubectl apply -f metallb/layer2-config.yml
-```
-
 ## Install nginx-ingress
 
 ```
-helm install -f nginx-ingress/values.yml stable/nginx-ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.24.1/deploy/mandatory.yaml
 kubectl apply -f ingress/default.yml
+```
+
+## Install cert-manager
+
+```
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
+kubectl label namespace kube-system certmanager.k8s.io/disable-validation="true"
+helm repo add jetstack https://charts.jetstack.io
+helm install --name cert-manager --namespace kube-system jetstack/cert-manager --version v0.8.1
 ```
 
 ## Install registry-creds

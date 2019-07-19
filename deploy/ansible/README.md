@@ -12,11 +12,8 @@ sudo pip3 install ansible
 ## Create hosts inventory file
 
 ```
-[masters]
-master ansible_host=master_ip ansible_user=root
-
-[workers]
-worker ansible_host=worker_ip ansible_user=root
+[deluge]
+gra001 ansible_host=master_ip ansible_user=root
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
@@ -25,5 +22,5 @@ ansible_python_interpreter=/usr/bin/python3
 ## Run ansible playbook
 
 ```
-ansible-playbook -i hosts <playbook>
+ansible-playbook -i hosts site.yml
 ```
