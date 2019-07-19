@@ -36,6 +36,15 @@ helm install stable/nginx-ingress
 kubectl apply -f ingress/default.yml
 ```
 
+## Install cert-manager
+
+```
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
+kubectl label namespace kube-system certmanager.k8s.io/disable-validation="true"
+helm repo add jetstack https://charts.jetstack.io
+helm install --name cert-manager --namespace kube-system jetstack/cert-manager --version v0.8.1
+```
+
 ## Install registry-creds
 
 https://github.com/upmc-enterprises/registry-creds#how-to-setup-running-in-aws
