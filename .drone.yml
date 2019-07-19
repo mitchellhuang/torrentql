@@ -57,13 +57,13 @@ steps:
 - name: deploy-graphql
   image: lachlanevenson/k8s-kubectl
   environment:
-    KUBE_CONFIG_FILE:
-      from_secret: kube_config_file
+    DIGITALOCEAN_ACCESS_TOKEN:
+      from_secret: digitalocean_access_token
   commands:
-  - mkdir -p $HOME/.kube
-  - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
-  - cd deploy/kubernetes
-  - kubectl apply -f graphql/deploy.yml
+  - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
+  - mv doctl /usr/local/bin/
+  - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/graphql/deploy.yml
   - kubectl rollout status deployment torrentql-graphql
   depends_on:
   - build-graphql
@@ -75,13 +75,13 @@ steps:
 - name: deploy-nextjs
   image: lachlanevenson/k8s-kubectl
   environment:
-    KUBE_CONFIG_FILE:
-      from_secret: kube_config_file
+    DIGITALOCEAN_ACCESS_TOKEN:
+      from_secret: digitalocean_access_token
   commands:
-  - mkdir -p $HOME/.kube
-  - echo $KUBE_CONFIG_FILE | base64 -d > $HOME/.kube/config
-  - cd deploy/kubernetes
-  - kubectl apply -f nextjs/deploy.yml
+  - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
+  - mv doctl /usr/local/bin/
+  - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/nextjs/deploy.yml
   - kubectl rollout status deployment torrentql-nextjs
   depends_on:
   - deploy-graphql
