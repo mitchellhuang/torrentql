@@ -24,6 +24,8 @@ const Torrent = () => {
     return <Unstyled message={JSON.stringify(error)} />;
   }
   const torrent = data.getTorrent;
+  const fileContents = torrent.files.contents;
+  const initialDir = Object.keys(fileContents)[0];
   return (
     <Main title={torrent.name}>
       <div className="wrapper">
@@ -32,12 +34,8 @@ const Torrent = () => {
         </Link>
         <h2 className="name">{torrent.name}</h2>
         <h3>Contents:</h3>
-        <h5>{JSON.stringify(torrent.files.contents.size)}</h5>
-        <Directory name={torrent.name} />
-        <File name={torrent.name} />
-        <h5>{JSON.stringify(torrent.files.contents)}</h5>
+        {directoryDive(torrent.files.contents[initialDir], initialDir, 0)}
         <br/>
-        <h5>{JSON.stringify(torrent.files)}</h5>
         <style jsx>{`
         .name {
           margin-bottom: 15px;
@@ -51,29 +49,60 @@ const Torrent = () => {
   );
 };
 
-const Directory = ({ name }) => (
+   function directoryDive(dictionary,key, depth) {
+        if (dictionary.type === 'file') {
+          return (
+            <div key={key}>
+              <File name={key} depth={depth} />
+            </div>
+          )
+        } else if (dictionary.type === 'dir') {
+          const contents = dictionary.contents;
+          if (contents) {
+            return (
+              <div key={key}>
+                <Directory name={key} depth={depth} />
+                {Object.keys(contents).map(key => directoryDive(contents[key], key, depth + 1))}
+              </div>
+            )
+          }
+        } 
+      }
+
+const Directory = ({ name, depth }) => {
+  const offSet = depth > 0 ? (depth * 20) + 20 : 0;
+  return (
   <div className="directory">
     <Folder className="folder" color="blue" />
-    <div>{name}</div>
+    <span className="name">{name}</span>
     <style jsx>{`
       .directory {
         display: flex;
         flex-direction: row;
         align-items: center;
+        margin-left: ${offSet}px;
+      }
+      .name {
+        margin-left: 3px;
       }
     `}</style>
   </div>
-);
+)
+};
 
-const File = ({ name }) => (
+const File = ({ name, depth }) => (
   <div className="file">
-    <line></line><FileIcon color="blue"/>
-    <div> {name}</div>
+    <FileIcon color="blue"/>
+    <span className="name">{name}</span>
     <style jsx>{`
       .file {
+        margin-left: ${20 * (depth + 1)}px;
         display: flex;
         flex-direction: row;
         align-items: center;
+      }
+      .name {
+        margin-left: 3px;
       }
     `}</style>
   </div>
