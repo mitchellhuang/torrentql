@@ -7,18 +7,15 @@
     group: ubuntu
     mode: 0775
 
-- name: Running the container
+- name: run deluge container
   docker_container:
     image: linuxserver/deluge:latest
     name: deluge
-    state: present
-    restart: yes
-    published_ports:
+    state: started
+    restart_policy: always
+    ports:
      - "8112:8112"
      - "58846:58846"
      - "58946:58946"
     volumes:
       - /data:/root/Downloads
-
-- name: Check if container is running
-  shell: docker ps

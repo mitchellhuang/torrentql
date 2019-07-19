@@ -24,3 +24,15 @@
     name: ubuntu
     groups: docker
     append: yes
+
+- name: install python-pip3
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: true
+    force_apt_get: yes
+
+- name: install docker python sdk
+  pip:
+    name: docker
+    state: present
