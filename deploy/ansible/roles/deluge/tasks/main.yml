@@ -1,0 +1,24 @@
+- name: create data directory
+  become: yes
+  file:
+    path: /data
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0775
+
+- name: Running the container
+  docker_container:
+    image: linuxserver/deluge:latest
+    name: deluge
+    state: present
+    restart: yes
+    published_ports:
+     - "8112:8112"
+     - "58846:58846"
+     - "58946:58946"
+    volumes:
+      - /data:/root/Downloads
+
+- name: Check if container is running
+  shell: docker ps
