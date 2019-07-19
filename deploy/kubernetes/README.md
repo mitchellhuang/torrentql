@@ -32,7 +32,7 @@ helm init --service-account tiller --upgrade
 ## Install nginx-ingress
 
 ```
-helm install stable/nginx-ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.24.1/deploy/mandatory.yaml
 kubectl apply -f ingress/default.yml
 ```
 
