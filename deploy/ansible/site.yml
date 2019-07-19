@@ -1,0 +1,13 @@
+- name: apply common configuration to all nodes
+  hosts: all
+  become: yes
+
+  roles:
+    - common
+
+- name: deploy deluge to deluge nodes
+  hosts: deluge
+  remote_user: ubuntu
+
+  roles:
+    - deluge
