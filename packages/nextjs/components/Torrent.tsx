@@ -79,56 +79,54 @@ const Torrent = ({
   torrent,
   selected,
   onClick,
-}) => {
-  return (
-    <TRow key={torrent.id} selected={selected} onClick={onClick}>
-      <div className="container" onClick={onClick}>
-        <input type="checkbox" value={torrent.id}/>
-        {!selected && <Square size={20} />}
-        {selected && <CheckSquare size={20} />}
-      </div>
-      <TCell flex={5}>
-        <Link href={`/torrents/${torrent.id}`}>
-          <a>
-            {torrent.name}
-          </a>
-        </Link>
-      </TCell>
-      <TCell flex={2}>
-        <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)"/>
-      </TCell>
-      <TCell flex={1}>
-        {prettyBytes(torrent.downloadSpeed)}/s
-      </TCell>
-      <TCell flex={1}>
-        {prettyBytes(torrent.uploadSpeed)}/s
-      </TCell>
-      <TCell flex={1}>
-        {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
-      </TCell>
-      <TCell flex={1}>
-        {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
-      </TCell>
-      <style jsx>{`
-      .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        padding: 10px;
-      }
-      a {
-        text-decoration: underline;
-      }
-      input {
-        width: 0;
-        height: 0;
-        visibility: hidden;
-      }
-    `}</style>
-    </TRow>
-  );
-};
+}) => (
+  <TRow key={torrent.id} selected={selected} onClick={onClick}>
+    <div className="container" onClick={onClick}>
+      <input type="checkbox" value={torrent.id}/>
+      {!selected && <Square size={20} />}
+      {selected && <CheckSquare size={20} />}
+    </div>
+    <TCell flex={5}>
+      <Link href={`/torrents/${torrent.id}`}>
+        <a>
+          {torrent.name}
+        </a>
+      </Link>
+    </TCell>
+    <TCell flex={2}>
+      <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)"/>
+    </TCell>
+    <TCell flex={1}>
+      {prettyBytes(torrent.downloadSpeed)}/s
+    </TCell>
+    <TCell flex={1}>
+      {prettyBytes(torrent.uploadSpeed)}/s
+    </TCell>
+    <TCell flex={1}>
+      {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
+    </TCell>
+    <TCell flex={1}>
+      {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
+    </TCell>
+    <style jsx>{`
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      padding: 10px;
+    }
+    a {
+      text-decoration: underline;
+    }
+    input {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    }
+  `}</style>
+  </TRow>
+);
 
 const ProgressBar = ({
   color,
