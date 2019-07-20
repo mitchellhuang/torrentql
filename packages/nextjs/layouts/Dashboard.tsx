@@ -19,9 +19,7 @@ const tabs = [{
   url: '/account',
 }];
 
-const Tabs = ({
-  router,
-}) => (
+const Tabs = ({ router }) => (
   <ul>
     { tabs.map(item => (
       <li key={item.url}>

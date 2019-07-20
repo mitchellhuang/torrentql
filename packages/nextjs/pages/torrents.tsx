@@ -14,12 +14,18 @@ export const Unstyled = ({ message }) => (
 
 const TorrentTableHeader = () => (
   <TRow header>
+    <div />
     <TCell flex={5}>Name</TCell>
     <TCell flex={2}>Progress</TCell>
     <TCell flex={1}>Down Speed</TCell>
     <TCell flex={1}>Up Speed</TCell>
     <TCell flex={1}>Peers</TCell>
     <TCell flex={1}>Seeds</TCell>
+    <style jsx>{`
+      div {
+        margin-left: 50px;
+      }
+    `}</style>
   </TRow>
 );
 

@@ -55,17 +55,7 @@ const TRow: React.StatelessComponent<ITRow> = ({
   </div>
 );
 
-interface ITCell {
-  flex: Number;
-  width?: String;
-  children: React.ReactNode;
-}
-
-const TCell: React.FunctionComponent<ITCell> = ({
-  flex,
-  width,
-  children,
-}) => (
+const TCell = ({ flex, children }) => (
   <div className="t-cell">
     {children}
     <style jsx>{`
@@ -77,8 +67,7 @@ const TCell: React.FunctionComponent<ITCell> = ({
         flex: ${flex || 1};
         overflow: auto;
         white-space: nowrap;
-        padding: 10px;
-        width: ${width || '100%' };
+        padding: 10px 5px;
       }
     `}</style>
   </div>
@@ -129,7 +118,6 @@ const Torrent = ({
         padding: 10px;
       }
       a {
-        margin-left: 5px;
         text-decoration: underline;
       }
       input {
