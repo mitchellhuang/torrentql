@@ -1,7 +1,8 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
-import Link from "next/link";
+import Link from 'next/link';
+import { CheckSquare, Square } from 'react-feather';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -30,7 +31,6 @@ const TRow: React.StatelessComponent<ITRow> = ({
         box-sizing: border-box;
         color: var(--black);
         background-color: var(--white);
-        padding: 10px 0;
         border: 2px solid transparent;
         border-radius: 5px;
         width: 100%;
@@ -42,9 +42,6 @@ const TRow: React.StatelessComponent<ITRow> = ({
       }
       .row:hover {
         background-color: var(--buttonHover);
-      }
-      .selected {
-        border-color: var(--green);
       }
       .header {
         color: var(--lightGray);
@@ -58,10 +55,7 @@ const TRow: React.StatelessComponent<ITRow> = ({
   </div>
 );
 
-const TCell = ({
-  flex,
-  children,
-}) => (
+const TCell = ({ flex, children }) => (
   <div className="t-cell">
     {children}
     <style jsx>{`
@@ -73,7 +67,7 @@ const TCell = ({
         flex: ${flex || 1};
         overflow: auto;
         white-space: nowrap;
-        padding: 0 10px;
+        padding: 10px 5px;
       }
     `}</style>
   </div>
@@ -87,6 +81,11 @@ const Torrent = ({
   onClick,
 }) => (
   <TRow key={torrent.id} selected={selected} onClick={onClick}>
+    <div className="checkbox" onClick={onClick}>
+      <input type="checkbox" value={torrent.id}/>
+      {!selected && <Square size={20} />}
+      {selected && <CheckSquare size={20} />}
+    </div>
     <TCell flex={5}>
       <Link href={`/torrents/${torrent.id}`}>
         <a>
@@ -95,7 +94,7 @@ const Torrent = ({
       </Link>
     </TCell>
     <TCell flex={2}>
-      <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)" />
+      <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)"/>
     </TCell>
     <TCell flex={1}>
       {prettyBytes(torrent.downloadSpeed)}/s
@@ -109,6 +108,23 @@ const Torrent = ({
     <TCell flex={1}>
       {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
     </TCell>
+    <style jsx>{`
+    .checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      padding: 10px;
+    }
+    a {
+      text-decoration: underline;
+    }
+    input {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    }
+  `}</style>
   </TRow>
 );
 

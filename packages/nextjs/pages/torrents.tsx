@@ -14,17 +14,23 @@ export const Unstyled = ({ message }) => (
 
 const TorrentTableHeader = () => (
   <TRow header>
+    <div />
     <TCell flex={5}>Name</TCell>
     <TCell flex={2}>Progress</TCell>
     <TCell flex={1}>Down Speed</TCell>
     <TCell flex={1}>Up Speed</TCell>
     <TCell flex={1}>Peers</TCell>
     <TCell flex={1}>Seeds</TCell>
+    <style jsx>{`
+      div {
+        margin-left: 50px;
+      }
+    `}</style>
   </TRow>
 );
 
 const TorrentsWithData = () => {
-  const [selected, selectTorrent] = useState<{ id?: string }>({});
+  const [selected, selectTorrent] = useState<String[]>([]);
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
     pollInterval: 2000,
@@ -50,8 +56,14 @@ const TorrentsWithData = () => {
       {data.me.torrents.map(torrent => (
         <Torrent
           torrent={torrent}
-          selected={torrent.id === selected.id}
-          onClick={() => selectTorrent(torrent.id !== selected.id ? torrent : {})}
+          selected={selected.includes(torrent.id)}
+          onClick={() => {
+            if (!selected.includes(torrent.id)) {
+              selectTorrent(selected.concat([torrent.id]));
+            } else {
+              selectTorrent(selected.filter(id => id !== torrent.id));
+            }
+          }}
           key={torrent.id}
         />
       ))}
