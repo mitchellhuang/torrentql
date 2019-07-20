@@ -4,6 +4,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { User } from '../entities/User';
 import { Torrent } from '../entities/Torrent';
 import { Server } from '../entities/Server';
+import { BillingActivity } from '../entities/BillingActivity';
 import { BillingHistory } from '../entities/BillingHistory';
 
 export const createConnectionFromEnv = () => createConnection({
@@ -18,6 +19,7 @@ export const createConnectionFromEnv = () => createConnection({
     User,
     Torrent,
     Server,
+    BillingActivity,
     BillingHistory,
   ],
   namingStrategy: new SnakeNamingStrategy(),

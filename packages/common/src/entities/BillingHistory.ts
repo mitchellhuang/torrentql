@@ -7,31 +7,21 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from './User';
-import { Torrent } from './Torrent';
 
 @Entity('billing_history')
 export class BillingHistory {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('bigint')
-  diskUsageBytes: number;
+  @Column('decimal', { precision: 10, scale: 2 })
+  totalCost: number;
 
   @Column()
-  diskUsageSeconds: number;
-
-  @Column('decimal', { precision: 19, scale: 2 })
-  diskUsageCost: number;
+  beginAt: Date;
 
   @Column()
-  dataTransferOut: number;
-
-  @Column('decimal', { precision: 19, scale: 2 })
-  dataTransferCost: number;
-
-  @ManyToOne(type => Torrent)
-  torrent: Promise<Torrent>;
+  endAt: Date;
 
   @ManyToOne(type => User)
   user: Promise<User>;
