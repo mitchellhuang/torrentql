@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, Fragment } from 'react';
 import { File as FileIcon, Folder, Download } from 'react-feather';
 
 const directoryColor = '#A7B0BD';
@@ -7,18 +7,18 @@ const fileColor = '#51A4FB';
 function directoryDive(dictionary, key, depth) {
   if (dictionary.type === 'file') {
     return (
-      <div key={key}>
+      <Fragment key={key}>
         <File name={key} path={dictionary.path} depth={depth} />
-      </div>
+      </Fragment>
     );
   }
   const contents = dictionary.contents;
   return (
-    <div key={key}>
+    <Fragment key={key}>
       <Directory name={key} depth={depth}>
         {Object.keys(contents).map(key => directoryDive(contents[key], key, depth + 1))}
       </Directory>
-    </div>
+    </Fragment>
   );
 }
 
