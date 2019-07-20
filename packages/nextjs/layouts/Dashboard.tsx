@@ -19,9 +19,7 @@ const tabs = [{
   url: '/account',
 }];
 
-const Tabs = ({
-  router,
-}) => (
+const Tabs = ({ router }) => (
   <div className="tabs wrapper">
     <ul>
       {tabs.map(item => (
