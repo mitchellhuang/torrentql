@@ -24,7 +24,7 @@ const TorrentTableHeader = () => (
 );
 
 const TorrentsWithData = () => {
-  const [selected, selectTorrent] = useState<{ id?: string }>({});
+  const [selected, selectTorrent] = useState<String[]>([]);
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
     pollInterval: 2000,
@@ -50,8 +50,14 @@ const TorrentsWithData = () => {
       {data.me.torrents.map(torrent => (
         <Torrent
           torrent={torrent}
-          selected={torrent.id === selected.id}
-          onClick={() => selectTorrent(torrent.id !== selected.id ? torrent : {})}
+          selected={selected.includes(torrent.id)}
+          onClick={() => {
+            if (!selected.includes(torrent.id)) {
+              selectTorrent(selected.concat([torrent.id]));
+            } else {
+              selectTorrent(selected.filter(id => id !== torrent.id));
+            }
+          }}
           key={torrent.id}
         />
       ))}

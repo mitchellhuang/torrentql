@@ -63,7 +63,10 @@ const ToolBar = ({ selected }) => {
       <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>}>
         Add
       </ToolBarButton>
-      <ToolBarButton className="ml-2" onClick={() => handleDeleteTorrent(selected.id)} icon={<Trash2 size={iconSize}/>}>
+      <ToolBarButton
+        className="ml-2"
+        onClick={() => selected.forEach(id => handleDeleteTorrent(id))}
+        icon={<Trash2 size={iconSize}/>}>
         Delete
       </ToolBarButton>
       <AddTorrentModal active={active} toggle={toggle} />

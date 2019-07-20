@@ -1,7 +1,8 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
-import Link from "next/link";
+import Link from 'next/link';
+import { CheckSquare, Square } from 'react-feather';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -30,7 +31,6 @@ const TRow: React.StatelessComponent<ITRow> = ({
         box-sizing: border-box;
         color: var(--black);
         background-color: var(--white);
-        padding: 10px 0;
         border: 2px solid transparent;
         border-radius: 5px;
         width: 100%;
@@ -42,9 +42,6 @@ const TRow: React.StatelessComponent<ITRow> = ({
       }
       .row:hover {
         background-color: var(--buttonHover);
-      }
-      .selected {
-        border-color: var(--green);
       }
       .header {
         color: var(--lightGray);
@@ -58,8 +55,15 @@ const TRow: React.StatelessComponent<ITRow> = ({
   </div>
 );
 
-const TCell = ({
+interface ITCell {
+  flex: Number;
+  width?: String;
+  children: React.ReactNode;
+}
+
+const TCell: React.FunctionComponent<ITCell> = ({
   flex,
+  width,
   children,
 }) => (
   <div className="t-cell">
@@ -73,7 +77,8 @@ const TCell = ({
         flex: ${flex || 1};
         overflow: auto;
         white-space: nowrap;
-        padding: 0 10px;
+        padding: 10px;
+        width: ${width || '100%' };
       }
     `}</style>
   </div>
@@ -85,32 +90,57 @@ const Torrent = ({
   torrent,
   selected,
   onClick,
-}) => (
-  <TRow key={torrent.id} selected={selected} onClick={onClick}>
-    <TCell flex={5}>
-      <Link href={`/torrents/${torrent.id}`}>
-        <a>
-          {torrent.name}
-        </a>
-      </Link>
-    </TCell>
-    <TCell flex={2}>
-      <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)" />
-    </TCell>
-    <TCell flex={1}>
-      {prettyBytes(torrent.downloadSpeed)}/s
-    </TCell>
-    <TCell flex={1}>
-      {prettyBytes(torrent.uploadSpeed)}/s
-    </TCell>
-    <TCell flex={1}>
-      {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
-    </TCell>
-    <TCell flex={1}>
-      {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
-    </TCell>
-  </TRow>
-);
+}) => {
+  return (
+    <TRow key={torrent.id} selected={selected} onClick={onClick}>
+      <div className="container" onClick={onClick}>
+        <input type="checkbox" value={torrent.id}/>
+        {!selected && <Square size={20} />}
+        {selected && <CheckSquare size={20} />}
+      </div>
+      <TCell flex={5}>
+        <Link href={`/torrents/${torrent.id}`}>
+          <a>
+            {torrent.name}
+          </a>
+        </Link>
+      </TCell>
+      <TCell flex={2}>
+        <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)"/>
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.downloadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.uploadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
+      </TCell>
+      <style jsx>{`
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        padding: 10px;
+      }
+      a {
+        margin-left: 5px;
+        text-decoration: underline;
+      }
+      input {
+        width: 0;
+        height: 0;
+        visibility: hidden;
+      }
+    `}</style>
+    </TRow>
+  );
+};
 
 const ProgressBar = ({
   color,
