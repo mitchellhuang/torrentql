@@ -81,7 +81,7 @@ const Torrent = ({
   onClick,
 }) => (
   <TRow key={torrent.id} selected={selected} onClick={onClick}>
-    <div className="container" onClick={onClick}>
+    <div className="checkbox" onClick={onClick}>
       <input type="checkbox" value={torrent.id}/>
       {!selected && <Square size={20} />}
       {selected && <CheckSquare size={20} />}
@@ -109,7 +109,7 @@ const Torrent = ({
       {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
     </TCell>
     <style jsx>{`
-    .container {
+    .checkbox {
       display: flex;
       align-items: center;
       justify-content: center;
