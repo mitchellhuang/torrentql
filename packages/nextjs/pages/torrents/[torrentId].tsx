@@ -5,7 +5,8 @@ import { useQuery } from 'react-apollo-hooks';
 import { GET_TORRENT_QUERY } from '../../apollo/queries';
 import { Unstyled } from '../torrents';
 import Main from '../../layouts/Main';
-import Link from 'next/link';
+import Button from '../../components/Button';
+import FileExplorer from '../../components/FileExplorer';
 
 const Torrent = () => {
   const router = useRouter();
@@ -26,19 +27,20 @@ const Torrent = () => {
   return (
     <Main title={torrent.name}>
       <div className="wrapper">
-        <Link href="../torrents">
-          <a>Back to torrents</a>
-        </Link>
+        <Button href="/torrents" white className="back-button" animate>Back to torrents</Button>
         <h2 className="name">{torrent.name}</h2>
-        {Object.keys(torrent).map(key => (
-          <div key={key}>
-            <span className="title">{key}: </span>
-            <span>{JSON.stringify(torrent[key])}</span>
-          </div>
-        ))}
+        <h3 className="mb-2">Files</h3>
+        <div className="card">
+          <FileExplorer torrent={torrent} />
+        </div>
+        <br/>
         <style jsx>{`
         .name {
           margin-bottom: 15px;
+        }
+        .wrapper :global(.back-button) {
+          width: 200px;
+          margin-bottom: 10px;
         }
         .title {
           font-weight: bold;

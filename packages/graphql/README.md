@@ -20,7 +20,7 @@ DB_PASSWORD=password
 DB_DATABASE=torrentql
 DB_SSL=false
 JWT_SECRET=torrentql
-FILES_PATH=/User/mitchell/Downloads
+FILES_PATH=/Users/mitchell/Downloads
 ```
 
 ## Installation
