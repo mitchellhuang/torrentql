@@ -13,9 +13,12 @@
     name: deluge
     state: started
     restart_policy: always
+    env:
+      PUID: "0"
+      PGID: "0"
     ports:
-     - "8112:8112"
-     - "58846:58846"
-     - "58946:58946"
+      - "8112:8112"
+      - "58846:58846"
+      - "58946:58946"
     volumes:
       - /data:/root/Downloads
