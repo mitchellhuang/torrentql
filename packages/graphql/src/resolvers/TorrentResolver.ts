@@ -45,10 +45,11 @@ class DeleteTorrentInput {
 
 @Resolver(of => Torrent)
 export class TorrentResolver {
-  constructor(
-    @InjectRepository(Torrent) private readonly torrentRepository: Repository<Torrent>,
-    @InjectRepository(Server) private readonly serverRepository: Repository<Server>,
-  ) {}
+  @InjectRepository(Torrent)
+  private torrentRepository: Repository<Torrent>;
+
+  @InjectRepository(Server)
+  private serverRepository: Repository<Server>;
 
   @Authorized()
   @Query(returns => Torrent)
