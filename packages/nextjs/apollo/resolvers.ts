@@ -14,23 +14,26 @@ export const resolvers = {
   Torrent: {
     selectedFile: (torrent, _, { cache }) => {
       try {
-        const data = cache.readQuery({ query: GET_TORRENT_QUERY, variables: { id: torrent.id } });
-        return data.getTorrent.selectedFile;
-      } catch(error) {
+        const { getTorrent: { selectedFile } } = cache.readQuery({
+          query: GET_TORRENT_QUERY,
+          variables: { id: torrent.id },
+        });
+        return selectedFile;
+      } catch (error) {
         return null;
       }
     },
   },
   Mutation: {
     updateSelectedFile: (_, { id, filePath }, { cache }) => {
-      const data = cache.readQuery({ query: GET_TORRENT_QUERY, variables: { id } });
-      data.getTorrent.selectedFile = filePath;
+      const { getTorrent } = cache.readQuery({ query: GET_TORRENT_QUERY, variables: { id } });
+      getTorrent.selectedFile = filePath;
       cache.writeQuery({
         query: GET_TORRENT_QUERY,
-        data,
+        data : { getTorrent },
         variables: { id },
       });
-      return data.getTorrent;
+      return getTorrent;
     },
   },
 };

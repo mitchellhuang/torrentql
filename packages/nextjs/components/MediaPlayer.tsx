@@ -1,14 +1,21 @@
 import React from 'react';
 
 const audioExtensions = ['mp3'];
+const imageExtensions = ['png', 'jpg', 'gif'];
+const textExtensions = ['txt', 'csv', 'pdf'];
 const videoExtensions = {
   mp4: 'mp4',
   ogv: 'ogg',
   ogg: 'ogg',
   webm: 'webm',
 };
-const imageExtensions = ['png', 'jpg', 'gif'];
-const textExtensions = ['txt', 'csv', 'pdf'];
+
+const BrowserUnsupported = ({ mediaType, selectedFile }) => (
+  <p>
+    Your browser doesn't support HTML5 {mediaType}. Here is a <a href={selectedFile}>link to the {mediaType}</a>
+    instead.
+  </p>
+);
 
 const MediaPlayer = ({ selectedFile }) => {
   const ext = selectedFile.substring(selectedFile.lastIndexOf('.') + 1);
@@ -16,10 +23,7 @@ const MediaPlayer = ({ selectedFile }) => {
     return (
       <audio controls>
         <source src={selectedFile} type="audio/mpeg"/>
-        <p>
-          Your browser doesn't support HTML5 audio. Here is a <a href={selectedFile}>link to the audio</a>
-          instead.
-        </p>
+        <BrowserUnsupported mediaType="audio" selectedFile={selectedFile}/>
       </audio>
     );
   }
@@ -27,10 +31,7 @@ const MediaPlayer = ({ selectedFile }) => {
     return (
       <video controls>
         <source src={selectedFile} type={`video/${videoExtensions[ext]}`}/>
-        <p>
-          Your browser doesn't support HTML5 video. Here is a <a href={selectedFile}>link to the video</a>
-          instead.
-        </p>
+        <BrowserUnsupported mediaType="video" selectedFile={selectedFile}/>
         <style jsx>{`
           video {
             width: 100%;
@@ -41,32 +42,17 @@ const MediaPlayer = ({ selectedFile }) => {
   }
   if (imageExtensions.includes(ext)) {
     return (
-      <>
-        <img src={selectedFile} alt={selectedFile}/>
-        <style jsx>{`
-          img {
-            width: 100%;
-          }
-        `}</style>
-      </>
+      <img src={selectedFile} alt={selectedFile} width="100%"/>
     );
   }
   if (textExtensions.includes(ext)) {
     return (
-      <div id="list">
-        <p>
-          <iframe src={selectedFile} frameBorder="0" />
-        </p>
-        <style jsx>{`
-          iframe {
-            height: 350px;
-            width: 100%;
-          }
-        `}</style>
-      </div>
-    )
+      <iframe src={selectedFile} frameBorder="0" height="350px" width="100%" />
+    );
   }
-  return (<span>File can't be played in browser :(. Try download instead.</span>);
+  return (
+    <span>File type can't be played in browser :(. Try download instead.</span>
+  );
 };
 
 export default MediaPlayer;

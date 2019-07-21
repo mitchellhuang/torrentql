@@ -25,7 +25,7 @@ const Torrent = () => {
   }
   const torrent = data.getTorrent;
   return (
-    <Dashboard title={`torrent-${torrent.name}`} noFooter>
+    <Dashboard title={torrent.name} noFooter>
       <div className="wrapper">
         <h2 className="name">{torrent.name}</h2>
         <h3 className="mb-2">Files</h3>

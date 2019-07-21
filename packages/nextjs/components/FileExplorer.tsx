@@ -63,13 +63,9 @@ const File = ({ name, depth, path, id }) => {
   const filePath = `/files/${encodeURIComponent(path)}`;
   const updateSelectedFile = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   return (
-    <div className="file" onClick={() => updateSelectedFile({
-        variables: { id, filePath },
-        update: (x) => {
-          console.log(x);
-        },
-      },
-    )}>
+    <div
+      className="file"
+      onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
       <FileIcon color={fileColor}/>
       <span className="name">{name}</span>
       <a href={filePath}>Download <Download size={12}/></a>
