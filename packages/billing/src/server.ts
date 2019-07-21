@@ -6,6 +6,7 @@ import { BillingHistory } from '@torrentql/common/dist/entities/BillingHistory';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
 const DISK_USAGE_GB_MONTH_COST = 0.01;
+const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
 const DATA_TRANSFER_OUT_GB_COST = 0.01;
 
 const createServer = async () => {
@@ -53,20 +54,24 @@ const createServer = async () => {
   const writeBillingHistory = async () => {
     const endAt = new Date();
     const beginAt = new Date();
-    beginAt.setHours(endAt.getHours() - 1);
-
-    console.log(beginAt);
-    console.log(endAt);
+    beginAt.setHours(endAt.getHours() - 2);
 
     const billingActivities = await connection
       .getRepository(BillingActivity)
       .createQueryBuilder('billing_activity')
-      .select('SUM(disk_usage_bytes)')
+      .select(`
+        user_id,
+        SUM (
+          (disk_usage_bytes * disk_usage_seconds * disk_usage_cost / 30 / 86400) +
+          (data_transfer_out * data_transfer_cost)
+        )
+      `)
       .where('created_at >= :beginAt', { beginAt })
       .andWhere('created_at < :endAt', { endAt })
       .groupBy('user_id')
       .getRawMany();
 
+    console.log(DISK_USAGE_GB_SECOND_COST);
     console.log(billingActivities);
 
     // await connection.transaction<void>((transaction) => {
