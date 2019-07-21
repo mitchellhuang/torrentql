@@ -8,6 +8,14 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
+export const UPDATE_SELECTED_FILE_MUTATION = gql`
+  mutation updateSelectedFile($id: String!, $filePath: String!) {
+    updateSelectedFile(id: $id, filePath: $filePath) @client {
+      selectedFile
+    }
+  }
+`;
+
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($email: String!, $password: String!) {
     createUser(email: $email, password: $password) {

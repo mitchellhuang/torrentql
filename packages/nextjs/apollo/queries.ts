@@ -42,6 +42,7 @@ export const ME_QUERY = gql`
 export const GET_TORRENT_QUERY = gql`
   query GetTorrent($id: String!) {
     getTorrent(id: $id) {
+      selectedFile @client
       id
       hash
       name
