@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
 
 const UpdatePasswordForm = () => {
-  const updateUser = useMutation(UPDATE_USER_PASSWORD_MUTATION);
+  const [updateUser] = useMutation(UPDATE_USER_PASSWORD_MUTATION);
   return (
     <Formik
       initialValues={{ oldPassword: '', password: '' }}

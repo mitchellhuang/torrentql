@@ -43,7 +43,7 @@ const ToolBarButton: React.StatelessComponent<IToolBarButton> = ({
 
 const ToolBar = ({ selected }) => {
   const { active, toggle } = useModal();
-  const deleteTorrent = useMutation(DELETE_TORRENT_MUTATION);
+  const [deleteTorrent] = useMutation(DELETE_TORRENT_MUTATION);
   const handleDeleteTorrent = id => deleteTorrent({
     variables: {
       id,

@@ -10,7 +10,7 @@ import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
 
 const SignupForm = () => {
-  const createUser = useMutation(CREATE_USER_MUTATION);
+  const [createUser] = useMutation(CREATE_USER_MUTATION);
   const client = useApolloClient();
   return (
     <Formik
