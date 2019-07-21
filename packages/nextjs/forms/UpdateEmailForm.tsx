@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
 
 const UpdateEmailForm = () => {
-  const updateUserEmail = useMutation(UPDATE_USER_EMAIL_MUTATION);
+  const [updateUserEmail] = useMutation(UPDATE_USER_EMAIL_MUTATION);
   return (
     <Formik
       initialValues={{ email: '' }}

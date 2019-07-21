@@ -14,9 +14,9 @@ import { createContext, authChecker } from './lib/context';
 const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
-useContainer(Container);
-
 const createServer = async () => {
+  useContainer(Container);
+
   const connection = await createConnectionFromEnv();
 
   const schema = await buildSchema({
