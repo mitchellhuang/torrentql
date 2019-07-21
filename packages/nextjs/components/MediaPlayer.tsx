@@ -41,18 +41,12 @@ const MediaPlayer = ({ selectedFile }) => {
     );
   }
   if (imageExtensions.includes(ext)) {
-    return (
-      <img src={selectedFile} alt={selectedFile} width="100%"/>
-    );
+    return <img src={selectedFile} alt={selectedFile} width="100%"/>;
   }
   if (textExtensions.includes(ext)) {
-    return (
-      <iframe src={selectedFile} frameBorder="0" height="350px" width="100%" />
-    );
+    return <iframe src={selectedFile} frameBorder="0" height="350px" width="100%" />;
   }
-  return (
-    <span>File type can't be played in browser :(. Try download instead.</span>
-  );
+  return <span>File type can't be played in browser :(. Try download instead.</span>;
 };
 
 export default MediaPlayer;

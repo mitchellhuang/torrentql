@@ -8,14 +8,11 @@ import FileExplorer from '../../components/FileExplorer';
 import Dashboard from '../../layouts/Dashboard';
 import MediaPlayer from '../../components/MediaPlayer';
 
-const Torrent = () => {
-  const router = useRouter();
+const Torrent = ({ id }) => {
   const { loading, data, error } = useQuery(GET_TORRENT_QUERY, {
     ssr: false,
     pollInterval: 2000,
-    variables: {
-      id: router.query.torrentId,
-    },
+    variables: { id },
   });
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
@@ -25,26 +22,31 @@ const Torrent = () => {
   }
   const torrent = data.getTorrent;
   return (
-    <Dashboard title={torrent.name} noFooter>
-      <div className="wrapper">
-        <h2 className="name">{torrent.name}</h2>
-        <h3 className="mb-2">Files</h3>
-        <div className="card">
-          <FileExplorer torrent={torrent}/>
-        </div>
-        <br/>
-        {torrent.selectedFile && <MediaPlayer selectedFile={torrent.selectedFile}/>}
+    <div className="wrapper">
+      <h2 className="name">{torrent.name}</h2>
+      <h3 className="mb-2">Files</h3>
+      <div className="card">
+        <FileExplorer torrent={torrent}/>
       </div>
+      <br/>
+      {torrent.selectedFile && <MediaPlayer selectedFile={torrent.selectedFile}/>}
       <style jsx>{`
         .name {
           margin-bottom: 15px;
         }
-        .title {
-          font-weight: bold;
-        }
       `}</style>
+    </div>
+  );
+};
+
+const TorrentDashboard = () => {
+  const router = useRouter();
+  const id = router.query.torrentId;
+  return (
+    <Dashboard title={id} noFooter>
+      <Torrent id={id}/>
     </Dashboard>
   );
 };
 
-export default withAuth(Torrent);
+export default withAuth(TorrentDashboard);
