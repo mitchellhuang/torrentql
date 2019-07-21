@@ -61,7 +61,7 @@ const Directory = ({ name, depth, children }) => {
 
 const File = ({ name, depth, path, id }) => {
   const filePath = `/files/${encodeURIComponent(path)}`;
-  const updateSelectedFile = useMutation(UPDATE_SELECTED_FILE_MUTATION);
+  const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   return (
     <div
       className="file"
