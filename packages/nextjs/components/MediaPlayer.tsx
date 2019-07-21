@@ -12,7 +12,7 @@ const videoExtensions = {
 
 const BrowserUnsupported = ({ mediaType, selectedFile }) => (
   <p>
-    Your browser doesn't support HTML5 {mediaType}. Here is a <a href={selectedFile}>link to the {mediaType}</a>
+    Your browser doesn't support HTML5 {mediaType} 😢. Here is a <a href={selectedFile}>link to the {mediaType}</a>
     instead.
   </p>
 );
