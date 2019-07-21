@@ -22,7 +22,7 @@ const AddTorrentModal = ({
   active,
   toggle,
 }) => {
-  const addTorrent = useMutation(ADD_TORRENT_MUTATION);
+  const [addTorrent] = useMutation(ADD_TORRENT_MUTATION);
   return (
     <Modal
       title="Add torrent"

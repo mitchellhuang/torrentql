@@ -12,7 +12,7 @@
     "lint": "tslint --project tsconfig.json"
   },
   "dependencies": {
-    "@ctrl/deluge": "^2.0.1",
+    "@ctrl/deluge": "^2.0.2",
     "bcryptjs": "^2.4.3",
     "graphql": "^14.4.2",
     "graphql-bigint": "^1.0.0",

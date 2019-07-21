@@ -60,10 +60,11 @@ class UpdateUserPasswordInput {
 
 @Resolver(of => User)
 export class UserResolver {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Torrent) private readonly torrentRepository: Repository<Torrent>,
-  ) {}
+  @InjectRepository(User)
+  private userRepository: Repository<User>;
+
+  @InjectRepository(Torrent)
+  private torrentRepository: Repository<Torrent>;
 
   @Authorized()
   @Query(returns => User)

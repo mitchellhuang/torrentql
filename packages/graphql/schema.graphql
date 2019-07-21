@@ -41,6 +41,7 @@ type Torrent {
   state: String!
   progress: Float!
   ratio: Float!
+  totalSize: BigInt!
   uploadSpeed: Int!
   downloadSpeed: Int!
   eta: Int!
