@@ -58,13 +58,19 @@ const Tabs = ({ router }) => (
         color: var(--primary);
         font-size: 16px;
         font-weight: 600;
-        padding: 10px 15px;
+        padding: 12px 15px;
         border-top: 2px solid transparent;
         border-bottom: 2px solid transparent;
       }
       li > .active {
         color: var(--black);
         border-bottom-color: var(--gray);
+      }
+      @media(min-width: 768px) {
+        .wrapper {
+          padding-left: 25px;
+          padding-right: 25px;
+        }
       }
     `}</style>
   </div>
