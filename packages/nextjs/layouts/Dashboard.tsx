@@ -20,25 +20,27 @@ const tabs = [{
 }];
 
 const Tabs = ({ router }) => (
-  <div className="wrapper">
+  <div className="tabs">
+    <div className="wrapper">
     <ul>
       {tabs.map(item => (
         <li key={item.url}>
           <Link href={item.url}>
-            <a className={router.pathname === item.url ? 'active' : undefined}>
+            <a className={router.pathname.includes(item.url) ? 'active' : undefined}>
               {item.name}
             </a>
           </Link>
         </li>
       ))}
     </ul>
+    </div>
     <style jsx>{`
-      .wrapper {
-        padding-top: 0;
-        padding-bottom: 0;
-        border-top: 1px solid var(--gray);
+      .tabs {
         background-color: white;
         box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
+      }
+      .wrapper {
+        padding: 0;
       }
       ul {
         display: block;
@@ -76,7 +78,7 @@ const Dashboard = ({
 }) => (
   <Global backgroundColor="var(--dashboardBg)" {...props}>
     <Head title={title} />
-    <NavBar noBoxShadow />
+    <NavBar />
     <div className="tabs">
       <Tabs router={router} />
     </div>
