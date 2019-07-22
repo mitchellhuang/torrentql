@@ -15,7 +15,7 @@ const Hero = () => (
   <div className="hero">
     <div className="feature">
       <div className="text">
-        <p className="tagline">Download and seed torrents on a 1 Gbit/s network.</p>
+        <p className="tagline">Download and seed torrents on a 1 Gb/s network.</p>
         <div className="actions">
           <Button href="/signup" animate>Sign up</Button>
           <Button href="/pricing" className="ml-2" white animate>View pricing →</Button>
@@ -34,7 +34,7 @@ const Hero = () => (
         flex-direction: column-reverse;
       }
       .tagline {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 600;
         line-height: 1.2;
         margin-bottom: 15px;
@@ -86,8 +86,8 @@ const features = [{
     a fixed cost per month. No need to pay for resources that you don't use.`,
 }, {
   title: 'Lightning fast network',
-  description: `Our cluster of 1 Gbit/s dedicated servers in Gravelines,
-  France is connected to the OVH network.`,
+  description: `We run clusters of 1 Gb/s dedicated servers in France and
+  Germany.`,
 }];
 
 const Features = (

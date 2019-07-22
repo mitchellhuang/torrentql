@@ -7,23 +7,22 @@ const Pricing: React.FunctionComponent<{}> = () => (
       <h1 className="mb-3">Pricing</h1>
       <p className="mb-3">
         Pay only for what you use. There is no minimum fee. Estimate your monthly bill using our
-        <a href="/calculator"> billing calculator »</a>
+        billing calculator.
       </p>
       <h3 className="mb-3">Free Usage Tier</h3>
       <p className="mb-3">
-        As part of the Free Usage Tier, you can retrieve up to 10 GB of data uploaded per month free. Restrictions
-        apply; see offer terms for more details.
+        As part of our Always Free Usage Tier, your first 5 GB of storage per month is always free.
       </p>
-      <h3 className="mb-3">Standard Pricing</h3>
+      <h3 className="mb-3">Table</h3>
       <div className="pricing">
         <div className="column">
-          <h5 className="info">Tier</h5>
+          <h5 className="info">Region</h5>
         </div>
         <div className="column">
-          <h5 className="info">Standard (Hetzner)</h5>
+          <h5 className="info">eu-west-1</h5>
         </div>
         <div className="column">
-          <h5 className="info">Premium (OVH)</h5>
+          <h5 className="info">eu-west-2</h5>
         </div>
       </div>
       <div className="pricing">
@@ -42,10 +41,10 @@ const Pricing: React.FunctionComponent<{}> = () => (
           <h5 className="info">data transfer out</h5>
         </div>
         <div className="column">
-          <h5>$0.005 / GB</h5>
+          <h5>$0.01 / GB</h5>
         </div>
         <div className="column">
-          <h5>$0.01 / GB</h5>
+          <h5>$0.005 / GB</h5>
         </div>
       </div>
       <div className="pricing">
@@ -53,29 +52,45 @@ const Pricing: React.FunctionComponent<{}> = () => (
           <h5 className="info">storage</h5>
         </div>
         <div className="column">
-          <h5>$0.005 / GB / Month</h5>
+          <h5>$0.01 / GB / Month</h5>
         </div>
         <div className="column">
-          <h5>$0.01 / GB / Month</h5>
+          <h5>$0.005 / GB / Month</h5>
         </div>
       </div>
       <h3 className="mb-3 mt-3">FAQ</h3>
-      <h4 className="mb-3">What is the difference between standard and premium?</h4>
+      <h4 className="mb-3">What is the difference between eu-west-1 and eu-west-2?</h4>
       <p className="mb-3">
-        Our standard network uses a cluster of 1Gb/s Hetzner servers in Germany. Our premium network uses a cluster of
-        1Gb/s OVH servers in France. We do not allow public torrent seeding for the standard network.
+        eu-west-1 is our premium network located in France (OVH GRA1).<br />
+        eu-west-2 is our standard network located in Germany (Hetzner FN1).
       </p>
       <h4 className="mb-3">What is data transfer in?</h4>
       <p className="mb-3">
-        Data transfer in is the amount of bandwidth used when leeching torrents.
+        Data transfering in to our servers. Includes torrent download traffic.
       </p>
       <h4 className="mb-3">What is data transfer out?</h4>
       <p className="mb-3">
-        Data transfer out is the amount of bandwidth used when seeding torrents and downloading files over HTTP.
+        Data transfering out from our servers. Includes torrent seeding traffic and HTTPS download traffic.
       </p>
-      <h4 className="mb-3">What is storage pricing?</h4>
+      <h4 className="mb-3">What is storage?</h4>
       <p className="mb-3">
-        Storage pricing is how much disk space you are using.
+        Storage is how much disk space you are using per month.
+      </p>
+      <h4 className="mb-3">How often is billing calculated?</h4>
+      <p className="mb-3">
+        Billing for all services is calculated in one-second increments.
+      </p>
+      <h4 className="mb-3">How often is my account balance charged?</h4>
+      <p className="mb-3">
+        Your account balance is charged every day at 12:00AM UTC.
+      </p>
+      <h4 className="mb-3">What happens if my account balance is too low?</h4>
+      <p className="mb-3">
+        Your torrents will be forced into a paused state.
+      </p>
+      <h4 className="mb-3">Do you allow public trackers?</h4>
+      <p>
+        Public trackers are only allowed in region eu-west-1.
       </p>
     </div>
     <style jsx>{`
