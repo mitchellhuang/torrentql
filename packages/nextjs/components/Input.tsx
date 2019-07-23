@@ -6,7 +6,7 @@ interface IInput extends React.HTMLProps<HTMLInputElement>  {
   errors?: string[];
 }
 
-const Input: React.StatelessComponent<IInput> = ({
+const Input: React.FunctionComponent<IInput> = ({
   id,
   label,
   type,

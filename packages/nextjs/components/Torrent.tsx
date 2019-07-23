@@ -9,7 +9,7 @@ interface ITRow extends React.HTMLProps<HTMLDivElement> {
   selected?: boolean;
 }
 
-const TRow: React.StatelessComponent<ITRow> = ({
+const TRow: React.FunctionComponent<ITRow> = ({
   children,
   className,
   header,
