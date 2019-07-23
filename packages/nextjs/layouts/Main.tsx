@@ -10,7 +10,7 @@ interface IMain {
   noFooter?: boolean;
 }
 
-const Main: React.StatelessComponent<IMain> = ({
+const Main: React.FunctionComponent<IMain> = ({
   children,
   title,
   noFooter,

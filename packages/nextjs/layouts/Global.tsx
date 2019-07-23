@@ -21,7 +21,7 @@ const Global: React.FunctionComponent<{
         --black: #111;
         --white: #FFF;
         --gray: #999;
-        --green: #8CD087;
+        --green: #A3C9A8;
         --lightGray: #F5F5F5;
         --darkGray: #696969;
         --dashboardBg: #F5F5F5;
