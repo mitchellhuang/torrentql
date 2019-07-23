@@ -36,7 +36,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
         width: 100%;
         cursor: pointer;
         outline: none;
-        font-weight: ${header ? 'bold' : 'normal'};
+        font-weight: ${header ? '600' : '400'}
       }
       .row:not(:last-child) {
         margin-bottom: 10px;
@@ -95,7 +95,7 @@ const Torrent = ({
       </Link>
     </TCell>
     <TCell flex={2}>
-      <ProgressBar state={torrent.state} progress={torrent.progress}/>
+      <ProgressBar state={torrent.state} progress={torrent.progress} />
     </TCell>
     <TCell flex={1}>
       {prettyBytes(torrent.downloadSpeed)}/s
@@ -117,10 +117,7 @@ const Torrent = ({
       width: 30px;
       padding: 10px;
     }
-    a {
-      text-decoration: underline;
-    }
-    input {
+    .checkbox input {
       width: 0;
       height: 0;
       visibility: hidden;
@@ -133,7 +130,7 @@ const ProgressBar = ({
   state,
   progress,
 }) => {
-  const height = 27.5;
+  const height = 25;
   return (
     <div className="progress-bar">
       <div className="progress-bar-inner">
@@ -149,16 +146,16 @@ const ProgressBar = ({
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          border: 1px solid var(--black);
-          border-radius: 6px;
+          border: 1px solid var(--gray);
+          border-radius: 5px;
           margin-right: 10px;
+          overflow: hidden;
         }
         .progress-bar-inner {
           width: 100%;
           height: ${height}px;
           position: absolute;
-          background: linear-gradient(to right, darkGray ${progress}%, var(--white) 0);
-          border-radius: 5px;
+          background: linear-gradient(to right, var(--gray) ${progress}%, var(--white) 0);
         }
         .progress-bar-status {
           width: 100%;
@@ -167,9 +164,8 @@ const ProgressBar = ({
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          font-weight: bold;
           text-transform: capitalize;
-          background: linear-gradient(to right, white calc(${progress}% - 10px), var(--darkGray) 0);
+          background: linear-gradient(to right, var(--white) calc(${progress}% - 10px), var(--gray) 0);
           background-clip: text;
           color: transparent;
           margin-left: 10px;

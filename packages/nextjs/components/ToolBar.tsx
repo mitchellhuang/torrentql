@@ -66,7 +66,7 @@ const ToolBar = ({ selected }) => {
   const iconSize = 18;
   return (
     <div className="toolbar">
-      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} primary={true}>
+      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} primary>
         Add
       </ToolBarButton>
       <ToolBarButton
