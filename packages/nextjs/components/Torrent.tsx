@@ -36,6 +36,7 @@ const TRow: React.StatelessComponent<ITRow> = ({
         width: 100%;
         cursor: pointer;
         outline: none;
+        font-weight: ${header ? 'bold' : 'normal'};
       }
       .row:not(:last-child) {
         margin-bottom: 10px;
@@ -88,13 +89,13 @@ const Torrent = ({
     </div>
     <TCell flex={5}>
       <Link href={`/torrents/${torrent.id}`}>
-        <a>
+        <a onClick={e => e.stopPropagation()}>
           {torrent.name}
         </a>
       </Link>
     </TCell>
     <TCell flex={2}>
-      <ProgressBar state={torrent.state} progress={torrent.progress} color="var(--green)"/>
+      <ProgressBar state={torrent.state} progress={torrent.progress}/>
     </TCell>
     <TCell flex={1}>
       {prettyBytes(torrent.downloadSpeed)}/s
@@ -129,39 +130,53 @@ const Torrent = ({
 );
 
 const ProgressBar = ({
-  color,
   state,
   progress,
-}) => (
-  <div className="progress-bar">
-    <div className="progress-bar-status">
-      {state} {progress.toFixed(2)}%
+}) => {
+  const height = 27.5;
+  return (
+    <div className="progress-bar">
+      <div className="progress-bar-inner">
+        <div className="progress-bar-status">
+          {state} {progress.toFixed(2)}%
+        </div>
+      </div>
+      <style jsx>{`
+        .progress-bar {
+          width: 100%;
+          height: ${height}px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          border: 1px solid var(--black);
+          border-radius: 6px;
+          margin-right: 10px;
+        }
+        .progress-bar-inner {
+          width: 100%;
+          height: ${height}px;
+          position: absolute;
+          background: linear-gradient(to right, darkGray ${progress}%, var(--white) 0);
+          border-radius: 5px;
+        }
+        .progress-bar-status {
+          width: 100%;
+          height: ${height}px;
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-weight: bold;
+          text-transform: capitalize;
+          background: linear-gradient(to right, white calc(${progress}% - 10px), var(--darkGray) 0);
+          background-clip: text;
+          color: transparent;
+          margin-left: 10px;
+        }
+     `}</style>
     </div>
-    <div className="progress-bar-inner" />
-    <style jsx>{`
-      .progress-bar {
-        display: inline-block;
-        position: relative;
-        padding-right: 15px;
-        width: 100%;
-      }
-      .progress-bar-status {
-        display: flex;
-        align-items: center;
-        height: 22px;
-        margin-left: 5px;
-        position: absolute;
-        padding: 0 5px;
-        text-transform: capitalize;
-      }
-      .progress-bar-inner {
-        width: ${progress}%;
-        background-color: ${color || 'var(--gray)'};
-        border-radius: 5px;
-        height: 22px;
-      }
-   `}</style>
-  </div>
-);
+  );
+};
 
 export { Torrent as default, TRow, TCell };
