@@ -40,7 +40,8 @@ const Tabs = ({ router }) => (
         box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
       }
       .wrapper {
-        padding: 0;
+        padding-top: 0;
+        padding-bottom: 0;
       }
       ul {
         display: block;
@@ -58,19 +59,16 @@ const Tabs = ({ router }) => (
         color: var(--primary);
         font-size: 16px;
         font-weight: 600;
-        padding: 12px 15px;
+        padding: 12px 0;
         border-top: 2px solid transparent;
         border-bottom: 2px solid transparent;
+      }
+      li:not(:last-child) {
+        margin-right: 15px;
       }
       li > .active {
         color: var(--black);
         border-bottom-color: var(--gray);
-      }
-      @media(min-width: 768px) {
-        .wrapper {
-          padding-left: 25px;
-          padding-right: 25px;
-        }
       }
     `}</style>
   </div>
