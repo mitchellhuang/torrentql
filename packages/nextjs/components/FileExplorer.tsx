@@ -2,9 +2,9 @@ import React, { useState, Fragment } from 'react';
 import { File as FileIcon, Folder, Download } from 'react-feather';
 import { useMutation } from 'react-apollo-hooks';
 import { UPDATE_SELECTED_FILE_MUTATION } from '../apollo/mutations';
+import { primary } from '../layouts/Global';
 
 const directoryColor = '#A7B0BD';
-const fileColor = '#51A4FB';
 
 function directoryDive(dictionary, key, depth, id) {
   if (dictionary.type === 'file') {
@@ -66,7 +66,7 @@ const File = ({ name, depth, path, id }) => {
     <div
       className="file"
       onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
-      <FileIcon color={fileColor}/>
+      <FileIcon color={primary}/>
       <span className="name">{name}</span>
       <a href={filePath}>Download <Download size={12}/></a>
       <style jsx>{`

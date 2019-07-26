@@ -5,7 +5,13 @@ import { useQuery } from 'react-apollo-hooks';
 import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
 import { Logo } from './Logo';
 
-const NavBar = ({ router }) => {
+const NavBar: React.FunctionComponent<{
+  router: any,
+  noBoxShadow?: boolean,
+}> = ({
+  router,
+  noBoxShadow,
+}) => {
   const { data } = useQuery(IS_LOGGED_IN_QUERY);
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -48,7 +54,7 @@ const NavBar = ({ router }) => {
           position: sticky;
           top: 0;
           margin: 0;
-          box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
+          box-shadow: ${!noBoxShadow && '#fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px'};
         }
         .wrapper {
           display: flex;

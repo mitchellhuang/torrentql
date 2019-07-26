@@ -8,37 +8,43 @@ import { Trash2, Plus } from 'react-feather';
 
 interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
   icon: React.ReactElement;
+  primary?: Boolean;
 }
 
-const ToolBarButton: React.StatelessComponent<IToolBarButton> = ({
+const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
   children,
   onClick,
   icon,
   className,
+  primary,
 }) => (
-  <button onClick={onClick} className={className}>
-    {icon}
-    <div className="children">
-      {children}
-    </div>
+  <div className="tool-bar-button">
+    <button onClick={onClick} className={className}>
+      {icon}
+      <div className="children">
+        {children}
+      </div>
+    </button>
     <style jsx>{`
-      button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 5px 10px;
-        background-color: whiteSmoke;
-        border-radius: 5px;
-        outline: none;
-      }
-      button:hover {
-        background-color: var(--buttonHover);
-      }
-      .children {
-        margin-left: 5px;
-      }
-    `}</style>
-  </button>
+        button {
+          display: flex;
+          padding: 7.5px 10px;
+          color: ${primary ? 'var(--white)' : 'var(--primary)'};
+          background-color: ${primary ? 'var(--primary)' : 'var(--white)'};
+          border: 1px solid var(--primary);
+          border-radius: 5px;
+          outline: none;
+          cursor: pointer;
+          text-decoration: none;
+          text-align: center;
+          font-weight: 600;
+          transition: all 0.15s ease;
+        }
+        .children {
+          margin-left: 5px;
+        }
+      `}</style>
+  </div>
 );
 
 const ToolBar = ({ selected }) => {
@@ -60,7 +66,7 @@ const ToolBar = ({ selected }) => {
   const iconSize = 18;
   return (
     <div className="toolbar">
-      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>}>
+      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} primary>
         Add
       </ToolBarButton>
       <ToolBarButton

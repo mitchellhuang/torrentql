@@ -1,6 +1,9 @@
 import React from 'react';
 
-const Global: React.StatelessComponent<{
+const primary = '#3572BD';
+const secondary = '#2752BE';
+
+const Global: React.FunctionComponent<{
   children: React.ReactNode
   backgroundColor?: string;
 }> = ({
@@ -12,12 +15,13 @@ const Global: React.StatelessComponent<{
     <div id="modal-root" />
     <style jsx global>{`
       :root {
-        --primary: #51A4FB;
+        --primary: ${primary};
+        --secondary: ${secondary};
         --buttonHover: #E8E8E8;
         --black: #111;
         --white: #FFF;
         --gray: #999;
-        --green: #8CD087;
+        --green: #A3C9A8;
         --lightGray: #F5F5F5;
         --darkGray: #696969;
         --dashboardBg: #F5F5F5;
@@ -78,4 +82,4 @@ const Global: React.StatelessComponent<{
   </>
 );
 
-export default Global;
+export { Global as default, primary, secondary };

@@ -20,21 +20,28 @@ const tabs = [{
 }];
 
 const Tabs = ({ router }) => (
-  <div className="tabs wrapper">
+  <div className="tabs">
+    <div className="wrapper">
     <ul>
       {tabs.map(item => (
         <li key={item.url}>
           <Link href={item.url}>
-            <a className={router.pathname === item.url ? 'active' : undefined}>
+            <a className={router.pathname.includes(item.url) ? 'active' : undefined}>
               {item.name}
             </a>
           </Link>
         </li>
       ))}
     </ul>
+    </div>
     <style jsx>{`
       .tabs {
-        padding: 5px 5px 0 5px;
+        background-color: white;
+        box-shadow: #fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px;
+      }
+      .wrapper {
+        padding-top: 0;
+        padding-bottom: 0;
       }
       ul {
         display: block;
@@ -52,18 +59,16 @@ const Tabs = ({ router }) => (
         color: var(--primary);
         font-size: 16px;
         font-weight: 600;
-        padding: 10px 15px;
-        border: 1px solid transparent;
-        margin-bottom: -1px;
+        padding: 12px 0;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+      }
+      li:not(:last-child) {
+        margin-right: 15px;
       }
       li > .active {
         color: var(--black);
-        border-bottom: 2px solid var(--gray);
-      }
-      @media(min-width: 768px) {
-        ul {
-          overflow: visible;
-        }
+        border-bottom-color: var(--gray);
       }
     `}</style>
   </div>
@@ -92,11 +97,6 @@ const Dashboard = ({
       .main {
         display: flex;
         flex-direction: column;
-      }
-      .tabs {
-        border-top: 1px solid var(--gray);
-        background-color: white;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.12);
       }
       .content {
         border-radius: 5px;

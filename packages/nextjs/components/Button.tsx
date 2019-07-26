@@ -10,7 +10,7 @@ interface IButton extends React.HTMLProps<HTMLButtonElement & HTMLAnchorElement>
   animate?: boolean;
 }
 
-const Button: React.StatelessComponent<IButton> = ({
+const Button: React.FunctionComponent<IButton> = ({
   children,
   href,
   block,
