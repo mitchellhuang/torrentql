@@ -1,7 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 import { withRouter } from 'next/router';
-import withAuth from '../../lib/withAuth';
+import { ArrowLeft } from 'react-feather';
 import { useQuery } from 'react-apollo-hooks';
+import withAuth from '../../lib/withAuth';
 import { GET_TORRENT_QUERY } from '../../apollo/queries';
 import { Unstyled } from '../torrents';
 import FileExplorer from '../../components/FileExplorer';
@@ -127,7 +129,16 @@ const TorrentWithData = ({ id }) => {
   const torrent = data.getTorrent;
   return (
     <>
-      <h2 className="mb-3">{torrent.name}</h2>
+    <div className="mb-2">
+      <Link href="/torrents">
+        <a>
+          <ArrowLeft/>
+        </a>
+      </Link>
+    </div>
+    <Card className="mb-3">
+      <h3>{torrent.name}</h3>
+    </Card>
       <Card title="Info" className="mb-3" >
         <div className="info">
           <TorrentInfo torrent={torrent}/>
@@ -141,7 +152,7 @@ const TorrentWithData = ({ id }) => {
         .name {
           margin-bottom: 15px;
         }
-        .info :global(pre) {
+        .info:global(pre) {
           font-size: 14px;
         }
       `}</style>
