@@ -7,89 +7,109 @@ import { Unstyled } from '../torrents';
 import FileExplorer from '../../components/FileExplorer';
 import Dashboard from '../../layouts/Dashboard';
 import MediaPlayer from '../../components/MediaPlayer';
-
-const PrettyPrintJson = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-
+import Card from '../../components/Card';
+// const PrettyPrintJson = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+// <PrettyPrintJson data={torrent} />
 const TorrentInfo = ({ torrent }) =>  (
   <div>
-    <div><span className="label">ID: </span>
-      {torrent.id}
+    <div className="content">
+      <div className="box">
+        <span className="label">ID: </span>
+        {torrent.id}
+      </div>
+      <div className="box">
+        <span className="label">Hash: </span>
+        {torrent.hash}
+      </div>
+      <div className="box">
+        <span className="label">State: </span>
+        {torrent.state}
+      </div>
     </div>
-    <div><span className="label">Hash: </span>
-      {torrent.hash}
+    <div className="content">
+      <div className="box">
+        <span className="label">Progress: </span>
+        {torrent.progress}
+      </div>
+      <div className="box">
+        <span className="label">Ratio: </span>
+        {torrent.ratio}
+      </div>
+      <div className="box">
+        <span className="label">Upload Speed: </span>
+        {torrent.uploadSpeed}
+      </div>
     </div>
-    <div><span className="label">Name: </span>
-      {torrent.name}
+    <div className="content">
+      <div className="box">
+        <span className="label">Download Speed: </span>
+        {torrent.downloadSpeed}
+      </div>
+      <div className="box">
+        <span className="label">Eta: </span>
+        {torrent.eta}
+      </div>
+      <div className="box">
+        <span className="label">Number of Peers: </span>
+        {torrent.numPeers}
+      </div>
     </div>
-    <div><span className="label">State: </span>
-      {torrent.state}
+    <div className="content">
+      <div className="box">
+        <span className="label">Number of Seeds: </span>
+        {torrent.numSeeds}
+      </div>
+      <div className="box">
+        <span className="label">Total Peers: </span>
+        {torrent.totalPeers}
+      </div>
+      <div className="box">
+        <span className="label">Total Seeds: </span>
+        {torrent.totalSeeds}
+      </div>
     </div>
-    <div><span className="label">Progress: </span>
-      {torrent.progress}
+    <div className="content">
+      <div className="box">
+        <span className="label">Total Wanted: </span>
+        {torrent.totalWanted}
+      </div>
+      <div className="box">
+        <span className="label">Total Downloaded: </span>
+        {torrent.totalDownloaded}
+      </div>
+      <div className="box">
+        <span className="label">Tracker: </span>
+        {torrent.tracker}
+      </div>
     </div>
-
-
-    <div><span className="label">Ratio: </span>
-      {torrent.ratio}
+    <div className="content">
+      <div className="box">
+        <span className="label">Tracker Host: </span>
+        {torrent.trackerHost}
+      </div>
+      <div className="box">
+        <span className="label">Tracker Status: </span>
+        {torrent.trackerStatus}
+      </div>
+      <div className="box">
+        <span className="label">Total Uploaded: </span>
+        {torrent.totalUploaded}
+      </div>
     </div>
-    <div><span className="label">Upload Speed: </span>
-      {torrent.uploadSpeed}
-    </div>
-    <div><span className="label">Download Speed: </span>
-      {torrent.downloadSpeed}
-    </div>
-    <div><span className="label">Eta: </span>
-      {torrent.eta}
-    </div>
-    <div><span className="label">Number of Peers: </span>
-      {torrent.numPeers}
-    </div>
-
-
-
-
-    <div><span className="label">Number of Seeds: </span>
-      {torrent.numSeeds}
-    </div>
-    <div><span className="label">Download Speed: </span>
-      {torrent.downloadSpeed}
-    </div>
-    <div><span className="label">Eta: </span>
-      {torrent.eta}
-    </div>
-    <div><span className="label">Number of Peers: </span>
-      {torrent.numPeers}
-    </div>
-    <div><span className="label">Number of Seeds: </span>
-      {torrent.numSeeds}
-    </div>
-
-
-    <div><span className="label">Total Peers: </span>
-      {torrent.numSeeds}
-    </div>
-    <div><span className="label">Download Speed: </span>
-      {torrent.downloadSpeed}
-    </div>
-    <div><span className="label">Eta: </span>
-      {torrent.eta}
-    </div>
-    <div><span className="label">Number of Peers: </span>
-      {torrent.numPeers}
-    </div>
-    <div><span className="label">Number of Seeds: </span>
-      {torrent.numSeeds}
-    </div>
-
-
     <style jsx>{`
        .label {
-         background-color: white;
          font-weight: bold;
        }
-      `}</style>
+       .box {
+         margin-bottom: 5px;
+         flex: 1;
+       }
+       .content {
+         display: flex;
+         flex-direction: row;
+       }
+    `}</style>
   </div>
-
   );
 
 const TorrentWithData = ({ id }) => {
@@ -107,17 +127,15 @@ const TorrentWithData = ({ id }) => {
   const torrent = data.getTorrent;
   return (
     <>
-      <h2 className="mb-2">{torrent.name}</h2>
-      <h3 className="mb-2">Info</h3>
-      <div className="info">
-        <TorrentInfo torrent={torrent}/>
-        <PrettyPrintJson data={torrent} />
-      </div>
-      <h3 className="mb-2">Files</h3>
-      <div className="files">
+      <h2 className="mb-3">{torrent.name}</h2>
+      <Card title="Info" className="mb-3" >
+        <div className="info">
+          <TorrentInfo torrent={torrent}/>
+        </div>
+      </Card>
+      <Card title="Files">
         <FileExplorer torrent={torrent}/>
-      </div>
-      <br/>
+      </Card>
       {torrent.selectedFile && <MediaPlayer selectedFile={torrent.selectedFile}/>}
       <style jsx>{`
         .name {
@@ -132,7 +150,7 @@ const TorrentWithData = ({ id }) => {
 };
 
 const Torrent = ({
-  router
+  router,
 }) => {
   const id = router.query.torrentId;
   return (
