@@ -22,7 +22,7 @@ const TorrentInfo = ({ torrent }) =>  (
         </div>
         <div className="box">
           <span className="label">Progress</span>
-          {torrent.progress}
+          {torrent.progress}%
         </div>
         <div className="box">
           <span className="label">Download Speed</span>
@@ -48,7 +48,7 @@ const TorrentInfo = ({ torrent }) =>  (
         </div>
         <div className="box">
           <span className="label">Ratio</span>
-          {torrent.ratio}
+          {torrent.ratio.toFixed(2)}
         </div>
         <div className="box">
           <span className="label">Eta</span>
@@ -149,18 +149,14 @@ const TorrentWithData = ({ id }) => {
     <>
     <div className="mb-2">
       <Link href="/torrents">
-        <a>
+        <a className="back">
           <ArrowLeft/>
+          Back to Torrents
         </a>
       </Link>
     </div>
-    <Card className="mb-3">
-      <h3>{torrent.name}</h3>
-    </Card>
-      <Card title="Info" className="mb-3" >
-        <div className="info">
-          <TorrentInfo torrent={torrent}/>
-        </div>
+      <Card title={torrent.name} className="mb-3" >
+        <TorrentInfo torrent={torrent}/>
       </Card>
       <Card title="Files">
         <FileExplorer torrent={torrent}/>
@@ -172,6 +168,11 @@ const TorrentWithData = ({ id }) => {
         }
         .info:global(pre) {
           font-size: 14px;
+        }
+        .back {
+          display: flex;
+          align-items: center;
+          font-weight: 600;
         }
       `}</style>
     </>

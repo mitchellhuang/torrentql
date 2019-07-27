@@ -39,6 +39,10 @@ const Directory = ({ name, depth, children }) => {
         display: flex;
         flex-direction: column;
         margin-left: ${offSet}px;
+        cursor: pointer;
+      }
+      .directory:not(:last-child) {
+        margin-bottom: 5px;
       }
       .directory :global(.folder) {
         fill: ${directoryColor};
@@ -47,12 +51,13 @@ const Directory = ({ name, depth, children }) => {
         display: flex;
         flex-direction: row;
         align-items: center;
+        margin-bottom: ${expanded && '5px'};
       }
       .row:focus {
         outline:0;
       }
       .name {
-        margin-left: 3px;
+        margin-left: 5px;
       }
       `}</style>
     </div>
@@ -62,12 +67,13 @@ const Directory = ({ name, depth, children }) => {
 const File = ({ name, depth, path, id }) => {
   const filePath = `/files/${encodeURIComponent(path)}`;
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
+  const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
     <div
       className="file"
       onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
       <div className="name">
-        <FileIcon color={primary} className="file-icon"/>
+        <FileIcon color={primary} className="file-icon" />
         {name}
       </div>
       <a href={filePath}>
@@ -76,11 +82,15 @@ const File = ({ name, depth, path, id }) => {
       </a>
       <style jsx>{`
         .file {
-          margin-left: ${5 * (depth + 1)}px;
+          margin-left: ${offset}px;
           display: flex;
           flex-direction: row;
           align-items: center;
           word-wrap: normal;
+          cursor: pointer;
+        }
+        .file:not(:last-child) {
+          margin-bottom: 5px;
         }
         .download {
           margin-right: 5px;
@@ -97,7 +107,7 @@ const File = ({ name, depth, path, id }) => {
           align-items: center;
         }
         :global(.file-icon) {
-          margin-right: 3px;
+          margin-right: 5px;
         }
       `}</style>
     </div>
@@ -110,7 +120,7 @@ const FileExplorer = ({ torrent }) => {
   return (
     <div className="file-explorer">
       {directoryDive(torrent.files.contents[initialDir], initialDir, 0, torrent.id)}
-      <style>{`
+      <style jsx>{`
         .file-explorer {
           border-radius: 5px;
           max-height: 250px;

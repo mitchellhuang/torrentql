@@ -31,17 +31,14 @@ const TRow: React.FunctionComponent<ITRow> = ({
         box-sizing: border-box;
         color: var(--black);
         background-color: var(--white);
-        border: 1.5px solid transparent;
         width: 100%;
         cursor: pointer;
         outline: none;
-        font-weight: ${header ? '600' : '400'}
+        font-weight: ${header ? '600' : '400'};
+        height: 45px;
       }
       .row:nth-child(odd) {
         background-color: var(--buttonHover);
-      }
-      :not(.header):hover {
-        border: 1.5px solid var(--gray);
       }
       .header {
         color: var(--lightGray);
@@ -73,7 +70,7 @@ const TCell = ({ flex, children }) => (
         flex: ${flex || 1};
         overflow: hidden;
         white-space: nowrap;
-        height: 45px;
+        height: 100%;
         padding: 0 5px;
       }
     `}</style>
@@ -95,7 +92,9 @@ const Torrent = ({
     </div>
     <TCell flex={5}>
       <Link href={`/torrents/${torrent.id}`}>
-        <a onClick={e => e.stopPropagation()}>
+        <a
+          className="torrent-name"
+          onClick={e => e.stopPropagation()}>
           {torrent.name}
         </a>
       </Link>
