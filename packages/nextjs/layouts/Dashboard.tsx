@@ -7,9 +7,6 @@ import NavBar from '../components/NavBar';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 const tabs = [{
-  name: 'Home',
-  url: '/dashboard',
-}, {
   name: 'Torrents',
   url: '/torrents',
 }, {
@@ -89,10 +86,10 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
   ...props
 }) => (
   <Global backgroundColor="var(--dashboardBg)" {...props}>
-    <Head title={title} />
+    <Head title={title}/>
     <NavBar />
     <div className="tabs">
-      <Tabs router={router} />
+      <Tabs router={router}/>
     </div>
     <div className="confine-scope">
       <div className="wrapper">

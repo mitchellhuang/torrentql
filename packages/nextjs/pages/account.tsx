@@ -4,8 +4,11 @@ import withAuth from '../lib/withAuth';
 import Button from '../components/Button';
 import UpdateEmailForm from '../forms/UpdateEmailForm';
 import UpdatePasswordForm from '../forms/UpdatePasswordForm';
+import { Mail, Lock, LogOut } from 'react-feather';
+import Card from '../components/Card';
 
 const tabs = {
+  INFO: 'info',
   UPDATE_EMAIL: 'update_email',
   UPDATE_PASSWORD: 'update_password',
   LOGOUT: 'logout',
@@ -37,19 +40,32 @@ const Logout = () => (
 const Account = () => {
   const [selectedTab, setSelectedTab] = useState(tabs.UPDATE_EMAIL);
   return (
-    <Dashboard title="Account" noFooter>
+    <Dashboard title="Account">
       <div className="container">
         <ul className="sidebar">
-          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_EMAIL)}>Update email</li>
-          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_PASSWORD)}>Update password</li>
-          <li className="tab" onClick={() => setSelectedTab(tabs.LOGOUT)}>Logout</li>
+          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_EMAIL)}>
+            <Mail/>
+            <span className="ml-2">Update email</span>
+          </li>
+          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_PASSWORD)}>
+            <Lock/>
+            <span className="ml-2">Update password</span>
+          </li>
+          <li className="tab" onClick={() => setSelectedTab(tabs.LOGOUT)}>
+            <LogOut/>
+            <span className="ml-2">Logout</span>
+          </li>
         </ul>
         <div className="actions">
-          <div className="selected-tab">
+          <Card className="selected-tab">
             {selectedTab === tabs.UPDATE_EMAIL && <UpdateEmail/>}
             {selectedTab === tabs.UPDATE_PASSWORD && <UpdatePassword/>}
             {selectedTab === tabs.LOGOUT && <Logout/>}
-          </div>
+          </Card>
+        </div>
+        <div className="help">
+          <h3 className="mb-3">Make TQL better</h3>
+          <a href="www.google.com">Give us feedback</a>
         </div>
       </div>
       <style jsx>{`
@@ -58,32 +74,49 @@ const Account = () => {
         flex-direction: row;
       }
       .tab {
+        display: flex;
+        align-items: center;
         font-size: 12pt;
         color: black;
         list-style-type: none;
         font-weight: 600;
-        color: var(--gray);
+        cursor: pointer;
+        color: var(--black);
         text-transform: uppercase;
+      }
+      .tab:hover {
+       color: var(--darkGray);
       }
       .tab:not(:last-child) {
         margin-bottom: 15px;
       }
-      .selected-tab {
-        max-width: 600px;
+      :global(.selected-tab) {
         flex: 1;
       }
       .sidebar {
-        padding: 15px;
-        color: white;
+        padding: 0 15px;
+        margin: 0;
         height: 100%;
-        width: 200px;
-        background-color: var(--white);
       }
       .actions {
-        padding: 15px;
         display: flex;
         justify-content: center;
         flex: 1;
+        padding: 0 15px;
+      }
+      .help {
+        padding: 0 15px;
+      }
+      @media(max-width: 767px) {
+        .container {
+          flex-direction: column;
+        }
+        .actions {
+          padding: 0;
+        }
+        .actions, .help {
+          margin-top: 15px;
+        }
       }
     `}</style>
     </Dashboard>
