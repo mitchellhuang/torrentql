@@ -30,7 +30,7 @@ const Directory = ({ name, depth, children }) => {
   return (
     <div className="directory">
       <div className="row" onClick={() => toggle(!expanded)} role="button" tabIndex={0}>
-        <Folder className="folder" color={directoryColor} />
+        <Folder className="folder" color={directoryColor}/>
         <span className="name">{name}</span>
       </div>
       {expanded && children}
@@ -40,7 +40,7 @@ const Directory = ({ name, depth, children }) => {
         flex-direction: column;
         margin-left: ${offSet}px;
       }
-      .directory :global(svg.folder) {
+      .directory :global(.folder) {
         fill: ${directoryColor};
       }
       .row {
@@ -66,21 +66,38 @@ const File = ({ name, depth, path, id }) => {
     <div
       className="file"
       onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
-      <FileIcon color={primary}/>
-      <span className="name">{name}</span>
-      <a href={filePath}>Download <Download size={12}/></a>
+      <div className="name">
+        <FileIcon color={primary} className="file-icon"/>
+        {name}
+      </div>
+      <a href={filePath}>
+        <span className="download">Download</span>
+        <Download size={12}/>
+      </a>
       <style jsx>{`
         .file {
           margin-left: ${5 * (depth + 1)}px;
           display: flex;
           flex-direction: row;
           align-items: center;
+          word-wrap: normal;
+        }
+        .download {
+          margin-right: 5px;
         }
         a {
           margin-left: 5px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
         }
         .name {
-          margin-left: 3px;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+        }
+        :global(.file-icon) {
+          margin-right: 3px;
         }
       `}</style>
     </div>
@@ -96,7 +113,6 @@ const FileExplorer = ({ torrent }) => {
       <style>{`
         .file-explorer {
           border-radius: 5px;
-          padding: 5px;
           max-height: 250px;
           overflow: scroll;
         }
