@@ -114,7 +114,7 @@ const FileExplorer = ({ torrent }) => {
         .file-explorer {
           border-radius: 5px;
           max-height: 250px;
-          overflow: scroll;
+          overflow: auto;
         }
       `}</style>
     </div>
