@@ -70,7 +70,7 @@ const TorrentInfo = ({ torrent }) =>  (
       <div className="column">
         <div className="box">
           <span className="label">State</span>
-          {torrent.state.toUpperCase()}
+          {torrent.state}
         </div>
         <div className="box">
           <span className="label">Upload Speed</span>
@@ -102,11 +102,13 @@ const TorrentInfo = ({ torrent }) =>  (
       }
       .column {
         flex: 1;
+        overflow: auto;
       }
       .box {
         margin-bottom: 10px;
         display: flex;
         flex-direction: column;
+        word-break: break-word;
       }
       .content {
         display: flex;
