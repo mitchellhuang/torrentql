@@ -4,69 +4,101 @@ import withAuth from '../lib/withAuth';
 import Button from '../components/Button';
 import UpdateEmailForm from '../forms/UpdateEmailForm';
 import UpdatePasswordForm from '../forms/UpdatePasswordForm';
-import { Mail, Lock, LogOut } from 'react-feather';
+import { Database, Mail, Lock, LogOut } from 'react-feather';
 import Card from '../components/Card';
 
-const tabs = {
-  INFO: 'info',
+const actions = {
+  USAGE: 'usage',
   UPDATE_EMAIL: 'update_email',
   UPDATE_PASSWORD: 'update_password',
   LOGOUT: 'logout',
 };
 
-const UpdateEmail = () => (
+const Usage = () => (
   <>
+    <h3 className="mb-3">Usage</h3>
+    <div className="container">
+      <Card>
+        Data transfer out
+        <img src="https://cloud.google.com/billing/docs/images/billing-reports3.png" alt="Cloud report"/>
+      </Card>
+      <Card>
+        Storage
+        <img src="https://cloud.google.com/billing/docs/images/billing-reports3.png" alt="Cloud report"/>
+      </Card>
+    </div>
+    <style jsx>{`
+      .container {
+        display: flex;
+      }
+      .container div {
+        flex: 1;
+      }
+      img {
+        width: 100%;
+      }
+    `}</style>
+  </>
+);
+
+const UpdateEmail = () => (
+  <Card>
     <h3 className="mb-3">Update email</h3>
     <UpdateEmailForm/>
-  </>
+  </Card>
 );
 
 const UpdatePassword = () => (
-  <>
+  <Card>
     <h3 className="mb-3">Update password</h3>
     <UpdatePasswordForm/>
-  </>
+  </Card>
 );
 
 const Logout = () => (
-  <>
+  <Card>
     <h3 className="mb-3">Logout</h3>
     <Button href="/logout" block>
       Logout
     </Button>
-  </>
+  </Card>
 );
 
 const Account = () => {
-  const [selectedTab, setSelectedTab] = useState(tabs.UPDATE_EMAIL);
+  const [selectedTab, setSelectedTab] = useState(actions.USAGE);
   return (
     <Dashboard title="Account">
       <div className="container">
         <ul className="sidebar">
-          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_EMAIL)}>
+          <li className="tab" onClick={() => setSelectedTab(actions.USAGE)}>
+            <Database/>
+            <span className="ml-2">Usage</span>
+          </li>
+          <li className="tab" onClick={() => setSelectedTab(actions.UPDATE_EMAIL)}>
             <Mail/>
             <span className="ml-2">Update email</span>
           </li>
-          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_PASSWORD)}>
+          <li className="tab" onClick={() => setSelectedTab(actions.UPDATE_PASSWORD)}>
             <Lock/>
             <span className="ml-2">Update password</span>
           </li>
-          <li className="tab" onClick={() => setSelectedTab(tabs.LOGOUT)}>
+          <li className="tab" onClick={() => setSelectedTab(actions.LOGOUT)}>
             <LogOut/>
             <span className="ml-2">Logout</span>
           </li>
         </ul>
         <div className="actions">
-          <Card className="selected-tab">
-            {selectedTab === tabs.UPDATE_EMAIL && <UpdateEmail/>}
-            {selectedTab === tabs.UPDATE_PASSWORD && <UpdatePassword/>}
-            {selectedTab === tabs.LOGOUT && <Logout/>}
-          </Card>
+          <div className="selected-tab">
+            {selectedTab === actions.USAGE && <Usage/>}
+            {selectedTab === actions.UPDATE_EMAIL && <UpdateEmail/>}
+            {selectedTab === actions.UPDATE_PASSWORD && <UpdatePassword/>}
+            {selectedTab === actions.LOGOUT && <Logout/>}
+          </div>
         </div>
-        <div className="help">
+        {selectedTab !== actions.USAGE && <div className="help">
           <h3 className="mb-3">Make TQL better</h3>
           <a href="www.google.com">Give us feedback</a>
-        </div>
+        </div>}
       </div>
       <style jsx>{`
       .container {
