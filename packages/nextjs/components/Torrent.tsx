@@ -32,7 +32,6 @@ const TRow: React.FunctionComponent<ITRow> = ({
         color: var(--black);
         background-color: var(--white);
         border: 1.5px solid transparent;
-        border-radius: 5px;
         width: 100%;
         cursor: pointer;
         outline: none;
@@ -48,6 +47,12 @@ const TRow: React.FunctionComponent<ITRow> = ({
         color: var(--lightGray);
         background-color: var(--primary);
         cursor: default;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+      .row:last-child {
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
       }
       .header:hover {
         background-color: var(--primary);
