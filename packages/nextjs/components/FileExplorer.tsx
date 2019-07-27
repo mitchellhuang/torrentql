@@ -30,7 +30,7 @@ const Directory = ({ name, depth, children }) => {
   return (
     <div className="directory">
       <div className="row" onClick={() => toggle(!expanded)} role="button" tabIndex={0}>
-        <Folder className="folder" color={directoryColor} />
+        <Folder className="folder" color={directoryColor}/>
         <span className="name">{name}</span>
       </div>
       {expanded && children}
@@ -39,20 +39,25 @@ const Directory = ({ name, depth, children }) => {
         display: flex;
         flex-direction: column;
         margin-left: ${offSet}px;
+        cursor: pointer;
       }
-      .directory :global(svg.folder) {
+      .directory:not(:last-child) {
+        margin-bottom: 5px;
+      }
+      .directory :global(.folder) {
         fill: ${directoryColor};
       }
       .row {
         display: flex;
         flex-direction: row;
         align-items: center;
+        margin-bottom: ${expanded && '5px'};
       }
       .row:focus {
         outline:0;
       }
       .name {
-        margin-left: 3px;
+        margin-left: 5px;
       }
       `}</style>
     </div>
@@ -62,25 +67,47 @@ const Directory = ({ name, depth, children }) => {
 const File = ({ name, depth, path, id }) => {
   const filePath = `/files/${encodeURIComponent(path)}`;
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
+  const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
     <div
       className="file"
       onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
-      <FileIcon color={primary}/>
-      <span className="name">{name}</span>
-      <a href={filePath}>Download <Download size={12}/></a>
+      <div className="name">
+        <FileIcon color={primary} className="file-icon" />
+        {name}
+      </div>
+      <a href={filePath}>
+        <span className="download">Download</span>
+        <Download size={12}/>
+      </a>
       <style jsx>{`
         .file {
-          margin-left: ${5 * (depth + 1)}px;
+          margin-left: ${offset}px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          word-wrap: normal;
+          cursor: pointer;
+        }
+        .file:not(:last-child) {
+          margin-bottom: 5px;
+        }
+        .download {
+          margin-right: 5px;
+        }
+        a {
+          margin-left: 5px;
           display: flex;
           flex-direction: row;
           align-items: center;
         }
-        a {
-          margin-left: 5px;
-        }
         .name {
-          margin-left: 3px;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+        }
+        :global(.file-icon) {
+          margin-right: 5px;
         }
       `}</style>
     </div>
@@ -93,12 +120,11 @@ const FileExplorer = ({ torrent }) => {
   return (
     <div className="file-explorer">
       {directoryDive(torrent.files.contents[initialDir], initialDir, 0, torrent.id)}
-      <style>{`
+      <style jsx>{`
         .file-explorer {
           border-radius: 5px;
-          padding: 5px;
           max-height: 250px;
-          overflow: scroll;
+          overflow: auto;
         }
       `}</style>
     </div>
