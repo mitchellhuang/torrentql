@@ -71,7 +71,7 @@ const TCell = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
-        overflow: auto;
+        overflow: hidden;
         white-space: nowrap;
         height: 45px;
         padding: 0 5px;
