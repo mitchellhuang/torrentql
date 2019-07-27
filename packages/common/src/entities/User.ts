@@ -27,6 +27,10 @@ export class User {
   @Column()
   password: string;
 
+  @Field()
+  @Column('decimal', { precision: 19, scale: 4, default: 0 })
+  balance: number;
+
   @Field({ nullable: true })
   token: string;
 

@@ -14,7 +14,7 @@ export class BillingHistory {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 19, scale: 4 })
   totalCost: number;
 
   @Column()

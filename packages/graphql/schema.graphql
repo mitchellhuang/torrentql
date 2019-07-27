@@ -63,6 +63,7 @@ type Torrent {
 type User {
   id: ID!
   email: String!
+  balance: Float!
   token: String
   torrents: [Torrent!]!
 }

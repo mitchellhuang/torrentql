@@ -16,19 +16,13 @@ export class BillingActivity {
   id: string;
 
   @Column('bigint')
-  diskUsageBytes: number;
+  diskUsage: number;
 
-  @Column()
-  diskUsageSeconds: number;
+  @Column('bigint')
+  dataTransferIn: number;
 
-  @Column('decimal', { precision: 4, scale: 2 })
-  diskUsageCost: number;
-
-  @Column()
+  @Column('bigint')
   dataTransferOut: number;
-
-  @Column('decimal', { precision: 4, scale: 2 })
-  dataTransferCost: number;
 
   @ManyToOne(type => Torrent)
   torrent: Promise<Torrent>;
