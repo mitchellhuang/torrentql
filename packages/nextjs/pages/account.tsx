@@ -1,50 +1,93 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Button from '../components/Button';
 import UpdateEmailForm from '../forms/UpdateEmailForm';
 import UpdatePasswordForm from '../forms/UpdatePasswordForm';
 
-const Account = () => (
-  <Dashboard title="Account" noFooter>
-    <div className="account">
-      <div className="panel update-email">
-        <h3 className="mb-3">Update email</h3>
-        <UpdateEmailForm />
+const tabs = {
+  UPDATE_EMAIL: 'update_email',
+  UPDATE_PASSWORD: 'update_password',
+  LOGOUT: 'logout',
+};
+
+const UpdateEmail = () => (
+  <>
+    <h3 className="mb-3">Update email</h3>
+    <UpdateEmailForm/>
+  </>
+);
+
+const UpdatePassword = () => (
+  <>
+    <h3 className="mb-3">Update password</h3>
+    <UpdatePasswordForm/>
+  </>
+);
+
+const Logout = () => (
+  <>
+    <h3 className="mb-3">Logout</h3>
+    <Button href="/logout" block>
+      Logout
+    </Button>
+  </>
+);
+
+const Account = () => {
+  const [selectedTab, setSelectedTab] = useState(tabs.UPDATE_EMAIL);
+  return (
+    <Dashboard title="Account" noFooter>
+      <div className="container">
+        <ul className="sidebar">
+          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_EMAIL)}>Update email</li>
+          <li className="tab" onClick={() => setSelectedTab(tabs.UPDATE_PASSWORD)}>Update password</li>
+          <li className="tab" onClick={() => setSelectedTab(tabs.LOGOUT)}>Logout</li>
+        </ul>
+        <div className="actions">
+          <div className="selected-tab">
+            {selectedTab === tabs.UPDATE_EMAIL && <UpdateEmail/>}
+            {selectedTab === tabs.UPDATE_PASSWORD && <UpdatePassword/>}
+            {selectedTab === tabs.LOGOUT && <Logout/>}
+          </div>
+        </div>
       </div>
-      <div className="panel update-password">
-        <h3 className="mb-3">Update password</h3>
-        <UpdatePasswordForm />
-      </div>
-      <div className="panel actions">
-        <h3 className="mb-3">Actions</h3>
-        <Button href="/logout" block>
-          Logout
-        </Button>
-      </div>
-    </div>
-    <style jsx>{`
-      .account {
+      <style jsx>{`
+      .container {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
       }
-      .panel:not(:last-child) {
+      .tab {
+        font-size: 12pt;
+        color: black;
+        list-style-type: none;
+        font-weight: 600;
+        color: var(--gray);
+        text-transform: uppercase;
+      }
+      .tab:not(:last-child) {
         margin-bottom: 15px;
       }
-      @media(min-width: 768px) {
-        .account {
-          flex-direction: row;
-        }
-        .panel {
-          flex: 1;
-        }
-        .panel:not(:last-child) {
-          margin-right: 15px;
-          margin-bottom: 0;
-        }
+      .selected-tab {
+        max-width: 600px;
+        flex: 1;
+      }
+      .sidebar {
+        padding: 15px;
+        color: white;
+        height: 100%;
+        width: 200px;
+        background-color: var(--white);
+      }
+      .actions {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        flex: 1;
       }
     `}</style>
-  </Dashboard>
-);
+    </Dashboard>
+  )
+};
 
 export default withAuth(Account);
