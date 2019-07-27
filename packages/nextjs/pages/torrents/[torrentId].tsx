@@ -114,9 +114,15 @@ const TorrentInfo = ({ torrent }) =>  (
         display: flex;
         flex-direction: column;
       }
+      .column:last-child .box:last-child {
+        margin-bottom: 0;
+      }
       @media(min-width: 768px) {
         .content {
           flex-direction: row;
+        }
+        .box {
+          padding-right: 15px;
         }
         .box:last-child {
           margin-bottom: 0;
