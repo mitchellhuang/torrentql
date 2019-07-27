@@ -17,79 +17,79 @@ const TorrentInfo = ({ torrent }) =>  (
     <div className="content">
       <div className="column">
         <div className="box">
-          <span className="label">ID </span>
+          <span className="label">ID</span>
           {torrent.id}
         </div>
         <div className="box">
-          <span className="label">Progress </span>
+          <span className="label">Progress</span>
           {torrent.progress}
         </div>
         <div className="box">
-          <span className="label">Download Speed </span>
+          <span className="label">Download Speed</span>
           {prettyBytes(torrent.downloadSpeed)}
         </div>
         <div className="box">
-          <span className="label">Number of Seeds </span>
+          <span className="label">Number of Seeds</span>
           {torrent.numSeeds}
         </div>
         <div className="box">
-          <span className="label">Total Wanted </span>
+          <span className="label">Total Wanted</span>
           {prettyBytes(torrent.totalWanted)}
         </div>
         <div className="box">
-          <span className="label">Tracker Host </span>
+          <span className="label">Tracker Host</span>
           {torrent.trackerHost}
         </div>
       </div>
       <div className="column">
         <div className="box">
-          <span className="label">Hash </span>
+          <span className="label">Hash</span>
           {torrent.hash}
         </div>
         <div className="box">
-          <span className="label">Ratio </span>
+          <span className="label">Ratio</span>
           {torrent.ratio}
         </div>
         <div className="box">
-          <span className="label">Eta </span>
+          <span className="label">Eta</span>
           {torrent.eta}
         </div>
         <div className="box">
-          <span className="label">Total Peers </span>
+          <span className="label">Total Peers</span>
           {torrent.totalPeers}
         </div>
         <div className="box">
-          <span className="label">Total Downloaded </span>
+          <span className="label">Total Downloaded</span>
           {prettyBytes(torrent.totalDownloaded)}
         </div>
         <div className="box">
-          <span className="label">Tracker Status </span>
+          <span className="label">Tracker Status</span>
           {torrent.trackerStatus}
         </div>
       </div>
       <div className="column">
         <div className="box">
-          <span className="label">State </span>
+          <span className="label">State</span>
           {torrent.state.toUpperCase()}
         </div>
         <div className="box">
-          <span className="label">Upload Speed </span>
+          <span className="label">Upload Speed</span>
           {prettyBytes(torrent.uploadSpeed)}
         </div>
         <div className="box">
-          <span className="label">Number of Peers </span>
+          <span className="label">Number of Peers</span>
           {torrent.numPeers}
         </div>
         <div className="box">
-          <span className="label">Total Seeds </span>
+          <span className="label">Total Seeds</span>
           {torrent.totalSeeds}
         </div>
         <div className="box">
-          <span className="label">Tracker </span>
+          <span className="label">Tracker</span>
           {torrent.tracker}
         </div>
         <div className="box">
-          <span className="label">Total Uploaded </span>
+          <span className="label">Total Uploaded</span>
           {prettyBytes(torrent.totalUploaded)}
         </div>
       </div>
