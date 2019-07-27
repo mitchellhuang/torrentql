@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import prettyBytes from 'pretty-bytes';
 import { withRouter } from 'next/router';
 import { ArrowLeft } from 'react-feather';
 import { useQuery } from 'react-apollo-hooks';
@@ -16,99 +17,100 @@ const TorrentInfo = ({ torrent }) =>  (
   <div>
     <div className="content">
       <div className="box">
-        <span className="label">ID: </span>
-        {torrent.id}
+        <div className="label">ID</div>
+        <div>{torrent.id}</div>
       </div>
       <div className="box">
-        <span className="label">Hash: </span>
-        {torrent.hash}
+        <div className="label">Hash</div>
+        <div>{torrent.hash}</div>
       </div>
       <div className="box">
-        <span className="label">State: </span>
-        {torrent.state}
-      </div>
-    </div>
-    <div className="content">
-      <div className="box">
-        <span className="label">Progress: </span>
-        {torrent.progress}
-      </div>
-      <div className="box">
-        <span className="label">Ratio: </span>
-        {torrent.ratio}
-      </div>
-      <div className="box">
-        <span className="label">Upload Speed: </span>
-        {torrent.uploadSpeed}
+        <div className="label">State</div>
+        <div>{torrent.state.toUpperCase()}</div>
       </div>
     </div>
     <div className="content">
       <div className="box">
-        <span className="label">Download Speed: </span>
-        {torrent.downloadSpeed}
+        <div className="label">Progress</div>
+        <div>{torrent.progress}</div>
       </div>
       <div className="box">
-        <span className="label">Eta: </span>
-        {torrent.eta}
+        <div className="label">Ratio</div>
+        <div>{torrent.ratio}</div>
       </div>
       <div className="box">
-        <span className="label">Number of Peers: </span>
-        {torrent.numPeers}
-      </div>
-    </div>
-    <div className="content">
-      <div className="box">
-        <span className="label">Number of Seeds: </span>
-        {torrent.numSeeds}
-      </div>
-      <div className="box">
-        <span className="label">Total Peers: </span>
-        {torrent.totalPeers}
-      </div>
-      <div className="box">
-        <span className="label">Total Seeds: </span>
-        {torrent.totalSeeds}
+        <div className="label">Upload Speed: </div>
+        <div>{prettyBytes(torrent.uploadSpeed)}/s</div>
       </div>
     </div>
     <div className="content">
       <div className="box">
-        <span className="label">Total Wanted: </span>
-        {torrent.totalWanted}
+        <div className="label">Download Speed</div>
+        <div>{prettyBytes(torrent.downloadSpeed)}/s</div>
       </div>
       <div className="box">
-        <span className="label">Total Downloaded: </span>
-        {torrent.totalDownloaded}
+        <div className="label">Eta</div>
+        <div>{torrent.eta}</div>
       </div>
       <div className="box">
-        <span className="label">Tracker: </span>
-        {torrent.tracker}
+        <div className="label">Number of Peers</div>
+        <div>{torrent.numPeers}</div>
       </div>
     </div>
     <div className="content">
       <div className="box">
-        <span className="label">Tracker Host: </span>
-        {torrent.trackerHost}
+        <div className="label">Number of Seeds</div>
+        <div>{torrent.numSeeds}</div>
       </div>
       <div className="box">
-        <span className="label">Tracker Status: </span>
-        {torrent.trackerStatus}
+        <div className="label">Total Peers</div>
+        <div>{torrent.totalPeers}</div>
       </div>
       <div className="box">
-        <span className="label">Total Uploaded: </span>
-        {torrent.totalUploaded}
+        <div className="label">Total Seeds</div>
+        <div>{torrent.totalSeeds}</div>
+      </div>
+    </div>
+    <div className="content">
+      <div className="box">
+        <div className="label">Total Wanted</div>
+        <div>{prettyBytes(torrent.totalWanted)}</div>
+      </div>
+      <div className="box">
+        <div className="label">Total Downloaded</div>
+        <div>{prettyBytes(torrent.totalDownloaded)}</div>
+      </div>
+      <div className="box">
+        <div className="label">Tracker</div>
+        <div>{torrent.tracker}</div>
+      </div>
+    </div>
+    <div className="content">
+      <div className="box">
+        <div className="label">Tracker Host</div>
+        <div>{torrent.trackerHost}</div>
+      </div>
+      <div className="box">
+        <div className="label">Tracker Status</div>
+        <div>{torrent.trackerStatus}</div>
+      </div>
+      <div className="box">
+        <div className="label">Total Uploaded</div>
+        <div>{prettyBytes(torrent.totalUploaded)}</div>
       </div>
     </div>
     <style jsx>{`
        .label {
-         font-weight: bold;
+         font-weight: 600;
+         margin-bottom: 5px;
        }
        .box {
-         margin-bottom: 5px;
          flex: 1;
        }
        .content {
          display: flex;
          flex-direction: row;
+         margin-bottom: 10px;
        }
     `}</style>
   </div>
