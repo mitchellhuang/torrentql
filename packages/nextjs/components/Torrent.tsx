@@ -31,18 +31,18 @@ const TRow: React.FunctionComponent<ITRow> = ({
         box-sizing: border-box;
         color: var(--black);
         background-color: var(--white);
-        border: 2px solid transparent;
+        border: 1.5px solid transparent;
         border-radius: 5px;
         width: 100%;
         cursor: pointer;
         outline: none;
         font-weight: ${header ? '600' : '400'}
       }
-      .row:not(:last-child) {
-        margin-bottom: 10px;
-      }
-      .row:hover {
+      .row:nth-child(odd) {
         background-color: var(--buttonHover);
+      }
+      :not(.header):hover {
+        border: 1.5px solid var(--gray);
       }
       .header {
         color: var(--lightGray);
@@ -68,7 +68,8 @@ const TCell = ({ flex, children }) => (
         flex: ${flex || 1};
         overflow: auto;
         white-space: nowrap;
-        padding: 10px 5px;
+        height: 45px;
+        padding: 0 5px;
       }
     `}</style>
   </div>
@@ -115,7 +116,7 @@ const Torrent = ({
       align-items: center;
       justify-content: center;
       width: 30px;
-      padding: 10px;
+      padding: 0 10px;
     }
     .checkbox input {
       width: 0;
