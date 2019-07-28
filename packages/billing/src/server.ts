@@ -8,6 +8,7 @@ import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
 const DISK_USAGE_GB_MONTH_COST = 0.01;
 const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
+const DISK_USAGE_BYTES_SECOND_COST = DISK_USAGE_GB_SECOND_COST / 1e9;
 const DATA_TRANSFER_IN_GB_COST = 0.01;
 const DATA_TRANSFER_OUT_GB_COST = 0.01;
 const DATA_TRANSFER_IN_BYTES_COST = DATA_TRANSFER_IN_GB_COST / 1e9;
@@ -17,6 +18,15 @@ interface TorrentUsage {
   diskUsage: number;
   dataTransferIn: number;
   dataTransferOut: number;
+}
+
+interface UsageByUser {
+  user_id: string;
+  begin_at: Date;
+  end_at: Date;
+  disk_usage: number;
+  data_transfer_in: number;
+  data_transfer_out: number;
 }
 
 const run = async () => {
@@ -41,57 +51,39 @@ const run = async () => {
     let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
     torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
 
-    let values = await Promise.all(
-      (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
-        const cached = cache.get(torrent.id);
-        if (cached) {
-          if (cached.diskUsage === torrent.totalSize &&
-              cached.dataTransferIn === torrent.totalDownloaded &&
-              cached.dataTransferOut === torrent.totalUploaded) {
-            return null;
+    await connection.transaction(async (transaction) => {
+      await Promise.all(
+        (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
+          const cached = cache.get(torrent.id);
+          if (cached) {
+            if (cached.diskUsage === torrent.totalSize &&
+                cached.dataTransferIn === torrent.totalDownloaded &&
+                cached.dataTransferOut === torrent.totalUploaded) {
+              return Promise.resolve(undefined);
+            }
           }
-        }
-        cache.set(torrent.id, {
-          diskUsage: torrent.totalSize,
-          dataTransferIn: torrent.totalDownloaded,
-          dataTransferOut: torrent.totalUploaded,
-        });
-        return {
-          diskUsage: torrent.totalSize,
-          dataTransferIn: torrent.totalDownloaded,
-          dataTransferOut: torrent.totalUploaded,
-          torrent,
-          user: await torrent.user,
-        };
-      }),
-    );
-
-    values = values.filter(ba => ba !== null);
-
-    if (values.length) {
-      await connection
-        .createQueryBuilder()
-        .insert()
-        .into(BillingActivity)
-        .values(values as any)
-        .execute();
-    }
+          cache.set(torrent.id, {
+            diskUsage: torrent.totalSize,
+            dataTransferIn: torrent.totalDownloaded,
+            dataTransferOut: torrent.totalUploaded,
+          });
+          return transaction.createQueryBuilder()
+            .insert()
+            .into(BillingActivity)
+            .values({
+              diskUsage: torrent.totalSize,
+              dataTransferIn: torrent.totalDownloaded,
+              dataTransferOut: torrent.totalUploaded,
+              torrent: await torrent,
+              user: await torrent.user,
+            } as any)
+            .execute();
+        }),
+      );
+    });
   };
 
   const writeBillingHistory = async () => {
-    const endAt = new Date();
-    const beginAt = new Date();
-    beginAt.setHours(endAt.getHours() - 1);
-
-    interface UsageByUser {
-      user_id: string;
-      begin_at: Date;
-      end_at: Date;
-      disk_usage: number;
-      data_transfer_in: number;
-      data_transfer_out: number;
-    }
-
     const usageByUser: UsageByUser[] = await connection
       .createEntityManager()
       .query(`
@@ -131,17 +123,17 @@ const run = async () => {
 
     await connection.transaction(async (transaction) => {
       await Promise.all(
-        usageByUser.map((user) => {
-          const totalCost = user.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST +
-                            user.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
+        usageByUser.map((usage) => {
+          const totalCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST +
+                            usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
           if (totalCost > 0) {
-            const tmpUser = new User();
-            tmpUser.id = user.user_id;
+            const user = new User();
+            user.id = usage.user_id;
             return transaction.createQueryBuilder().insert().into(BillingHistory).values({
               totalCost,
-              beginAt: user.begin_at,
-              endAt: user.end_at,
-              user: Promise.resolve(tmpUser),
+              beginAt: usage.begin_at,
+              endAt: usage.end_at,
+              user: Promise.resolve(user),
             }).execute();
           }
           return Promise.resolve(undefined);
