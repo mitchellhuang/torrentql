@@ -5,11 +5,13 @@ import withAuth from '../../lib/withAuth';
 
 const UpdateEmail = () => (
   <Account>
-    <h3 className="mb-3">Update email</h3>
-    <UpdateEmailForm/>
+    <div className="update-email">
+      <h3 className="mb-3">Update email</h3>
+      <UpdateEmailForm/>
+    </div>
     <style jsx>{`
       .update-email {
-        max-width: 350px;
+        max-width: 400px;
         margin: 0 auto;
       }
     `}</style>

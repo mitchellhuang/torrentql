@@ -15,6 +15,7 @@ const tabs = [{
 }, {
   name: 'Account',
   url: '/account/usage',
+  search: '/account',
 }];
 
 const Tabs = ({ router }) => (
@@ -24,7 +25,7 @@ const Tabs = ({ router }) => (
       {tabs.map(item => (
         <li key={item.url}>
           <Link href={item.url}>
-            <a className={router.pathname.includes(item.url) ? 'active' : undefined}>
+            <a className={router.pathname.includes(item.search || item.url) ? 'active' : undefined}>
               {item.name}
             </a>
           </Link>

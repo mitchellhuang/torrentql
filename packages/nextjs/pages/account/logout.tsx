@@ -5,17 +5,17 @@ import withAuth from '../../lib/withAuth';
 
 const Logout = () => (
   <Account>
-    <h3 className="mb-3">Logout</h3>
-    <Button href="/logout" block>
-      Logout
-    </Button>
+    <div className="logout">
+      <h3 className="mb-3">Logout</h3>
+      <Button href="/logout" block>
+        Logout
+      </Button>
+    </div>
     <style jsx>{`
       .logout {
-        max-width: 350px;
+        max-width: 400px;
         margin: 0 auto;
       }
-    `}</style>
-    <style jsx>{`
       .container {
         display: flex;
       }
