@@ -65,12 +65,14 @@ const run = async () => {
 
     values = values.filter(ba => ba !== null);
 
-    await connection
-      .createQueryBuilder()
-      .insert()
-      .into(BillingActivity)
-      .values(values as any)
-      .execute();
+    if (values.length) {
+      await connection
+        .createQueryBuilder()
+        .insert()
+        .into(BillingActivity)
+        .values(values as any)
+        .execute();
+    }
   };
 
   const writeBillingHistory = async () => {
