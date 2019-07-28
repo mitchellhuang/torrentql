@@ -10,23 +10,26 @@ const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
 // const DATA_TRANSFER_IN_GB_COST = 0.00;
 // const DATA_TRANSFER_OUT_GB_COST = 0.01;
 
-const createServer = async () => {
+interface TorrentUsage {
+  diskUsage: number;
+  dataTransferIn: number;
+  dataTransferOut: number;
+}
+
+const run = async () => {
+  console.log('Starting billing daemon...');
+
+  const cache = new Map<string, TorrentUsage>();
   const connection = await createConnectionFromEnv();
 
   const writeBillingActivity = async () => {
-    let torrents = await connection
+    const torrents = await connection
       .getRepository(Torrent)
       .createQueryBuilder('torrent')
       .where('is_active = true')
+      .leftJoinAndSelect('torrent.user', 'user')
+      .leftJoinAndSelect('torrent.server', 'server')
       .getMany();
-
-    torrents = await Promise.all(
-      torrents.map(async (torrent) => {
-        const user = await torrent.user;
-        torrent.user = Promise.resolve(user);
-        return torrent;
-      }),
-    );
 
     if (!torrents.length) {
       return;
@@ -35,19 +38,37 @@ const createServer = async () => {
     let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
     torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
 
-    await connection.transaction<void>(async (transaction) => {
-      await Promise.all((torrentsWithDeluge as Torrent[]).map((torrent) => {
-        const billingActivity = new BillingActivity();
-        billingActivity.diskUsage = torrent.totalSize;
-        billingActivity.dataTransferIn = torrent.totalDownloaded;
-        billingActivity.dataTransferOut = torrent.totalUploaded;
-        billingActivity.torrent = Promise.resolve(torrent);
-        billingActivity.user = Promise.resolve(torrent.user);
-        return transaction
-          .getRepository(BillingActivity)
-          .save(billingActivity);
-      }));
+    let values = (torrentsWithDeluge as Torrent[]).map((torrent) => {
+      const cachedTorrentUsage = cache.get(torrent.id);
+      if (cachedTorrentUsage) {
+        if (cachedTorrentUsage.diskUsage === torrent.totalSize &&
+            cachedTorrentUsage.dataTransferIn === torrent.totalDownloaded &&
+            cachedTorrentUsage.dataTransferOut === torrent.totalUploaded) {
+          return null;
+        }
+      }
+      cache.set(torrent.id, {
+        diskUsage: torrent.totalSize,
+        dataTransferIn: torrent.totalDownloaded,
+        dataTransferOut: torrent.totalUploaded,
+      });
+      return {
+        diskUsage: torrent.totalSize,
+        dataTransferIn: torrent.totalDownloaded,
+        dataTransferOut: torrent.totalUploaded,
+        torrent,
+        user: torrent.user,
+      };
     });
+
+    values = values.filter(ba => ba !== null);
+
+    await connection
+      .createQueryBuilder()
+      .insert()
+      .into(BillingActivity)
+      .values(values as any)
+      .execute();
   };
 
   const writeBillingHistory = async () => {
@@ -87,11 +108,13 @@ const createServer = async () => {
     // });
   };
 
-  writeBillingHistory();
+  // writeBillingHistory();
 
-  // setInterval(writeBillingActivity, 5 * 1000);
+  // writeBillingActivity();
+
+  setInterval(writeBillingActivity, 5 * 1000);
 
   // setInterval(writeBillingHistory, 5 * 1000);
 };
 
-createServer();
+run();
