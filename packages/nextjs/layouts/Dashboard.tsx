@@ -14,7 +14,7 @@ const tabs = [{
   url: '/downloads',
 }, {
   name: 'Account',
-  url: '/account',
+  url: '/account/usage',
 }];
 
 const Tabs = ({ router }) => (
