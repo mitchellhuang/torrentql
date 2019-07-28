@@ -99,11 +99,11 @@ export class Torrent {
 
   @Field(type => User)
   @ManyToOne(type => User, user => user.torrents)
-  user: Promise<User> | User;
+  user: Promise<User>;
 
   @Field(type => Server)
   @ManyToOne(type => Server, server => server.torrents)
-  server: Promise<Server> | Server;
+  server: Promise<Server>;
 
   @CreateDateColumn()
   createdAt: Date;

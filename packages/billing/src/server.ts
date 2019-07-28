@@ -38,28 +38,30 @@ const run = async () => {
     let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
     torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
 
-    let values = (torrentsWithDeluge as Torrent[]).map((torrent) => {
-      const cachedTorrentUsage = cache.get(torrent.id);
-      if (cachedTorrentUsage) {
-        if (cachedTorrentUsage.diskUsage === torrent.totalSize &&
-            cachedTorrentUsage.dataTransferIn === torrent.totalDownloaded &&
-            cachedTorrentUsage.dataTransferOut === torrent.totalUploaded) {
-          return null;
+    let values = await Promise.all(
+      (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
+        const cached = cache.get(torrent.id);
+        if (cached) {
+          if (cached.diskUsage === torrent.totalSize &&
+              cached.dataTransferIn === torrent.totalDownloaded &&
+              cached.dataTransferOut === torrent.totalUploaded) {
+            return null;
+          }
         }
-      }
-      cache.set(torrent.id, {
-        diskUsage: torrent.totalSize,
-        dataTransferIn: torrent.totalDownloaded,
-        dataTransferOut: torrent.totalUploaded,
-      });
-      return {
-        diskUsage: torrent.totalSize,
-        dataTransferIn: torrent.totalDownloaded,
-        dataTransferOut: torrent.totalUploaded,
-        torrent,
-        user: torrent.user,
-      };
-    });
+        cache.set(torrent.id, {
+          diskUsage: torrent.totalSize,
+          dataTransferIn: torrent.totalDownloaded,
+          dataTransferOut: torrent.totalUploaded,
+        });
+        return {
+          diskUsage: torrent.totalSize,
+          dataTransferIn: torrent.totalDownloaded,
+          dataTransferOut: torrent.totalUploaded,
+          torrent,
+          user: await torrent.user,
+        };
+      }),
+    );
 
     values = values.filter(ba => ba !== null);
 
@@ -86,33 +88,13 @@ const run = async () => {
       .getSql();
 
     console.log(billingActivities);
-
-    // await connection.transaction<void>((transaction) => {
-    //   torrentsWithDeluge.forEach(async (torrent) => {
-    //     if (torrent) {
-    //       console.log('Writing billing history for torrent', torrent.id);
-    //       const billingHistory = new BillingActivity();
-    //       billingHistory.diskUsageBytes = torrent.totalSize;
-    //       billingHistory.diskUsageSeconds = 60;
-    //       billingHistory.diskUsageCost = DISK_USAGE_GB_MONTH_COST;
-    //       billingHistory.dataTransferOut = torrent.totalUploaded;
-    //       billingHistory.dataTransferCost = DATA_TRANSFER_OUT_GB_COST;
-    //       billingHistory.torrent = Promise.resolve(torrent);
-    //       billingHistory.user = torrent.user;
-    //       await transaction
-    //         .getRepository(BillingActivity)
-    //         .save(billingHistory);
-    //     }
-    //   });
-    //   return Promise.resolve();
-    // });
   };
 
   // writeBillingHistory();
 
   // writeBillingActivity();
 
-  setInterval(writeBillingActivity, 5 * 1000);
+  setInterval(writeBillingActivity, 1 * 1000);
 
   // setInterval(writeBillingHistory, 5 * 1000);
 };
