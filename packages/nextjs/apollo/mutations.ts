@@ -16,6 +16,14 @@ export const UPDATE_SELECTED_FILE_MUTATION = gql`
   }
 `;
 
+export const UPDATE_SEARCH_QUERY_MUTATION = gql`
+  mutation updateSearchQuery($searchQuery: String!) {
+    updateSearchQuery(searchQuery: $searchQuery) @client {
+      filter
+    }
+  }
+`;
+
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($email: String!, $password: String!) {
     createUser(email: $email, password: $password) {

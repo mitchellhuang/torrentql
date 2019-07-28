@@ -1,6 +1,6 @@
 import React from 'react';
 
-const primary = '#3572BD';
+const primary = '#207ece';
 const secondary = '#2752BE';
 
 const Global: React.FunctionComponent<{
@@ -26,6 +26,9 @@ const Global: React.FunctionComponent<{
         --darkGray: #696969;
         --dashboardBg: #F5F5F5;
         --error: #FF0000;
+        --blueGray: #526780;
+        --darkBlue: #152d4b;
+        --darkDarkBlue: #10243c;
       };
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",

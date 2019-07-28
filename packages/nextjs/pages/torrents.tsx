@@ -5,6 +5,7 @@ import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
 import { ME_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
+import TorrentsSidebar from '../components/TorrentsSidebar';
 
 export const Unstyled = ({ message }) => (
   <div>
@@ -51,25 +52,32 @@ const TorrentsWithData = () => {
   }
   return (
     <div className="torrents">
-      <ToolBar selected={selected} />
-      <TorrentTableHeader />
-      {data.me.torrents.map(torrent => (
-        <Torrent
-          torrent={torrent}
-          selected={selected.includes(torrent.id)}
-          onClick={() => {
-            if (!selected.includes(torrent.id)) {
-              selectTorrent(selected.concat([torrent.id]));
-            } else {
-              selectTorrent(selected.filter(id => id !== torrent.id));
-            }
-          }}
-          key={torrent.id}
-        />
-      ))}
+      <TorrentsSidebar/>
+      <div className="main">
+        <ToolBar selected={selected} />
+        <TorrentTableHeader />
+        {data.me.torrents.map(torrent => (
+          <Torrent
+            torrent={torrent}
+            selected={selected.includes(torrent.id)}
+            onClick={() => {
+              if (!selected.includes(torrent.id)) {
+                selectTorrent(selected.concat([torrent.id]));
+              } else {
+                selectTorrent(selected.filter(id => id !== torrent.id));
+              }
+            }}
+            key={torrent.id}
+          />
+        ))}
+      </div>
       <style jsx>{`
         .torrents {
+          display: flex;
           min-width: 1024px;
+        }
+        .main {
+          flex: 1;
         }
       `}</style>
     </div>

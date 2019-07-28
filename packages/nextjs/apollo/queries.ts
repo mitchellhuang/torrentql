@@ -10,6 +10,7 @@ export const ME_QUERY = gql`
   {
     me {
       id
+      filter @client
       torrents {
         id
         hash
