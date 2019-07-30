@@ -144,7 +144,10 @@ const run = async () => {
               } as any)
               .execute();
             const update = transaction
-              .query('UPDATE users SET balance = balance - $1 WHERE id = $2', [totalCost, user.id]);
+              .query(
+                'UPDATE users SET balance = balance - $1 WHERE id = $2',
+                [history.totalCost, user.id],
+              );
             return Promise.all([insert, update]);
           }
           return Promise.resolve(undefined);
