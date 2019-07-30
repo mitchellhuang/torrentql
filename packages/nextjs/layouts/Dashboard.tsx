@@ -87,7 +87,7 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
   ...props
 }) => (
   <Global backgroundColor="var(--dashboardBg)" {...props}>
-    <Head title={title}/>
+    <Head title={title} />
     <NavBar />
     <div className="tabs">
       <Tabs router={router}/>

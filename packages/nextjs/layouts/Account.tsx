@@ -9,10 +9,9 @@ const urls = {
   UPDATE_EMAIL: '/account/update-email',
   UPDATE_PASSWORD: '/account/update-password',
   LOGOUT: '/account/logout',
-}
+};
 
 const Account = ({ children, router }) => {
-  console.log(router.pathname.includes(urls.USAGE));
   return (
     <Dashboard title="Account">
       <div className="container">
@@ -49,70 +48,70 @@ const Account = ({ children, router }) => {
         </div>
       </div>
       <style jsx>{`
-  .container {
-    display: flex;
-    flex-direction: row;
-  }
-  span.bar {
-    height: 22px;
-    width: 3px;
-  }
-  .active .bar {
-    background-color: var(--black);
-  }
-  .active a {
-    color: var(--black);
-  }
-  .tab {
-    display: flex;
-    flex-direction: row;
-    color: black;
-    list-style-type: none;
-  }
-  a {
-    text-transform: capitalize;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    color: var(--primary);
-    font-size: 12pt;
-  }
-  .tab:not(:last-child) {
-    margin-bottom: 15px;
-  }
-  .container :global(.selected-tab) {
-    flex: 1;
-  }
-  .sidebar {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 25%;
-  }
-  .actions {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    padding: 0 15px;
-    width: 75%;
-  }
-  .help {
-    padding: 0 15px;
-  }
-  @media(max-width: 767px) {
-    .container {
-      flex-direction: column;
-    }
-    .actions {
-      padding: 0;
-    }
-    .actions, .help {
-      margin-top: 15px;
-    }
-  }
-`}</style>
+        .container {
+          display: flex;
+          flex-direction: row;
+        }
+        span.bar {
+          height: 22px;
+          width: 3px;
+        }
+        .active .bar {
+          background-color: var(--black);
+        }
+        .active a {
+          color: var(--black);
+        }
+        .tab {
+          display: flex;
+          flex-direction: row;
+          color: black;
+          list-style-type: none;
+        }
+        a {
+          text-transform: capitalize;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          color: var(--primary);
+          font-size: 12pt;
+        }
+        .tab:not(:last-child) {
+          margin-bottom: 15px;
+        }
+        .container :global(.selected-tab) {
+          flex: 1;
+        }
+        .sidebar {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 25%;
+        }
+        .actions {
+          display: flex;
+          justify-content: center;
+          flex: 1;
+          padding: 0 15px;
+          width: 75%;
+        }
+        .help {
+          padding: 0 15px;
+        }
+        @media(max-width: 767px) {
+          .container {
+            flex-direction: column;
+          }
+          .actions {
+            padding: 0;
+          }
+          .actions, .help {
+            margin-top: 15px;
+          }
+        }
+      `}</style>
     </Dashboard>
   );
-}
+};
 
 export default withRouter(Account);
