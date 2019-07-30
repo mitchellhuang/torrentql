@@ -14,10 +14,16 @@ const DATA_TRANSFER_OUT_GB_COST = 0.01;
 const DATA_TRANSFER_IN_BYTES_COST = DATA_TRANSFER_IN_GB_COST / 1e9;
 const DATA_TRANSFER_OUT_BYTES_COST = DATA_TRANSFER_OUT_GB_COST / 1e9;
 
-interface TorrentUsage {
+interface Usage {
   diskUsage: number;
   dataTransferIn: number;
   dataTransferOut: number;
+}
+
+interface History {
+  totalCost: number;
+  beginAt: Date;
+  endAt: Date;
 }
 
 interface UsageByUser {
@@ -32,7 +38,7 @@ interface UsageByUser {
 const run = async () => {
   console.log('Starting billing daemon...');
 
-  const cache = new Map<string, TorrentUsage>();
+  const cache = new Map<string, Usage>();
   const connection = await createConnectionFromEnv();
 
   const writeBillingActivity = async () => {
@@ -51,25 +57,24 @@ const run = async () => {
       await Promise.all(
         (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
           const cached = cache.get(torrent.id);
-          if (cached) {
-            if (cached.diskUsage === torrent.totalSize &&
-                cached.dataTransferIn === torrent.totalDownloaded &&
-                cached.dataTransferOut === torrent.totalUploaded) {
-              return Promise.resolve(undefined);
-            }
-          }
-          cache.set(torrent.id, {
+          const usage: Usage = {
             diskUsage: torrent.totalSize,
             dataTransferIn: torrent.totalDownloaded,
             dataTransferOut: torrent.totalUploaded,
-          });
+          };
+          if (cached) {
+            if (cached.diskUsage === usage.diskUsage &&
+                cached.dataTransferIn === usage.dataTransferIn &&
+                cached.dataTransferOut === usage.dataTransferOut) {
+              return Promise.resolve(undefined);
+            }
+          }
+          cache.set(torrent.id, usage);
           return transaction.createQueryBuilder()
             .insert()
             .into(BillingActivity)
             .values({
-              diskUsage: torrent.totalSize,
-              dataTransferIn: torrent.totalDownloaded,
-              dataTransferOut: torrent.totalUploaded,
+              ...usage,
               torrent: await torrent,
               user: await torrent.user,
             } as any)
@@ -122,6 +127,11 @@ const run = async () => {
           const totalCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST +
                             usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
           if (totalCost > 0) {
+            const history: History = {
+              totalCost,
+              beginAt: usage.begin_at,
+              endAt: usage.end_at,
+            };
             const user = new User();
             user.id = usage.user_id;
             const insert = transaction
@@ -129,9 +139,7 @@ const run = async () => {
               .insert()
               .into(BillingHistory)
               .values({
-                totalCost,
-                beginAt: usage.begin_at,
-                endAt: usage.end_at,
+                ...history,
                 user,
               } as any)
               .execute();
