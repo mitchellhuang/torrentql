@@ -27,7 +27,15 @@ function create(initialState, { getToken }) {
   });
   const token = getToken();
   const cache = new InMemoryCache().restore(initialState || {});
-  cache.writeData({ data: { isLoggedIn: !!token } });
+  cache.writeData({
+    data: {
+      isLoggedIn: !!token,
+      getDashboard: {
+        filter: '',
+        __typename: 'Dashboard',
+      },
+    },
+  });
   return new ApolloClient({
     connectToDevTools: process.browser,
     ssrMode: !process.browser,

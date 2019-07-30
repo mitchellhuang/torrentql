@@ -6,11 +6,18 @@ export const IS_LOGGED_IN_QUERY = gql`
   }
 `;
 
+export const GET_DASHBOARD_QUERY = gql`
+  {
+    getDashboard @client {
+      filter
+    }
+  }
+`;
+
 export const ME_QUERY = gql`
   {
     me {
       id
-      filter @client
       torrents {
         id
         hash

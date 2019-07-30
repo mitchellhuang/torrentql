@@ -1,18 +1,19 @@
 import gql from 'graphql-tag';
-import {GET_TORRENT_QUERY, ME_QUERY} from './queries';
+import { GET_TORRENT_QUERY, GET_DASHBOARD_QUERY } from './queries';
 
 export const typeDefs = gql`
   extend type Torrent {
     selectedFile: String
   }
-  extend type User {
-      filter: String
+  type Dashboard {
+    filter: String
+  }
+  extend type Query {
+    getDashboard: Dashboard!
   }
   extend type Mutation {
     updateSelectedFile(id: String!, filePath: String!): Torrent
-  }
-  extend type Mutation {
-    updateSearchQuery(searchQuery: String!): User
+    updateFilter(filter: String!): Dashboard
   }
 `;
 
@@ -30,19 +31,6 @@ export const resolvers = {
       }
     },
   },
-  User: {
-    filter: (_, _, { cache }) => {
-      try {
-        const { me: { filter } } = cache.readQuery({
-          query: ME_QUERY,
-        });
-        console.log('filter', filter);
-        return filter;
-      } catch (error) {
-        return null;
-      }
-    },
-  },
   Mutation: {
     updateSelectedFile: (_, { id, filePath }, { cache }) => {
       const { getTorrent } = cache.readQuery({ query: GET_TORRENT_QUERY, variables: { id } });
@@ -54,16 +42,24 @@ export const resolvers = {
       });
       return getTorrent;
     },
-    updateSearchQuery: (_, { searchQuery }, { cache }) => {
-      console.log("UPDATING SEARCH QUERY");
-      const { me } = cache.readQuery({ query: ME_QUERY });
-      console.log('me', me);
-      me.filter = searchQuery;
-      cache.writeQuery({
-        query: GET_TORRENT_QUERY,
-        data : { me },
-      });
-      return me;
+    updateFilter: (_, { filter }, { cache }) => {
+      try {
+        const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
+        getDashboard.filter = filter;
+        return cache.writeQuery({
+          query: GET_DASHBOARD_QUERY,
+          data: { getDashboard },
+        });
+      } catch (error) {
+        return cache.writeQuery({
+          query: GET_DASHBOARD_QUERY,
+          data: {
+            getDashboard: {
+              filter,
+            },
+          },
+        });
+      }
     },
   },
 };

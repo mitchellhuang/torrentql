@@ -16,9 +16,9 @@ export const UPDATE_SELECTED_FILE_MUTATION = gql`
   }
 `;
 
-export const UPDATE_SEARCH_QUERY_MUTATION = gql`
-  mutation updateSearchQuery($searchQuery: String!) {
-    updateSearchQuery(searchQuery: $searchQuery) @client {
+export const UPDATE_FILTER_MUTATION = gql`
+  mutation updateFilter($filter: String!) {
+    updateFilter(filter: $filter) @client {
       filter
     }
   }

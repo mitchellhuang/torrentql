@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Search as SearchIcon } from 'react-feather';
 import { useMutation } from 'react-apollo-hooks';
-import { UPDATE_SEARCH_QUERY_MUTATION } from '../apollo/mutations';
+import { UPDATE_FILTER_MUTATION } from '../apollo/mutations';
 
 const SearchInput = () => {
-  const [inputText, setInputText] = useState(null);
-  const [updateSearchQuery] = useMutation(UPDATE_SEARCH_QUERY_MUTATION);
-  console.log(setInputText);
+  const [updateFilter] = useMutation(UPDATE_FILTER_MUTATION);
+  const handleChange = inputValue => updateFilter({
+    variables: {
+      filter: inputValue,
+    },
+  });
   return (
     <div className="input-group">
       <SearchIcon size={20}/>
-      <input type="text" placeholder="Search torrents" value={inputText} onChange={() => updateSearchQuery(inputText)}/>
+      <input type="text" placeholder="Search torrents" onChange={(e) => handleChange(e.target.value)}/>
       <style>{`
       .input-group {
         padding-left: 10px;

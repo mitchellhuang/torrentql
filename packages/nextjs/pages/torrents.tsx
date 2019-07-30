@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
-import { ME_QUERY } from '../apollo/queries';
+import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
 import TorrentsSidebar from '../components/TorrentsSidebar';
 
@@ -36,6 +36,8 @@ const TorrentsWithData = () => {
     ssr: false,
     pollInterval: 2000,
   });
+  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  console.log('DASHBOARD FILTER IN TORRENTS', getDashboard);
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }
