@@ -43,23 +43,12 @@ export const resolvers = {
       return getTorrent;
     },
     updateFilter: (_, { filter }, { cache }) => {
-      try {
-        const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
-        getDashboard.filter = filter;
-        return cache.writeQuery({
-          query: GET_DASHBOARD_QUERY,
-          data: { getDashboard },
-        });
-      } catch (error) {
-        return cache.writeQuery({
-          query: GET_DASHBOARD_QUERY,
-          data: {
-            getDashboard: {
-              filter,
-            },
-          },
-        });
-      }
+      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
+      getDashboard.filter = filter;
+      return cache.writeQuery({
+        query: GET_DASHBOARD_QUERY,
+        data: { getDashboard },
+      });
     },
   },
 };

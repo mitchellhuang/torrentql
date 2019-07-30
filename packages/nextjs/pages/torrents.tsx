@@ -37,7 +37,6 @@ const TorrentsWithData = () => {
     pollInterval: 2000,
   });
   let { data: { getDashboard: { filter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
-  console.log('DASHBOARD FILTER IN TORRENTS', filter);
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }

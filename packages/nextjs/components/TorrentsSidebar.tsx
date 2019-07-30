@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search as SearchIcon } from 'react-feather';
+import { Search as SearchIcon, Aperture, Download, Check, Square, Activity, TrendingDown } from 'react-feather';
 import { useMutation } from 'react-apollo-hooks';
 import { UPDATE_FILTER_MUTATION } from '../apollo/mutations';
 
@@ -13,7 +13,7 @@ const SearchInput = () => {
   return (
     <div className="input-group">
       <SearchIcon size={20}/>
-      <input type="text" placeholder="Search torrents" onChange={(e) => handleChange(e.target.value)}/>
+      <input type="text" placeholder="Search torrents" onChange={e => handleChange(e.target.value)}/>
       <style>{`
       .input-group {
         padding-left: 10px;
@@ -37,18 +37,71 @@ const SearchInput = () => {
     `}</style>
     </div>
   );
-}
+};
+
+const StatusFilters = () => (
+  <div className="status-filters">
+    <h5 className="mb-2">Filter by status</h5>
+    <div className="row selected">
+      <Aperture size={22}/>
+      <span>All</span>
+    </div>
+    <div className="row">
+      <Download size={22}/>
+      <span>Download</span>
+    </div>
+    <div className="row">
+      <Check size={22}/>
+      <span>Complete</span>
+    </div>
+    <div className="row">
+      <Square size={22}/>
+      <span>Stopped</span>
+    </div>
+    <div className="row">
+      <Activity size={22}/>
+      <span>Active</span>
+    </div>
+    <div className="row">
+      <TrendingDown size={22}/>
+      <span>Inactive</span>
+    </div>
+    <style jsx>{`
+      .status-filters {
+        padding: 15px;
+      }
+      h5 {
+        color: var(--grayBlue);
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      span {
+        margin-left: 5px;
+      }
+      .selected {
+        color: var(--primary);
+      }
+    `}</style>
+  </div>
+);
 
 const TorrentsSidebar = () => (
   <div className="torrents-sidebar">
     My name is borat. My wife, yes yes.
     <SearchInput/>
+    <StatusFilters/>
     <style>{`
       .torrents-sidebar {
         background-color: var(--darkBlue);
         color: var(--blueGray);;
         display: flex;
+        border-radius: 5px;
         flex-direction: column;
+        height: 100vh;
       }
     `}</style>
   </div>
