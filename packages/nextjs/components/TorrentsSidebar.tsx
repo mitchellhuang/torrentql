@@ -1,5 +1,14 @@
 import React from 'react';
-import { Search as SearchIcon, Aperture, Download, Check, Square, Activity, TrendingDown } from 'react-feather';
+import {
+  Search as SearchIcon,
+  Aperture,
+  Download,
+  Check,
+  Square,
+  Activity,
+  TrendingDown,
+  CloudDrizzle,
+} from 'react-feather';
 import { useMutation } from 'react-apollo-hooks';
 import { UPDATE_FILTER_MUTATION } from '../apollo/mutations';
 
@@ -16,6 +25,7 @@ const SearchInput = () => {
       <input type="text" placeholder="Search torrents" onChange={e => handleChange(e.target.value)}/>
       <style>{`
       .input-group {
+        margin-top: 50px;
         padding-left: 10px;
         height: 50px;
         display: flex;
@@ -66,12 +76,17 @@ const StatusFilters = () => (
       <TrendingDown size={22}/>
       <span>Inactive</span>
     </div>
+    <h5 className="mb-2 mt-4">Filter by host</h5>
+    <div className="row">
+      <CloudDrizzle size={22}/>
+      <span>christianbooks.net</span>
+    </div>
     <style jsx>{`
       .status-filters {
         padding: 15px;
       }
       h5 {
-        color: var(--grayBlue);
+        color: var(--blueGray);
       }
       .row {
         display: flex;
@@ -80,7 +95,7 @@ const StatusFilters = () => (
         font-weight: bold;
       }
       span {
-        margin-left: 5px;
+        margin-left: 10px;
       }
       .selected {
         color: var(--primary);
@@ -91,7 +106,6 @@ const StatusFilters = () => (
 
 const TorrentsSidebar = () => (
   <div className="torrents-sidebar">
-    My name is borat. My wife, yes yes.
     <SearchInput/>
     <StatusFilters/>
     <style>{`
@@ -99,7 +113,6 @@ const TorrentsSidebar = () => (
         background-color: var(--darkBlue);
         color: var(--blueGray);;
         display: flex;
-        border-radius: 5px;
         flex-direction: column;
         height: 100vh;
       }

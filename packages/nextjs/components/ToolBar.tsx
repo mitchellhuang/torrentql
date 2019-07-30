@@ -4,7 +4,7 @@ import AddTorrentModal from '../modals/AddTorrentModal';
 import { useMutation } from 'react-apollo-hooks';
 import { DELETE_TORRENT_MUTATION } from '../apollo/mutations';
 import { ME_QUERY } from '../apollo/queries';
-import { Trash2, Plus } from 'react-feather';
+import { Minus, Plus, Pause, Square, Play } from 'react-feather';
 
 interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
   icon: React.ReactElement;
@@ -12,36 +12,28 @@ interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
 }
 
 const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
-  children,
   onClick,
   icon,
   className,
-  primary,
 }) => (
   <div className="tool-bar-button">
     <button onClick={onClick} className={className}>
       {icon}
-      <div className="children">
-        {children}
-      </div>
     </button>
     <style jsx>{`
         button {
           display: flex;
-          padding: 7.5px 10px;
-          color: ${primary ? 'var(--white)' : 'var(--primary)'};
-          background-color: ${primary ? 'var(--primary)' : 'var(--white)'};
-          border: 1px solid var(--primary);
-          border-radius: 5px;
+          padding: 5px;
+          margin: 0 10px;
+          color: var(--blueGray);
+          background-color: #EEE;
+          border: none;
           outline: none;
           cursor: pointer;
           text-decoration: none;
           text-align: center;
           font-weight: 600;
           transition: all 0.15s ease;
-        }
-        .children {
-          margin-left: 5px;
         }
       `}</style>
   </div>
@@ -63,25 +55,31 @@ const ToolBar = ({ selected }) => {
       });
     },
   });
-  const iconSize = 18;
+  const iconSize = 23;
   return (
     <div className="toolbar">
-      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} primary>
-        Add
-      </ToolBarButton>
+      <ToolBarButton icon={<Play size={iconSize}/>} />
+      <ToolBarButton icon={<Square size={iconSize}/>} />
+      <ToolBarButton icon={<Pause size={iconSize}/>} />
+      <span className="line-separator"/>
+      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} />
       <ToolBarButton
-        className="ml-2"
         onClick={() => selected.forEach(id => handleDeleteTorrent(id))}
-        icon={<Trash2 size={iconSize}/>}>
-        Delete
-      </ToolBarButton>
+        icon={<Minus size={iconSize}/>} />
       <AddTorrentModal active={active} toggle={toggle} />
       <style jsx>{`
         .toolbar {
           display: flex;
+          padding: 5px;
           align-items: center;
           justify-content: flex-end;
-          margin-bottom: 10px;
+          background-color: #EEE;
+        }
+        .line-separator {
+          width: 2px;
+          margin: 0 15px;
+          height: 25px;
+          background-color: var(--blueGray);
         }
       `}</style>
     </div>
