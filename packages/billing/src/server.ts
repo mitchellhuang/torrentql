@@ -6,9 +6,9 @@ import { BillingActivity } from '@torrentql/common/dist/entities/BillingActivity
 import { BillingHistory } from '@torrentql/common/dist/entities/BillingHistory';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
-const DISK_USAGE_GB_MONTH_COST = 0.01;
-const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
-const DISK_USAGE_BYTES_SECOND_COST = DISK_USAGE_GB_SECOND_COST / 1e9;
+// const DISK_USAGE_GB_MONTH_COST = 0.01;
+// const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
+// const DISK_USAGE_BYTES_SECOND_COST = DISK_USAGE_GB_SECOND_COST / 1e9;
 const DATA_TRANSFER_IN_GB_COST = 0.01;
 const DATA_TRANSFER_OUT_GB_COST = 0.01;
 const DATA_TRANSFER_IN_BYTES_COST = DATA_TRANSFER_IN_GB_COST / 1e9;
@@ -133,8 +133,8 @@ const run = async () => {
               totalCost,
               beginAt: usage.begin_at,
               endAt: usage.end_at,
-              user: Promise.resolve(user),
-            }).execute();
+              user,
+            } as any).execute();
           }
           return Promise.resolve(undefined);
         }),
