@@ -85,7 +85,6 @@ const run = async () => {
 
   const writeBillingHistory = async () => {
     const usageByUser: UsageByUser[] = await connection
-      .createEntityManager()
       .query(`
         WITH per_torrent AS (
           SELECT DISTINCT ON (t1.torrent_id)
@@ -129,12 +128,20 @@ const run = async () => {
           if (totalCost > 0) {
             const user = new User();
             user.id = usage.user_id;
-            return transaction.createQueryBuilder().insert().into(BillingHistory).values({
-              totalCost,
-              beginAt: usage.begin_at,
-              endAt: usage.end_at,
-              user,
-            } as any).execute();
+            const insert = transaction
+              .createQueryBuilder()
+              .insert()
+              .into(BillingHistory)
+              .values({
+                totalCost,
+                beginAt: usage.begin_at,
+                endAt: usage.end_at,
+                user,
+              } as any)
+              .execute();
+            const update = transaction
+              .query('UPDATE users SET balance = balance - $1 WHERE id = $2', [totalCost, user.id]);
+            return Promise.all([insert, update]);
           }
           return Promise.resolve(undefined);
         }),
