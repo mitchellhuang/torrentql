@@ -99,7 +99,6 @@ const Dashboard = ({
         flex-direction: column;
       }
       .content {
-        border-radius: 5px;
         overflow: auto;
       }
     `}</style>
