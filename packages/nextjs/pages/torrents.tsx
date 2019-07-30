@@ -36,8 +36,8 @@ const TorrentsWithData = () => {
     ssr: false,
     pollInterval: 2000,
   });
-  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
-  console.log('DASHBOARD FILTER IN TORRENTS', getDashboard);
+  let { data: { getDashboard: { filter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  console.log('DASHBOARD FILTER IN TORRENTS', filter);
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }
@@ -48,9 +48,14 @@ const TorrentsWithData = () => {
     return (
       <>
         <ToolBar selected={selected} />
-        <Unstyled message="No torrents."/>
+        <Unstyled message="No torrents." />
       </>
     );
+  }
+  let torrents = data.me.torrents;
+  if (filter) {
+    filter = filter.toLowerCase();
+    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(filter));
   }
   return (
     <div className="torrents">
@@ -58,7 +63,7 @@ const TorrentsWithData = () => {
       <div className="main">
         <ToolBar selected={selected} />
         <TorrentTableHeader />
-        {data.me.torrents.map(torrent => (
+        {torrents.map(torrent => (
           <Torrent
             torrent={torrent}
             selected={selected.includes(torrent.id)}
