@@ -54,7 +54,15 @@ export default function initApollo(initialState, options) {
   if (!apolloClient) {
     apolloClient = create(initialState, options);
     apolloClient.onResetStore(() => {
-      apolloClient.cache.writeData({ data: { isLoggedIn: false } });
+      return apolloClient.cache.writeData({
+        data: {
+          isLoggedIn: false,
+          getDashboard: {
+            filter: '',
+            __typename: 'Dashboard',
+          },
+        },
+      });
     });
   }
 
