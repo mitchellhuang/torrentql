@@ -44,10 +44,6 @@ const run = async () => {
       .leftJoinAndSelect('torrent.server', 'server')
       .getMany();
 
-    if (!torrents.length) {
-      return;
-    }
-
     let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
     torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
 
