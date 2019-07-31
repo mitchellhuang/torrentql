@@ -31,7 +31,8 @@ function create(initialState, { getToken }) {
     data: {
       isLoggedIn: !!token,
       getDashboard: {
-        filter: '',
+        searchFilter: '',
+        statusFilter: 'all',
         __typename: 'Dashboard',
       },
     },
@@ -58,7 +59,7 @@ export default function initApollo(initialState, options) {
         data: {
           isLoggedIn: false,
           getDashboard: {
-            filter: '',
+            searchFilter: 'all',
             __typename: 'Dashboard',
           },
         },

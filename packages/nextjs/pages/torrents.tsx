@@ -36,7 +36,7 @@ const TorrentsWithData = () => {
     ssr: false,
     pollInterval: 2000,
   });
-  let { data: { getDashboard: { filter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  let { data: { getDashboard: { searchFilter, statusFilter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }
@@ -52,9 +52,12 @@ const TorrentsWithData = () => {
     );
   }
   let torrents = data.me.torrents;
-  if (filter) {
-    filter = filter.toLowerCase();
-    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(filter));
+  if (searchFilter) {
+    searchFilter = searchFilter.toLowerCase();
+    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
+  }
+  if (statusFilter !== 'all') {
+    torrents = torrents.filter(torrent => torrent.state === statusFilter);
   }
   return (
     <div className="torrents">

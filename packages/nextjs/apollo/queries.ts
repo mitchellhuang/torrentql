@@ -9,7 +9,8 @@ export const IS_LOGGED_IN_QUERY = gql`
 export const GET_DASHBOARD_QUERY = gql`
   {
     getDashboard @client {
-      filter
+      searchFilter
+      statusFilter
     }
   }
 `;

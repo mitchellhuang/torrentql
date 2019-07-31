@@ -2,7 +2,7 @@ import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { CheckSquare, Square, Play } from 'react-feather';
+import { CheckSquare, Square, Percent } from 'react-feather';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -131,7 +131,7 @@ const ProgressBar = ({
     : `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`;
   return (
     <div className="progress-bar">
-      <Play size={14} className="play" />
+      <Percent size={14} className="chevron-right" />
       <div className="progress-bar-inner"/>
       <style jsx>{`
         .progress-bar {
@@ -144,13 +144,10 @@ const ProgressBar = ({
           margin-right: 10px;
           overflow: hidden;
         }
-        .progress-bar :global(.play) {
-          fill: var(--darkGray);
-          margin-right: 5px;
-        }
         .progress-bar-inner {
           width: 100%;
           height: 4px;
+          margin-left: 5px;
           background: ${background};
         }
      `}</style>

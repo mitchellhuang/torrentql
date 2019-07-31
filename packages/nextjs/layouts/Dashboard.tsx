@@ -108,7 +108,7 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
       }
       ${noWrapPadding && `
       .wrapper {
-        padding: 0;
+        padding: 0 !important;
       }
       `}
       .content {

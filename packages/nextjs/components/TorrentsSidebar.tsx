@@ -2,21 +2,21 @@ import React from 'react';
 import {
   Search as SearchIcon,
   Aperture,
-  Download,
-  Check,
-  Square,
-  Activity,
-  TrendingDown,
+  DownloadCloud,
+  UploadCloud,
+  Pause,
+  Clock,
   CloudDrizzle,
 } from 'react-feather';
-import { useMutation } from 'react-apollo-hooks';
-import { UPDATE_FILTER_MUTATION } from '../apollo/mutations';
+import {useMutation, useQuery} from 'react-apollo-hooks';
+import {UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION} from '../apollo/mutations';
+import {GET_DASHBOARD_QUERY} from "../apollo/queries";
 
 const SearchInput = () => {
-  const [updateFilter] = useMutation(UPDATE_FILTER_MUTATION);
-  const handleChange = inputValue => updateFilter({
+  const [updateSearchFilter] = useMutation(UPDATE_SEARCH_FILTER_MUTATION);
+  const handleChange = inputValue => updateSearchFilter({
     variables: {
-      filter: inputValue,
+      searchFilter: inputValue,
     },
   });
   return (
@@ -49,39 +49,50 @@ const SearchInput = () => {
   );
 };
 
-const StatusFilters = () => (
-  <div className="status-filters">
-    <h5 className="mb-2">Filter by status</h5>
-    <div className="row selected">
-      <Aperture size={22}/>
-      <span>All</span>
-    </div>
-    <div className="row">
-      <Download size={22}/>
-      <span>Download</span>
-    </div>
-    <div className="row">
-      <Check size={22}/>
-      <span>Complete</span>
-    </div>
-    <div className="row">
-      <Square size={22}/>
-      <span>Stopped</span>
-    </div>
-    <div className="row">
-      <Activity size={22}/>
-      <span>Active</span>
-    </div>
-    <div className="row">
-      <TrendingDown size={22}/>
-      <span>Inactive</span>
-    </div>
-    <h5 className="mb-2 mt-4">Filter by host</h5>
-    <div className="row">
-      <CloudDrizzle size={22}/>
-      <span>christianbooks.net</span>
-    </div>
-    <style jsx>{`
+const statusTypes = {
+  ALL: 'all',
+  SEEDING: 'seeding',
+  DOWNLOADING: 'downloading',
+  PAUSED: 'paused',
+  QUEUED: 'queued',
+};
+
+const StatusFilters = () => {
+  const [updateStatusFilter] = useMutation(UPDATE_STATUS_FILTER_MUTATION);
+  const { data: { getDashboard: { statusFilter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  const handleChange = filter => updateStatusFilter({
+    variables: { statusFilter: filter },
+  });
+  const getClassName = type => type === statusFilter ? 'row selected' : 'row';
+  return (
+    <div className="status-filters">
+      <h5 className="mb-2">Filter by status</h5>
+      <div className={getClassName(statusTypes.ALL)} onClick={() => handleChange(statusTypes.ALL)}>
+        <Aperture size={22}/>
+        <span>All</span>
+      </div>
+      <div className={getClassName(statusTypes.SEEDING)} onClick={() => handleChange(statusTypes.SEEDING)}>
+        <UploadCloud size={22}/>
+        <span>Seeding</span>
+      </div>
+      <div className={getClassName(statusTypes.DOWNLOADING)} onClick={() => handleChange(statusTypes.DOWNLOADING)}>
+        <DownloadCloud size={22}/>
+        <span>Downloading</span>
+      </div>
+      <div className={getClassName(statusTypes.PAUSED)} onClick={() => handleChange(statusTypes.PAUSED)}>
+        <Pause size={22}/>
+        <span>Paused</span>
+      </div>
+      <div className={getClassName(statusTypes.QUEUED)} onClick={() => handleChange(statusTypes.QUEUED)}>
+        <Clock size={22}/>
+        <span>Queued</span>
+      </div>
+      <h5 className="mb-2 mt-4">Filter by host</h5>
+      <div className="row">
+        <CloudDrizzle size={22}/>
+        <span>christianbooks.net</span>
+      </div>
+      <style jsx>{`
       .status-filters {
         padding: 15px;
       }
@@ -101,8 +112,9 @@ const StatusFilters = () => (
         color: var(--primary);
       }
     `}</style>
-  </div>
-);
+    </div>
+  );
+};
 
 const TorrentsSidebar = () => (
   <div className="torrents-sidebar">

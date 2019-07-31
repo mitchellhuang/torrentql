@@ -2,19 +2,21 @@ import gql from 'graphql-tag';
 import { GET_TORRENT_QUERY, GET_DASHBOARD_QUERY } from './queries';
 
 export const typeDefs = gql`
-  extend type Torrent {
-    selectedFile: String
-  }
-  type Dashboard {
-    filter: String
-  }
-  extend type Query {
-    getDashboard: Dashboard!
-  }
-  extend type Mutation {
-    updateSelectedFile(id: String!, filePath: String!): Torrent
-    updateFilter(filter: String!): Dashboard
-  }
+    extend type Torrent {
+        selectedFile: String
+    }
+    type Dashboard {
+        searchFilter: String
+        statusFilter: String
+    }
+    extend type Query {
+        getDashboard: Dashboard!
+    }
+    extend type Mutation {
+        updateSelectedFile(id: String!, filePath: String!): Torrent
+        updateSearchFilter(searchFilter: String!): Dashboard
+        updateStatusFilter(statusFilter: String!): Dashboard
+    }
 `;
 
 export const resolvers = {
@@ -42,9 +44,17 @@ export const resolvers = {
       });
       return getTorrent;
     },
-    updateFilter: (_, { filter }, { cache }) => {
+    updateSearchFilter: (_, { searchFilter }, { cache }) => {
       const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
-      getDashboard.filter = filter;
+      getDashboard.searchFilter = searchFilter;
+      return cache.writeQuery({
+        query: GET_DASHBOARD_QUERY,
+        data: { getDashboard },
+      });
+    },
+    updateStatusFilter: (_, { statusFilter }, { cache }) => {
+      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
+      getDashboard.statusFilter = statusFilter;
       return cache.writeQuery({
         query: GET_DASHBOARD_QUERY,
         data: { getDashboard },

@@ -16,10 +16,17 @@ export const UPDATE_SELECTED_FILE_MUTATION = gql`
   }
 `;
 
-export const UPDATE_FILTER_MUTATION = gql`
-  mutation updateFilter($filter: String!) {
-    updateFilter(filter: $filter) @client {
-      filter
+export const UPDATE_SEARCH_FILTER_MUTATION = gql`
+  mutation updateSearchFilter($searchFilter: String!) {
+    updateSearchFilter(searchFilter: $searchFilter) @client {
+      searchFilter
+    }
+  }
+`;
+export const UPDATE_STATUS_FILTER_MUTATION = gql`
+  mutation updateStatusFilter($statusFilter: String!) {
+    updateStatusFilter(statusFilter: $statusFilter) @client {
+      statusFilter
     }
   }
 `;
