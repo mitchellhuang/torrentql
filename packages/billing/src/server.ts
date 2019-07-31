@@ -6,9 +6,9 @@ import { BillingActivity } from '@torrentql/common/dist/entities/BillingActivity
 import { BillingHistory } from '@torrentql/common/dist/entities/BillingHistory';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
-// const DISK_USAGE_GB_MONTH_COST = 0.01;
-// const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
-// const DISK_USAGE_BYTES_SECOND_COST = DISK_USAGE_GB_SECOND_COST / 1e9;
+const DISK_USAGE_GB_MONTH_COST = 0.01;
+const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
+const DISK_USAGE_BYTE_SECONDS_COST = DISK_USAGE_GB_SECOND_COST / 1e9;
 const DATA_TRANSFER_IN_GB_COST = 0.01;
 const DATA_TRANSFER_OUT_GB_COST = 0.01;
 const DATA_TRANSFER_IN_BYTES_COST = DATA_TRANSFER_IN_GB_COST / 1e9;
@@ -30,7 +30,7 @@ interface UsageByUser {
   user_id: string;
   begin_at: Date;
   end_at: Date;
-  disk_usage: number;
+  disk_usage_byte_seconds: number;
   data_transfer_in: number;
   data_transfer_out: number;
 }
@@ -91,11 +91,13 @@ const run = async () => {
           SELECT DISTINCT ON (t1.torrent_id)
               t1.torrent_id,
               t1.user_id,
-              t1.disk_usage,
-              CURRENT_TIMESTAMP as begin_at,
-              CURRENT_TIMESTAMP - interval '1 hour' as end_at,
+              CEIL(
+                EXTRACT(EPOCH FROM (MAX(t2.created_at) - MIN(t2.created_at))) * t1.disk_usage
+              ) AS disk_usage_byte_seconds,
               MAX(t2.data_transfer_in) - MIN(t2.data_transfer_in) AS data_transfer_in,
-              MAX(t2.data_transfer_out) - MIN(t2.data_transfer_out) AS data_transfer_out
+              MAX(t2.data_transfer_out) - MIN(t2.data_transfer_out) AS data_transfer_out,
+              CURRENT_TIMESTAMP as begin_at,
+              CURRENT_TIMESTAMP - interval '1 hour' as end_at
           FROM
               billing_activity AS t1,
               billing_activity AS t2
@@ -109,11 +111,11 @@ const run = async () => {
               t1.user_id
         ) SELECT
             user_id,
-            begin_at,
-            end_at,
-            SUM(disk_usage) disk_usage,
+            SUM(disk_usage_byte_seconds) disk_usage_byte_seconds,
             SUM(data_transfer_in) data_transfer_in,
-            SUM(data_transfer_out) data_transfer_out
+            SUM(data_transfer_out) data_transfer_out,
+            begin_at,
+            end_at
             FROM per_torrent
           GROUP BY
             user_id,
@@ -124,7 +126,8 @@ const run = async () => {
     await connection.transaction(async (transaction) => {
       await Promise.all(
         usageByUser.map((usage) => {
-          const totalCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST +
+          const totalCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_COST +
+                            usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST +
                             usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
           if (totalCost > 0) {
             const history: History = {
