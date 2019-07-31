@@ -71,12 +71,11 @@ const run = async () => {
             dataTransferIn: torrent.totalDownloaded,
             dataTransferOut: torrent.totalUploaded,
           };
-          if (cached) {
-            if (cached.diskUsage === usage.diskUsage &&
-                cached.dataTransferIn === usage.dataTransferIn &&
-                cached.dataTransferOut === usage.dataTransferOut) {
-              return Promise.resolve(undefined);
-            }
+          if (cached &&
+              cached.diskUsage === usage.diskUsage &&
+              cached.dataTransferIn === usage.dataTransferIn &&
+              cached.dataTransferOut === usage.dataTransferOut) {
+            return Promise.resolve(undefined);
           }
           cache.set(torrent.id, usage);
           return transaction.createQueryBuilder()
@@ -84,9 +83,9 @@ const run = async () => {
             .into(BillingActivity)
             .values({
               ...usage,
-              torrent: await torrent,
-              user: await torrent.user,
-            } as any)
+              torrent: await torrent as any,
+              user: await torrent.user as any,
+            })
             .execute();
         }),
       );
@@ -139,40 +138,40 @@ const run = async () => {
           const dataTransferInCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST;
           const dataTransferOutCost = usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
           const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
-          if (cost > 0) {
-            const history: History = {
-              cost,
-              diskUsage: usage.disk_usage_byte_seconds,
-              diskUsagePrice: DISK_USAGE_GB_MONTH_COST,
-              diskUsageCost,
-              dataTransferIn: usage.data_transfer_in,
-              dataTransferInPrice: DATA_TRANSFER_IN_GB_COST,
-              dataTransferInCost,
-              dataTransferOut: usage.data_transfer_out,
-              dataTransferOutPrice: DATA_TRANSFER_OUT_GB_COST,
-              dataTransferOutCost,
-              beginAt: usage.begin_at,
-              endAt: usage.end_at,
-            };
-            const user = new User();
-            user.id = usage.user_id;
-            const insert = transaction
-              .createQueryBuilder()
-              .insert()
-              .into(BillingHistory)
-              .values({
-                ...history,
-                user,
-              } as any)
-              .execute();
-            const update = transaction
-              .query(
-                'UPDATE users SET balance = balance - $1 WHERE id = $2',
-                [history.cost, user.id],
-              );
-            return Promise.all([insert, update]);
+          if (cost <= 0) {
+            return Promise.resolve(undefined);
           }
-          return Promise.resolve(undefined);
+          const history: History = {
+            cost,
+            diskUsage: usage.disk_usage_byte_seconds,
+            diskUsagePrice: DISK_USAGE_GB_MONTH_COST,
+            diskUsageCost,
+            dataTransferIn: usage.data_transfer_in,
+            dataTransferInPrice: DATA_TRANSFER_IN_GB_COST,
+            dataTransferInCost,
+            dataTransferOut: usage.data_transfer_out,
+            dataTransferOutPrice: DATA_TRANSFER_OUT_GB_COST,
+            dataTransferOutCost,
+            beginAt: usage.begin_at,
+            endAt: usage.end_at,
+          };
+          const user = new User();
+          user.id = usage.user_id;
+          const insert = transaction
+            .createQueryBuilder()
+            .insert()
+            .into(BillingHistory)
+            .values({
+              ...history,
+              user: user as any,
+            })
+            .execute();
+          const update = transaction
+            .query(
+              'UPDATE users SET balance = balance - $1 WHERE id = $2',
+              [history.cost, user.id],
+            );
+          return Promise.all([insert, update]);
         }),
       );
     });
