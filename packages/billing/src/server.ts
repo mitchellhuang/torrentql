@@ -21,7 +21,16 @@ interface Usage {
 }
 
 interface History {
-  totalCost: number;
+  cost: number;
+  diskUsage: number;
+  diskUsagePrice: number;
+  diskUsageCost: number;
+  dataTransferIn: number;
+  dataTransferInPrice: number;
+  dataTransferInCost: number;
+  dataTransferOut: number;
+  dataTransferOutPrice: number;
+  dataTransferOutCost: number;
   beginAt: Date;
   endAt: Date;
 }
@@ -126,12 +135,22 @@ const run = async () => {
     await connection.transaction(async (transaction) => {
       await Promise.all(
         usageByUser.map((usage) => {
-          const totalCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_COST +
-                            usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST +
-                            usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
-          if (totalCost > 0) {
+          const diskUsageCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_COST;
+          const dataTransferInCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST;
+          const dataTransferOutCost = usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
+          const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
+          if (cost > 0) {
             const history: History = {
-              totalCost,
+              cost,
+              diskUsage: usage.disk_usage_byte_seconds,
+              diskUsagePrice: DISK_USAGE_GB_MONTH_COST,
+              diskUsageCost,
+              dataTransferIn: usage.data_transfer_in,
+              dataTransferInPrice: DATA_TRANSFER_IN_GB_COST,
+              dataTransferInCost,
+              dataTransferOut: usage.data_transfer_out,
+              dataTransferOutPrice: DATA_TRANSFER_OUT_GB_COST,
+              dataTransferOutCost,
               beginAt: usage.begin_at,
               endAt: usage.end_at,
             };
@@ -149,7 +168,7 @@ const run = async () => {
             const update = transaction
               .query(
                 'UPDATE users SET balance = balance - $1 WHERE id = $2',
-                [history.totalCost, user.id],
+                [history.cost, user.id],
               );
             return Promise.all([insert, update]);
           }

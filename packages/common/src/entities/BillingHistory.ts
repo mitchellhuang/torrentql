@@ -15,7 +15,34 @@ export class BillingHistory {
   id: string;
 
   @Column('decimal', { precision: 19, scale: 4 })
-  totalCost: number;
+  cost: number;
+
+  @Column('bigint')
+  diskUsage: number;
+
+  @Column('decimal', { precision: 19, scale: 4 })
+  diskUsagePrice: number;
+
+  @Column('decimal', { precision: 19, scale: 4 })
+  diskUsageCost: number;
+
+  @Column('bigint')
+  dataTransferIn: number;
+
+  @Column('decimal', { precision: 19, scale: 4 })
+  dataTransferInPrice: number;
+
+  @Column('decimal', { precision: 19, scale: 4 })
+  dataTransferInCost: number;
+
+  @Column('bigint')
+  dataTransferOut: number;
+
+  @Column('decimal', { precision: 19, scale: 4 })
+  dataTransferOutPrice: number;
+
+  @Column('decimal', { precision: 19, scale: 4 })
+  dataTransferOutCost: number;
 
   @Column()
   beginAt: Date;
