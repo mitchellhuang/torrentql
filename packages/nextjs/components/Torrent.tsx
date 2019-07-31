@@ -126,6 +126,9 @@ const ProgressBar = ({
   progress,
 }) => {
   const height = 25;
+  const background = progress < 1
+    ? 'var(--lightGray)'
+    : `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`;
   return (
     <div className="progress-bar">
       <Play size={14} className="play" />
@@ -148,7 +151,7 @@ const ProgressBar = ({
         .progress-bar-inner {
           width: 100%;
           height: 4px;
-          background: linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0);
+          background: ${background};
         }
      `}</style>
     </div>

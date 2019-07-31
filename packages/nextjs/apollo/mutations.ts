@@ -61,3 +61,15 @@ export const DELETE_TORRENT_MUTATION = gql`
     deleteTorrent(id: $id)
   }
 `;
+
+export const PAUSE_TORRENT_MUTATION = gql`
+  mutation pauseTorrent($id: String!) {
+    pauseTorrent(id: $id)
+  }
+`;
+
+export const RESUME_TORRENT_MUTATION = gql`
+  mutation resumeTorrent($id: String!) {
+    resumeTorrent(id: $id)
+  }
+`;
