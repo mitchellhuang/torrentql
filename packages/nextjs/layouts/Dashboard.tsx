@@ -4,6 +4,7 @@ import { withRouter } from 'next/router';
 import Global from './Global';
 import Head from '../components/Head';
 import NavBar from '../components/NavBar';
+import { WithRouterProps } from 'next/dist/client/with-router';
 
 const tabs = [{
   name: 'Home',
@@ -74,10 +75,17 @@ const Tabs = ({ router }) => (
   </div>
 );
 
-const Dashboard = ({
+interface IDashboard extends React.HTMLProps<HTMLDivElement> {
+  title: string;
+  noWrapPadding?: boolean;
+  noFooter?: boolean;
+}
+
+const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
   children,
   router,
   title,
+ noWrapPadding,
   ...props
 }) => (
   <Global backgroundColor="var(--dashboardBg)" {...props}>
@@ -98,6 +106,11 @@ const Dashboard = ({
         display: flex;
         flex-direction: column;
       }
+      ${noWrapPadding && `
+      .wrapper {
+        padding: 0;
+      }
+      `}
       .content {
         overflow: auto;
       }
