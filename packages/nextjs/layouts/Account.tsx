@@ -5,10 +5,26 @@ import { withRouter } from 'next/router';
 import Card from '../components/Card';
 
 const urls = {
-  USAGE: '/account/usage',
-  UPDATE_EMAIL: '/account/update-email',
-  UPDATE_PASSWORD: '/account/update-password',
-  LOGOUT: '/account/logout',
+  USAGE: {
+    url: '/account/usage',
+    icon: <Database />,
+    text: 'Usage',
+  },
+  UPDATE_EMAIL: {
+    url: '/account/update_email',
+    icon: <Mail />,
+    text: 'Update email',
+  },
+  UPDATE_PASSWORD: {
+    url: '/account/update_password',
+    icon: <Lock />,
+    text: 'Update password',
+  },
+  LOGOUT: {
+    url: '/account/logout',
+    icon: <LogOut/>,
+    text: 'Logout',
+  },
 };
 
 const Account = ({ children, router }) => {
@@ -16,30 +32,14 @@ const Account = ({ children, router }) => {
     <Dashboard title="Account">
       <div className="container">
         <ul className="sidebar">
-          <li className={`tab ${router.pathname.includes(urls.USAGE) ? 'active' : ''}`}>
-            <a href={urls.USAGE}>
-              <Database/>
-              <span className="tab-text ml-2">Usage</span>
-            </a>
-          </li>
-          <li className={`tab ${router.pathname.includes(urls.UPDATE_EMAIL) ? 'active' : ''}`}>
-            <a href={urls.UPDATE_EMAIL}>
-              <Mail/>
-              <span className="tab-text ml-2">Update email</span>
-            </a>
-          </li>
-          <li className={`tab ${router.pathname.includes(urls.UPDATE_PASSWORD) ? 'active' : ''}`}>
-            <a href={urls.UPDATE_PASSWORD}>
-              <Lock/>
-              <span className="tab-text ml-2">Update password</span>
-            </a>
-          </li>
-          <li className={`tab ${router.pathname.includes(urls.LOGOUT) ? 'active' : ''}`}>
-            <a href={urls.LOGOUT}>
-              <LogOut/>
-              <span className="tab-text ml-2">Logout</span>
-            </a>
-          </li>
+          {Object.keys(urls).map(key => (
+            <li className={`tab ${router.pathname.includes(urls[key].url) ? 'active' : ''}`}>
+              <a href={urls[key].url}>
+                {urls[key].icon}
+                <span className="tab-text ml-2">{urls[key].text}</span>
+              </a>
+            </li>
+          ))}
         </ul>
         <div className="actions">
           <Card className="selected-tab">
