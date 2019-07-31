@@ -6,6 +6,7 @@ import Torrent, { TRow, TCell } from '../components/Torrent';
 import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
 import TorrentsSidebar from '../components/TorrentsSidebar';
+import { torrentStatus } from '../lib/constants';
 
 export const Unstyled = ({ message }) => (
   <div>
@@ -56,7 +57,7 @@ const TorrentsWithData = () => {
     searchFilter = searchFilter.toLowerCase();
     torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
   }
-  if (statusFilter !== 'all') {
+  if (statusFilter !== torrentStatus.ALL) {
     torrents = torrents.filter(torrent => torrent.state === statusFilter);
   }
   return (

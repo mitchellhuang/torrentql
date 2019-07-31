@@ -8,9 +8,10 @@ import {
   Clock,
   CloudDrizzle,
 } from 'react-feather';
-import {useMutation, useQuery} from 'react-apollo-hooks';
-import {UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION} from '../apollo/mutations';
-import {GET_DASHBOARD_QUERY} from "../apollo/queries";
+import { useMutation, useQuery } from 'react-apollo-hooks';
+import { UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION } from '../apollo/mutations';
+import { GET_DASHBOARD_QUERY } from '../apollo/queries';
+import { torrentStatus } from '../lib/constants';
 
 const SearchInput = () => {
   const [updateSearchFilter] = useMutation(UPDATE_SEARCH_FILTER_MUTATION);
@@ -23,7 +24,7 @@ const SearchInput = () => {
     <div className="input-group">
       <SearchIcon size={20}/>
       <input type="text" placeholder="Search torrents" onChange={e => handleChange(e.target.value)}/>
-      <style>{`
+      <style jsx>{`
       .input-group {
         margin-top: 50px;
         padding-left: 10px;
@@ -49,14 +50,6 @@ const SearchInput = () => {
   );
 };
 
-const statusTypes = {
-  ALL: 'all',
-  SEEDING: 'seeding',
-  DOWNLOADING: 'downloading',
-  PAUSED: 'paused',
-  QUEUED: 'queued',
-};
-
 const StatusFilters = () => {
   const [updateStatusFilter] = useMutation(UPDATE_STATUS_FILTER_MUTATION);
   const { data: { getDashboard: { statusFilter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
@@ -67,23 +60,23 @@ const StatusFilters = () => {
   return (
     <div className="status-filters">
       <h5 className="mb-2">Filter by status</h5>
-      <div className={getClassName(statusTypes.ALL)} onClick={() => handleChange(statusTypes.ALL)}>
+      <div className={getClassName(torrentStatus.ALL)} onClick={() => handleChange(torrentStatus.ALL)}>
         <Aperture size={22}/>
         <span>All</span>
       </div>
-      <div className={getClassName(statusTypes.SEEDING)} onClick={() => handleChange(statusTypes.SEEDING)}>
+      <div className={getClassName(torrentStatus.SEEDING)} onClick={() => handleChange(torrentStatus.SEEDING)}>
         <UploadCloud size={22}/>
         <span>Seeding</span>
       </div>
-      <div className={getClassName(statusTypes.DOWNLOADING)} onClick={() => handleChange(statusTypes.DOWNLOADING)}>
+      <div className={getClassName(torrentStatus.DOWNLOADING)} onClick={() => handleChange(torrentStatus.DOWNLOADING)}>
         <DownloadCloud size={22}/>
         <span>Downloading</span>
       </div>
-      <div className={getClassName(statusTypes.PAUSED)} onClick={() => handleChange(statusTypes.PAUSED)}>
+      <div className={getClassName(torrentStatus.PAUSED)} onClick={() => handleChange(torrentStatus.PAUSED)}>
         <Pause size={22}/>
         <span>Paused</span>
       </div>
-      <div className={getClassName(statusTypes.QUEUED)} onClick={() => handleChange(statusTypes.QUEUED)}>
+      <div className={getClassName(torrentStatus.QUEUED)} onClick={() => handleChange(torrentStatus.QUEUED)}>
         <Clock size={22}/>
         <span>Queued</span>
       </div>
@@ -104,6 +97,7 @@ const StatusFilters = () => {
         align-items: center;
         margin-bottom: 5px;
         font-weight: bold;
+        cursor: pointer;
       }
       span {
         margin-left: 10px;
@@ -120,7 +114,7 @@ const TorrentsSidebar = () => (
   <div className="torrents-sidebar">
     <SearchInput/>
     <StatusFilters/>
-    <style>{`
+    <style jsx>{`
       .torrents-sidebar {
         background-color: var(--darkBlue);
         color: var(--blueGray);;

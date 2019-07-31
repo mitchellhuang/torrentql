@@ -2,7 +2,8 @@ import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { CheckSquare, Square, Percent } from 'react-feather';
+import { CheckSquare, Square, Pause, ChevronRight } from 'react-feather';
+import { torrentStatus } from '../lib/constants';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -91,7 +92,7 @@ const Torrent = ({
       </Link>
     </TCell>
     <TCell flex={2}>
-      <ProgressBar progress={torrent.progress} />
+      <ProgressBar progress={torrent.progress} state={torrent.state} />
     </TCell>
     <TCell flex={1}>
       {prettyBytes(torrent.downloadSpeed)}/s
@@ -124,25 +125,31 @@ const Torrent = ({
 
 const ProgressBar = ({
   progress,
+  state,
 }) => {
-  const height = 25;
+  // const height = 25;
+  const iconSize = 25;
   const background = progress < 1
     ? 'var(--lightGray)'
     : `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`;
   return (
     <div className="progress-bar">
-      <Percent size={14} className="chevron-right" />
+      {state === torrentStatus.PAUSED && <Pause size={iconSize} className="pause-icon" /> }
+      {state === torrentStatus.SEEDING && <ChevronRight size={iconSize} className="play-icon" />}
+      {state === torrentStatus.QUEUED && <ChevronRight size={iconSize} className="play-icon" />}
       <div className="progress-bar-inner"/>
       <style jsx>{`
         .progress-bar {
           width: 100%;
-          height: ${height}px;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: flex-start;
           margin-right: 10px;
           overflow: hidden;
+        }
+        .progress-bar :global(.play-icon) {
+          fill: var(--blueGray);
         }
         .progress-bar-inner {
           width: 100%;
