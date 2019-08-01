@@ -23,10 +23,19 @@ export const UPDATE_SEARCH_FILTER_MUTATION = gql`
     }
   }
 `;
+
 export const UPDATE_STATUS_FILTER_MUTATION = gql`
   mutation updateStatusFilter($statusFilter: String!) {
     updateStatusFilter(statusFilter: $statusFilter) @client {
       statusFilter
+    }
+  }
+`;
+
+export const UPDATE_SELECTED_TORRENTS_MUTATION = gql`
+  mutation updateSelectedTorrents($selectedTorrents: [String]!) {
+    updateSelectedTorrents(selectedTorrents: $selectedTorrents) @client {
+      selectedTorrents
     }
   }
 `;

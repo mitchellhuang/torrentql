@@ -1,9 +1,9 @@
 import React from 'react';
 import useModal from '../lib/useModal';
 import AddTorrentModal from '../modals/AddTorrentModal';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import { DELETE_TORRENT_MUTATION, PAUSE_TORRENT_MUTATION, RESUME_TORRENT_MUTATION } from '../apollo/mutations';
-import { ME_QUERY } from '../apollo/queries';
+import { GET_DASHBOARD_QUERY, ME_QUERY } from '../apollo/queries';
 import { Minus, Plus, Pause, Play } from 'react-feather';
 
 interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
@@ -39,11 +39,12 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
   </div>
 );
 
-const ToolBar = ({ selected }) => {
+const ToolBar = () => {
   const { active, toggle } = useModal();
   const [deleteTorrent] = useMutation(DELETE_TORRENT_MUTATION);
   const [pauseTorrent] = useMutation(PAUSE_TORRENT_MUTATION);
   const [resumeTorrent] = useMutation(RESUME_TORRENT_MUTATION);
+  const { data: { getDashboard: { selectedTorrents } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   const handleDeleteTorrent = id => deleteTorrent({
     variables: {
       id,
@@ -71,15 +72,15 @@ const ToolBar = ({ selected }) => {
   return (
     <div className="toolbar">
       <ToolBarButton
-        onClick={() => selected.forEach(id => handleResumeTorrent(id))}
+        onClick={() => selectedTorrents.forEach(id => handleResumeTorrent(id))}
         icon={<Play size={iconSize} className="icon" />} />
       <ToolBarButton
-        onClick={() => selected.forEach(id => handlePauseTorrent(id))}
+        onClick={() => selectedTorrents.forEach(id => handlePauseTorrent(id))}
         icon={<Pause size={iconSize} className="icon" />} />
       <span className="line-separator" />
       <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} />
       <ToolBarButton
-        onClick={() => selected.forEach(id => handleDeleteTorrent(id))}
+        onClick={() => selectedTorrents.forEach(id => handleDeleteTorrent(id))}
         icon={<Minus size={iconSize}/>} />
       <AddTorrentModal active={active} toggle={toggle} />
       <style jsx>{`

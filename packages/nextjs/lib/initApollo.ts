@@ -34,6 +34,7 @@ function create(initialState, { getToken }) {
       getDashboard: {
         searchFilter: '',
         statusFilter: torrentStatus.ALL,
+        selectedTorrents: [],
         __typename: 'Dashboard',
       },
     },
@@ -60,7 +61,9 @@ export default function initApollo(initialState, options) {
         data: {
           isLoggedIn: false,
           getDashboard: {
-            searchFilter: torrentStatus.ALL,
+            searchFilter: '',
+            statusFilter: torrentStatus.ALL,
+            selectedTorrents: [],
             __typename: 'Dashboard',
           },
         },

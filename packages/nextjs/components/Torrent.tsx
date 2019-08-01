@@ -4,6 +4,9 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { CheckSquare, Square, Pause, Play } from 'react-feather';
 import { torrentStatus } from '../lib/constants';
+import { useMutation, useQuery } from 'react-apollo-hooks';
+import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
+import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -39,7 +42,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
         height: 42.5px;
       }
       .row:not(.header):hover {
-        background-color: #EEE;
+        background-color: var(--toolBarGray);
       }
       .header {
         height: 35px;
@@ -74,40 +77,48 @@ const constrainRange = (x : string) : number => Math.max(parseInt(x, 10), 0);
 
 const Torrent = ({
   torrent,
-  selected,
-  onClick,
-}) => (
-  <TRow key={torrent.id} selected={selected} onClick={onClick}>
-    <div className="checkbox" onClick={onClick}>
-      <input type="checkbox" value={torrent.id}/>
-      {!selected && <Square size={20} />}
-      {selected && <CheckSquare size={20} />}
-    </div>
-    <TCell flex={5}>
-      <Link href={`/torrents/${torrent.id}`}>
-        <a
-          className="torrent-name"
-          onClick={e => e.stopPropagation()}>
-          {torrent.name}
-        </a>
-      </Link>
-    </TCell>
-    <TCell flex={2}>
-      <ProgressBar progress={torrent.progress} state={torrent.state} />
-    </TCell>
-    <TCell flex={1}>
-      {prettyBytes(torrent.downloadSpeed)}/s
-    </TCell>
-    <TCell flex={1}>
-      {prettyBytes(torrent.uploadSpeed)}/s
-    </TCell>
-    <TCell flex={1}>
-      {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
-    </TCell>
-    <TCell flex={1}>
-      {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
-    </TCell>
-    <style jsx>{`
+}) => {
+  const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
+  let { data: { getDashboard: { selectedTorrents } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  const selected = selectedTorrents.includes(torrent.id);
+  const handleSelection = () => {
+    selectedTorrents = selectedTorrents.includes(torrent.id)
+      ? selectedTorrents.filter(id => id !== torrent.id)
+      : selectedTorrents.concat([torrent.id]);
+    return updateSelectedTorrents({ variables : { selectedTorrents } });
+  };
+  return (
+    <TRow key={torrent.id} selected={selected} onClick={() => handleSelection()}>
+      <div className="checkbox">
+        <input type="checkbox" value={torrent.id}/>
+        {!selected && <Square size={20} />}
+        {selected && <CheckSquare size={20} />}
+      </div>
+      <TCell flex={5}>
+        <Link href={`/torrents/${torrent.id}`}>
+          <a
+            className="torrent-name"
+            onClick={e => e.stopPropagation()}>
+            {torrent.name}
+          </a>
+        </Link>
+      </TCell>
+      <TCell flex={2}>
+        <ProgressBar progress={torrent.progress} state={torrent.state} />
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.downloadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.uploadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
+      </TCell>
+      <style jsx>{`
     .checkbox {
       display: flex;
       align-items: center;
@@ -121,22 +132,22 @@ const Torrent = ({
       visibility: hidden;
     }
   `}</style>
-  </TRow>
-);
+    </TRow>
+  );
+};
 
 const ProgressBar = ({
   progress,
   state,
 }) => {
-  // const height = 25;
   const iconSize = 20;
   const background = progress < 1
     ? 'var(--lightGray)'
     : `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`;
   return (
     <div className="progress-bar">
-      {state === torrentStatus.PAUSED && <Pause size={iconSize} className="pause-icon" />}
-      {state !== torrentStatus.PAUSED && <Play size={iconSize} className="play-icon" />}
+      {state === torrentStatus.PAUSED && <Pause size={iconSize} className="icon" />}
+      {state !== torrentStatus.PAUSED && <Play size={iconSize} className="icon" />}
       <div className="progress-bar-inner"/>
       <style jsx>{`
         .progress-bar {
@@ -148,7 +159,7 @@ const ProgressBar = ({
           margin-right: 10px;
           overflow: hidden;
         }
-        .progress-bar :global(.play-icon), .progress-bar :global(.pause-icon) {
+        .progress-bar :global(.icon) {
           fill: var(--blueGray);
         }
         .progress-bar-inner {

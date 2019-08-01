@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
@@ -32,12 +32,11 @@ const TorrentTableHeader = () => (
 );
 
 const TorrentsWithData = () => {
-  const [selected, selectTorrent] = useState<String[]>([]);
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
     pollInterval: 2000,
   });
-  let { data: { getDashboard: { searchFilter, statusFilter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }
@@ -47,36 +46,29 @@ const TorrentsWithData = () => {
   if (!data.me.torrents.length) {
     return (
       <>
-        <ToolBar selected={selected} />
+        <ToolBar />
         <Unstyled message="No torrents." />
       </>
     );
   }
   let torrents = data.me.torrents;
+  let searchFilter = getDashboard.searchFilter;
   if (searchFilter) {
     searchFilter = searchFilter.toLowerCase();
     torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
   }
-  if (statusFilter !== torrentStatus.ALL) {
-    torrents = torrents.filter(torrent => torrent.state === statusFilter);
+  if (getDashboard.statusFilter !== torrentStatus.ALL) {
+    torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
   }
   return (
     <div className="torrents">
       <TorrentsSidebar/>
       <div className="main">
-        <ToolBar selected={selected} />
+        <ToolBar />
         <TorrentTableHeader />
         {torrents.map(torrent => (
           <Torrent
             torrent={torrent}
-            selected={selected.includes(torrent.id)}
-            onClick={() => {
-              if (!selected.includes(torrent.id)) {
-                selectTorrent(selected.concat([torrent.id]));
-              } else {
-                selectTorrent(selected.filter(id => id !== torrent.id));
-              }
-            }}
             key={torrent.id}
           />
         ))}

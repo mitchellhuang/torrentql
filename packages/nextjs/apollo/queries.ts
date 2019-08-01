@@ -11,6 +11,7 @@ export const GET_DASHBOARD_QUERY = gql`
     getDashboard @client {
       searchFilter
       statusFilter
+      selectedTorrents
     }
   }
 `;
