@@ -105,7 +105,7 @@ const TorrentsSidebar = () => (
         color: var(--blueGray);;
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        height: calc(100vh - 86px);
       }
     `}</style>
   </div>
