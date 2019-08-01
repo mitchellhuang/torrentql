@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Search as SearchIcon,
-  Aperture,
-  DownloadCloud,
-  UploadCloud,
-  Pause,
-  Clock,
-} from 'react-feather';
+import { Search as SearchIcon, Aperture, DownloadCloud, UploadCloud, Pause, Clock } from 'react-feather';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION } from '../apollo/mutations';
 import { GET_DASHBOARD_QUERY } from '../apollo/queries';
@@ -15,13 +8,11 @@ import { torrentStatus } from '../lib/constants';
 const SearchInput = () => {
   const [updateSearchFilter] = useMutation(UPDATE_SEARCH_FILTER_MUTATION);
   const handleChange = inputValue => updateSearchFilter({
-    variables: {
-      searchFilter: inputValue,
-    },
+    variables: { searchFilter: inputValue },
   });
   return (
     <div className="input-group">
-      <SearchIcon size={20}/>
+      <SearchIcon size={20} />
       <input type="text" placeholder="Search torrents" onChange={e => handleChange(e.target.value)}/>
       <style jsx>{`
       .input-group {
@@ -60,23 +51,23 @@ const StatusFilters = () => {
     <div className="status-filters">
       <h5 className="mb-2">Filter by status</h5>
       <div className={getClassName(torrentStatus.ALL)} onClick={() => handleChange(torrentStatus.ALL)}>
-        <Aperture size={22}/>
+        <Aperture size={22} />
         <span>All</span>
       </div>
       <div className={getClassName(torrentStatus.SEEDING)} onClick={() => handleChange(torrentStatus.SEEDING)}>
-        <UploadCloud size={22}/>
+        <UploadCloud size={22} />
         <span>Seeding</span>
       </div>
       <div className={getClassName(torrentStatus.DOWNLOADING)} onClick={() => handleChange(torrentStatus.DOWNLOADING)}>
-        <DownloadCloud size={22}/>
+        <DownloadCloud size={22} />
         <span>Downloading</span>
       </div>
       <div className={getClassName(torrentStatus.PAUSED)} onClick={() => handleChange(torrentStatus.PAUSED)}>
-        <Pause size={22}/>
+        <Pause size={22} />
         <span>Paused</span>
       </div>
       <div className={getClassName(torrentStatus.QUEUED)} onClick={() => handleChange(torrentStatus.QUEUED)}>
-        <Clock size={22}/>
+        <Clock size={22} />
         <span>Queued</span>
       </div>
       <style jsx>{`
@@ -106,8 +97,8 @@ const StatusFilters = () => {
 
 const TorrentsSidebar = () => (
   <div className="torrents-sidebar">
-    <SearchInput/>
-    <StatusFilters/>
+    <SearchInput />
+    <StatusFilters />
     <style jsx>{`
       .torrents-sidebar {
         background-color: var(--darkBlue);

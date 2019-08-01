@@ -26,7 +26,7 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
           padding: 5px;
           margin: 0 10px;
           color: var(--blueGray);
-          background-color: #EEE;
+          background-color: var(--toolBarGray);
           border: none;
           outline: none;
           cursor: pointer;
@@ -88,7 +88,7 @@ const ToolBar = ({ selected }) => {
           padding: 5px;
           align-items: center;
           justify-content: flex-end;
-          background-color: #EEE;
+          background-color: var(--toolBarGray);
         }
         .toolbar :global(.icon):hover {
           fill: var(--blueGray);

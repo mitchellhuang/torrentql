@@ -3,19 +3,19 @@ import { GET_TORRENT_QUERY, GET_DASHBOARD_QUERY } from './queries';
 
 export const typeDefs = gql`
     extend type Torrent {
-        selectedFile: String
+      selectedFile: String
     }
     type Dashboard {
-        searchFilter: String
-        statusFilter: String
+      searchFilter: String
+      statusFilter: String
     }
     extend type Query {
-        getDashboard: Dashboard!
+      getDashboard: Dashboard!
     }
     extend type Mutation {
-        updateSelectedFile(id: String!, filePath: String!): Torrent
-        updateSearchFilter(searchFilter: String!): Dashboard
-        updateStatusFilter(statusFilter: String!): Dashboard
+      updateSelectedFile(id: String!, filePath: String!): Torrent
+      updateSearchFilter(searchFilter: String!): Dashboard
+      updateStatusFilter(statusFilter: String!): Dashboard
     }
 `;
 
