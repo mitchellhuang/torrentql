@@ -10,7 +10,7 @@ const Usage = () => (
       <Card>
         Data transfer out
         <img src="https://cloud.google.com/billing/docs/images/billing-reports3.png" alt="Cloud report"/>
-      </Card>(
+      </Card>
       <Card>
         Storage
         <img src="https://cloud.google.com/billing/docs/images/billing-reports3.png" alt="Cloud report"/>
