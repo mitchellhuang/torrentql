@@ -1,6 +1,6 @@
 # Ansible
 
-Ansible playbooks for creating, updating, adding nodes to baremetal k8s clusters with kubeadm.
+Ansible playbooks deploy Deluge to bare-metal servers.
 
 ## Install ansible
 
