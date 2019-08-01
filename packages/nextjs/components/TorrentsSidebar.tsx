@@ -6,7 +6,6 @@ import {
   UploadCloud,
   Pause,
   Clock,
-  CloudDrizzle,
 } from 'react-feather';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION } from '../apollo/mutations';
@@ -79,11 +78,6 @@ const StatusFilters = () => {
       <div className={getClassName(torrentStatus.QUEUED)} onClick={() => handleChange(torrentStatus.QUEUED)}>
         <Clock size={22}/>
         <span>Queued</span>
-      </div>
-      <h5 className="mb-2 mt-4">Filter by host</h5>
-      <div className="row">
-        <CloudDrizzle size={22}/>
-        <span>christianbooks.net</span>
       </div>
       <style jsx>{`
       .status-filters {

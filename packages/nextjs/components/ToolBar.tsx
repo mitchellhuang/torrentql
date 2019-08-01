@@ -48,7 +48,7 @@ const ToolBar = ({ selected }) => {
     variables: {
       id,
     },
-    update: store => {
+    update: (store) => {
       const data : any = store.readQuery({ query: ME_QUERY });
       data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
       store.writeQuery({
@@ -59,18 +59,12 @@ const ToolBar = ({ selected }) => {
   });
   const handlePauseTorrent = async (id) => {
     await pauseTorrent({
-      variables: {
-        id,
-      },
-      refetchQueries: [{ query: ME_QUERY }],
+      variables: { id },
     });
   };
   const handleResumeTorrent = async (id) => {
     await resumeTorrent({
-      variables: {
-        id,
-      },
-      refetchQueries: [{ query: ME_QUERY }],
+      variables: { id },
     });
   };
   const iconSize = 23;
@@ -78,11 +72,11 @@ const ToolBar = ({ selected }) => {
     <div className="toolbar">
       <ToolBarButton
         onClick={() => selected.forEach(id => handleResumeTorrent(id))}
-        icon={<Play size={iconSize}/>} />
+        icon={<Play size={iconSize} className="icon" />} />
       <ToolBarButton
         onClick={() => selected.forEach(id => handlePauseTorrent(id))}
-        icon={<Pause size={iconSize}/>} />
-      <span className="line-separator"/>
+        icon={<Pause size={iconSize} className="icon" />} />
+      <span className="line-separator" />
       <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} />
       <ToolBarButton
         onClick={() => selected.forEach(id => handleDeleteTorrent(id))}
@@ -95,6 +89,9 @@ const ToolBar = ({ selected }) => {
           align-items: center;
           justify-content: flex-end;
           background-color: #EEE;
+        }
+        .toolbar :global(.icon):hover {
+          fill: var(--blueGray);
         }
         .line-separator {
           width: 2px;

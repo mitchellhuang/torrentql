@@ -2,7 +2,7 @@ import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { CheckSquare, Square, Pause, ChevronRight } from 'react-feather';
+import { CheckSquare, Square, Pause, Play } from 'react-feather';
 import { torrentStatus } from '../lib/constants';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
@@ -42,6 +42,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
         background-color: #EEE;
       }
       .header {
+        height: 35px;
         cursor: default;
         color: var(--blueGray);
         border-bottom: 1px solid var(--buttonHover);
@@ -128,15 +129,14 @@ const ProgressBar = ({
   state,
 }) => {
   // const height = 25;
-  const iconSize = 25;
+  const iconSize = 20;
   const background = progress < 1
     ? 'var(--lightGray)'
     : `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`;
   return (
     <div className="progress-bar">
-      {state === torrentStatus.PAUSED && <Pause size={iconSize} className="pause-icon" /> }
-      {state === torrentStatus.SEEDING && <ChevronRight size={iconSize} className="play-icon" />}
-      {state === torrentStatus.QUEUED && <ChevronRight size={iconSize} className="play-icon" />}
+      {state === torrentStatus.PAUSED && <Pause size={iconSize} className="pause-icon" />}
+      {state !== torrentStatus.PAUSED && <Play size={iconSize} className="play-icon" />}
       <div className="progress-bar-inner"/>
       <style jsx>{`
         .progress-bar {
@@ -148,7 +148,7 @@ const ProgressBar = ({
           margin-right: 10px;
           overflow: hidden;
         }
-        .progress-bar :global(.play-icon) {
+        .progress-bar :global(.play-icon), .progress-bar :global(.pause-icon) {
           fill: var(--blueGray);
         }
         .progress-bar-inner {
