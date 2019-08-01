@@ -2,17 +2,17 @@ import 'dotenv/config';
 import { createConnectionFromEnv } from '@torrentql/common/dist/lib/db';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { User } from '@torrentql/common/dist/entities/User';
-import { BillingActivity } from '@torrentql/common/dist/entities/BillingActivity';
+import { BillingUsage } from '@torrentql/common/dist/entities/BillingUsage';
 import { BillingHistory } from '@torrentql/common/dist/entities/BillingHistory';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
-const DISK_USAGE_GB_MONTH_COST = 0.01;
-const DISK_USAGE_GB_SECOND_COST = DISK_USAGE_GB_MONTH_COST / 30 / 86400;
-const DISK_USAGE_BYTE_SECONDS_COST = DISK_USAGE_GB_SECOND_COST / 1e9;
-const DATA_TRANSFER_IN_GB_COST = 0.01;
-const DATA_TRANSFER_OUT_GB_COST = 0.01;
-const DATA_TRANSFER_IN_BYTES_COST = DATA_TRANSFER_IN_GB_COST / 1e9;
-const DATA_TRANSFER_OUT_BYTES_COST = DATA_TRANSFER_OUT_GB_COST / 1e9;
+const DISK_USAGE_GB_MONTH_PRICE = 0.01;
+const DISK_USAGE_GB_SECOND_PRICE = DISK_USAGE_GB_MONTH_PRICE / 30 / 86400;
+const DISK_USAGE_BYTE_SECONDS_PRICE = DISK_USAGE_GB_SECOND_PRICE / 1e9;
+const DATA_TRANSFER_IN_GB_PRICE = 0.01;
+const DATA_TRANSFER_OUT_GB_PRICE = 0.01;
+const DATA_TRANSFER_IN_BYTES_PRICE = DATA_TRANSFER_IN_GB_PRICE / 1e9;
+const DATA_TRANSFER_OUT_BYTES_PRICE = DATA_TRANSFER_OUT_GB_PRICE / 1e9;
 
 interface Usage {
   diskUsage: number;
@@ -50,7 +50,7 @@ const run = async () => {
   const cache = new Map<string, Usage>();
   const connection = await createConnectionFromEnv();
 
-  const writeBillingActivity = async () => {
+  const writeBillingUsage = async () => {
     const torrents = await connection
       .getRepository(Torrent)
       .createQueryBuilder('torrent')
@@ -80,7 +80,7 @@ const run = async () => {
           cache.set(torrent.id, usage);
           return transaction.createQueryBuilder()
             .insert()
-            .into(BillingActivity)
+            .into(BillingUsage)
             .values({
               ...usage,
               torrent: await torrent as any,
@@ -107,8 +107,8 @@ const run = async () => {
               CURRENT_TIMESTAMP as begin_at,
               CURRENT_TIMESTAMP - interval '1 hour' as end_at
           FROM
-              billing_activity AS t1,
-              billing_activity AS t2
+              billing_usage AS t1,
+              billing_usage AS t2
           WHERE
               t1.torrent_id = t2.torrent_id
               AND t1.created_at <= CURRENT_TIMESTAMP
@@ -134,9 +134,9 @@ const run = async () => {
     await connection.transaction(async (transaction) => {
       await Promise.all(
         usageByUser.map((usage) => {
-          const diskUsageCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_COST;
-          const dataTransferInCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_COST;
-          const dataTransferOutCost = usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_COST;
+          const diskUsageCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_PRICE;
+          const dataTransferInCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_PRICE;
+          const dataTransferOutCost = usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_PRICE;
           const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
           if (cost <= 0) {
             return Promise.resolve(undefined);
@@ -144,13 +144,13 @@ const run = async () => {
           const history: History = {
             cost,
             diskUsage: usage.disk_usage_byte_seconds,
-            diskUsagePrice: DISK_USAGE_GB_MONTH_COST,
+            diskUsagePrice: DISK_USAGE_GB_MONTH_PRICE,
             diskUsageCost,
             dataTransferIn: usage.data_transfer_in,
-            dataTransferInPrice: DATA_TRANSFER_IN_GB_COST,
+            dataTransferInPrice: DATA_TRANSFER_IN_GB_PRICE,
             dataTransferInCost,
             dataTransferOut: usage.data_transfer_out,
-            dataTransferOutPrice: DATA_TRANSFER_OUT_GB_COST,
+            dataTransferOutPrice: DATA_TRANSFER_OUT_GB_PRICE,
             dataTransferOutCost,
             beginAt: usage.begin_at,
             endAt: usage.end_at,
@@ -177,12 +177,10 @@ const run = async () => {
     });
   };
 
-  // writeBillingActivity();
-
+  // writeBillingUsage();
   // writeBillingHistory();
 
-  setInterval(writeBillingActivity, 1 * 1000);
-
+  setInterval(writeBillingUsage, 1 * 1000);
   setInterval(writeBillingHistory, 60 * 1000);
 };
 

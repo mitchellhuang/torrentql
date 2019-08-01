@@ -9,8 +9,8 @@ import {
 import { User } from './User';
 import { Torrent } from './Torrent';
 
-@Entity('billing_activity')
-export class BillingActivity {
+@Entity('billing_usage')
+export class BillingUsage {
 
   @PrimaryGeneratedColumn()
   id: string;
