@@ -96,6 +96,11 @@ const ToolBar = () => {
           height: 25px;
           background-color: var(--blueGray);
         }
+        @media(max-width: 767px) {
+        .toolbar {
+          justify-content: flex-start;
+        }
+      }
       `}</style>
     </div>
   );

@@ -114,6 +114,11 @@ const TorrentsSidebar = () => (
         flex-direction: column;
         height: calc(100vh - 86px);
       }
+      @media(max-width: 767px) {
+        .torrents-sidebar {
+          display: none;
+        }
+      }
     `}</style>
   </div>
 );
