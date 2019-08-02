@@ -6,42 +6,45 @@ import Card from '../components/Card';
 
 const tabLinks = [
   {
-    url: '/account/usage',
+    path: 'usage',
     name: 'Usage',
     icon: <Database />,
   },
   {
-    url: '/account/update-email',
+    path: 'update-email',
     name: 'Update email',
     icon: <Mail />,
   },
   {
-    url: '/account/update-password',
+    path: 'update-password',
     name: 'Update password',
     icon: <Lock />,
   },
   {
-    url: '/account/logout',
+    path: 'logout',
     name: 'Logout',
     icon: <LogOut />,
   },
 ];
 const Account = ({ children, router }) => {
-  const selectedClass = router.pathname.split('/')[2];
+  const selectedPath = router.pathname.split('/')[2];
   return (
     <Dashboard title="Account">
       <div className="container">
         <ul className="sidebar">
-          {tabLinks.map(tabLink => (
-            <li key={tabLink.url} className={`tab ${tabLink.url.split('/')[2]}`}>
-              <a href={tabLink.url}>
-                {tabLink.icon}
-                <span className="tab-text ml-2">
+          {tabLinks.map((tabLink) => {
+            const url = `/account/${tabLink.path}`;
+            return (
+              <li key={url} className={tabLink.path}>
+                <a href={url}>
+                  {tabLink.icon}
+                  <span className="tab-text ml-2">
                   {tabLink.name}
                 </span>
-              </a>
-            </li>
-          ))}
+                </a>
+              </li>
+            );
+          })}
         </ul>
         <div className="actions">
           <Card className="selected-tab">
@@ -52,19 +55,19 @@ const Account = ({ children, router }) => {
       <style jsx>{`
         .container {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
         }
         span.bar {
           height: 22px;
           width: 3px;
         }
-        .${selectedClass} .bar {
+        .${selectedPath} .bar {
           background-color: var(--black);
         }
-        .${selectedClass} a {
+        .${selectedPath} a {
           color: var(--black);
         }
-        .tab, .selected-tab {
+        li, .selected-tab {
           display: flex;
           flex-direction: row;
           color: black;
@@ -78,7 +81,7 @@ const Account = ({ children, router }) => {
           color: var(--primary);
           font-size: 12pt;
         }
-        .tab:not(:last-child) {
+        li:not(:last-child) {
           margin-bottom: 15px;
         }
         .container :global(.selected-tab) {
@@ -93,20 +96,18 @@ const Account = ({ children, router }) => {
           display: flex;
           justify-content: center;
           flex: 5;
-          padding: 0 15px;
+          padding: 0;
+          margin-top: 15px;
         }
         .help {
           padding: 0 15px;
         }
-        @media(max-width: 767px) {
+        @media(min-width: 768px) {
           .container {
-            flex-direction: column;
+            flex-direction: row;
           }
           .actions {
-            padding: 0;
-          }
-          .actions, .help {
-            margin-top: 15px;
+            padding: 0 15px;
           }
         }
       `}</style>
