@@ -6,6 +6,16 @@ export const IS_LOGGED_IN_QUERY = gql`
   }
 `;
 
+export const GET_DASHBOARD_QUERY = gql`
+  {
+    getDashboard @client {
+      searchFilter
+      statusFilter
+      selectedTorrents
+    }
+  }
+`;
+
 export const ME_QUERY = gql`
   {
     me {
