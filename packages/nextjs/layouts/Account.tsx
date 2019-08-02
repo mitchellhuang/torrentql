@@ -4,7 +4,7 @@ import { Database, Lock, LogOut, Mail } from 'react-feather';
 import { withRouter } from 'next/router';
 import Card from '../components/Card';
 
-const urls = [
+const tabLinks = [
   {
     url: '/account/usage',
     name: 'Usage',
@@ -27,17 +27,21 @@ const urls = [
   },
 ];
 const Account = ({ children, router }) => {
+  const selectedClass = router.pathname.split('/')[2];
   return (
     <Dashboard title="Account">
       <div className="container">
         <ul className="sidebar">
-        {urls.map(url => (
-          <li key={url.url} className={`tab ${router.pathname.includes(url.url) ? 'active' : ''}`}>
-          <a href={url.url}>
-            {url.icon}
-            <span className="tab-text ml-2">{url.name}</span>
-          </a>
-        </li>))}
+          {tabLinks.map(tabLink => (
+            <li key={tabLink.url} className={`tab ${tabLink.url.split('/')[2]}`}>
+              <a href={tabLink.url}>
+                {tabLink.icon}
+                <span className="tab-text ml-2">
+                  {tabLink.name}
+                </span>
+              </a>
+            </li>
+          ))}
         </ul>
         <div className="actions">
           <Card className="selected-tab">
@@ -54,10 +58,10 @@ const Account = ({ children, router }) => {
           height: 22px;
           width: 3px;
         }
-        .active .bar {
+        .${selectedClass} .bar {
           background-color: var(--black);
         }
-        .active a {
+        .${selectedClass} a {
           color: var(--black);
         }
         .tab, .selected-tab {
