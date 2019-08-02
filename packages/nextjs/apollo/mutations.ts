@@ -16,6 +16,30 @@ export const UPDATE_SELECTED_FILE_MUTATION = gql`
   }
 `;
 
+export const UPDATE_SEARCH_FILTER_MUTATION = gql`
+  mutation updateSearchFilter($searchFilter: String!) {
+    updateSearchFilter(searchFilter: $searchFilter) @client {
+      searchFilter
+    }
+  }
+`;
+
+export const UPDATE_STATUS_FILTER_MUTATION = gql`
+  mutation updateStatusFilter($statusFilter: String!) {
+    updateStatusFilter(statusFilter: $statusFilter) @client {
+      statusFilter
+    }
+  }
+`;
+
+export const UPDATE_SELECTED_TORRENTS_MUTATION = gql`
+  mutation updateSelectedTorrents($selectedTorrents: [String]!) {
+    updateSelectedTorrents(selectedTorrents: $selectedTorrents) @client {
+      selectedTorrents
+    }
+  }
+`;
+
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($email: String!, $password: String!) {
     createUser(email: $email, password: $password) {
@@ -51,5 +75,17 @@ export const ADD_TORRENT_MUTATION = gql`
 export const DELETE_TORRENT_MUTATION = gql`
   mutation deleteTorrent($id: String!) {
     deleteTorrent(id: $id)
+  }
+`;
+
+export const PAUSE_TORRENT_MUTATION = gql`
+  mutation pauseTorrent($id: String!) {
+    pauseTorrent(id: $id)
+  }
+`;
+
+export const RESUME_TORRENT_MUTATION = gql`
+  mutation resumeTorrent($id: String!) {
+    resumeTorrent(id: $id)
   }
 `;

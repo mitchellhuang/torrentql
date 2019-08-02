@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
-import { ME_QUERY } from '../apollo/queries';
+import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
+import TorrentsSidebar from '../components/TorrentsSidebar';
+import { torrentStatus } from '../lib/constants';
 
 export const Unstyled = ({ message }) => (
   <div>
@@ -30,11 +32,11 @@ const TorrentTableHeader = () => (
 );
 
 const TorrentsWithData = () => {
-  const [selected, selectTorrent] = useState<String[]>([]);
   const { loading, data, error } = useQuery(ME_QUERY, {
     ssr: false,
     pollInterval: 2000,
   });
+  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }
@@ -44,32 +46,40 @@ const TorrentsWithData = () => {
   if (!data.me.torrents.length) {
     return (
       <>
-        <ToolBar selected={selected} />
-        <Unstyled message="No torrents."/>
+        <ToolBar />
+        <Unstyled message="No torrents." />
       </>
     );
   }
+  let torrents = data.me.torrents;
+  let searchFilter = getDashboard.searchFilter;
+  if (searchFilter) {
+    searchFilter = searchFilter.toLowerCase();
+    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
+  }
+  if (getDashboard.statusFilter !== torrentStatus.ALL) {
+    torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
+  }
   return (
     <div className="torrents">
-      <ToolBar selected={selected} />
-      <TorrentTableHeader />
-      {data.me.torrents.map(torrent => (
-        <Torrent
-          torrent={torrent}
-          selected={selected.includes(torrent.id)}
-          onClick={() => {
-            if (!selected.includes(torrent.id)) {
-              selectTorrent(selected.concat([torrent.id]));
-            } else {
-              selectTorrent(selected.filter(id => id !== torrent.id));
-            }
-          }}
-          key={torrent.id}
-        />
-      ))}
+      <TorrentsSidebar />
+      <div className="main">
+        <ToolBar />
+        <TorrentTableHeader />
+        {torrents.map(torrent => (
+          <Torrent
+            torrent={torrent}
+            key={torrent.id}
+          />
+        ))}
+      </div>
       <style jsx>{`
         .torrents {
+          display: flex;
           min-width: 1024px;
+        }
+        .main {
+          flex: 1;
         }
       `}</style>
     </div>
@@ -77,7 +87,7 @@ const TorrentsWithData = () => {
 };
 
 const Torrents = () => (
-  <Dashboard title="Torrents" noFooter>
+  <Dashboard title="Torrents" noFooter noPad>
     <TorrentsWithData />
   </Dashboard>
 );

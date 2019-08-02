@@ -2,7 +2,11 @@ import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { CheckSquare, Square } from 'react-feather';
+import { CheckSquare, Square, Pause, Play } from 'react-feather';
+import { torrentStatus } from '../lib/constants';
+import { useMutation, useQuery } from 'react-apollo-hooks';
+import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
+import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   header?: boolean;
@@ -34,25 +38,18 @@ const TRow: React.FunctionComponent<ITRow> = ({
         width: 100%;
         cursor: pointer;
         outline: none;
-        font-weight: ${header ? '600' : '400'};
-        height: 45px;
+        font-weight: 400;
+        height: 42.5px;
       }
-      .row:nth-child(odd) {
-        background-color: var(--buttonHover);
+      .row:not(.header):hover {
+        background-color: var(--toolBarGray);
       }
       .header {
-        color: var(--lightGray);
-        background-color: var(--primary);
+        height: 35px;
         cursor: default;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-      }
-      .row:last-child {
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      .header:hover {
-        background-color: var(--primary);
+        color: var(--blueGray);
+        font-size: 11pt;
+        border-bottom: 1px solid var(--buttonHover);
       }
     `}</style>
   </div>
@@ -60,7 +57,9 @@ const TRow: React.FunctionComponent<ITRow> = ({
 
 const TCell = ({ flex, children }) => (
   <div className="t-cell">
-    {children}
+    <span className="children">
+      {children}
+    </span>
     <style jsx>{`
       .t-cell {
         display: flex;
@@ -68,10 +67,15 @@ const TCell = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
-        overflow: hidden;
-        white-space: nowrap;
         height: 100%;
         padding: 0 5px;
+        overflow: hidden;
+      }
+      .children {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     `}</style>
   </div>
@@ -81,40 +85,48 @@ const constrainRange = (x : string) : number => Math.max(parseInt(x, 10), 0);
 
 const Torrent = ({
   torrent,
-  selected,
-  onClick,
-}) => (
-  <TRow key={torrent.id} selected={selected} onClick={onClick}>
-    <div className="checkbox" onClick={onClick}>
-      <input type="checkbox" value={torrent.id}/>
-      {!selected && <Square size={20} />}
-      {selected && <CheckSquare size={20} />}
-    </div>
-    <TCell flex={5}>
-      <Link href={`/torrents/${torrent.id}`}>
-        <a
-          className="torrent-name"
-          onClick={e => e.stopPropagation()}>
-          {torrent.name}
-        </a>
-      </Link>
-    </TCell>
-    <TCell flex={2}>
-      <ProgressBar state={torrent.state} progress={torrent.progress} />
-    </TCell>
-    <TCell flex={1}>
-      {prettyBytes(torrent.downloadSpeed)}/s
-    </TCell>
-    <TCell flex={1}>
-      {prettyBytes(torrent.uploadSpeed)}/s
-    </TCell>
-    <TCell flex={1}>
-      {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
-    </TCell>
-    <TCell flex={1}>
-      {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
-    </TCell>
-    <style jsx>{`
+}) => {
+  const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
+  let { data: { getDashboard: { selectedTorrents } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  const selected = selectedTorrents.includes(torrent.id);
+  const handleSelection = () => {
+    selectedTorrents = selectedTorrents.includes(torrent.id)
+      ? selectedTorrents.filter(id => id !== torrent.id)
+      : selectedTorrents.concat([torrent.id]);
+    return updateSelectedTorrents({ variables : { selectedTorrents } });
+  };
+  return (
+    <TRow key={torrent.id} selected={selected} onClick={() => handleSelection()}>
+      <div className="checkbox">
+        <input type="checkbox" value={torrent.id} />
+        {!selected && <Square size={20} />}
+        {selected && <CheckSquare size={20} />}
+      </div>
+      <TCell flex={5}>
+        <Link href={`/torrents/${torrent.id}`}>
+          <a
+            className="torrent-name"
+            onClick={e => e.stopPropagation()}>
+            {torrent.name}
+          </a>
+        </Link>
+      </TCell>
+      <TCell flex={2}>
+        <ProgressBar progress={torrent.progress} state={torrent.state} />
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.downloadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.uploadSpeed)}/s
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
+      </TCell>
+      <TCell flex={1}>
+        {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
+      </TCell>
+      <style jsx>{`
     .checkbox {
       display: flex;
       align-items: center;
@@ -128,52 +140,41 @@ const Torrent = ({
       visibility: hidden;
     }
   `}</style>
-  </TRow>
-);
+    </TRow>
+  );
+};
 
 const ProgressBar = ({
-  state,
   progress,
+  state,
 }) => {
-  const height = 25;
+  const iconSize = 20;
+  const background = progress > 0
+    ? `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`
+    : 'var(--lightGray)';
   return (
     <div className="progress-bar">
-      <div className="progress-bar-inner">
-        <div className="progress-bar-status">
-          {state} {progress.toFixed(2)}%
-        </div>
-      </div>
+      {state === torrentStatus.PAUSED && <Pause size={iconSize} className="icon" />}
+      {state !== torrentStatus.PAUSED && <Play size={iconSize} className="icon" />}
+      <div className="progress-bar-inner"/>
       <style jsx>{`
         .progress-bar {
           width: 100%;
-          height: ${height}px;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          border: 1px solid var(--gray);
-          border-radius: 5px;
           margin-right: 10px;
           overflow: hidden;
         }
+        .progress-bar :global(.icon) {
+          fill: var(--blueGray);
+        }
         .progress-bar-inner {
           width: 100%;
-          height: ${height}px;
-          position: absolute;
-          background: linear-gradient(to right, var(--gray) ${progress}%, var(--white) 0);
-        }
-        .progress-bar-status {
-          width: 100%;
-          height: ${height}px;
-          position: absolute;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          text-transform: capitalize;
-          background: linear-gradient(to right, var(--white) calc(${progress}% - 10px), var(--gray) 0);
-          background-clip: text;
-          color: transparent;
-          margin-left: 10px;
+          height: 4px;
+          margin-left: 5px;
+          background: ${background};
         }
      `}</style>
     </div>

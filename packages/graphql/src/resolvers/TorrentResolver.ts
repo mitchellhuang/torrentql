@@ -43,6 +43,20 @@ class DeleteTorrentInput {
   id: string;
 }
 
+@ArgsType()
+class PauseTorrentInput {
+  @Field()
+  @IsUUID()
+  id: string;
+}
+
+@ArgsType()
+class ResumeTorrentInput {
+  @Field()
+  @IsUUID()
+  id: string;
+}
+
 @Resolver(of => Torrent)
 export class TorrentResolver {
   @InjectRepository(Torrent)
@@ -156,6 +170,48 @@ export class TorrentResolver {
       torrent.isActive = false;
       await this.torrentRepository.save(torrent);
     }
+    return true;
+  }
+
+  @Authorized()
+  @Mutation(returns => Boolean)
+  async pauseTorrent(@Args() { id }: PauseTorrentInput, @Ctx() ctx: Context) {
+    const torrent = await this.torrentRepository.findOne(id);
+    if (!torrent) {
+      throw new Error('Torrent not found.');
+    }
+    const torrentUser = await torrent.user;
+    if (torrentUser.id !== ctx.user.id) {
+      throw new Error('Torrent not found.');
+    }
+    const server = await torrent.server;
+    const deluge = new Deluge({
+      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      password: 'deluge',
+      timeout: 1000,
+    });
+    await deluge.pauseTorrent(torrent.hash);
+    return true;
+  }
+
+  @Authorized()
+  @Mutation(returns => Boolean)
+  async resumeTorrent(@Args() { id }: ResumeTorrentInput, @Ctx() ctx: Context) {
+    const torrent = await this.torrentRepository.findOne(id);
+    if (!torrent) {
+      throw new Error('Torrent not found.');
+    }
+    const torrentUser = await torrent.user;
+    if (torrentUser.id !== ctx.user.id) {
+      throw new Error('Torrent not found.');
+    }
+    const server = await torrent.server;
+    const deluge = new Deluge({
+      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      password: 'deluge',
+      timeout: 1000,
+    });
+    await deluge.resumeTorrent(torrent.hash);
     return true;
   }
 }
