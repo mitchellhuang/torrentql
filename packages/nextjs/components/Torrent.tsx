@@ -48,6 +48,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
         height: 35px;
         cursor: default;
         color: var(--blueGray);
+        font-size: 11pt;
         border-bottom: 1px solid var(--buttonHover);
       }
     `}</style>
@@ -56,7 +57,9 @@ const TRow: React.FunctionComponent<ITRow> = ({
 
 const TCell = ({ flex, children }) => (
   <div className="t-cell">
-    {children}
+    <span className="children">
+      {children}
+    </span>
     <style jsx>{`
       .t-cell {
         display: flex;
@@ -64,10 +67,15 @@ const TCell = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
-        overflow: hidden;
-        white-space: nowrap;
         height: 100%;
         padding: 0 5px;
+        overflow: hidden;
+      }
+      .children {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     `}</style>
   </div>
@@ -90,7 +98,7 @@ const Torrent = ({
   return (
     <TRow key={torrent.id} selected={selected} onClick={() => handleSelection()}>
       <div className="checkbox">
-        <input type="checkbox" value={torrent.id}/>
+        <input type="checkbox" value={torrent.id} />
         {!selected && <Square size={20} />}
         {selected && <CheckSquare size={20} />}
       </div>
@@ -141,9 +149,9 @@ const ProgressBar = ({
   state,
 }) => {
   const iconSize = 20;
-  const background = progress < 1
-    ? 'var(--lightGray)'
-    : `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`;
+  const background = progress > 0
+    ? `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`
+    : 'var(--lightGray)';
   return (
     <div className="progress-bar">
       {state === torrentStatus.PAUSED && <Pause size={iconSize} className="icon" />}

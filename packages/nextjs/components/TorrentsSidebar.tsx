@@ -43,30 +43,36 @@ const SearchInput = () => {
 const StatusFilters = () => {
   const [updateStatusFilter] = useMutation(UPDATE_STATUS_FILTER_MUTATION);
   const { data: { getDashboard: { statusFilter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  const getClassName = status => status === statusFilter ? 'row selected' : 'row';
   const handleChange = filter => updateStatusFilter({
     variables: { statusFilter: filter },
   });
-  const getClassName = type => type === statusFilter ? 'row selected' : 'row';
+  const commonProps = status => ({
+    role: 'button',
+    tabIndex: 0,
+    onClick: () => handleChange(status),
+  });
   return (
     <div className="status-filters">
       <h5 className="mb-2">Filter by status</h5>
-      <div className={getClassName(torrentStatus.ALL)} onClick={() => handleChange(torrentStatus.ALL)}>
+      <div className={getClassName(torrentStatus.ALL)} {...commonProps(torrentStatus.ALL)}>
         <Aperture size={22} />
         <span>All</span>
       </div>
-      <div className={getClassName(torrentStatus.SEEDING)} onClick={() => handleChange(torrentStatus.SEEDING)}>
+      <div
+        className={getClassName(torrentStatus.SEEDING)} {...commonProps(torrentStatus.SEEDING)}>
         <UploadCloud size={22} />
         <span>Seeding</span>
       </div>
-      <div className={getClassName(torrentStatus.DOWNLOADING)} onClick={() => handleChange(torrentStatus.DOWNLOADING)}>
+      <div className={getClassName(torrentStatus.DOWNLOADING)} {...commonProps(torrentStatus.DOWNLOADING)}>
         <DownloadCloud size={22} />
         <span>Downloading</span>
       </div>
-      <div className={getClassName(torrentStatus.PAUSED)} onClick={() => handleChange(torrentStatus.PAUSED)}>
+      <div className={getClassName(torrentStatus.PAUSED)} {...commonProps(torrentStatus.PAUSED)}>
         <Pause size={22} />
         <span>Paused</span>
       </div>
-      <div className={getClassName(torrentStatus.QUEUED)} onClick={() => handleChange(torrentStatus.QUEUED)}>
+      <div className={getClassName(torrentStatus.QUEUED)} {...commonProps(torrentStatus.QUEUED)}>
         <Clock size={22} />
         <span>Queued</span>
       </div>
@@ -83,6 +89,7 @@ const StatusFilters = () => {
         margin-bottom: 5px;
         font-weight: bold;
         cursor: pointer;
+        outline: none;
       }
       span {
         margin-left: 10px;

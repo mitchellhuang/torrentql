@@ -62,7 +62,7 @@ const TorrentsWithData = () => {
   }
   return (
     <div className="torrents">
-      <TorrentsSidebar/>
+      <TorrentsSidebar />
       <div className="main">
         <ToolBar />
         <TorrentTableHeader />

@@ -58,16 +58,12 @@ const ToolBar = () => {
       });
     },
   });
-  const handlePauseTorrent = async (id) => {
-    await pauseTorrent({
-      variables: { id },
-    });
-  };
-  const handleResumeTorrent = async (id) => {
-    await resumeTorrent({
-      variables: { id },
-    });
-  };
+  const handlePauseTorrent = id => pauseTorrent({
+    variables: { id },
+  });
+  const handleResumeTorrent = id => resumeTorrent({
+    variables: { id },
+  });
   const iconSize = 23;
   return (
     <div className="toolbar">
@@ -78,10 +74,10 @@ const ToolBar = () => {
         onClick={() => selectedTorrents.forEach(id => handlePauseTorrent(id))}
         icon={<Pause size={iconSize} className="icon" />} />
       <span className="line-separator" />
-      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize}/>} />
+      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize} />} />
       <ToolBarButton
         onClick={() => selectedTorrents.forEach(id => handleDeleteTorrent(id))}
-        icon={<Minus size={iconSize}/>} />
+        icon={<Minus size={iconSize} />} />
       <AddTorrentModal active={active} toggle={toggle} />
       <style jsx>{`
         .toolbar {
