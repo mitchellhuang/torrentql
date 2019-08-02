@@ -7,6 +7,9 @@ import NavBar from '../components/NavBar';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 const tabs = [{
+  name: 'Home',
+  url: '/dashboard',
+}, {
   name: 'Torrents',
   url: '/torrents',
 }, {
@@ -15,7 +18,6 @@ const tabs = [{
 }, {
   name: 'Account',
   url: '/account/usage',
-  search: '/account',
 }];
 
 const Tabs = ({ router }) => (
@@ -25,7 +27,7 @@ const Tabs = ({ router }) => (
       {tabs.map(item => (
         <li key={item.url}>
           <Link href={item.url}>
-            <a className={router.pathname.includes(item.search || item.url) ? 'active' : undefined}>
+            <a className={router.pathname.includes(item.url) ? 'active' : undefined}>
               {item.name}
             </a>
           </Link>
@@ -90,7 +92,7 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
     <Head title={title} />
     <NavBar />
     <div className="tabs">
-      <Tabs router={router}/>
+      <Tabs router={router} />
     </div>
     <div className="confine-scope">
       <div className="wrapper">
