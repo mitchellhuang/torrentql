@@ -43,7 +43,6 @@ const SearchInput = () => {
 const StatusFilters = () => {
   const [updateStatusFilter] = useMutation(UPDATE_STATUS_FILTER_MUTATION);
   const { data: { getDashboard: { statusFilter } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
-  const getClassName = status => status === statusFilter ? 'row selected' : 'row';
   const handleChange = filter => updateStatusFilter({
     variables: { statusFilter: filter },
   });
@@ -55,24 +54,23 @@ const StatusFilters = () => {
   return (
     <div className="status-filters">
       <h5 className="mb-2">Filter by status</h5>
-      <div className={getClassName(torrentStatus.ALL)} {...commonProps(torrentStatus.ALL)}>
+      <div className={`row ${torrentStatus.ALL}`} {...commonProps(torrentStatus.ALL)}>
         <Aperture size={22} />
         <span>All</span>
       </div>
-      <div
-        className={getClassName(torrentStatus.SEEDING)} {...commonProps(torrentStatus.SEEDING)}>
+      <div className={`row ${torrentStatus.SEEDING}`} {...commonProps(torrentStatus.SEEDING)}>
         <UploadCloud size={22} />
         <span>Seeding</span>
       </div>
-      <div className={getClassName(torrentStatus.DOWNLOADING)} {...commonProps(torrentStatus.DOWNLOADING)}>
+      <div className={`row ${torrentStatus.DOWNLOADING}`} {...commonProps(torrentStatus.DOWNLOADING)}>
         <DownloadCloud size={22} />
         <span>Downloading</span>
       </div>
-      <div className={getClassName(torrentStatus.PAUSED)} {...commonProps(torrentStatus.PAUSED)}>
+      <div className={`row ${torrentStatus.PAUSED}`} {...commonProps(torrentStatus.PAUSED)}>
         <Pause size={22} />
         <span>Paused</span>
       </div>
-      <div className={getClassName(torrentStatus.QUEUED)} {...commonProps(torrentStatus.QUEUED)}>
+      <div className={`row ${torrentStatus.QUEUED}`} {...commonProps(torrentStatus.QUEUED)}>
         <Clock size={22} />
         <span>Queued</span>
       </div>
@@ -91,11 +89,11 @@ const StatusFilters = () => {
         cursor: pointer;
         outline: none;
       }
+      .${statusFilter} {
+        color: var(--primary);
+      }
       span {
         margin-left: 10px;
-      }
-      .selected {
-        color: var(--primary);
       }
     `}</style>
     </div>

@@ -184,23 +184,13 @@ export class TorrentResolver {
     if (torrentUser.id !== ctx.user.id) {
       throw new Error('Torrent not found.');
     }
-    const activeHashes = await this.torrentRepository.find({
-      hash: torrent.hash,
-      isActive: true,
+    const server = await torrent.server;
+    const deluge = new Deluge({
+      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      password: 'deluge',
+      timeout: 1000,
     });
-    if (activeHashes.length > 1) {
-      torrent.isActive = false;
-      await this.torrentRepository.save(torrent);
-    } else if (activeHashes.length === 1) {
-      const server = await torrent.server;
-      const deluge = new Deluge({
-        baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
-        password: 'deluge',
-        timeout: 1000,
-      });
-      await deluge.pauseTorrent(torrent.hash);
-      await this.torrentRepository.save(torrent);
-    }
+    await deluge.pauseTorrent(torrent.hash);
     return true;
   }
 
@@ -215,23 +205,13 @@ export class TorrentResolver {
     if (torrentUser.id !== ctx.user.id) {
       throw new Error('Torrent not found.');
     }
-    const activeHashes = await this.torrentRepository.find({
-      hash: torrent.hash,
-      isActive: true,
+    const server = await torrent.server;
+    const deluge = new Deluge({
+      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      password: 'deluge',
+      timeout: 1000,
     });
-    if (activeHashes.length > 1) {
-      torrent.isActive = false;
-      await this.torrentRepository.save(torrent);
-    } else if (activeHashes.length === 1) {
-      const server = await torrent.server;
-      const deluge = new Deluge({
-        baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
-        password: 'deluge',
-        timeout: 1000,
-      });
-      await deluge.resumeTorrent(torrent.hash);
-      await this.torrentRepository.save(torrent);
-    }
+    await deluge.resumeTorrent(torrent.hash);
     return true;
   }
 }

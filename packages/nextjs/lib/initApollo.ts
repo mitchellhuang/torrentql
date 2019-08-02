@@ -12,6 +12,16 @@ if (!process.browser) {
   (global as any).fetch = fetch;
 }
 
+const DEFAULT_CLIENT_CACHE = {
+  isLoggedIn: false,
+  getDashboard: {
+    searchFilter: '',
+    statusFilter: torrentStatus.ALL,
+    selectedTorrents: [],
+    __typename: 'Dashboard',
+  },
+};
+
 function create(initialState, { getToken }) {
   const httpLink = new HttpLink({
     uri: process.browser ? '/graphql' : process.env.API_URI,
@@ -26,18 +36,9 @@ function create(initialState, { getToken }) {
       },
     };
   });
-  const token = getToken();
   const cache = new InMemoryCache().restore(initialState || {});
   cache.writeData({
-    data: {
-      isLoggedIn: !!token,
-      getDashboard: {
-        searchFilter: '',
-        statusFilter: torrentStatus.ALL,
-        selectedTorrents: [],
-        __typename: 'Dashboard',
-      },
-    },
+    data: DEFAULT_CLIENT_CACHE,
   });
   return new ApolloClient({
     connectToDevTools: process.browser,
@@ -53,23 +54,13 @@ export default function initApollo(initialState, options) {
   if (!process.browser) {
     return create(initialState, options);
   }
-
   if (!apolloClient) {
     apolloClient = create(initialState, options);
     apolloClient.onResetStore(() => {
       return apolloClient.cache.writeData({
-        data: {
-          isLoggedIn: false,
-          getDashboard: {
-            searchFilter: '',
-            statusFilter: torrentStatus.ALL,
-            selectedTorrents: [],
-            __typename: 'Dashboard',
-          },
-        },
+        data: DEFAULT_CLIENT_CACHE,
       });
     });
   }
-
   return apolloClient;
 }

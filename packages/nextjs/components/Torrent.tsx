@@ -38,7 +38,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
         width: 100%;
         cursor: pointer;
         outline: none;
-        font-weight: '400';
+        font-weight: 400;
         height: 42.5px;
       }
       .row:not(.header):hover {
