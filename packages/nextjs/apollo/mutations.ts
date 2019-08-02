@@ -16,6 +16,14 @@ export const UPDATE_SELECTED_FILE_MUTATION = gql`
   }
 `;
 
+export const UPDATE_DOWNLOAD_SPEEDS_MUTATION = gql`
+  mutation updateDownloadSpeeds($id: String!, $downloadSpeeds: [Int]!) {
+    updateDownloadSpeeds(id: $id, downloadSpeeds: $downloadSpeeds) @client {
+      downloadSpeeds
+    }
+  }
+`;
+
 export const UPDATE_SEARCH_FILTER_MUTATION = gql`
   mutation updateSearchFilter($searchFilter: String!) {
     updateSearchFilter(searchFilter: $searchFilter) @client {

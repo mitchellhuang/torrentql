@@ -4,6 +4,8 @@ import { useMutation, useQuery } from 'react-apollo-hooks';
 import { UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION } from '../apollo/mutations';
 import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 import { torrentStatus } from '../lib/constants';
+import { VictoryLine } from 'victory';
+import { blueGray } from '../layouts/Global';
 
 const SearchInput = () => {
   const [updateSearchFilter] = useMutation(UPDATE_SEARCH_FILTER_MUTATION);
@@ -16,7 +18,6 @@ const SearchInput = () => {
       <input type="text" placeholder="Search torrents" onChange={e => handleChange(e.target.value)}/>
       <style jsx>{`
       .input-group {
-        margin-top: 50px;
         padding-left: 10px;
         height: 50px;
         display: flex;
@@ -100,17 +101,35 @@ const StatusFilters = () => {
   );
 };
 
-const TorrentsSidebar = () => (
-  <div className="torrents-sidebar">
-    <SearchInput />
-    <StatusFilters />
-    <style jsx>{`
+const getFakeData = () => {
+  const arr = [];
+  for (let idx = 0; idx < 30; idx += 1) {
+    arr.push({ x: idx, y: Math.random() * 3 });
+  }
+  return arr;
+};
+
+const TorrentsSidebar = () => {
+  return (
+    <div className="torrents-sidebar">
+      <VictoryLine
+        style={{ data: { stroke: blueGray } }}
+        interpolation="natural"
+        data={getFakeData()}
+      />
+      <SearchInput />
+      <StatusFilters />
+      <style jsx>{`
       .torrents-sidebar {
         background-color: var(--darkBlue);
-        color: var(--blueGray);;
+        color: var(--blueGray);
         display: flex;
         flex-direction: column;
         height: calc(100vh - 86px);
+      }
+      .torrents-sidebar :global(.VictoryContainer) {
+        height: fit-content !important;
+        width: 300px !important;
       }
       @media(max-width: 767px) {
         .torrents-sidebar {
@@ -118,7 +137,8 @@ const TorrentsSidebar = () => (
         }
       }
     `}</style>
-  </div>
-);
+    </div>
+  );
+};
 
 export default TorrentsSidebar;

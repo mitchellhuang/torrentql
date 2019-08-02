@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
-import { GET_TORRENT_QUERY, GET_DASHBOARD_QUERY } from './queries';
+import {GET_TORRENT_QUERY, GET_DASHBOARD_QUERY, ME_QUERY} from './queries';
 
 export const typeDefs = gql`
     extend type Torrent {
       selectedFile: String
+      downloadSpeeds: [Int]
     }
     type Dashboard {
       searchFilter: String
@@ -15,6 +16,7 @@ export const typeDefs = gql`
     }
     extend type Mutation {
       updateSelectedFile(id: String!, filePath: String!): Torrent
+      updateDownloadSpeeds(id: String!, downloadSpeeds: [Int]!): Torrent
       updateSearchFilter(searchFilter: String!): Dashboard
       updateStatusFilter(statusFilter: String!): Dashboard
       updateSelectedTorrents(selectedTorrents: [String]!): Dashboard
@@ -34,6 +36,17 @@ export const resolvers = {
         return null;
       }
     },
+    downloadSpeeds: (torrent, _, { cache }) => {
+      try {
+        const { getTorrent: { downloadSpeeds } } = cache.readQuery({
+          query: ME_QUERY,
+          variables: { id: torrent.id },
+        });
+        return downloadSpeeds;
+      } catch (error) {
+        return Array(30).fill(0);
+      }
+    },
   },
   Mutation: {
     updateSelectedFile: (_, { id, filePath }, { cache }) => {
@@ -45,6 +58,17 @@ export const resolvers = {
         variables: { id },
       });
       return getTorrent;
+    },
+    updateDownloadSpeeds: (_, { id, downloadSpeeds }, { cache }) => {
+      const data = cache.readQuery({ query: ME_QUERY });
+      console.log(data);
+      console.log(downloadSpeeds);
+      cache.writeQuery({
+        query: ME_QUERY,
+        data : { data },
+        variables: { id },
+      });
+      return data;
     },
     updateSearchFilter: (_, { searchFilter }, { cache }) => {
       const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });

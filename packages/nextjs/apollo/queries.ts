@@ -40,6 +40,7 @@ export const ME_QUERY = gql`
         tracker
         trackerHost
         trackerStatus
+        downloadSpeeds @client
         server {
           id
           region

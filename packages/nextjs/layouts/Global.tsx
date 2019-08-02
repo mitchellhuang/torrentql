@@ -2,6 +2,7 @@ import React from 'react';
 
 const primary = '#207ECE';
 const secondary = '#2752BE';
+const blueGray = '#526780';
 
 const Global: React.FunctionComponent<{
   children: React.ReactNode
@@ -28,7 +29,7 @@ const Global: React.FunctionComponent<{
         --darkGray: #696969;
         --dashboardBg: #F5F5F5;
         --error: #FF0000;
-        --blueGray: #526780;
+        --blueGray: ${blueGray};
         --darkBlue: #152D4B;
         --darkDarkBlue: #10243C;
       };
@@ -87,4 +88,4 @@ const Global: React.FunctionComponent<{
   </>
 );
 
-export { Global as default, primary, secondary };
+export { Global as default, primary, secondary, blueGray };
