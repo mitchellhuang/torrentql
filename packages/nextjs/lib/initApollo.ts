@@ -12,14 +12,11 @@ if (!process.browser) {
   (global as any).fetch = fetch;
 }
 
-const DEFAULT_CLIENT_CACHE = {
-  isLoggedIn: false,
-  getDashboard: {
-    searchFilter: '',
-    statusFilter: torrentStatus.ALL,
-    selectedTorrents: [],
-    __typename: 'Dashboard',
-  },
+const DEFAULT_DASHBOARD_CACHE = {
+  searchFilter: '',
+  statusFilter: torrentStatus.ALL,
+  selectedTorrents: [],
+  __typename: 'Dashboard',
 };
 
 function create(initialState, { getToken }) {
@@ -36,9 +33,13 @@ function create(initialState, { getToken }) {
       },
     };
   });
+  const token = getToken();
   const cache = new InMemoryCache().restore(initialState || {});
   cache.writeData({
-    data: DEFAULT_CLIENT_CACHE,
+    data: {
+      isLoggedIn: !!token,
+      getDashboard: DEFAULT_DASHBOARD_CACHE,
+    },
   });
   return new ApolloClient({
     connectToDevTools: process.browser,
@@ -58,7 +59,10 @@ export default function initApollo(initialState, options) {
     apolloClient = create(initialState, options);
     apolloClient.onResetStore(() => {
       return apolloClient.cache.writeData({
-        data: DEFAULT_CLIENT_CACHE,
+        data: {
+          isLoggedIn: false,
+          getDashboard: DEFAULT_DASHBOARD_CACHE,
+        },
       });
     });
   }
