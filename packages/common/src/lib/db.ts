@@ -5,6 +5,7 @@ import { User } from '../entities/User';
 import { Torrent } from '../entities/Torrent';
 import { Server } from '../entities/Server';
 import { BillingUsage } from '../entities/BillingUsage';
+import { BillingPeriod } from '../entities/BillingPeriod';
 import { BillingHistory } from '../entities/BillingHistory';
 
 export const createConnectionFromEnv = () => createConnection({
@@ -20,6 +21,7 @@ export const createConnectionFromEnv = () => createConnection({
     Torrent,
     Server,
     BillingUsage,
+    BillingPeriod,
     BillingHistory,
   ],
   namingStrategy: new SnakeNamingStrategy(),

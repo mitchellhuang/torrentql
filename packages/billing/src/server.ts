@@ -3,6 +3,7 @@ import { createConnectionFromEnv } from '@torrentql/common/dist/lib/db';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { User } from '@torrentql/common/dist/entities/User';
 import { BillingUsage } from '@torrentql/common/dist/entities/BillingUsage';
+import { BillingPeriod } from '@torrentql/common/dist/entities/BillingPeriod';
 import { BillingHistory } from '@torrentql/common/dist/entities/BillingHistory';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
@@ -37,11 +38,11 @@ interface History {
 
 interface UsageByUser {
   user_id: string;
-  begin_at: Date;
-  end_at: Date;
   disk_usage_byte_seconds: number;
   data_transfer_in: number;
   data_transfer_out: number;
+  begin_at: Date;
+  end_at: Date;
 }
 
 const run = async () => {
@@ -50,19 +51,61 @@ const run = async () => {
   const cache = new Map<string, Usage>();
   const connection = await createConnectionFromEnv();
 
-  const writeBillingUsage = async () => {
-    const torrents = await connection
-      .getRepository(Torrent)
-      .createQueryBuilder('torrent')
-      .where('is_active = true')
-      .leftJoinAndSelect('torrent.user', 'user')
-      .leftJoinAndSelect('torrent.server', 'server')
-      .getMany();
-
-    let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
-    torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
-
+  const writeBillingPeriod = async () => {
     await connection.transaction(async (transaction) => {
+      const torrents = await transaction
+        .getRepository(Torrent)
+        .createQueryBuilder('torrent')
+        .where('is_active = true')
+        .leftJoinAndSelect('torrent.user', 'user')
+        .leftJoinAndSelect('torrent.server', 'server')
+        .getMany();
+
+      let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
+      torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
+
+      await Promise.all(
+        (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
+          return transaction
+            .getRepository(BillingPeriod)
+            .createQueryBuilder('billing_period')
+            .insert()
+            .values({
+              diskUsageByteSeconds: torrent.totalSize,
+              diskUsageByteSecondsBilled: 0,
+              dataTransferIn: torrent.totalDownloaded,
+              dataTransferInBilled: 0,
+              dataTransferOut: torrent.totalUploaded,
+              dataTransferOutBilled: 0,
+              torrent: await torrent as any,
+              user: await torrent.user as any,
+            })
+            .onConflict(`
+              (torrent_id)
+                DO UPDATE SET
+                  disk_usage_byte_seconds = EXCLUDED.disk_usage_byte_seconds + billing_period.disk_usage_byte_seconds,
+                  data_transfer_in = EXCLUDED.data_transfer_in,
+                  data_transfer_out = EXCLUDED.data_transfer_out
+            `)
+            .execute();
+        }),
+      );
+    });
+  };
+
+  const writeBillingUsage = async () => {
+    await connection.transaction(async (transaction) => {
+      const torrents = await transaction
+        .getRepository(Torrent)
+        .createQueryBuilder('torrent')
+        .where('is_active = true')
+        .leftJoinAndSelect('torrent.user', 'user')
+        .leftJoinAndSelect('torrent.server', 'server')
+        .getMany();
+
+      let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
+      torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
+
       await Promise.all(
         (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
           const cached = cache.get(torrent.id);
@@ -78,9 +121,10 @@ const run = async () => {
             return Promise.resolve(undefined);
           }
           cache.set(torrent.id, usage);
-          return transaction.createQueryBuilder()
+          return transaction
+            .getRepository(BillingUsage)
+            .createQueryBuilder()
             .insert()
-            .into(BillingUsage)
             .values({
               ...usage,
               torrent: await torrent as any,
@@ -93,52 +137,28 @@ const run = async () => {
   };
 
   const writeBillingHistory = async () => {
-    const usageByUser: UsageByUser[] = await connection
-      .query(`
-        WITH per_torrent AS (
-          SELECT DISTINCT ON (t1.torrent_id)
-              t1.torrent_id,
-              t1.user_id,
-              CEIL(
-                EXTRACT(EPOCH FROM (MAX(t2.created_at) - MIN(t2.created_at))) * t1.disk_usage
-              ) AS disk_usage_byte_seconds,
-              MAX(t2.data_transfer_in) - MIN(t2.data_transfer_in) AS data_transfer_in,
-              MAX(t2.data_transfer_out) - MIN(t2.data_transfer_out) AS data_transfer_out,
-              CURRENT_TIMESTAMP as begin_at,
-              CURRENT_TIMESTAMP - interval '1 hour' as end_at
-          FROM
-              billing_usage AS t1,
-              billing_usage AS t2
-          WHERE
-              t1.torrent_id = t2.torrent_id
-              AND t1.created_at <= CURRENT_TIMESTAMP
-              AND t1.created_at >= CURRENT_TIMESTAMP - interval '1 hour'
-          GROUP BY
-              t1.disk_usage,
-              t1.torrent_id,
-              t1.user_id
-        ) SELECT
-            user_id,
-            SUM(disk_usage_byte_seconds) disk_usage_byte_seconds,
-            SUM(data_transfer_in) data_transfer_in,
-            SUM(data_transfer_out) data_transfer_out,
-            begin_at,
-            end_at
-            FROM per_torrent
-          GROUP BY
-            user_id,
-            begin_at,
-            end_at
-      `);
-
     await connection.transaction(async (transaction) => {
+      const usageByUser: UsageByUser[] = await transaction
+        .getRepository(BillingPeriod)
+        .createQueryBuilder()
+        .select(`
+          user_id,
+          SUM(disk_usage_byte_seconds) - SUM(disk_usage_byte_seconds_billed) AS disk_usage_byte_seconds,
+          SUM(data_transfer_in) - SUM(data_transfer_in_billed) AS data_transfer_in,
+          SUM(data_transfer_out) - SUM(data_transfer_out_billed) AS data_transfer_out,
+          CURRENT_TIMESTAMP as begin_at,
+          CURRENT_TIMESTAMP - interval '1 hour' as end_at
+        `)
+        .groupBy('user_id')
+        .getRawMany();
+
       await Promise.all(
         usageByUser.map((usage) => {
           const diskUsageCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_PRICE;
           const dataTransferInCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_PRICE;
           const dataTransferOutCost = usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_PRICE;
           const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
-          if (cost <= 0) {
+          if (cost <= 0.01) {
             return Promise.resolve(undefined);
           }
           const history: History = {
@@ -157,31 +177,51 @@ const run = async () => {
           };
           const user = new User();
           user.id = usage.user_id;
-          const insert = transaction
-            .createQueryBuilder()
+          const insertBillingHistory = transaction
+            .getRepository(BillingHistory)
+            .createQueryBuilder('billing_history')
             .insert()
-            .into(BillingHistory)
             .values({
               ...history,
               user: user as any,
             })
             .execute();
-          const update = transaction
-            .query(
-              'UPDATE users SET balance = balance - $1 WHERE id = $2',
-              [history.cost, user.id],
-            );
-          return Promise.all([insert, update]);
+          const updateUserBalance = transaction
+            .getRepository(User)
+            .createQueryBuilder('user')
+            .update({
+              balance: () => 'balance - :cost',
+            })
+            .setParameter('cost', history.cost)
+            .where({
+              id: user.id,
+            })
+            .execute();
+          const updateBillingPeriod = transaction
+            .getRepository(BillingPeriod)
+            .createQueryBuilder('billing_period')
+            .update({
+              diskUsageByteSecondsBilled: () => 'disk_usage_byte_seconds',
+              dataTransferInBilled: () => 'data_transfer_in',
+              dataTransferOutBilled: () => 'data_transfer_out',
+            })
+            .where({
+              user_Id: user.id,
+            })
+            .execute();
+          return Promise.all([insertBillingHistory, updateUserBalance, updateBillingPeriod]);
         }),
       );
     });
   };
 
+  // writeBillingPeriod();
   // writeBillingUsage();
   // writeBillingHistory();
 
-  setInterval(writeBillingUsage, 1 * 1000);
-  setInterval(writeBillingHistory, 60 * 1000);
+  setInterval(writeBillingPeriod, 1 * 1000);
+  setInterval(writeBillingUsage, 60 * 1000);
+  setInterval(writeBillingHistory, 86400 * 1000);
 };
 
 run();
