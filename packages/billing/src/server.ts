@@ -23,7 +23,7 @@ interface Usage {
 
 interface History {
   cost: number;
-  diskUsage: number;
+  diskUsageByteSeconds: number;
   diskUsagePrice: number;
   diskUsageCost: number;
   dataTransferIn: number;
@@ -37,12 +37,12 @@ interface History {
 }
 
 interface UsageByUser {
-  user_id: string;
-  disk_usage_byte_seconds: number;
-  data_transfer_in: number;
-  data_transfer_out: number;
-  begin_at: Date;
-  end_at: Date;
+  userId: string;
+  diskUsageByteSeconds: number;
+  dataTransferIn: number;
+  dataTransferOut: number;
+  beginAt: Date;
+  endAt: Date;
 }
 
 const run = async () => {
@@ -142,41 +142,41 @@ const run = async () => {
         .getRepository(BillingPeriod)
         .createQueryBuilder()
         .select(`
-          user_id,
-          SUM(disk_usage_byte_seconds) - SUM(disk_usage_byte_seconds_billed) AS disk_usage_byte_seconds,
-          SUM(data_transfer_in) - SUM(data_transfer_in_billed) AS data_transfer_in,
-          SUM(data_transfer_out) - SUM(data_transfer_out_billed) AS data_transfer_out,
-          CURRENT_TIMESTAMP as begin_at,
-          CURRENT_TIMESTAMP - interval '1 hour' as end_at
+          user_id as "userId",
+          SUM(disk_usage_byte_seconds) - SUM(disk_usage_byte_seconds_billed) AS "diskUsageByteSeconds",
+          SUM(data_transfer_in) - SUM(data_transfer_in_billed) AS "dataTransferIn",
+          SUM(data_transfer_out) - SUM(data_transfer_out_billed) AS "dataTransferOut",
+          CURRENT_TIMESTAMP as "beginAt",
+          CURRENT_TIMESTAMP - interval '24 hour' as "endAt"
         `)
         .groupBy('user_id')
         .getRawMany();
 
       await Promise.all(
         usageByUser.map((usage) => {
-          const diskUsageCost = usage.disk_usage_byte_seconds * DISK_USAGE_BYTE_SECONDS_PRICE;
-          const dataTransferInCost = usage.data_transfer_in * DATA_TRANSFER_IN_BYTES_PRICE;
-          const dataTransferOutCost = usage.data_transfer_out * DATA_TRANSFER_OUT_BYTES_PRICE;
+          const diskUsageCost = usage.diskUsageByteSeconds * DISK_USAGE_BYTE_SECONDS_PRICE;
+          const dataTransferInCost = usage.dataTransferIn * DATA_TRANSFER_IN_BYTES_PRICE;
+          const dataTransferOutCost = usage.dataTransferOut * DATA_TRANSFER_OUT_BYTES_PRICE;
           const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
-          if (cost <= 0.01) {
+          if (cost <= 0) {
             return Promise.resolve(undefined);
           }
           const history: History = {
             cost,
-            diskUsage: usage.disk_usage_byte_seconds,
+            diskUsageByteSeconds: usage.diskUsageByteSeconds,
             diskUsagePrice: DISK_USAGE_GB_MONTH_PRICE,
             diskUsageCost,
-            dataTransferIn: usage.data_transfer_in,
+            dataTransferIn: usage.dataTransferIn,
             dataTransferInPrice: DATA_TRANSFER_IN_GB_PRICE,
             dataTransferInCost,
-            dataTransferOut: usage.data_transfer_out,
+            dataTransferOut: usage.dataTransferOut,
             dataTransferOutPrice: DATA_TRANSFER_OUT_GB_PRICE,
             dataTransferOutCost,
-            beginAt: usage.begin_at,
-            endAt: usage.end_at,
+            beginAt: usage.beginAt,
+            endAt: usage.endAt,
           };
           const user = new User();
-          user.id = usage.user_id;
+          user.id = usage.userId;
           const insertBillingHistory = transaction
             .getRepository(BillingHistory)
             .createQueryBuilder('billing_history')
@@ -206,7 +206,7 @@ const run = async () => {
               dataTransferOutBilled: () => 'data_transfer_out',
             })
             .where({
-              user_Id: user.id,
+              user_id: user.id,
             })
             .execute();
           return Promise.all([insertBillingHistory, updateUserBalance, updateBillingPeriod]);

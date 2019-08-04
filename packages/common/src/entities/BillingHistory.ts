@@ -18,7 +18,7 @@ export class BillingHistory {
   cost: number;
 
   @Column('bigint')
-  diskUsage: number;
+  diskUsageByteSeconds: number;
 
   @Column('decimal', { precision: 19, scale: 4 })
   diskUsagePrice: number;
