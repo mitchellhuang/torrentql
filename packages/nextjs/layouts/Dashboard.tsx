@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
+import classNames from 'classnames';
 import Global from './Global';
 import Head from '../components/Head';
 import NavBar from '../components/NavBar';
@@ -94,12 +95,10 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
     <div className="tabs">
       <Tabs router={router} />
     </div>
-    <div className="confine-scope">
-      <div className="wrapper">
-        <div className="main">
-          <div className="content">
-            {children}
-          </div>
+    <div className={classNames('wrapper', { noPad })}>
+      <div className="main">
+        <div className="content">
+          {children}
         </div>
       </div>
     </div>
@@ -108,11 +107,9 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
         display: flex;
         flex-direction: column;
       }
-      ${noPad && `
-        .confine-scope .wrapper {
-          padding: 0;
-        }
-      `}
+      .noPad {
+        padding: 0;
+      }
       .content {
         overflow: auto;
       }
