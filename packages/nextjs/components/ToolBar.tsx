@@ -84,7 +84,7 @@ const ToolBar = () => {
           display: flex;
           padding: 5px;
           align-items: center;
-          justify-content: flex-end;
+          justify-content: flex-start;
           background-color: var(--toolBarGray);
         }
         .toolbar :global(.icon):hover {
@@ -96,9 +96,9 @@ const ToolBar = () => {
           height: 25px;
           background-color: var(--blueGray);
         }
-        @media(max-width: 767px) {
+        @media(min-width: 768px) {
         .toolbar {
-          justify-content: flex-start;
+          justify-content: flex-end;
         }
       }
       `}</style>

@@ -106,15 +106,15 @@ const TorrentsSidebar = () => (
     <StatusFilters />
     <style jsx>{`
       .torrents-sidebar {
-        background-color: var(--darkBlue);
-        color: var(--blueGray);;
-        display: flex;
-        flex-direction: column;
-        height: calc(100vh - 86px);
+        display: none;
       }
-      @media(max-width: 767px) {
+      @media(min-width: 768px) {
         .torrents-sidebar {
-          display: none;
+          background-color: var(--darkBlue);
+          color: var(--blueGray);;
+          display: flex;
+          flex-direction: column;
+          height: calc(100vh - 86px);
         }
       }
     `}</style>
