@@ -17,6 +17,9 @@ const productItems = [{
   name: 'Pricing',
   url: '/pricing',
 }, {
+  name: 'Features',
+  url: '/features',
+}, {
   name: 'API',
   url: '/api',
 }];

@@ -19,6 +19,7 @@ const NavBar: React.FunctionComponent<{
   };
   const items = [
     { name: 'Pricing', url: '/pricing' },
+    { name: 'Features', url: '/features' },
     { name: 'API', url: '/api' },
   ];
   const finalItem = (data && data.isLoggedIn)
