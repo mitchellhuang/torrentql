@@ -63,7 +63,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
           ))}
         </ul>
       </Card>
-      <Card className="content">
+      <Card title={title} className="content">
         {children}
       </Card>
     </div>
