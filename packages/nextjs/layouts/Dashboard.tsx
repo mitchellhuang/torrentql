@@ -78,6 +78,7 @@ const Tabs = ({ router }) => (
 
 interface IDashboard extends React.HTMLProps<HTMLDivElement> {
   title: string;
+  noWrap?: boolean;
   noPad?: boolean;
   noFooter?: boolean;
 }
@@ -86,6 +87,7 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
   children,
   router,
   title,
+  noWrap,
   noPad,
   ...props
 }) => (
@@ -95,7 +97,7 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
     <div className="tabs">
       <Tabs router={router} />
     </div>
-    <div className={classNames('wrapper', { noPad })}>
+    <div className={classNames({ wrapper: !noWrap, 'no-pad': noPad })}>
       <div className="main">
         <div className="content">
           {children}
@@ -107,11 +109,11 @@ const Dashboard : React.FunctionComponent<IDashboard & WithRouterProps> = ({
         display: flex;
         flex-direction: column;
       }
-      .noPad {
+      .no-pad {
         padding: 0;
       }
       .content {
-        overflow: auto;
+        flex: 1;
       }
     `}</style>
   </Global>
