@@ -9,6 +9,7 @@ import ToolBar from '../components/ToolBar';
 import TorrentsSidebar from '../components/TorrentsSidebar';
 import { torrentStatus } from '../lib/constants';
 import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
+import InfoPanel from '../components/InfoPanel';
 
 export const Unstyled = ({ message }) => (
   <div>
@@ -57,42 +58,67 @@ const TorrentsWithData = () => {
   let content;
   if (loading || !process.browser) {
     content = <Unstyled message="Loading..." />;
-  } else if (error) {
-    content = <Unstyled message={JSON.stringify(error)} />;
-  } else if (!data.me.torrents.length) {
-    content = <Unstyled message="No torrents." />;
-  } else {
-    torrents = data.me.torrents;
-    let searchFilter = getDashboard.searchFilter;
-    if (searchFilter) {
-      searchFilter = searchFilter.toLowerCase();
-      torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
-    }
-    if (getDashboard.statusFilter !== torrentStatus.ALL) {
-      torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
-    }
-    content = torrents.map(torrent => (
-      <Torrent
-        torrent={torrent}
-        key={torrent.id}
-      />
-    ));
   }
+  if (error) {
+    content = <Unstyled message={JSON.stringify(error)} />;
+  }
+  if (!data.me.torrents.length) {
+    content = (
+      <>
+        <ToolBar />
+        <Unstyled message="No torrents." />
+      </>
+    );
+  }
+  torrents = data.me.torrents;
+  let searchFilter = getDashboard.searchFilter;
+  if (searchFilter) {
+    searchFilter = searchFilter.toLowerCase();
+    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
+  }
+  if (getDashboard.statusFilter !== torrentStatus.ALL) {
+    torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
+  }
+  content = torrents.map(torrent => (
+    <Torrent
+      torrent={torrent}
+      key={torrent.id}
+    />
+  ));
+  const selectedTorrents = getDashboard.selectedTorrents;
+  const focusedTorrentId = selectedTorrents.length > 0
+    ? selectedTorrents[selectedTorrents.length - 1]
+    : undefined;
+  let focusedTorrent = torrents.filter(torrent => torrent.id === focusedTorrentId);
+  focusedTorrent = focusedTorrent.length > 0 ? focusedTorrent[0] : undefined;
   return (
     <div className="torrents">
       <TorrentsSidebar />
       <div className="main">
-        <ToolBar />
-        <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
-        {content}
+        <div className="no-flex-zone">
+          <ToolBar />
+          <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
+          {content}
+        </div>
       </div>
       <style jsx>{`
         .torrents {
           display: flex;
           min-width: 1024px;
+          flex-direction: row;
+        }
+        .info-panel {
+          display: flex;
+
+        }
+        .no-flex-zone {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          margin-left: 10px;
         }
         .main {
-          flex: 1;
+          flex: 5;
         }
       `}</style>
     </div>
