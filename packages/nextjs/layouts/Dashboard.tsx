@@ -17,7 +17,7 @@ const tabs = [{
   url: '/downloads',
 }, {
   name: 'Account',
-  url: '/account/usage',
+  url: '/account',
 }];
 
 const Tabs = ({ router }) => (
@@ -27,7 +27,7 @@ const Tabs = ({ router }) => (
       {tabs.map(item => (
         <li key={item.url}>
           <Link href={item.url}>
-            <a className={router.pathname.includes(item.url) ? 'active' : undefined}>
+            <a className={router.pathname.includes(item.url) && 'active'}>
               {item.name}
             </a>
           </Link>

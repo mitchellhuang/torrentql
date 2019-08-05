@@ -3,10 +3,8 @@ import Account from '../../layouts/Account';
 import withAuth from '../../lib/withAuth';
 
 const Usage = () => (
-  <Account title="Usage">
-    <div>
-      Usage information will go here.
-    </div>
+  <Account title="Billing">
+    Billing information will go here.
   </Account>
 );
 

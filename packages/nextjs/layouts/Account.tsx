@@ -1,72 +1,94 @@
 import React from 'react';
 import Dashboard from './Dashboard';
-import { Database, Lock, LogOut, Mail } from 'react-feather';
+import { Home, CreditCard, PieChart, Lock, LogOut, Mail } from 'react-feather';
 import { withRouter } from 'next/router';
+import { WithRouterProps } from 'next/dist/client/with-router';
 import Card from '../components/Card';
 
-const tabLinks = [
+const items = [
+  {
+    url: '/account',
+    name: 'Account',
+    icon: <Home />,
+  },
+  {
+    url: '/account/billing',
+    name: 'Billing',
+    icon: <CreditCard />,
+  },
   {
     url: '/account/usage',
     name: 'Usage',
-    icon: <Database />,
+    icon: <PieChart />,
   },
   {
-    url: '/account/update-email',
-    name: 'Update email',
+    url: '/account/email',
+    name: 'Update Email',
     icon: <Mail />,
   },
   {
-    url: '/account/update-password',
-    name: 'Update password',
+    url: '/account/password',
+    name: 'Update Password',
     icon: <Lock />,
   },
   {
-    url: '/account/logout',
+    url: '/logout',
     name: 'Logout',
     icon: <LogOut />,
   },
 ];
-const Account = ({ children, router }) => (
-  <Dashboard title="Account">
+
+interface IAccount extends React.HTMLProps<HTMLDivElement> {
+  title: string;
+}
+
+const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
+  title,
+  children,
+  router,
+}) => (
+  <Dashboard title={title}>
     <div className="container">
-      <ul className="sidebar">
-        {tabLinks.map(tabLink => (
-          <li key={tabLink.url} className={router.pathname.includes(tabLink.url) ? 'selected' : null}>
-            <a href={tabLink.url}>
-              {tabLink.icon}
-              <span className="tab-text ml-2">
-              {tabLink.name}
-            </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div className="actions">
-        <Card className="selected-tab">
-          {children}
-        </Card>
-      </div>
+      <Card className="sidebar">
+        <ul>
+          {items.map(item => (
+            <li key={item.url} className={router.pathname === item.url ? 'selected' : null}>
+              <a href={item.url}>
+                {item.icon}
+                <span className="tab-text ml-2">
+                  {item.name}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Card>
+      <Card className="content">
+        {children}
+      </Card>
     </div>
     <style jsx>{`
       .container {
         display: flex;
         flex-direction: column;
       }
-      span.bar {
-        height: 22px;
-        width: 3px;
-      }
-      .selected .bar {
-        background-color: var(--black);
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
       }
       .selected a {
         color: var(--black);
       }
-      li, .selected-tab {
-        display: flex;
-        flex-direction: row;
-        color: black;
-        list-style-type: none;
+      .container :global(.sidebar) {
+        margin-bottom: 15px;
+        height: 100%;
+      }
+      .container :global(.content) {
+        flex: 1;
+      }
+      li:not(:last-child) {
+        margin-bottom: 15px;
       }
       a {
         text-transform: capitalize;
@@ -74,36 +96,16 @@ const Account = ({ children, router }) => (
         display: flex;
         align-items: center;
         color: var(--primary);
-        font-size: 12pt;
-      }
-      li:not(:last-child) {
-        margin-bottom: 15px;
-      }
-      .container :global(.selected-tab) {
-        flex: 1;
-      }
-      .sidebar {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-      }
-      .actions {
-        display: flex;
-        justify-content: center;
-        flex: 5;
-        padding: 0;
-        margin-top: 15px;
-      }
-      .help {
-        padding: 0 15px;
+        font-size: 16px;
       }
       @media(min-width: 768px) {
         .container {
           flex-direction: row;
         }
-        .actions {
-          margin-top: 0;
-          padding: 0 15px;
+        .container :global(.sidebar) {
+          min-width: 200px;
+          margin-right: 10px;
+          margin-bottom: 0;
         }
       }
     `}</style>
