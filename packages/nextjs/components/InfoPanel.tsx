@@ -5,6 +5,7 @@ import ProgressBar from './ProgressBar';
 
 const InfoPanel = ({ torrent }) =>  (
   <Card>
+  <h5>{torrent.name}</h5>
   <ProgressBar progress={torrent.progress} state={torrent.state} />
     <div className="content">
       <div className="column">
@@ -96,6 +97,7 @@ const InfoPanel = ({ torrent }) =>  (
         font-weight: 600;
         font-weight: bold;
         margin-bottom: 2.5px;
+        margin-right: 5px;
       }
       .column {
         flex: 1;

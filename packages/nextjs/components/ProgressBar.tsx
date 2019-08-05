@@ -25,6 +25,7 @@ const ProgressBar = ({
           justify-content: flex-start;
           margin-right: 10px;
           overflow: hidden;
+          margin-bottom: 10px;
         }
         .progress-bar :global(.icon) {
           fill: var(--blueGray);
