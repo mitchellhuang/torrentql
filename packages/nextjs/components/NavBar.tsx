@@ -23,7 +23,7 @@ const NavBar: React.FunctionComponent<{
     { name: 'API', url: '/api' },
   ];
   const finalItem = (data && data.isLoggedIn)
-    ? { name: 'Dashboard →', url: '/torrents' }
+    ? { name: 'Dashboard →', url: '/dashboard' }
     : { name: 'Log in →', url: '/login' };
   items.push(finalItem);
   return (

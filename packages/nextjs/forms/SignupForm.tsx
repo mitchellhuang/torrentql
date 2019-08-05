@@ -27,7 +27,7 @@ const SignupForm = () => {
           jsCookie.set('token', token, { expires: 365 });
           client.writeData({ data: { isLoggedIn: true } });
           setSubmitting(false);
-          Router.push('/torrents');
+          Router.push('/dashboard');
         } catch (err) {
           setStatus(transformErrors(err));
           setSubmitting(false);
