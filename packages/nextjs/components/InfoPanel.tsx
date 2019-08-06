@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import prettyBytes from 'pretty-bytes';
 import Card from './Card';
 import ProgressBar from './ProgressBar';
+import { X } from 'react-feather';
 
-const InfoPanel = ({ torrent }) =>  (
+const InfoPanel = ({ torrent }) =>  {
+  const [expanded, toggle] = useState(true);
+  console.log(expanded);
+  if (!expanded) {
+    return (
+      <span />
+    );
+  }
+  return (
   <div className="info-panel">
     <Card>
-    <h5>{torrent.name}</h5>
+    <div className="banner">
+      <h5>{torrent.name}</h5>
+      <div className="close" onClick={() => toggle(!expanded)} >
+        <X/>
+      </div>
+    </div>
     <ProgressBar progress={torrent.progress} state={torrent.state} />
     <div className="content">
       <div className="column">
@@ -95,11 +109,16 @@ const InfoPanel = ({ torrent }) =>  (
     </div>
     </Card>
     <style jsx>{`
+      .banner {
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+      }
       .info-panel {
         position: absolute;
         bottom: 0;
-        width: calc(100vw - 241px);
-        box-shadow: 15px 0;
+        display: flex;
+        flex: 1;
       }
       .label {
         font-weight: 600;
@@ -149,6 +168,6 @@ const InfoPanel = ({ torrent }) =>  (
       }
     `}</style>
   </div>
-);
-
+  );
+};
 export default InfoPanel;
