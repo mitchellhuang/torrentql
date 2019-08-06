@@ -61,7 +61,7 @@ const TorrentsWithData = () => {
   }
   if (!data.me.torrents.length) {
     return (
-      <>100
+      <>
         <ToolBar />
         <Unstyled message="No torrents." />
       </>
