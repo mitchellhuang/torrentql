@@ -9,6 +9,7 @@ export const typeDefs = gql`
       searchFilter: String
       statusFilter: String
       selectedTorrents: [String]
+      focusedTorrent: String
     }
     extend type Query {
       getDashboard: Dashboard!
@@ -18,6 +19,7 @@ export const typeDefs = gql`
       updateSearchFilter(searchFilter: String!): Dashboard
       updateStatusFilter(statusFilter: String!): Dashboard
       updateSelectedTorrents(selectedTorrents: [String]!): Dashboard
+      updateFocusedTorrent(mostRecentSelected: String!): Dashboard
     }
 `;
 
@@ -65,6 +67,14 @@ export const resolvers = {
     updateSelectedTorrents: (_, { selectedTorrents }, { cache }) => {
       const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
       getDashboard.selectedTorrents = selectedTorrents;
+      return cache.writeQuery({
+        query: GET_DASHBOARD_QUERY,
+        data: { getDashboard },
+      });
+    },
+    updateFocusedTorrent: (_, { focusedTorrent }, { cache }) => {
+      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
+      getDashboard.focusedTorrent = focusedTorrent;
       return cache.writeQuery({
         query: GET_DASHBOARD_QUERY,
         data: { getDashboard },

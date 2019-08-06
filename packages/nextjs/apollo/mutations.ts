@@ -32,6 +32,14 @@ export const UPDATE_STATUS_FILTER_MUTATION = gql`
   }
 `;
 
+export const UPDATE_FOCUSED_TORRENT_MUTATION = gql`
+  mutation updateFocusedTorrent($focusedTorrent: String!) {
+    updateFocusedTorrent(focusedTorrent: $focusedTorrent) @client {
+      focusedTorrent
+    }
+  }
+`;
+
 export const UPDATE_SELECTED_TORRENTS_MUTATION = gql`
   mutation updateSelectedTorrents($selectedTorrents: [String]!) {
     updateSelectedTorrents(selectedTorrents: $selectedTorrents) @client {

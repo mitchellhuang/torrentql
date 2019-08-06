@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { CheckSquare, Square } from 'react-feather';
 import { useMutation, useQuery } from 'react-apollo-hooks';
-import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
+import { UPDATE_FOCUSED_TORRENT_MUTATION, UPDATE_SELECTED_TORRENTS_MUTATION} from '../apollo/mutations';
 import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ProgressBar from './ProgressBar';
 
@@ -87,12 +87,14 @@ const Torrent = ({
   torrent,
 }) => {
   const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
+  const [updateFocusedTorrent] = useMutation(UPDATE_FOCUSED_TORRENT_MUTATION);
   let { data: { getDashboard: { selectedTorrents } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   const selected = selectedTorrents.includes(torrent.id);
-  const handleSelection = () => {
+  const handleSelection = async () => {
     selectedTorrents = selectedTorrents.includes(torrent.id)
       ? selectedTorrents.filter(id => id !== torrent.id)
       : selectedTorrents.concat([torrent.id]);
+    await updateFocusedTorrent({ variables: { focusedTorrent: torrent.id } });
     return updateSelectedTorrents({ variables : { selectedTorrents } });
   };
   return (

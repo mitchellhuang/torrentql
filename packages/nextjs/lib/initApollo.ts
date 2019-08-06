@@ -16,6 +16,7 @@ const DEFAULT_DASHBOARD_CACHE = {
   searchFilter: '',
   statusFilter: torrentStatus.ALL,
   selectedTorrents: [],
+  focusedTorrent: null,
   __typename: 'Dashboard',
 };
 

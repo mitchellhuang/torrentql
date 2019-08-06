@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import Card from './Card';
 import ProgressBar from './ProgressBar';
 import { X } from 'react-feather';
+import { useMutation } from 'react-apollo-hooks';
+import { UPDATE_FOCUSED_TORRENT_MUTATION } from '../apollo/mutations';
 
 const InfoPanel = ({ torrent }) =>  {
-  const [expanded, toggle] = useState(true);
-  console.log(expanded);
-  if (!expanded) {
-    return (
-      <span />
-    );
-  }
+  const [updateFocusedTorrent] = useMutation(UPDATE_FOCUSED_TORRENT_MUTATION);
+  const handleClose = focusedTorrent => updateFocusedTorrent({ variables: { focusedTorrent } });
   return (
   <div className="info-panel">
     <Card>
     <div className="banner">
       <h5>{torrent.name}</h5>
-      <div className="close" onClick={() => toggle(!expanded)} >
+      <div className="close" onClick={() => handleClose(null)} >
         <X/>
       </div>
     </div>
@@ -46,8 +43,9 @@ const InfoPanel = ({ torrent }) =>  {
         </div>
         <div className="box">
           <span className="long-text">
-          <b>ID</b>
-          {torrent.id}</span>
+            <span className="label">ID</span>
+            <span className="value">{torrent.id}</span>
+          </span>
         </div>
       </div>
       <div className="column">
@@ -68,13 +66,13 @@ const InfoPanel = ({ torrent }) =>  {
           {prettyBytes(torrent.totalDownloaded)}
         </div>
         <div className="box">
-          <span className="label">Tracker Status</span>
-          {torrent.trackerStatus}
+          <span className="label">Size</span>
+          {prettyBytes(69000000)}
         </div>
         <div className="box">
           <span className="long-text">
-            <b>Hash</b>
-            {torrent.hash}
+            <span className="label">Hash</span>
+            <span className="value">{torrent.hash}</span>
           </span>
         </div>
       </div>
@@ -101,8 +99,8 @@ const InfoPanel = ({ torrent }) =>  {
         </div>
         <div className="box">
           <span className="long-text">
-            <b>Tracker</b>
-            {torrent.tracker}
+            <span className="label">Tracker Status</span>
+            <span className="value">{torrent.trackerStatus}</span>
           </span>
         </div>
       </div>
@@ -115,16 +113,19 @@ const InfoPanel = ({ torrent }) =>  {
         justify-content: space-between;
       }
       .info-panel {
-        position: absolute;
+        position: sticky;
         bottom: 0;
-        display: flex;
-        flex: 1;
+      }
+      .value {
+        flex: 3;
+        word-break: break-all;
       }
       .label {
         font-weight: 600;
         font-weight: bold;
         margin-bottom: 2.5px;
         margin-right: 5px;
+        word-break: none;
       }
       .column {
         flex: 1;
@@ -139,18 +140,16 @@ const InfoPanel = ({ torrent }) =>  {
       .content {
         display: flex;
         flex-direction: column;
+        flex-flow: flex-wrap;
       }
       .column:last-child .box:last-child {
         margin-bottom: 0;
       }
       .long-text {
         display: flex;
-        flex-direction: column;
-        word-break: break-all;
+        flex-direction: row;
         font-weight: 600;
         margin-bottom: 2.5px;
-        flex-direction: column-row;
-
       }
       .long-text:last-child {
         font-weight: 400;

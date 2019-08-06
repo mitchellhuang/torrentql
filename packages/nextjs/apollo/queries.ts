@@ -12,6 +12,7 @@ export const GET_DASHBOARD_QUERY = gql`
       searchFilter
       statusFilter
       selectedTorrents
+      focusedTorrent
     }
   }
 `;
