@@ -4,9 +4,10 @@ import Card from './Card';
 import ProgressBar from './ProgressBar';
 
 const InfoPanel = ({ torrent }) =>  (
-  <Card>
-  <h5>{torrent.name}</h5>
-  <ProgressBar progress={torrent.progress} state={torrent.state} />
+  <div className="info-panel">
+    <Card>
+    <h5>{torrent.name}</h5>
+    <ProgressBar progress={torrent.progress} state={torrent.state} />
     <div className="content">
       <div className="column">
         <div className="box">
@@ -92,7 +93,14 @@ const InfoPanel = ({ torrent }) =>  (
         </div>
       </div>
     </div>
+    </Card>
     <style jsx>{`
+      .info-panel {
+        position: absolute;
+        bottom: 0;
+        width: calc(100vw - 241px);
+        box-shadow: 15px 0;
+      }
       .label {
         font-weight: 600;
         font-weight: bold;
@@ -140,7 +148,7 @@ const InfoPanel = ({ torrent }) =>  (
         }
       }
     `}</style>
-  </Card>
+  </div>
 );
 
 export default InfoPanel;

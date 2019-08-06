@@ -9,11 +9,11 @@ const Card: React.FunctionComponent<ICard> = ({
   title,
   ...props
 }) => (
-  <div {...props}>
+  <div {...props} className="card">
     {title && <h3 className="mb-3">{title}</h3>}
     {children}
     <style jsx>{`
-      div {
+      .card {
         background-color: var(--white);
         border-radius: 5px;
         border: 1px solid var(--lightGray);

@@ -94,12 +94,13 @@ const TorrentsWithData = () => {
   return (
     <div className="torrents">
       <TorrentsSidebar />
-      <div className="main">
-        <div className="no-flex-zone">
+      <div className="info-main">
+        <div className="main">
           <ToolBar />
           <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
           {content}
         </div>
+        {focusedTorrent && <InfoPanel torrent={focusedTorrent} />}
       </div>
       <style jsx>{`
         .torrents {
@@ -111,11 +112,10 @@ const TorrentsWithData = () => {
           display: flex;
 
         }
-        .no-flex-zone {
+        .info-main {
           display: flex;
           flex-direction: column;
           flex: 1;
-          margin-left: 10px;
         }
         .main {
           flex: 5;
