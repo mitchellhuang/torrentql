@@ -1,5 +1,6 @@
 import React from 'react';
-import {useMutation, useQuery} from 'react-apollo-hooks';
+import { Square } from 'react-feather';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
@@ -7,7 +8,6 @@ import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
 import TorrentsSidebar from '../components/TorrentsSidebar';
 import { torrentStatus } from '../lib/constants';
-import { Square } from 'react-feather';
 import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
 
 export const Unstyled = ({ message }) => (
