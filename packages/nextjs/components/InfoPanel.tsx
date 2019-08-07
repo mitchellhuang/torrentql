@@ -126,6 +126,9 @@ const InfoPanel = ({ torrent }) =>  {
         position: sticky;
         bottom: 0;
       }
+      .info-panel :global(.card) {
+        background-color: var(--toolBarGray);
+      }
       .value {
         display: flex;
         flex-direction:row;
