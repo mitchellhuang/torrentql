@@ -1,5 +1,6 @@
 import React from 'react';
-import { useQuery } from 'react-apollo-hooks';
+import { Square } from 'react-feather';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import Torrent, { TRow, TCell } from '../components/Torrent';
@@ -7,6 +8,7 @@ import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ToolBar from '../components/ToolBar';
 import TorrentsSidebar from '../components/TorrentsSidebar';
 import { torrentStatus } from '../lib/constants';
+import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
 
 export const Unstyled = ({ message }) => (
   <div>
@@ -14,22 +16,36 @@ export const Unstyled = ({ message }) => (
   </div>
 );
 
-const TorrentTableHeader = () => (
-  <TRow header>
-    <div />
-    <TCell flex={5}>Name</TCell>
-    <TCell flex={2}>Progress</TCell>
-    <TCell flex={1}>Down Speed</TCell>
-    <TCell flex={1}>Up Speed</TCell>
-    <TCell flex={1}>Peers</TCell>
-    <TCell flex={1}>Seeds</TCell>
-    <style jsx>{`
-      div {
-        margin-left: 50px;
+const TorrentTableHeader = ({ torrents, selected }) => {
+  const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
+  const allSelected = torrents.length === selected.length && torrents.length > 0;
+  const handleSelection = () => {
+    const selectedTorrents = allSelected ? [] : torrents.map(torrent => torrent.id);
+    return updateSelectedTorrents({ variables: { selectedTorrents } });
+  };
+  return (
+    <TRow header>
+      <div className="checkbox" onClick={() => handleSelection()}>
+        <Square size={20} className="icon-square" />
+      </div>
+      <TCell flex={5}>Name</TCell>
+      <TCell flex={2}>Progress</TCell>
+      <TCell flex={1}>Down Speed</TCell>
+      <TCell flex={1}>Up Speed</TCell>
+      <TCell flex={1}>Peers</TCell>
+      <TCell flex={1}>Seeds</TCell>
+      <style jsx>{`
+      .checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        padding: 0 10px;
       }
     `}</style>
-  </TRow>
-);
+    </TRow>
+  );
+}
 
 const TorrentsWithData = () => {
   const { loading, data, error } = useQuery(ME_QUERY, {
@@ -65,7 +81,7 @@ const TorrentsWithData = () => {
       <TorrentsSidebar />
       <div className="main">
         <ToolBar />
-        <TorrentTableHeader />
+        <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
         {torrents.map(torrent => (
           <Torrent
             torrent={torrent}
