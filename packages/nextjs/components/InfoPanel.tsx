@@ -21,88 +21,98 @@ const InfoPanel = ({ torrent }) =>  {
     <ProgressBar progress={torrent.progress} state={torrent.state} />
     <div className="content">
       <div className="column">
-        <div className="box">
-          <span className="label">Progress</span>
-          {torrent.progress}%
-        </div>
-        <div className="box">
-          <span className="label">Download Speed</span>
-          {prettyBytes(torrent.downloadSpeed)}
-        </div>
-        <div className="box">
-          <span className="label">Number of Seeds</span>
-          {torrent.numSeeds}
-        </div>
-        <div className="box">
-          <span className="label">Total Wanted</span>
-          {prettyBytes(torrent.totalWanted)}
-        </div>
-        <div className="box">
-          <span className="label">Tracker Host</span>
-          {torrent.trackerHost}
-        </div>
-        <div className="box">
-          <span className="long-text">
-            <span className="label">ID</span>
-            <span className="value">{torrent.id}</span>
-          </span>
-        </div>
+        <Card>
+          <div className="box">
+            <span className="label">Progress</span>
+            {torrent.progress}%
+          </div>
+          <div className="box">
+            <span className="label">Download Speed</span>
+            {prettyBytes(torrent.downloadSpeed)}
+          </div>
+          <div className="box">
+            <span className="label">Number of Seeds</span>
+            {torrent.numSeeds}
+          </div>
+          <div className="box">
+            <span className="label">Total Wanted</span>
+            {prettyBytes(torrent.totalWanted)}
+          </div>
+          <div className="box">
+            <span className="label">Tracker Host</span>
+            {torrent.trackerHost}
+          </div>
+          <div className="box">
+            <span className="long-text">
+              <span className="label">ID</span>
+              <span className="value">{torrent.id}</span>
+            </span>
+          </div>
+        </Card>
       </div>
       <div className="column">
-        <div className="box">
-          <span className="label">Ratio</span>
-          {torrent.ratio.toFixed(2)}
-        </div>
-        <div className="box">
-          <span className="label">Eta</span>
-          {torrent.eta}
-        </div>
-        <div className="box">
-          <span className="label">Total Peers</span>
-          {torrent.totalPeers}
-        </div>
-        <div className="box">
-          <span className="label">Total Downloaded</span>
-          {prettyBytes(torrent.totalDownloaded)}
-        </div>
-        <div className="box">
-          <span className="label">Size</span>
-          {prettyBytes(69000000)}
-        </div>
-        <div className="box">
-          <span className="long-text">
-            <span className="label">Hash</span>
-            <span className="value">{torrent.hash}</span>
-          </span>
-        </div>
+        <Card>
+          <div className="box">
+            <span className="label">Ratio</span>
+            {torrent.ratio.toFixed(2)}
+          </div>
+          <div className="box">
+            <span className="label">Eta</span>
+            {torrent.eta}
+          </div>
+          <div className="box">
+            <span className="label">Total Peers</span>
+            {torrent.totalPeers}
+          </div>
+          <div className="box">
+            <span className="label">Total Downloaded</span>
+            {prettyBytes(torrent.totalDownloaded)}
+          </div>
+          <div className="box">
+            <span className="label">Size</span>
+            {prettyBytes(69000000)}
+          </div>
+          <div className="box">
+            <span className="long-text">
+              <span className="label">Hash</span>
+              <span className="value">{torrent.hash}</span>
+            </span>
+          </div>
+        </Card>
       </div>
       <div className="column">
-        <div className="box">
-          <span className="label">State</span>
-          {torrent.state}
-        </div>
-        <div className="box">
-          <span className="label">Upload Speed</span>
-          {prettyBytes(torrent.uploadSpeed)}
-        </div>
-        <div className="box">
-          <span className="label">Number of Peers</span>
-          {torrent.numPeers}
-        </div>
-        <div className="box">
-          <span className="label">Total Seeds</span>
-          {torrent.totalSeeds}
-        </div>
-        <div className="box">
-          <span className="label">Total Uploaded</span>
-          {prettyBytes(torrent.totalUploaded)}
-        </div>
-        <div className="box">
-          <span className="long-text">
-            <span className="label">Tracker Status</span>
-            <span className="value">{torrent.trackerStatus}</span>
-          </span>
-        </div>
+        <Card>
+          <div className="box">
+            <span className="label">State</span>
+            {torrent.state}
+          </div>
+          <div className="box">
+            <span className="label">Upload Speed</span>
+            {prettyBytes(torrent.uploadSpeed)}
+          </div>
+          <div className="box">
+            <span className="label">Number of Peers</span>
+            {torrent.numPeers}
+          </div>
+          <div className="box">
+            <span className="label">Total Seeds</span>
+            {torrent.totalSeeds}
+          </div>
+          <div className="box">
+            <span className="label">Total Uploaded</span>
+            {prettyBytes(torrent.totalUploaded)}
+          </div>
+          <div className="box">
+            <span className="long-text">
+              <span className="label">
+                Tracker Status
+              </span>
+              <span className="value">
+                {torrent.trackerStatus}
+              </span>
+            </span>
+          </div>
+        </Card>
       </div>
     </div>
     </Card>
@@ -117,8 +127,9 @@ const InfoPanel = ({ torrent }) =>  {
         bottom: 0;
       }
       .value {
-        flex: 3;
-        word-break: break-all;
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
       }
       .label {
         font-weight: 600;
@@ -136,23 +147,23 @@ const InfoPanel = ({ torrent }) =>  {
         margin-bottom: 10px;
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
       }
       .content {
         display: flex;
         flex-direction: column;
         flex-flow: flex-wrap;
       }
-      .column:last-child .box:last-child {
-        margin-bottom: 0;
-      }
       .long-text {
         display: flex;
+        text-align: right;
         flex-direction: row;
         font-weight: 600;
         margin-bottom: 2.5px;
       }
       .long-text:last-child {
         font-weight: 400;
+
       }
       @media(min-width: 768px) {
         .content {
@@ -160,6 +171,8 @@ const InfoPanel = ({ torrent }) =>  {
         }
         .box {
           padding-right: 15px;
+          display: flex;
+          justify-content: space-between;
         }
         .box:last-child {
           margin-bottom: 0;

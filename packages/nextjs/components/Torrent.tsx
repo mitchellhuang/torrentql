@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { CheckSquare, Square } from 'react-feather';
 import { useMutation, useQuery } from 'react-apollo-hooks';
-import { UPDATE_FOCUSED_TORRENT_MUTATION, UPDATE_SELECTED_TORRENTS_MUTATION} from '../apollo/mutations';
+import { UPDATE_FOCUSED_TORRENT_MUTATION, UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
 import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 import ProgressBar from './ProgressBar';
 
