@@ -36,6 +36,7 @@ const Directory = ({ name, depth, children }) => {
       {expanded && children}
       <style jsx>{`
       .directory {
+        height: 200px;
         display: flex;
         flex-direction: column;
         margin-left: ${offSet}px;

@@ -6,7 +6,7 @@ import { UPDATE_FOCUSED_TORRENT_MUTATION } from '../apollo/mutations';
 import FileExplorer from '../components/FileExplorer';
 import Card from './Card';
 import ProgressBar from './ProgressBar';
-
+import Button from '../components/Button';
 const InfoPanel = ({ torrent }) => (
   <>
     <ProgressBar progress={torrent.progress} state={torrent.state} />
@@ -166,10 +166,20 @@ const InfoPopup = ({ torrent }) =>  {
         </div>
       </div>
       <ul>
-        <li onClick={() => setSelectedTab(0)}>Info</li>
-        <li onClick={() => setSelectedTab(1)}>Second panel</li>
+        <li onClick={() => setSelectedTab(0)}>
+          <Button>
+            Info
+          </Button>
+        </li>
+        <li onClick={() => setSelectedTab(1)}>
+          <Button>
+            Files
+          </Button>
+        </li>
       </ul>
-      {tabs[selectedTab]}
+      <div className="tab">
+        {tabs[selectedTab]}
+      </div>
     </Card>
     <style jsx>{`
       .banner {
@@ -184,17 +194,24 @@ const InfoPopup = ({ torrent }) =>  {
       }
       .info-panel :global(.card) {
         background-color: var(--toolBarGray);
+        height: 300px;
       }
       ul {
+        position: sticky;
+        bottom: 0;
         display: flex;
         flex-direction: row;
         list-style-type: none;
       }
       li {
+        margin-right: 5px;
+        position: sticky;
+        bottom: 0;
         margin-left: 5px;
       }
     `}</style>
   </div>
   );
 };
+
 export default InfoPopup;
