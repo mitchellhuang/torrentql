@@ -31,6 +31,7 @@ export const ME_QUERY = gql`
         uploadSpeed
         downloadSpeed
         eta
+        files
         numPeers
         numSeeds
         totalPeers

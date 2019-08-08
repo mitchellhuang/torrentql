@@ -2,7 +2,6 @@ import React from 'react';
 import { torrentStatus } from '../lib/constants';
 import { Pause, Play } from 'react-feather';
 
-
 const ProgressBar = ({
   progress,
   state,

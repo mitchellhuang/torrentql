@@ -9,7 +9,7 @@ import ToolBar from '../components/ToolBar';
 import TorrentsSidebar from '../components/TorrentsSidebar';
 import { torrentStatus } from '../lib/constants';
 import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
-import InfoPanel from '../components/InfoPanel';
+import InfoPopup from '../components/InfoPopup';
 
 export const Unstyled = ({ message }) => (
   <div>
@@ -100,7 +100,7 @@ const TorrentsWithData = () => {
           <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
           {content}
         </div>
-        {focusedTorrent && <InfoPanel torrent={focusedTorrent} />}
+        {focusedTorrent && <InfoPopup torrent={focusedTorrent} />}
       </div>
       <style jsx>{`
         .torrents {

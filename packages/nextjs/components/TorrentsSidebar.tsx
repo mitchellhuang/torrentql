@@ -111,7 +111,7 @@ const TorrentsSidebar = () => (
       @media(min-width: 768px) {
         .torrents-sidebar {
           background-color: var(--darkBlue);
-          color: var(--blueGray);;
+          color: var(--blueGray);
           display: flex;
           flex-direction: column;
           height: calc(100vh - 65px);

@@ -2,11 +2,13 @@ import React from 'react';
 
 interface ICard extends React.HTMLProps<HTMLDivElement> {
    title?: string;
+   noBorder?: boolean;
 }
 
 const Card: React.FunctionComponent<ICard> = ({
   children,
   title,
+  noBorder,
   ...props
 }) => (
   <div {...props} className="card">
@@ -16,8 +18,8 @@ const Card: React.FunctionComponent<ICard> = ({
       .card {
         background-color: var(--white);
         border-radius: 5px;
-        border: 1px solid var(--lightGray);
         padding: 15px;
+        ${!noBorder && 'border: 1px solid var(--lightGray);'}
       }
     `}</style>
   </div>

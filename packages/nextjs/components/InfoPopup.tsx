@@ -1,27 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import prettyBytes from 'pretty-bytes';
-import Card from './Card';
-import ProgressBar from './ProgressBar';
 import { X } from 'react-feather';
 import { useMutation } from 'react-apollo-hooks';
 import { UPDATE_FOCUSED_TORRENT_MUTATION } from '../apollo/mutations';
+import FileExplorer from '../components/FileExplorer';
+import Card from './Card';
+import ProgressBar from './ProgressBar';
 
-const InfoPanel = ({ torrent }) =>  {
-  const [updateFocusedTorrent] = useMutation(UPDATE_FOCUSED_TORRENT_MUTATION);
-  const handleClose = focusedTorrent => updateFocusedTorrent({ variables: { focusedTorrent } });
-  return (
-  <div className="info-panel">
-    <Card>
-    <div className="banner">
-      <h5>{torrent.name}</h5>
-      <div className="close" onClick={() => handleClose(null)} >
-        <X/>
-      </div>
-    </div>
+const InfoPanel = ({ torrent }) => (
+  <>
     <ProgressBar progress={torrent.progress} state={torrent.state} />
     <div className="content">
       <div className="column">
-        <Card>
+        <Card noBorder>
           <div className="box">
             <span className="label">Progress</span>
             {torrent.progress}%
@@ -43,15 +34,13 @@ const InfoPanel = ({ torrent }) =>  {
             {torrent.trackerHost}
           </div>
           <div className="box">
-            <span className="long-text">
-              <span className="label">ID</span>
-              <span className="value">{torrent.id}</span>
-            </span>
+            <span className="label" id="id-label">ID</span>
+            {torrent.id}
           </div>
         </Card>
       </div>
       <div className="column">
-        <Card>
+        <Card noBorder>
           <div className="box">
             <span className="label">Ratio</span>
             {torrent.ratio.toFixed(2)}
@@ -73,15 +62,13 @@ const InfoPanel = ({ torrent }) =>  {
             {prettyBytes(69000000)}
           </div>
           <div className="box">
-            <span className="long-text">
-              <span className="label">Hash</span>
-              <span className="value">{torrent.hash}</span>
-            </span>
+            <span className="label" id="hash-label">Hash</span>
+            {torrent.hash}
           </div>
         </Card>
       </div>
       <div className="column">
-        <Card>
+        <Card noBorder>
           <div className="box">
             <span className="label">State</span>
             {torrent.state}
@@ -103,42 +90,24 @@ const InfoPanel = ({ torrent }) =>  {
             {prettyBytes(torrent.totalUploaded)}
           </div>
           <div className="box">
-            <span className="long-text">
-              <span className="label">
-                Tracker Status
-              </span>
-              <span className="value">
-                {torrent.trackerStatus}
-              </span>
-            </span>
+            <span className="label" id="tracker-status-label">Tracker Status</span>
+            {torrent.trackerStatus}
           </div>
         </Card>
       </div>
     </div>
-    </Card>
     <style jsx>{`
-      .banner {
-        display: flex;
-        flex-direction:row;
-        justify-content: space-between;
+      #tracker-status-label {
+        width: 160px;
       }
-      .info-panel {
-        position: sticky;
-        bottom: 0;
+      #hash-label {
+        width: 80px;
       }
-      .info-panel :global(.card) {
-        background-color: var(--toolBarGray);
-      }
-      .value {
-        display: flex;
-        flex-direction:row;
-        justify-content: space-between;
+      #id-label {
+        width: 30px;
       }
       .label {
         font-weight: 600;
-        font-weight: bold;
-        margin-bottom: 2.5px;
-        margin-right: 5px;
         word-break: none;
       }
       .column {
@@ -150,23 +119,17 @@ const InfoPanel = ({ torrent }) =>  {
         margin-bottom: 10px;
         display: flex;
         flex-direction: row;
+        word-break: break-all;
+        justify-content: space-between;
+      }
+      .value {
+        display: flex;
+        flex-direction:row;
         justify-content: space-between;
       }
       .content {
         display: flex;
         flex-direction: column;
-        flex-flow: flex-wrap;
-      }
-      .long-text {
-        display: flex;
-        text-align: right;
-        flex-direction: row;
-        font-weight: 600;
-        margin-bottom: 2.5px;
-      }
-      .long-text:last-child {
-        font-weight: 400;
-
       }
       @media(min-width: 768px) {
         .content {
@@ -182,7 +145,56 @@ const InfoPanel = ({ torrent }) =>  {
         }
       }
     `}</style>
+  </>
+);
+
+const InfoPopup = ({ torrent }) =>  {
+  const [updateFocusedTorrent] = useMutation(UPDATE_FOCUSED_TORRENT_MUTATION);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const handleClose = focusedTorrent => updateFocusedTorrent({ variables: { focusedTorrent } });
+  const tabs = [
+    <InfoPanel torrent={torrent} />,
+    <FileExplorer torrent={torrent} />,
+  ];
+  return (
+  <div className="info-panel">
+    <Card noBorder>
+      <div className="banner">
+        <h5>{torrent.name}</h5>
+        <div className="close" onClick={() => handleClose(null)} >
+          <X/>
+        </div>
+      </div>
+      <ul>
+        <li onClick={() => setSelectedTab(0)}>Info</li>
+        <li onClick={() => setSelectedTab(1)}>Second panel</li>
+      </ul>
+      {tabs[selectedTab]}
+    </Card>
+    <style jsx>{`
+      .banner {
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+      }
+      .info-panel {
+        position: sticky;
+        bottom: 0;
+        font-size: 14px;
+      }
+      .info-panel :global(.card) {
+        background-color: var(--toolBarGray);
+      }
+      ul {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+      }
+      li {
+        margin-left: 5px;
+      }
+    `}</style>
   </div>
   );
 };
-export default InfoPanel;
+export default InfoPopup;
