@@ -119,7 +119,7 @@ const InfoPanel = ({ torrent }) => (
         margin-bottom: 10px;
         display: flex;
         flex-direction: row;
-        word-break: break-all;
+        word-break: break-word;
         justify-content: space-between;
       }
       .value {
