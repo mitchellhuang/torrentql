@@ -1,6 +1,5 @@
 import React from 'react';
 import Main from '../layouts/Main';
-import Link from 'next/link';
 
 const Error = ({ statusCode }) => {
   return (
@@ -9,20 +8,20 @@ const Error = ({ statusCode }) => {
         <div className="error">
           <h1 className="mb-3">{statusCode}</h1>
           <h3 className="mb-3">
-            {statusCode ? 'An error occurred on server.' : 'An error occurred on client.'}
+            An error occurred.
           </h3>
           <p>
-            <Link href="/">
-              <a>Return home</a>
-            </Link>
+            <a href="/" className="return-home">Return home</a>
           </p>
         </div>
       </div>
       <style jsx>{`
+        .return-home {
+          text-transform: uppercase;
+          font-weight: 600;
+        }
         @media(min-width: 768px) {
           .wrapper {
-            height: calc(100vh - 500px);
-            align-items: center;
             max-width: 768px;
             padding: 75px 0;
           }
