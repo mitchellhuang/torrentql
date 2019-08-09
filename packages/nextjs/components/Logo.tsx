@@ -13,7 +13,7 @@ export const Logo: React.FunctionComponent<React.HTMLProps<HTMLAnchorElement>> =
           background-position: -30px 50%;
           background-size: cover;
           width: 225px;
-          height: 40px;
+          height: 35px;
         }
       `}</style>
     </a>

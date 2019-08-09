@@ -10,6 +10,13 @@ interface IMain {
   noFooter?: boolean;
 }
 
+const items = [
+  { name: 'Pricing', url: '/pricing' },
+  { name: 'Features', url: '/features' },
+  { name: 'API', url: '/api' },
+  { name: 'Log in →', url: '/login' },
+];
+
 const Main: React.FunctionComponent<IMain> = ({
   children,
   title,
@@ -18,7 +25,7 @@ const Main: React.FunctionComponent<IMain> = ({
   <Global>
     <Head title={title} />
     <div className="main">
-      <NavBar />
+      <NavBar items={items} />
       <div className="content">
         {children}
       </div>
