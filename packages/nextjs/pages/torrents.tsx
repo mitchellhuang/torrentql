@@ -45,7 +45,7 @@ const TorrentTableHeader = ({ torrents, selected }) => {
     `}</style>
     </TRow>
   );
-}
+};
 
 const TorrentsWithData = () => {
   const { loading, data, error } = useQuery(ME_QUERY, {
