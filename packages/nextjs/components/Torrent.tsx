@@ -45,6 +45,9 @@ const TRow: React.FunctionComponent<ITRow> = ({
         background-color: var(--toolBarGray);
       }
       .header {
+        position: sticky;
+        z-index: 1;
+        top: 85px;
         height: 35px;
         cursor: default;
         color: var(--blueGray);

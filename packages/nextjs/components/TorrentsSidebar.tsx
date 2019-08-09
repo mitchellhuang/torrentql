@@ -102,11 +102,17 @@ const StatusFilters = () => {
 
 const TorrentsSidebar = () => (
   <div className="torrents-sidebar">
-    <SearchInput />
-    <StatusFilters />
+    <div className="contents">
+      <SearchInput />
+      <StatusFilters />
+    </div>
     <style jsx>{`
       .torrents-sidebar {
         display: none;
+      }
+      .contents {
+        position: sticky;
+        top: 53px;
       }
       @media(min-width: 768px) {
         .torrents-sidebar {

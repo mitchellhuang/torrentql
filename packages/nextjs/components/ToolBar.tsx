@@ -99,6 +99,9 @@ const ToolBar = () => {
         @media(min-width: 768px) {
         .toolbar {
           justify-content: flex-end;
+          position: sticky;
+          z-index: 1;
+          top: 42px;
         }
       }
       `}</style>

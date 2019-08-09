@@ -36,7 +36,6 @@ const Directory = ({ name, depth, children }) => {
       {expanded && children}
       <style jsx>{`
       .directory {
-        height: 200px;
         display: flex;
         flex-direction: column;
         margin-left: ${offSet}px;
@@ -124,7 +123,7 @@ const FileExplorer = ({ torrent }) => {
       <style jsx>{`
         .file-explorer {
           border-radius: 5px;
-          max-height: 250px;
+          max-height: 193px;
           overflow: auto;
         }
       `}</style>
