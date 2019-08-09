@@ -35,7 +35,7 @@ const NavBar: React.FunctionComponent<{
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
-                <a className={router.pathname === item.url ? 'active' : undefined}>
+                <a className={router.pathname === item.url && 'active'}>
                   {item.name}
                 </a>
               </Link>

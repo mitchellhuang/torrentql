@@ -29,7 +29,7 @@ const Main: React.FunctionComponent<IMain> = ({
       <div className="content">
         {children}
       </div>
-      {!noFooter ? <Footer /> : null}
+      {!noFooter && <Footer />}
     </div>
   </Global>
 );

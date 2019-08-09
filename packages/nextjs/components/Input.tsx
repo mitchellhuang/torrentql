@@ -15,7 +15,7 @@ const Input: React.FunctionComponent<IInput> = ({
   ...props
 }) => (
   <div>
-    { label ? <label htmlFor={id}>{label}</label> : null}
+    { label && <label htmlFor={id}>{label}</label>}
     <input
       id={id}
       type={type}

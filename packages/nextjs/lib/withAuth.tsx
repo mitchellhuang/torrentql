@@ -28,7 +28,7 @@ const withAuth = (Component: React.ComponentType) => (
 
     render() {
       const { isLoggedIn } = this.props;
-      return isLoggedIn ? <Component /> : null;
+      return isLoggedIn && <Component />;
     }
   }
 );

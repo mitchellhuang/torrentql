@@ -7,7 +7,7 @@ const Modal = ({
   toggle,
   title,
   children,
-}) => active ? ReactDOM.createPortal(
+}) => active && ReactDOM.createPortal(
   <div className="modal">
     <a
       className="modal-overlay"
@@ -79,6 +79,6 @@ const Modal = ({
     `}</style>
   </div>,
   document.getElementById('modal-root') as Element,
-) : null;
+);
 
 export default Modal;
