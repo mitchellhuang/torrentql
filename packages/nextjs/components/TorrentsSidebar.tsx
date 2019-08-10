@@ -113,7 +113,8 @@ const TorrentsSidebar = () => (
       .contents {
         position: sticky;
         top: 65px;
-        height: calc(100vh - 65px);
+        height: calc(100vh);
+        overflow: scroll;
       }
       @media(min-width: 768px) {
         .torrents-sidebar {
