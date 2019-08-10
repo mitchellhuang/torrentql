@@ -101,7 +101,7 @@ const ToolBar = () => {
           justify-content: flex-end;
           position: sticky;
           z-index: 1;
-          top: 42px;
+          top: 65px;
         }
       }
       `}</style>

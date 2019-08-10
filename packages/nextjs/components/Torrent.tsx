@@ -47,7 +47,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
       .header {
         position: sticky;
         z-index: 1;
-        top: 85px;
+        top: 108px;
         height: 35px;
         cursor: default;
         color: var(--blueGray);

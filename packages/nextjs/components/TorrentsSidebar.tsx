@@ -112,7 +112,8 @@ const TorrentsSidebar = () => (
       }
       .contents {
         position: sticky;
-        top: 53px;
+        top: 65px;
+        height: calc(100vh - 65px);
       }
       @media(min-width: 768px) {
         .torrents-sidebar {
@@ -120,7 +121,6 @@ const TorrentsSidebar = () => (
           color: var(--blueGray);
           display: flex;
           flex-direction: column;
-          height: calc(100vh - 65px);
         }
       }
     `}</style>

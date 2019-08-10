@@ -50,6 +50,7 @@ const NavBar: React.FunctionComponent<{
           position: sticky;
           top: 0;
           margin: 0;
+          z-index: 1;
           box-shadow: ${!noBoxShadow && '#fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px'};
         }
         .wrapper {

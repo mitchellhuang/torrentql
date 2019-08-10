@@ -56,41 +56,41 @@ const TorrentsWithData = () => {
   const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   let torrents = [];
   let content;
+  let focusedTorrent;
   if (loading || !process.browser) {
     content = <Unstyled message="Loading..." />;
-  }
-  if (error) {
+  } else if (error) {
     content = <Unstyled message={JSON.stringify(error)} />;
-  }
-  if (!data.me.torrents.length) {
+  } else if (!data.me.torrents.length) {
     content = (
       <>
         <ToolBar />
         <Unstyled message="No torrents." />
       </>
     );
+  } else {
+    torrents = data.me.torrents;
+    let searchFilter = getDashboard.searchFilter;
+    if (searchFilter) {
+      searchFilter = searchFilter.toLowerCase();
+      torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
+    }
+    if (getDashboard.statusFilter !== torrentStatus.ALL) {
+      torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
+    }
+    content = torrents.map(torrent => (
+      <Torrent
+        torrent={torrent}
+        key={torrent.id}
+      />
+    ));
+    const selectedTorrents = getDashboard.selectedTorrents;
+    const focusedTorrentId = selectedTorrents.length > 0
+      ? selectedTorrents[selectedTorrents.length - 1]
+      : undefined;
+    focusedTorrent = torrents.filter(torrent => torrent.id === focusedTorrentId);
+    focusedTorrent = focusedTorrent.length > 0 ? focusedTorrent[0] : undefined;
   }
-  torrents = data.me.torrents;
-  let searchFilter = getDashboard.searchFilter;
-  if (searchFilter) {
-    searchFilter = searchFilter.toLowerCase();
-    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
-  }
-  if (getDashboard.statusFilter !== torrentStatus.ALL) {
-    torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
-  }
-  content = torrents.map(torrent => (
-    <Torrent
-      torrent={torrent}
-      key={torrent.id}
-    />
-  ));
-  const selectedTorrents = getDashboard.selectedTorrents;
-  const focusedTorrentId = selectedTorrents.length > 0
-    ? selectedTorrents[selectedTorrents.length - 1]
-    : undefined;
-  let focusedTorrent = torrents.filter(torrent => torrent.id === focusedTorrentId);
-  focusedTorrent = focusedTorrent.length > 0 ? focusedTorrent[0] : undefined;
   return (
     <div className="torrents">
       <TorrentsSidebar />
