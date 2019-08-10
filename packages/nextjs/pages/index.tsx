@@ -58,7 +58,7 @@ const Hero = () => (
           margin: 100px 0;
         }
         .image {
-          width: 500px;
+          width: 400px;
         }
         .text {
           width: 260px;
