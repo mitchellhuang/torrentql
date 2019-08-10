@@ -3,11 +3,18 @@
   become: yes
 
   roles:
-    - common
+    - { role: common, tags: common }
 
 - name: deploy deluge to deluge nodes
   hosts: deluge
   remote_user: ubuntu
 
   roles:
-    - deluge
+    - { role: deluge, tags: deluge }
+
+- name: deploy nginx to deluge nodes
+  hosts: deluge
+  remote_user: ubuntu
+
+  roles:
+    - { role: nginx, tags: nginx }
