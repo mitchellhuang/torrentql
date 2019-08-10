@@ -6,23 +6,20 @@ interface IButton extends React.HTMLProps<HTMLButtonElement & HTMLAnchorElement>
   type?: any;
   href?: string;
   block?: boolean;
-  white?: boolean;
-  animate?: boolean;
+  outline?: boolean;
 }
 
 const Button: React.FunctionComponent<IButton> = ({
   children,
   href,
   block,
-  white,
-  animate,
+  outline,
   className,
   ...props
 }) => {
   const btnClass = classNames('button', {
     'button--block': block,
-    'button--outline': white,
-    'button--animate': animate,
+    'button--outline': outline,
     [className as string]: className,
   });
   return (
@@ -41,7 +38,7 @@ const Button: React.FunctionComponent<IButton> = ({
       <style jsx>{`
         .button {
           display: inline-block;
-          padding: 10px;
+          padding: 9px 10px;
           color: var(--white);
           background-color: var(--primary);
           border: 1px solid var(--primary);
@@ -52,6 +49,9 @@ const Button: React.FunctionComponent<IButton> = ({
           text-align: center;
           font-weight: 600;
           transition: all 0.15s ease;
+        }
+        .button:hover {
+          background-color: #1C71B9;
         }
         .button:disabled {
           background-color: #aaa;
@@ -67,12 +67,10 @@ const Button: React.FunctionComponent<IButton> = ({
           background-color: var(--white);
           border: 1px solid var(--primary);
         }
-        .button--animate {
-          box-shadow: 0 5px 10px rgba(0,0,0,0.12);
-        }
-        .button--animate:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 7px 20px rgba(0,0,0,0.12);
+        .button--outline:hover {
+          background-color: initial;
+          border-color: #1C71B9;
+          color: #1C71B9;
         }
       `}</style>
     </>

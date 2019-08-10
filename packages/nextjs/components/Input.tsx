@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 
 interface IInput extends React.HTMLProps<HTMLInputElement>  {
   label?: string;
@@ -10,20 +9,14 @@ const Input: React.FunctionComponent<IInput> = ({
   id,
   label,
   type,
-  className,
   errors,
   ...props
 }) => (
   <div>
-    { label ? <label htmlFor={id}>{label}</label> : null}
+    { label && <label htmlFor={id}>{label}</label>}
     <input
       id={id}
       type={type}
-      className={classNames('input', {
-        'input--text': ['text', 'password'].includes(type),
-        'input--file': type === 'file',
-        [className as string]: className,
-      })}
       {...props}
     />
     { errors && errors.map(error => <div key={error} className="error">{error}</div>)}
@@ -35,23 +28,27 @@ const Input: React.FunctionComponent<IInput> = ({
         display: block;
         margin-bottom: 10px;
       }
-      .input {
+      input {
         display: block;
         box-sizing: border-box;
         width: 100%;
         outline: none;
         appearance: none;
       }
-      .input--text {
+      input[type=text],
+      input[type=password] {
         border: 1px solid var(--gray);
         border-radius: 3px;
-        padding: 10px;
+        padding: 6px 10px;
+        height: 38px;
+        line-height: 24px;
+        vertical-align: middle;
+        box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       }
-      .input--text:focus {
-        border: 1px solid var(--primary);
-      }
-      .input--file {
+      input[type=text]:focus,
+      input[type=password]:focus {
+        border-color: var(--primary);
       }
       .error {
         color: var(--error);

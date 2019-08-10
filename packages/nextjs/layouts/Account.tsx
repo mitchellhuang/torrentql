@@ -52,7 +52,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
       <Card className="sidebar">
         <ul>
           {items.map(item => (
-            <li key={item.url} className={router.pathname === item.url ? 'selected' : null}>
+            <li key={item.url} className={router.pathname === item.url && 'selected'}>
               <a href={item.url}>
                 {item.icon}
                 <span className="tab-text ml-2">

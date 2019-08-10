@@ -17,7 +17,7 @@
     "start": "lerna run --ignore @torrentql/common --stream --parallel start"
   },
   "dependencies": {
-    "lerna": "^3.15.0",
+    "lerna": "^3.16.4",
     "typescript": "^3.5.3"
   },
   "devDependencies": {

@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
-import { useQuery } from 'react-apollo-hooks';
-import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
 import { Logo } from './Logo';
 
+interface INavBarItem {
+  name: string;
+  url: string;
+}
+
 const NavBar: React.FunctionComponent<{
+  items: INavBarItem[],
   router: any,
   noBoxShadow?: boolean,
 }> = ({
+  items,
   router,
   noBoxShadow,
 }) => {
-  const { data } = useQuery(IS_LOGGED_IN_QUERY);
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
   };
-  const items = [
-    { name: 'Pricing', url: '/pricing' },
-    { name: 'Features', url: '/features' },
-    { name: 'API', url: '/api' },
-  ];
-  const finalItem = (data && data.isLoggedIn)
-    ? { name: 'Dashboard →', url: '/dashboard' }
-    : { name: 'Log in →', url: '/login' };
-  items.push(finalItem);
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -40,7 +35,7 @@ const NavBar: React.FunctionComponent<{
           { items.map(item => (
             <li key={item.url}>
               <Link href={item.url}>
-                <a className={router.pathname === item.url ? 'active' : undefined}>
+                <a className={router.pathname === item.url && 'active'}>
                   {item.name}
                 </a>
               </Link>

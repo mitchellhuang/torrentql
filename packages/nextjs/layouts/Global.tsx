@@ -66,6 +66,9 @@ const Global: React.FunctionComponent<{
         color: var(--primary);
         text-decoration: none;
       }
+      a:hover {
+        color: #1C71B9;
+      }
       p {
         margin: 0;
         line-height: 1.4;
