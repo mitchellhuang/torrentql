@@ -84,12 +84,8 @@ const TorrentsWithData = () => {
         key={torrent.id}
       />
     ));
-    const selectedTorrents = getDashboard.selectedTorrents;
-    const focusedTorrentId = selectedTorrents.length > 0
-      ? selectedTorrents[selectedTorrents.length - 1]
-      : undefined;
-    focusedTorrent = torrents.filter(torrent => torrent.id === focusedTorrentId);
-    focusedTorrent = focusedTorrent.length > 0 ? focusedTorrent[0] : undefined;
+    focusedTorrent = torrents.filter(torrent => torrent.id === getDashboard.focusedTorrent);
+    focusedTorrent = focusedTorrent.length > 0 && focusedTorrent[0];
   }
   return (
     <div className="torrents">
