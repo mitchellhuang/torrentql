@@ -24,8 +24,8 @@ const Main: React.FunctionComponent<IMain> = ({
     { name: 'API', url: '/api' },
   ];
   const finalItem = (data && data.isLoggedIn)
-    ? { name: 'Dashboard →', url: '/dashboard' }
-    : { name: 'Log in →', url: '/login' };
+    ? { name: 'Dashboard', url: '/dashboard' }
+    : { name: 'Log in', url: '/login' };
   items.push(finalItem);
   return (
     <Global>
