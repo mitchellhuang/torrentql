@@ -17,8 +17,8 @@ const Hero = () => (
       <div className="text">
         <p className="tagline">Download and seed torrents on a 1 Gb/s network.</p>
         <div className="actions">
-          <Button href="/signup" animate>Sign up</Button>
-          <Button href="/pricing" className="ml-2" white animate>View pricing →</Button>
+          <Button href="/signup">Sign up</Button>
+          <Button href="/pricing" className="ml-2" outline>View pricing →</Button>
         </div>
       </div>
       <div className="image" />

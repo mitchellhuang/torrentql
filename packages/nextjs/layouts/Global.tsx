@@ -66,9 +66,34 @@ const Global: React.FunctionComponent<{
         color: var(--primary);
         text-decoration: none;
       }
+      a:hover {
+        color: #1c71b9;
+      }
       p {
         margin: 0;
         line-height: 1.4;
+      }
+      input {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        outline: none;
+        appearance: none;
+      }
+      input[type=text],
+      input[type=password] {
+        border: 1px solid var(--gray);
+        border-radius: 3px;
+        padding: 6px 10px;
+        height: 38px;
+        line-height: 24px;
+        vertical-align: middle;
+        box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      }
+      input[type=text]:focus,
+      input[type=password]:focus {
+        border-color: var(--primary);
       }
       .wrapper {
         display: flex;
