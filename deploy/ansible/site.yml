@@ -1,18 +1,18 @@
-- name: apply common configuration to all nodes
+- name: apply common
   hosts: all
   become: yes
 
   roles:
     - { role: common, tags: common }
 
-- name: deploy deluge to deluge nodes
+- name: apply deluge
   hosts: deluge
   remote_user: ubuntu
 
   roles:
     - { role: deluge, tags: deluge }
 
-- name: deploy nginx to deluge nodes
+- name: apply nginx
   hosts: deluge
   remote_user: ubuntu
 
