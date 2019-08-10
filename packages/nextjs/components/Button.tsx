@@ -51,7 +51,7 @@ const Button: React.FunctionComponent<IButton> = ({
           transition: all 0.15s ease;
         }
         .button:hover {
-          background-color: #1c71b9;
+          background-color: #1C71B9;
         }
         .button:disabled {
           background-color: #aaa;
@@ -69,8 +69,8 @@ const Button: React.FunctionComponent<IButton> = ({
         }
         .button--outline:hover {
           background-color: initial;
-          border-color: #1c71b9;
-          color: #1c71b9;
+          border-color: #1C71B9;
+          color: #1C71B9;
         }
       `}</style>
     </>
