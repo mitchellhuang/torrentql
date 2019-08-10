@@ -15,7 +15,7 @@ const Hero = () => (
   <div className="hero">
     <div className="feature">
       <div className="text">
-        <p className="tagline">Download and seed torrents on a 1 Gb/s network.</p>
+        <p className="tagline">Download and seed torrents on a gigabit network.</p>
         <div className="actions">
           <Button href="/signup">Sign up</Button>
           <Button href="/pricing" className="ml-2" outline>View pricing →</Button>
@@ -46,7 +46,7 @@ const Hero = () => (
         border-radius: 5px;
       }
       .text {
-        padding-top: 15px;
+        margin-top: 15px;
       }
       @media(min-width: 768px) {
         .hero {
@@ -55,14 +55,16 @@ const Hero = () => (
         .feature {
           flex-direction: row;
           align-items: center;
-          padding: calc(100px - 15px) 0 100px 0;
+          margin: 100px 0;
         }
         .image {
-          width: 60%;
+          width: 500px;
         }
         .text {
-          width: 40%;
-          padding-right: 15px;
+          width: 260px;
+          height: 170px;
+          margin-top: 0;
+          margin-right: 25px;
         }
         .tagline {
           font-size: 32px;
@@ -73,21 +75,21 @@ const Hero = () => (
 );
 
 const features = [{
-  title: 'Easy to use dashboard',
-  description: `Use our dashboard to view, add, and delete torrents
-  and manage your account settings and API keys.`,
+  title: 'Powerful dashboard',
+  description: `Our custom-build dashboard (modeled after Flood UI)
+    lets you to manage your torrents and account settings.`,
 }, {
-  title: 'Powerful GraphQL API',
-  description: `Build robust applications with our modern
-    GraphQL API and let us handle the heavy lifting.`,
+  title: 'Easy to use API',
+  description: `Build robust applications with our easy to use
+    GraphQL API and let us handle the leeching and seeding.`,
 }, {
-  title: 'On-demand billing',
-  description: `Pay per gigabyte stored and uploaded instead of
-    a fixed cost per month. No need to pay for resources that you don't use.`,
+  title: 'Elastic billing',
+  description: `Pay on-demand for only the resources that you use. We bill you per GiB
+    stored per month and per GiB transfered out.`,
 }, {
-  title: 'Lightning fast network',
-  description: `We run clusters of 1 Gb/s dedicated servers in France and
-  Germany.`,
+  title: 'Lightning fast servers',
+  description: `We run load balanced clusters of 1 Gb/s
+    dedicated servers in France on the tier 1 OVH premium network (GRA1).`,
 }];
 
 const Features = (
@@ -114,9 +116,10 @@ const Features = (
       .feature {
         display: flex;
         flex-direction: column;
-      }
-      .feature:not(last-child) {
         margin-bottom: 25px;
+      }
+      .feature:last-child {
+        margin-bottom: 0;
       }
       .image {
         background-color: var(--lightGray);
@@ -135,21 +138,22 @@ const Features = (
           flex-direction: row;
           width: 100%;
           max-width: 960px;
+          margin-bottom: 75px;
         }
-        .feature:not(last-child) {
+        .feature:last-child {
           margin-bottom: 50px;
         }
         .feature:nth-child(2n) {
           flex-direction: row-reverse;
         }
         .text {
-          width: 50%;
-          padding-top: 15px;
-          padding-left: 25px;
+          width: 290px;
+          margin-top: 25px;
+          margin-left: 25px;
         }
         .feature:nth-child(2n) .text {
-          padding-left: 0;
-          padding-right: 25px;
+          margin-left: 0;
+          margin-right: 25px;
         }
         .image {
           width: 50%;
