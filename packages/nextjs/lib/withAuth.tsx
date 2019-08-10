@@ -10,15 +10,29 @@ const getIsLoggedIn = async (apolloClient) => {
   return isLoggedIn;
 };
 
-const withAuth = (Component: React.ComponentType) => (
+interface IOptions {
+  inverse: boolean;
+}
+
+const withAuth = (Component: React.ComponentType, options: IOptions = { inverse: false }) => (
   class WithAuth extends React.Component<{ isLoggedIn: boolean }> {
     static async getInitialProps({ res, apolloClient }) {
       const isLoggedIn = await getIsLoggedIn(apolloClient);
-      if (!isLoggedIn) {
-        if (!process.browser) {
-          res.redirect('/login');
-        } else {
-          Router.push('/login');
+      if (options.inverse) {
+        if (isLoggedIn) {
+          if (!process.browser) {
+            res.redirect('/dashboard');
+          } else {
+            Router.push('/dashboard');
+          }
+        }
+      } else {
+        if (!isLoggedIn) {
+          if (!process.browser) {
+            res.redirect('/login');
+          } else {
+            Router.push('/login');
+          }
         }
       }
       return {
@@ -28,6 +42,9 @@ const withAuth = (Component: React.ComponentType) => (
 
     render() {
       const { isLoggedIn } = this.props;
+      if (options.inverse) {
+        return !isLoggedIn && <Component />;
+      }
       return isLoggedIn && <Component />;
     }
   }
