@@ -53,28 +53,30 @@ const TorrentsWithData = () => {
     pollInterval: 2000,
   });
   const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  let torrents = [];
+  let content;
   if (loading || !process.browser) {
-    return <Unstyled message="Loading..." />;
-  }
-  if (error) {
-    return <Unstyled message={JSON.stringify(error)} />;
-  }
-  if (!data.me.torrents.length) {
-    return (
-      <>
-        <ToolBar />
-        <Unstyled message="No torrents." />
-      </>
-    );
-  }
-  let torrents = data.me.torrents;
-  let searchFilter = getDashboard.searchFilter;
-  if (searchFilter) {
-    searchFilter = searchFilter.toLowerCase();
-    torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
-  }
-  if (getDashboard.statusFilter !== torrentStatus.ALL) {
-    torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
+    content = <Unstyled message="Loading..." />;
+  } else if (error) {
+    content = <Unstyled message={JSON.stringify(error)} />;
+  } else if (!data.me.torrents.length) {
+    content = <Unstyled message="No torrents." />;
+  } else {
+    torrents = data.me.torrents;
+    let searchFilter = getDashboard.searchFilter;
+    if (searchFilter) {
+      searchFilter = searchFilter.toLowerCase();
+      torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
+    }
+    if (getDashboard.statusFilter !== torrentStatus.ALL) {
+      torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
+    }
+    content = torrents.map(torrent => (
+      <Torrent
+        torrent={torrent}
+        key={torrent.id}
+      />
+    ));
   }
   return (
     <div className="torrents">
@@ -82,12 +84,7 @@ const TorrentsWithData = () => {
       <div className="main">
         <ToolBar />
         <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
-        {torrents.map(torrent => (
-          <Torrent
-            torrent={torrent}
-            key={torrent.id}
-          />
-        ))}
+        {content}
       </div>
       <style jsx>{`
         .torrents {
