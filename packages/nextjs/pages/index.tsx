@@ -77,7 +77,7 @@ const Hero = () => (
 const features = [{
   title: 'Powerful dashboard',
   description: `Our custom-build dashboard (modeled after Flood UI)
-    lets you to manage your torrents and account settings.`,
+    lets you to manage your torrents, downloads, and account settings.`,
 }, {
   title: 'Easy to use API',
   description: `Build robust applications with our easy to use
@@ -147,7 +147,7 @@ const Features = (
           flex-direction: row-reverse;
         }
         .text {
-          width: 290px;
+          width: 310px;
           margin-top: 25px;
           margin-left: 25px;
         }
