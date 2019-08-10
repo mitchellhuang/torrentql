@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import withAuth from '../lib/withAuth';
 import Main from '../layouts/Main';
 import LoginForm from '../forms/LoginForm';
 
@@ -44,4 +43,4 @@ const Login = () => (
   </Main>
 );
 
-export default withAuth(Login, { inverse: true });
+export default Login;

@@ -41,4 +41,4 @@ const Signup = () => (
   </Main>
 );
 
-export default withAuth(Signup, { inverse: true });
+export default withAuth(Signup);
