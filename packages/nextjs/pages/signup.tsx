@@ -1,44 +1,44 @@
 import React from 'react';
 import Link from 'next/link';
-import withAuth from '../lib/withAuth';
-import Main from '../layouts/Main';
+import Dashboard from '../layouts/Dashboard';
 import SignupForm from '../forms/SignupForm';
+import Card from '../components/Card';
 
 const Signup = () => (
-  <Main title="Sign up" noFooter>
-    <div className="wrapper">
-      <div className="container">
+  <Dashboard title="Sign up" noFooter>
+    <div className="signup">
+      <Card>
         <div className="header">
           <h1>Sign up</h1>
         </div>
         <SignupForm />
-        <div className="helper">
+      </Card>
+      <div className="helpers">
+        <div>
           Have an account? <Link href="/login"><a>Log in</a></Link>
         </div>
       </div>
     </div>
     <style jsx>{`
       .header {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
       }
-      .container {
-        width: 100%;
-      }
-      .helper {
+      .helpers {
         margin-top: 15px;
       }
       @media(min-width: 768px) {
-        .wrapper {
+        .signup {
+          margin: 0 auto;
           align-items: center;
           max-width: 350px;
-          padding: 75px 0;
+          padding: 50px 0;
         }
-        .helper {
+        .helpers {
           text-align: center;
         }
       }
     `}</style>
-  </Main>
+  </Dashboard>
 );
 
-export default withAuth(Signup);
+export default Signup;
