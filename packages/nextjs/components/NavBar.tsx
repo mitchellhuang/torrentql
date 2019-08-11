@@ -11,11 +11,9 @@ interface INavBarItem {
 const NavBar: React.FunctionComponent<{
   items: INavBarItem[],
   router: any,
-  noBoxShadow?: boolean,
 }> = ({
   items,
   router,
-  noBoxShadow,
 }) => {
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -50,7 +48,7 @@ const NavBar: React.FunctionComponent<{
           position: sticky;
           top: 0;
           margin: 0;
-          box-shadow: ${!noBoxShadow && '#fff 0 -15px, rgba(0,0,0,0.1) 0 0 15px'};
+          border-bottom: 1px solid #ddd;
         }
         .wrapper {
           display: flex;

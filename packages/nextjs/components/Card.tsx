@@ -16,7 +16,7 @@ const Card: React.FunctionComponent<ICard> = ({
       div {
         background-color: var(--white);
         border-radius: 5px;
-        border: 1px solid var(--lightGray);
+        border: 1px solid #ddd;
         padding: 15px;
       }
     `}</style>

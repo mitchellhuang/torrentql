@@ -96,7 +96,7 @@ const Footer = () => (
     <style jsx>{`
       .wrapper {
         display: flex;
-        border-top: 1px solid var(--lightGray);
+        border-top: 1px solid #ddd;
         flex-direction: column;
         align-items: flex-start;
       }

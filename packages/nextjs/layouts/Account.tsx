@@ -9,32 +9,32 @@ const items = [
   {
     url: '/account',
     name: 'Account',
-    icon: <Home />,
+    icon: <Home size={18} />,
   },
   {
     url: '/account/billing',
     name: 'Billing',
-    icon: <CreditCard />,
+    icon: <CreditCard size={18} />,
   },
   {
     url: '/account/usage',
     name: 'Usage',
-    icon: <PieChart />,
+    icon: <PieChart size={18} />,
   },
   {
     url: '/account/email',
     name: 'Update Email',
-    icon: <Mail />,
+    icon: <Mail size={18} />,
   },
   {
     url: '/account/password',
     name: 'Update Password',
-    icon: <Lock />,
+    icon: <Lock size={18} />,
   },
   {
     url: '/logout',
     name: 'Logout',
-    icon: <LogOut />,
+    icon: <LogOut size={18} />,
   },
 ];
 
@@ -49,20 +49,20 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
 }) => (
   <Dashboard title={title}>
     <div className="container">
-      <Card className="sidebar">
+      <div className="sidebar">
         <ul>
           {items.map(item => (
             <li key={item.url} className={router.pathname === item.url && 'selected'}>
               <a href={item.url}>
                 {item.icon}
-                <span className="tab-text ml-2">
+                <span className="tab-text">
                   {item.name}
                 </span>
               </a>
             </li>
           ))}
         </ul>
-      </Card>
+      </div>
       <Card title={title} className="content">
         {children}
       </Card>
@@ -77,10 +77,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         padding: 0;
         margin: 0;
       }
-      .selected a {
-        color: var(--black);
-      }
-      .container :global(.sidebar) {
+      .sidebar {
         margin-bottom: 15px;
         height: 100%;
       }
@@ -92,20 +89,31 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
       }
       a {
         text-transform: capitalize;
-        font-weight: 600;
         display: flex;
         align-items: center;
+        color: var(--lightBlack);
+        font-size: 18px;
+      }
+      .selected a {
         color: var(--primary);
-        font-size: 16px;
+        font-weight: 600;
+      }
+      .tab-text {
+        margin-left: 15px;
       }
       @media(min-width: 768px) {
         .container {
           flex-direction: row;
         }
-        .container :global(.sidebar) {
+        .sidebar {
           min-width: 200px;
           margin-right: 10px;
           margin-bottom: 0;
+        }
+      }
+      @media(min-width: 1024px) {
+        .sidebar {
+          min-width: 250px;
         }
       }
     `}</style>

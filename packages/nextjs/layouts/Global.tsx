@@ -19,6 +19,7 @@ const Global: React.FunctionComponent<{
         --secondary: ${secondary};
         --buttonHover: #E8E8E8;
         --black: #111;
+        --lightBlack: #1A1F36;
         --white: #FFF;
         --gray: #999;
         --toolBarGray: #EEE;
@@ -26,7 +27,7 @@ const Global: React.FunctionComponent<{
         --lightGreen: #E1F7EC;
         --lightGray: #F5F5F5;
         --darkGray: #696969;
-        --dashboardBg: #F5F5F5;
+        --dashboardBg: #E3E8EE;
         --error: #FF0000;
         --blueGray: #526780;
         --darkBlue: #152D4B;
@@ -83,7 +84,7 @@ const Global: React.FunctionComponent<{
       @media(min-width: 768px) {
         .wrapper {
           margin: 0 auto;
-          padding: 15px 25px;
+          padding: 25px;
         }
       }
     `}</style>
