@@ -92,7 +92,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         display: flex;
         align-items: center;
         color: var(--lightBlack);
-        font-size: 18px;
+        font-size: 16px;
       }
       .selected a {
         color: var(--primary);
