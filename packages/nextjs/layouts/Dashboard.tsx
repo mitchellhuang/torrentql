@@ -5,8 +5,7 @@ import Head from '../components/Head';
 import NavBar from '../components/NavBar';
 
 const items = [
-  { name: 'Home', url: '/dashboard' },
-  { name: 'Torrents', url: '/torrents' },
+  { name: 'Torrents', url: '/dashboard' },
   { name: 'Downloads', url: '/downloads' },
   { name: 'Account', url: '/account' },
 ];

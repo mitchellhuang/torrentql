@@ -6,11 +6,16 @@ import { ArrowLeft } from 'react-feather';
 import { useQuery } from 'react-apollo-hooks';
 import withAuth from '../../lib/withAuth';
 import { GET_TORRENT_QUERY } from '../../apollo/queries';
-import { Unstyled } from '../torrents';
 import FileExplorer from '../../components/FileExplorer';
 import Dashboard from '../../layouts/Dashboard';
 import MediaPlayer from '../../components/MediaPlayer';
 import Card from '../../components/Card';
+
+const Unstyled = ({ message }) => (
+  <div>
+    {message}
+  </div>
+);
 
 const TorrentInfo = ({ torrent }) =>  (
   <div>
