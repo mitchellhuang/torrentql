@@ -16,6 +16,9 @@ const Card: React.FunctionComponent<ICard> = ({
     {children}
     <style jsx>{`
       .card {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
         background-color: var(--white);
         border-radius: 5px;
         padding: 15px;

@@ -49,20 +49,18 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
 }) => (
   <Dashboard title={title}>
     <div className="container">
-      <Card className="sidebar">
-        <ul>
-          {items.map(item => (
-            <li key={item.url} className={router.pathname === item.url && 'selected'}>
-              <a href={item.url}>
-                {item.icon}
-                <span className="tab-text ml-2">
-                  {item.name}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </Card>
+      <ul className="mr-2">
+        {items.map(item => (
+          <li key={item.url} className={router.pathname === item.url && 'selected'}>
+            <a href={item.url}>
+              {item.icon}
+              <span className="tab-text ml-2">
+                {item.name}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
       <Card title={title} className="content">
         {children}
       </Card>
@@ -80,12 +78,17 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
       .selected a {
         color: var(--black);
       }
+      .content {
+        display: flex;
+        flex-direction: row;
+      }
       .container :global(.sidebar) {
         margin-bottom: 15px;
         height: 100%;
       }
       .container :global(.content) {
         flex: 1;
+        flex-direction: row;
       }
       li:not(:last-child) {
         margin-bottom: 15px;
