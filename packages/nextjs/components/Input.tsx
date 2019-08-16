@@ -36,7 +36,8 @@ const Input: React.FunctionComponent<IInput> = ({
         appearance: none;
       }
       input[type=text],
-      input[type=password] {
+      input[type=password],
+      input[type=email] {
         border: 1px solid var(--gray);
         border-radius: 3px;
         padding: 6px 10px;
