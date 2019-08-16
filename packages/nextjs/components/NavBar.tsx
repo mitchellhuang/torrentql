@@ -24,10 +24,10 @@ const NavBar: React.FunctionComponent<{
       <div className="wrapper">
         <div className="logo-burger-wrapper">
           <Logo />
-          <NavBarBurger
+          { items.length ? <NavBarBurger
             open={open}
             onClick={() => toggle()}
-          />
+          /> : null }
         </div>
         <ul className="tabs">
           { items.map(item => (
