@@ -9,13 +9,14 @@
 
 - name: run deluge container
   docker_container:
-    image: linuxserver/deluge:latest
+    image: linuxserver/deluge
     name: deluge
     state: started
     restart_policy: always
     env:
       PUID: "0"
       PGID: "0"
+    network_mode: host
     ports:
       - "8112:8112"
       - "58846:58846"
