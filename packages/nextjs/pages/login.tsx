@@ -5,7 +5,7 @@ import LoginForm from '../forms/LoginForm';
 import Card from '../components/Card';
 
 const Login = () => (
-  <Dashboard title="Log in" noFooter>
+  <Dashboard title="Log in" noNavBarItems noFooter>
     <div className="login">
       <Card>
         <div className="header">

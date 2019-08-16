@@ -15,6 +15,7 @@ interface IDashboard extends React.HTMLProps<HTMLDivElement> {
   noWrap?: boolean;
   noPad?: boolean;
   noFooter?: boolean;
+  noNavBarItems?: boolean;
 }
 
 const Dashboard : React.FunctionComponent<IDashboard> = ({
@@ -22,11 +23,12 @@ const Dashboard : React.FunctionComponent<IDashboard> = ({
   title,
   noWrap,
   noPad,
+  noNavBarItems,
   ...props
 }) => (
   <Global backgroundColor="var(--dashboardBg)" {...props}>
     <Head title={title} />
-    <NavBar items={items} />
+    <NavBar items={noNavBarItems ? [] : items} />
     <div className={classNames({ wrapper: !noWrap, 'no-pad': noPad })}>
       <div className="main">
         <div className="content">

@@ -5,7 +5,7 @@ import SignupForm from '../forms/SignupForm';
 import Card from '../components/Card';
 
 const Signup = () => (
-  <Dashboard title="Sign up" noFooter>
+  <Dashboard title="Sign up" noNavBarItems noFooter>
     <div className="signup">
       <Card>
         <div className="header">
