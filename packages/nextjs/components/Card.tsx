@@ -15,9 +15,13 @@ const Card: React.FunctionComponent<ICard> = ({
     <style jsx>{`
       div {
         background-color: var(--white);
-        border-radius: 5px;
         border: 1px solid #ddd;
         padding: 15px;
+        margin: 0 -15px;
+      }
+      @media(min-width: 768px) {
+        margin: 0;
+        border-radius: 5px;
       }
     `}</style>
   </div>

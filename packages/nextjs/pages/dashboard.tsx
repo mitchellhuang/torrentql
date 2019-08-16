@@ -100,7 +100,7 @@ const TorrentsWithData = () => {
 };
 
 const Torrents = () => (
-  <Dashboard title="Torrents" noFooter noWrap noPad>
+  <Dashboard title="Dashboard" noFooter noWrap noPad>
     <TorrentsWithData />
   </Dashboard>
 );
