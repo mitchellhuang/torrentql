@@ -23,7 +23,7 @@ const Error = ({ statusCode }) => {
         @media(min-width: 768px) {
           .wrapper {
             max-width: 768px;
-            padding: 75px 0;
+            padding: 100px 0;
           }
           .error {
             text-align: center;
