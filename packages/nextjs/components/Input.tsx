@@ -48,7 +48,8 @@ const Input: React.FunctionComponent<IInput> = ({
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       }
       input[type=text]:focus,
-      input[type=password]:focus {
+      input[type=password]:focus,
+      input[type=email]:focus {
         border-color: var(--primary);
       }
       .error {
