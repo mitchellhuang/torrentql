@@ -138,7 +138,7 @@ const NavBarBurger = ({
         box-sizing: border-box;
         width: 35px;
         height: 35px;
-        margin-right: -9px;
+        margin-right: -5px;
         outline: 0;
         cursor: pointer;
       }
