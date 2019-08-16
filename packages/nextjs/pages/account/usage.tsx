@@ -1,12 +1,13 @@
 import React from 'react';
 import Account from '../../layouts/Account';
 import withAuth from '../../lib/withAuth';
+import Card from '../../components/Card';
 
 const Usage = () => (
   <Account title="Usage">
-    <div>
+    <Card title="Usage" className="mb-3">
       Usage information will go here.
-    </div>
+    </Card>
   </Account>
 );
 

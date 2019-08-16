@@ -26,7 +26,7 @@ const Dashboard : React.FunctionComponent<IDashboard> = ({
   noNavBarItems,
   ...props
 }) => (
-  <Global backgroundColor="var(--dashboardBg)" {...props}>
+  <Global backgroundColor="var(--dashboard-bg)" {...props}>
     <Head title={title} />
     <NavBar items={noNavBarItems ? [] : items} />
     <div className={classNames({ wrapper: !noWrap, 'no-pad': noPad })}>

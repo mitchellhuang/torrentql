@@ -3,7 +3,6 @@ import Dashboard from './Dashboard';
 import { Home, CreditCard, PieChart, Lock, LogOut } from 'react-feather';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
-import Card from '../components/Card';
 
 const items = [
   {
@@ -58,9 +57,9 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
           ))}
         </ul>
       </div>
-      <Card title={title} className="content">
+      <div className="content">
         {children}
-      </Card>
+      </div>
     </div>
     <style jsx>{`
       .container {
@@ -76,18 +75,20 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         margin-bottom: 15px;
         height: 100%;
       }
-      .container :global(.content) {
+      .content {
+        display: flex;
+        flex-direction: column;
         flex: 1;
       }
       li:not(:last-child) {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
       }
       a {
         text-transform: capitalize;
         display: flex;
         align-items: center;
-        color: var(--lightBlack);
-        font-size: 16px;
+        color: var(--light-black);
+        font-size: 20px;
       }
       .selected a {
         color: var(--primary);
@@ -104,6 +105,12 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
           min-width: 200px;
           margin-right: 10px;
           margin-bottom: 0;
+        }
+        a {
+          font-size: 16px;
+        }
+        li:not(:last-child) {
+          margin-bottom: 15px;
         }
       }
       @media(min-width: 1024px) {

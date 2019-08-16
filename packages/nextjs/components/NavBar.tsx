@@ -24,10 +24,10 @@ const NavBar: React.FunctionComponent<{
       <div className="wrapper">
         <div className="logo-burger-wrapper">
           <Logo />
-          <NavBarBurger
+          { items.length ? <NavBarBurger
             open={open}
             onClick={() => toggle()}
-          />
+          /> : null }
         </div>
         <ul className="tabs">
           { items.map(item => (
@@ -73,18 +73,13 @@ const NavBar: React.FunctionComponent<{
         .tabs li a {
           display: flex;
           color: var(--black);
-          background-color: var(--white);
-          border: 1px solid var(--gray);
-          border-radius: 5px;
-          padding: 8px;
+          font-size: 20px;
           font-weight: 600;
           border-radius: 5px;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
         .tabs li:last-child a {
-          color: var(--white);
-          background-color: var(--primary);
-          border-color: var(--primary);
+          color: var(--primary);
           margin-bottom: 0;
         }
         @media(min-width: 768px) {
@@ -105,16 +100,13 @@ const NavBar: React.FunctionComponent<{
           }
           .tabs li a {
             display: inline-block;
-            border: 0;
             color: var(--black);
-            background-color: var(--white);
-            padding: 0;
+            font-size: 16px;
             margin-bottom: 0;
             margin-right: 15px;
           }
           .tabs li:last-child a {
             color: var(--black);
-            background-color: var(--white);
             margin-bottom: 0;
             margin-right: 0;
           }
@@ -144,8 +136,8 @@ const NavBarBurger = ({
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         margin-right: -9px;
         outline: 0;
         cursor: pointer;

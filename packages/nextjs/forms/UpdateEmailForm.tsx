@@ -37,7 +37,7 @@ const UpdateEmailForm = () => {
             id="email"
             label="Email"
             placeholder="Enter your new email"
-            type="text"
+            type="email"
             value={email}
             onChange={handleChange}
             onBlur={handleBlur}

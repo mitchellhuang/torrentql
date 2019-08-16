@@ -40,7 +40,7 @@ const Hero = () => (
         margin-bottom: 15px;
       }
       .image {
-        background-color: var(--lightGray);
+        background-color: var(--light-gray);
         width: 100%;
         height: 225px;
         border-radius: 5px;
@@ -122,7 +122,7 @@ const Features = (
         margin-bottom: 0;
       }
       .image {
-        background-color: var(--lightGray);
+        background-color: var(--light-gray);
         height: 200px;
         border-radius: 5px;
         margin-bottom: 15px;
