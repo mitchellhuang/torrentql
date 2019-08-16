@@ -25,8 +25,8 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
           display: flex;
           padding: 5px;
           margin: 0 10px;
-          color: var(--blueGray);
-          background-color: var(--toolBarGray);
+          color: var(--blue-gray);
+          background-color: var(--toolbar-gray);
           border: none;
           outline: none;
           cursor: pointer;
@@ -85,16 +85,16 @@ const ToolBar = () => {
           padding: 5px;
           align-items: center;
           justify-content: flex-start;
-          background-color: var(--toolBarGray);
+          background-color: var(--toolbar-gray);
         }
         .toolbar :global(.icon):hover {
-          fill: var(--blueGray);
+          fill: var(--blue-gray);
         }
         .line-separator {
           width: 2px;
           margin: 0 15px;
           height: 25px;
-          background-color: var(--blueGray);
+          background-color: var(--blue-gray);
         }
         @media(min-width: 768px) {
         .toolbar {

@@ -21,18 +21,18 @@ const SearchInput = () => {
         height: 50px;
         display: flex;
         align-items: center;
-        background-color: var(--darkDarkBlue);
+        background-color: var(--dark-dark-blue);
       }
       input {
         margin-left: 10px;
-        background-color: var(--darkDarkBlue);
-        color: var(--blueGray);
+        background-color: var(--dark-dark-blue);
+        color: var(--blue-gray);
         border: 0px;
         height: 30px;
         outline: none;
       }
       ::placeholder {
-        color: var(--blueGray);
+        color: var(--blue-gray);
         font-style: italic;
       }
     `}</style>
@@ -79,7 +79,7 @@ const StatusFilters = () => {
         padding: 15px;
       }
       h5 {
-        color: var(--blueGray);
+        color: var(--blue-gray);
       }
       .row {
         display: flex;
@@ -110,8 +110,8 @@ const TorrentsSidebar = () => (
       }
       @media(min-width: 768px) {
         .torrents-sidebar {
-          background-color: var(--darkBlue);
-          color: var(--blueGray);;
+          background-color: var(--dark-blue);
+          color: var(--blue-gray);;
           display: flex;
           flex-direction: column;
           height: calc(100vh - 65px);

@@ -123,7 +123,7 @@ const Pricing: React.FunctionComponent<{}> = () => (
       }
       .info {
         font-weight: bolder;
-        color: var(--darkGray);
+        color: var(--dark-gray);
       }
       .disclaimer {
         font-size: 10px;

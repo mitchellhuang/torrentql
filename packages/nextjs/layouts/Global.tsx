@@ -17,21 +17,21 @@ const Global: React.FunctionComponent<{
       :root {
         --primary: ${primary};
         --secondary: ${secondary};
-        --buttonHover: #E8E8E8;
+        --button-hover: #E8E8E8;
         --black: #111;
-        --lightBlack: #1A1F36;
+        --light-black: #1A1F36;
         --white: #FFF;
         --gray: #999;
-        --toolBarGray: #EEE;
+        --toolbar-gray: #EEE;
         --green: #6ECF85;
-        --lightGreen: #E1F7EC;
-        --lightGray: #F5F5F5;
-        --darkGray: #696969;
-        --dashboardBg: #E3E8EE;
+        --light-green: #E1F7EC;
+        --light-gray: #F5F5F5;
+        --dark-gray: #696969;
+        --dashboard-bg: #E3E8EE;
         --error: #FF0000;
-        --blueGray: #526780;
-        --darkBlue: #152D4B;
-        --darkDarkBlue: #10243C;
+        --blue-gray: #526780;
+        --dark-blue: #152D4B;
+        --dark-dark-blue: #10243C;
       };
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",

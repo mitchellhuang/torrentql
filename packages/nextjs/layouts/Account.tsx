@@ -86,7 +86,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         text-transform: capitalize;
         display: flex;
         align-items: center;
-        color: var(--lightBlack);
+        color: var(--light-black);
         font-size: 16px;
       }
       .selected a {

@@ -42,14 +42,14 @@ const TRow: React.FunctionComponent<ITRow> = ({
         height: 42.5px;
       }
       .row:not(.header):hover {
-        background-color: var(--toolBarGray);
+        background-color: var(--toolbar-gray);
       }
       .header {
         height: 35px;
         cursor: default;
-        color: var(--blueGray);
+        color: var(--blue-gray);
         font-size: 11pt;
-        border-bottom: 1px solid var(--buttonHover);
+        border-bottom: 1px solid var(--button-hover);
       }
     `}</style>
   </div>
@@ -150,8 +150,8 @@ const ProgressBar = ({
 }) => {
   const iconSize = 20;
   const background = progress > 0
-    ? `linear-gradient(to right, var(--green) ${progress}%, var(--lightGreen) 0)`
-    : 'var(--lightGray)';
+    ? `linear-gradient(to right, var(--green) ${progress}%, var(--light-green) 0)`
+    : 'var(--light-gray)';
   return (
     <div className="progress-bar">
       {state === torrentStatus.PAUSED && <Pause size={iconSize} className="icon" />}
@@ -168,7 +168,7 @@ const ProgressBar = ({
           overflow: hidden;
         }
         .progress-bar :global(.icon) {
-          fill: var(--blueGray);
+          fill: var(--blue-gray);
         }
         .progress-bar-inner {
           width: 100%;
