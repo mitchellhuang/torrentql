@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Dashboard from './Dashboard';
 import { Home, CreditCard, PieChart, Lock, LogOut } from 'react-feather';
 import { withRouter } from 'next/router';
@@ -47,12 +48,14 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         <ul>
           {items.map(item => (
             <li key={item.url} className={router.pathname === item.url && 'selected'}>
-              <a href={item.url}>
-                {item.icon}
-                <span className="tab-text">
-                  {item.name}
-                </span>
-              </a>
+              <Link href={item.url}>
+                <a>
+                  {item.icon}
+                  <span className="tab-text">
+                    {item.name}
+                  </span>
+                </a>
+              </Link>
             </li>
           ))}
         </ul>
