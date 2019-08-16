@@ -2,10 +2,10 @@ import React from 'react';
 import Account from '../../layouts/Account';
 import withAuth from '../../lib/withAuth';
 
-const Billing = () => (
-  <Account title="Billing">
-    Billing information will go here.
+const Api = () => (
+  <Account title="API Keys">
+    API keys will go here.
   </Account>
 );
 
-export default withAuth(Billing);
+export default withAuth(Api);
