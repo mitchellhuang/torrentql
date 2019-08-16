@@ -21,10 +21,12 @@ const Card: React.FunctionComponent<ICard> = ({
         margin: 0 -15px;
       }
       @media(min-width: 768px) {
-        margin: 0;
-        border-left: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-        border-radius: 5px;
+        div {
+          margin: 0;
+          border-left: 1px solid #ddd;
+          border-right: 1px solid #ddd;
+          border-radius: 5px;
+        }
       }
     `}</style>
   </div>
