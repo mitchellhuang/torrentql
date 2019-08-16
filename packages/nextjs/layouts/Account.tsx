@@ -1,6 +1,6 @@
 import React from 'react';
 import Dashboard from './Dashboard';
-import { Home, CreditCard, PieChart, Key, Lock, LogOut, Mail } from 'react-feather';
+import { Home, CreditCard, PieChart, Lock, LogOut } from 'react-feather';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import Card from '../components/Card';
@@ -24,16 +24,6 @@ const items = [
   {
     url: '/account/api',
     name: 'API Keys',
-    icon: <Key size={18} />,
-  },
-  {
-    url: '/account/email',
-    name: 'Update Email',
-    icon: <Mail size={18} />,
-  },
-  {
-    url: '/account/password',
-    name: 'Update Password',
     icon: <Lock size={18} />,
   },
   {
