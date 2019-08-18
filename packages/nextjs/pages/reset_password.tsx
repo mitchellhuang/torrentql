@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo-hooks';
 import Dashboard from '../layouts/Dashboard';
 import Card from '../components/Card';
-import ResetPasswordForm from '../forms/ResetPasswordForm';
+import ResetPasswordForm from '../forms/SendResetEmailForm';
 import { SEND_PASSWORD_RESET_EMAIL_MUTATION } from '../apollo/mutations';
 import { CheckCircle } from 'react-feather';
 
@@ -28,11 +28,11 @@ const ResetPassword = () => {
         </Card>
       </div>
       <style jsx>{`
-      .reset-wrapper {
-        display: flex;
-        justify-content: center;
-      }
-    `}</style>
+        .reset-wrapper {
+          display: flex;
+          justify-content: center;
+        }
+      `}</style>
     </Dashboard>
   );
 }
