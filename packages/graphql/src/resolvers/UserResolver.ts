@@ -16,8 +16,14 @@ import { IsEmail, MinLength } from 'class-validator';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { PasswordReset } from '@torrentql/common/dist/entities/PasswordReset';
 import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
+import sgMail from '@sendgrid/mail';
+import nanoid from 'nanoid';
+import bcrypt from 'bcryptjs';
+
+sgMail.setApiKey('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');
 
 @ArgsType()
 class LoginInput {
@@ -49,6 +55,13 @@ class UpdateUserEmailInput {
 }
 
 @ArgsType()
+class SendPasswordResetEmail {
+  @Field()
+  @IsEmail()
+  email: string;
+}
+
+@ArgsType()
 class UpdateUserPasswordInput {
   @Field()
   oldPassword: string;
@@ -65,6 +78,9 @@ export class UserResolver {
 
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
+
+  @InjectRepository(PasswordReset)
+  private passwordResetRepository: Repository<PasswordReset>;
 
   @Authorized()
   @Query(returns => User)
@@ -118,6 +134,35 @@ export class UserResolver {
     }
     user.token = jwt.encode(user.id, user.email);
     return user;
+  }
+
+  @Mutation(returns => Boolean)
+  async sendPasswordResetEmail(
+    @Args() { email }: SendPasswordResetEmail,
+  ) {
+    try {
+      const id = nanoid();
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(id, salt);
+      const url = `http://localhost:3000/reset_password/${hash}`;
+      const msg = {
+        to: email,
+        from: 'i-love-torrents69@torrentql.com',
+        templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
+        dynamic_template_data: {
+          link: `<a href="${url}">${url}</a>`,
+        },
+      };
+      await sgMail.send(msg);
+      const passwordReset = new PasswordReset();
+      passwordReset.hash = hash;
+      passwordReset.email = email;
+      passwordReset.expiryDate = new Date(new Date().getTime() + 60 * 60 * 24 * 1000);
+      await this.passwordResetRepository.save(passwordReset);
+      return true;
+    } catch (err) {
+      throw new Error('Unable to generate email.');
+    }
   }
 
   @Authorized()
