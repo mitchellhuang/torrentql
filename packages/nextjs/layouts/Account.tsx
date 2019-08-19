@@ -109,9 +109,6 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
           margin-right: 15px;
           margin-bottom: 0;
         }
-        li:not(:last-child) {
-          margin-bottom: 15px;
-        }
       }
       @media(min-width: 1024px) {
         .sidebar {
