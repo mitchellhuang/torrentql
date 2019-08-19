@@ -153,10 +153,10 @@ const TorrentWithData = ({ id }) => {
   return (
     <>
     <div className="mb-2">
-      <Link href="/torrents">
+      <Link href="/dashboard">
         <a className="back">
           <ArrowLeft/>
-          Back to Torrents
+          Back to Dashboard
         </a>
       </Link>
     </div>

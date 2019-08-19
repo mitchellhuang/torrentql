@@ -9,27 +9,27 @@ const items = [
   {
     url: '/account',
     name: 'Account',
-    icon: <Home size={18} />,
+    icon: Home,
   },
   {
     url: '/account/billing',
     name: 'Billing',
-    icon: <CreditCard size={18} />,
+    icon: CreditCard,
   },
   {
     url: '/account/usage',
     name: 'Usage',
-    icon: <PieChart size={18} />,
+    icon: PieChart,
   },
   {
     url: '/account/api',
     name: 'API Keys',
-    icon: <Lock size={18} />,
+    icon: Lock,
   },
   {
     url: '/logout',
     name: 'Logout',
-    icon: <LogOut size={18} />,
+    icon: LogOut,
   },
 ];
 
@@ -50,7 +50,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
             <li key={item.url} className={router.pathname === item.url && 'selected'}>
               <Link href={item.url}>
                 <a>
-                  {item.icon}
+                  <item.icon size={18} />
                   <span className="tab-text">
                     {item.name}
                   </span>
@@ -91,7 +91,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         display: flex;
         align-items: center;
         color: var(--light-black);
-        font-size: 20px;
+        font-size: 16px;
       }
       .selected a {
         color: var(--primary);
@@ -106,14 +106,8 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         }
         .sidebar {
           min-width: 200px;
-          margin-right: 10px;
+          margin-right: 15px;
           margin-bottom: 0;
-        }
-        a {
-          font-size: 16px;
-        }
-        li:not(:last-child) {
-          margin-bottom: 15px;
         }
       }
       @media(min-width: 1024px) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ICard extends React.HTMLProps<HTMLDivElement> {
+export interface ICard extends React.HTMLProps<HTMLDivElement> {
    title?: string;
 }
 

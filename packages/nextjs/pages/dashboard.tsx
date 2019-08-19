@@ -1,108 +1,297 @@
 import React from 'react';
-import { Square } from 'react-feather';
-import { useMutation, useQuery } from 'react-apollo-hooks';
-import Dashboard from '../layouts/Dashboard';
+import { useQuery, useMutation } from 'react-apollo-hooks';
+import { Compass, UploadCloud, DownloadCloud, Pause, Clock, AlertCircle, Loader } from 'react-feather';
+import DashboardLayout from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
-import Torrent, { TRow, TCell } from '../components/Torrent';
-import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
+import { GET_TORRENTS_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
+import {
+  UPDATE_SEARCH_FILTER_MUTATION,
+  UPDATE_STATUS_FILTER_MUTATION,
+  UPDATE_TRACKER_FILTER_MUTATION,
+} from '../apollo/mutations';
+import Torrent, { TorrentHeader } from '../components/Torrent';
 import ToolBar from '../components/ToolBar';
-import TorrentsSidebar from '../components/TorrentsSidebar';
+import Input from '../components/Input';
 import { torrentStatus } from '../lib/constants';
-import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
 
-const Unstyled = ({ message }) => (
-  <div>
-    {message}
+const NetworkGraph = props => (
+  <div {...props}>
+    <h5 className="mb-2">Network graph</h5>
+    <p>DL: 0 MB/s</p>
+    <p>UL: 0 MB/s</p>
   </div>
 );
 
-const TorrentTableHeader = ({ torrents, selected }) => {
-  const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
-  const allSelected = torrents.length === selected.length && torrents.length > 0;
-  const handleSelection = () => {
-    const selectedTorrents = allSelected ? [] : torrents.map(torrent => torrent.id);
-    return updateSelectedTorrents({ variables: { selectedTorrents } });
-  };
-  return (
-    <TRow header>
-      <div className="checkbox" onClick={() => handleSelection()}>
-        <Square size={20} className="icon-square" />
-      </div>
-      <TCell flex={5}>Name</TCell>
-      <TCell flex={2}>Progress</TCell>
-      <TCell flex={1}>Down Speed</TCell>
-      <TCell flex={1}>Up Speed</TCell>
-      <TCell flex={1}>Peers</TCell>
-      <TCell flex={1}>Seeds</TCell>
-      <style jsx>{`
-      .checkbox {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        padding: 0 10px;
-      }
-    `}</style>
-    </TRow>
-  );
-};
+const filterByStatusItems = [{
+  name: 'All',
+  status: torrentStatus.ALL,
+  icon: Compass,
+}, {
+  name: 'Seeding',
+  status: torrentStatus.SEEDING,
+  icon: UploadCloud,
+}, {
+  name: 'Downloading',
+  status: torrentStatus.DOWNLOADING,
+  icon: DownloadCloud,
+}, {
+  name: 'Paused',
+  status: torrentStatus.PAUSED,
+  icon: Pause,
+}, {
+  name: 'Queued',
+  status: torrentStatus.QUEUED,
+  icon: Clock,
+}];
 
-const TorrentsWithData = () => {
-  const { loading, data, error } = useQuery(ME_QUERY, {
-    ssr: false,
-    pollInterval: 2000,
+const FilterBySearch = (props) => {
+  const [updateSearchFilter] = useMutation(UPDATE_SEARCH_FILTER_MUTATION);
+  const handleChange = value => updateSearchFilter({
+    variables: { searchFilter: value },
   });
-  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
-  let torrents = [];
-  let content;
-  if (loading || !process.browser) {
-    content = <Unstyled message="Loading..." />;
-  } else if (error) {
-    content = <Unstyled message={JSON.stringify(error)} />;
-  } else if (!data.me.torrents.length) {
-    content = <Unstyled message="No torrents." />;
-  } else {
-    torrents = data.me.torrents;
-    let searchFilter = getDashboard.searchFilter;
-    if (searchFilter) {
-      searchFilter = searchFilter.toLowerCase();
-      torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter));
-    }
-    if (getDashboard.statusFilter !== torrentStatus.ALL) {
-      torrents = torrents.filter(torrent => torrent.state === getDashboard.statusFilter);
-    }
-    content = torrents.map(torrent => (
-      <Torrent
-        torrent={torrent}
-        key={torrent.id}
-      />
-    ));
-  }
   return (
-    <div className="torrents">
-      <TorrentsSidebar />
-      <div className="main">
-        <ToolBar />
-        <TorrentTableHeader torrents={torrents} selected={getDashboard.selectedTorrents} />
-        {content}
-      </div>
+    <div {...props}>
+      <h5 className="mb-2">Filter by Search</h5>
+      <Input
+        id="search"
+        type="text"
+        placeholder="Search torrents..."
+        onChange={e => handleChange((e.target as HTMLInputElement).value)}
+        small
+        noMargin
+      />
       <style jsx>{`
-        .torrents {
-          display: flex;
-          min-width: 1024px;
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
         }
-        .main {
-          flex: 1;
+        li {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+        li:not(:last-child) {
+          margin-bottom: 7.5px;
+        }
+        .name {
+          margin-left: 10px;
+        }
+        .selected {
+          color: var(--primary);
+          font-weight: 600;
         }
       `}</style>
     </div>
   );
 };
 
-const Torrents = () => (
-  <Dashboard title="Dashboard" noFooter noWrap noPad>
-    <TorrentsWithData />
-  </Dashboard>
+const FilterByStatus = ({
+  statusFilter,
+  ...props
+}) => {
+  const [updateStatusFilter] = useMutation(UPDATE_STATUS_FILTER_MUTATION);
+  const handleChange = filter => updateStatusFilter({
+    variables: { statusFilter: filter },
+  });
+  return (
+    <div {...props}>
+      <h5 className="mb-2">Filter by Status</h5>
+      <ul>
+        { filterByStatusItems.map(item => (
+          <li
+            key={item.name}
+            onClick={() => handleChange(item.status)}
+            className={statusFilter === item.status && 'selected'}>
+            <item.icon size={18} />
+            <span className="name">{item.name}</span>
+          </li>
+        )) }
+      </ul>
+      <style jsx>{`
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        li {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+        li:not(:last-child) {
+          margin-bottom: 7.5px;
+        }
+        .name {
+          margin-left: 10px;
+        }
+        .selected {
+          color: var(--primary);
+          font-weight: 600;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+const FilterByTracker = ({
+  trackers,
+  trackerFilter,
+  ...props
+}) => {
+  const [updateTrackerFilter] = useMutation(UPDATE_TRACKER_FILTER_MUTATION);
+  const handleChange = filter => updateTrackerFilter({
+    variables: { trackerFilter: trackerFilter === filter ? '' : filter },
+  });
+  return (
+    <div {...props}>
+      <h5 className="mb-2">Filter by Tracker</h5>
+      <ul>
+        { trackers.map(item => (
+          <li
+            key={item}
+            onClick={() => handleChange(item)}
+            className={trackerFilter === item && 'selected'}>
+            <span>{item}</span>
+          </li>
+        )) }
+      </ul>
+      <style jsx>{`
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        li {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+        li:not(:last-child) {
+          margin-bottom: 7.5px;
+        }
+        .selected {
+          color: var(--primary);
+          font-weight: 600;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+const Loading = () => (
+  <div>
+    <Loader size={35} />
+    <h4 className="mt-2">Loading</h4>
+    <style jsx>{`
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 25px 0;
+        color: var(--dark-gray);
+      }
+    `}</style>
+  </div>
 );
 
-export default withAuth(Torrents);
+const Empty = () => (
+  <div>
+    <AlertCircle size={35} />
+    <h4 className="mt-2">No torrents</h4>
+    <style jsx>{`
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 25px 0;
+        color: var(--dark-gray);
+      }
+    `}</style>
+  </div>
+);
+
+const Dashboard = () => {
+  const { loading, data } = useQuery(GET_TORRENTS_QUERY, { ssr: false, pollInterval: 2000 });
+  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  let torrents = data && data.getTorrents || [];
+  let state;
+  let content;
+  const trackers = {};
+  if (loading) {
+    state = <Loading />;
+  } else if (!torrents.length) {
+    state = <Empty />;
+  } else {
+    const { searchFilter, statusFilter, trackerFilter } = getDashboard;
+    torrents.forEach((torrent) => {
+      trackers[torrent.trackerHost] = true;
+    });
+    if (searchFilter) {
+      torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter.toLowerCase()));
+    }
+    if (statusFilter !== torrentStatus.ALL) {
+      torrents = torrents.filter(torrent => torrent.state === statusFilter);
+    }
+    if (trackerFilter) {
+      torrents = torrents.filter(torrent => torrent.trackerHost === trackerFilter);
+    }
+    content = torrents.map(torrent => <Torrent key={torrent.id} torrent={torrent} />);
+  }
+  return (
+    <DashboardLayout title="Dashboard">
+      <div className="dashboard">
+        <div className="sidebar">
+          <NetworkGraph className="mb-3" />
+          <FilterBySearch className="mb-3" />
+          <FilterByStatus className="mb-3" statusFilter={getDashboard.statusFilter} />
+          <FilterByTracker trackers={Object.keys(trackers)} trackerFilter={getDashboard.trackerFilter} />
+        </div>
+        <div className="content">
+          <div className="inner">
+            <ToolBar />
+            <TorrentHeader torrents={torrents} selected={getDashboard.selectedTorrents || []} />
+            {content}
+          </div>
+          {state}
+        </div>
+        <style jsx>{`
+          .dashboard {
+            display: flex;
+            flex-direction: column;
+          }
+          .sidebar {
+            margin-bottom: 15px;
+          }
+          .content {
+            margin: 0 -15px;
+            overflow: hidden;
+          }
+          @media(min-width: 768px) {
+            .dashboard {
+              flex-direction: row;
+            }
+            .sidebar {
+              min-width: 200px;
+              margin-right: 15px;
+              margin-bottom: 0;
+            }
+            .content {
+              flex: 1;
+              margin: 0;
+            }
+            .inner {
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              overflow: hidden;
+            }
+          }
+        `}</style>
+      </div>
+    </DashboardLayout>
+  );
+};
+
+export default withAuth(Dashboard);

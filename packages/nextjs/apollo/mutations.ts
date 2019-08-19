@@ -32,6 +32,14 @@ export const UPDATE_STATUS_FILTER_MUTATION = gql`
   }
 `;
 
+export const UPDATE_TRACKER_FILTER_MUTATION = gql`
+  mutation updateTrackerFilter($trackerFilter: String!) {
+    updateTrackerFilter(trackerFilter: $trackerFilter) @client {
+      trackerFilter
+    }
+  }
+`;
+
 export const UPDATE_SELECTED_TORRENTS_MUTATION = gql`
   mutation updateSelectedTorrents($selectedTorrents: [String]!) {
     updateSelectedTorrents(selectedTorrents: $selectedTorrents) @client {

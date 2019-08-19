@@ -35,27 +35,30 @@ const TRow: React.FunctionComponent<ITRow> = ({
         box-sizing: border-box;
         color: var(--black);
         background-color: var(--white);
-        width: 100%;
         cursor: pointer;
         outline: none;
         font-weight: 400;
-        height: 42.5px;
+        height: 40px;
+        border-top: 1px solid var(--button-hover);
       }
       .row:not(.header):hover {
         background-color: var(--toolbar-gray);
       }
       .header {
-        height: 35px;
         cursor: default;
-        color: var(--blue-gray);
-        font-size: 11pt;
-        border-bottom: 1px solid var(--button-hover);
+        font-size: 16px;
+        border-top: 0;
       }
     `}</style>
   </div>
 );
 
-const TCell = ({ flex, children }) => (
+interface ITRow extends React.HTMLProps<HTMLDivElement> {
+  children: any;
+  flex?: number;
+}
+
+const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
   <div className="t-cell">
     <span className="children">
       {children}
@@ -67,8 +70,7 @@ const TCell = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
-        height: 100%;
-        padding: 0 5px;
+        padding: 0 10px;
         overflow: hidden;
       }
       .children {
@@ -80,6 +82,40 @@ const TCell = ({ flex, children }) => (
     `}</style>
   </div>
 );
+
+const TorrentHeader = ({ torrents, selected }) => {
+  const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
+  const allSelected = torrents.length === selected.length && torrents.length > 0;
+  const handleSelection = () => {
+    const selectedTorrents = allSelected ? [] : torrents.map(torrent => torrent.id);
+    return updateSelectedTorrents({ variables: { selectedTorrents } });
+  };
+  return (
+    <TRow header>
+      <div className="checkbox" onClick={() => handleSelection()}>
+        {!allSelected && <Square size={20} />}
+        {allSelected && <CheckSquare size={20} />}
+      </div>
+      <TCell flex={5}>Name</TCell>
+      <TCell flex={1}>Size</TCell>
+      <TCell flex={2}>Progress</TCell>
+      <TCell flex={1}>Down Speed</TCell>
+      <TCell flex={1}>Up Speed</TCell>
+      <TCell flex={1}>Peers</TCell>
+      <TCell flex={1}>Seeds</TCell>
+      <style jsx>{`
+        .checkbox {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          width: 30px;
+          padding: 0 10px;
+        }
+      `}</style>
+    </TRow>
+  );
+};
 
 const constrainRange = (x : string) : number => Math.max(parseInt(x, 10), 0);
 
@@ -111,6 +147,9 @@ const Torrent = ({
           </a>
         </Link>
       </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.totalSize)}
+      </TCell>
       <TCell flex={2}>
         <ProgressBar progress={torrent.progress} state={torrent.state} />
       </TCell>
@@ -127,19 +166,19 @@ const Torrent = ({
         {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
       </TCell>
       <style jsx>{`
-    .checkbox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      padding: 0 10px;
-    }
-    .checkbox input {
-      width: 0;
-      height: 0;
-      visibility: hidden;
-    }
-  `}</style>
+        .checkbox {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          padding: 0 10px;
+        }
+        .checkbox input {
+          width: 0;
+          height: 0;
+          visibility: hidden;
+        }
+      `}</style>
     </TRow>
   );
 };
@@ -181,4 +220,4 @@ const ProgressBar = ({
   );
 };
 
-export { Torrent as default, TRow, TCell };
+export { Torrent as default, TorrentHeader, TRow, TCell };

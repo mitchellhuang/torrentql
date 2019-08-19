@@ -21,21 +21,19 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
       {icon}
     </button>
     <style jsx>{`
-        button {
-          display: flex;
-          padding: 5px;
-          margin: 0 10px;
-          color: var(--blue-gray);
-          background-color: var(--toolbar-gray);
-          border: none;
-          outline: none;
-          cursor: pointer;
-          text-decoration: none;
-          text-align: center;
-          font-weight: 600;
-          transition: all 0.15s ease;
-        }
-      `}</style>
+      button {
+        display: flex;
+        color: var(--blue-gray);
+        background-color: var(--toolbar-gray);
+        border: none;
+        outline: none;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        transition: all 0.15s ease;
+      }
+    `}</style>
   </div>
 );
 
@@ -64,7 +62,7 @@ const ToolBar = () => {
   const handleResumeTorrent = id => resumeTorrent({
     variables: { id },
   });
-  const iconSize = 23;
+  const iconSize = 20;
   return (
     <div className="toolbar">
       <ToolBarButton
@@ -82,10 +80,11 @@ const ToolBar = () => {
       <style jsx>{`
         .toolbar {
           display: flex;
-          padding: 5px;
+          height: 40px;
           align-items: center;
           justify-content: flex-start;
           background-color: var(--toolbar-gray);
+          padding: 0 8px;
         }
         .toolbar :global(.icon):hover {
           fill: var(--blue-gray);
@@ -97,10 +96,10 @@ const ToolBar = () => {
           background-color: var(--blue-gray);
         }
         @media(min-width: 768px) {
-        .toolbar {
-          justify-content: flex-end;
+          .toolbar {
+            justify-content: flex-end;
+          }
         }
-      }
       `}</style>
     </div>
   );

@@ -84,6 +84,21 @@ export class TorrentResolver {
   }
 
   @Authorized()
+  @Query(returns => [Torrent])
+  async getTorrents(@Ctx() ctx: Context) {
+    const user = ctx.user;
+    const torrents = await this.torrentRepository.find({
+      where: {
+        user: { id: user.id },
+        isActive: true,
+      },
+    });
+    const torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
+    const torrentsWithDelugeNotNull = torrentsWithDeluge.filter(torrent => torrent !== null);
+    return torrentsWithDelugeNotNull;
+  }
+
+  @Authorized()
   @Mutation(returns => Torrent)
   async addTorrent(@Args() { data }: AddTorrentInput, @Ctx() ctx: Context) {
     const servers = await this.serverRepository.find();
