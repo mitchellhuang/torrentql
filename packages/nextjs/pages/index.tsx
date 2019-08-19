@@ -76,7 +76,7 @@ const Hero = () => (
 
 const features = [{
   title: 'Powerful dashboard',
-  description: `Our custom-build dashboard (modeled after Flood UI)
+  description: `Our custom-built dashboard (modeled after Flood UI)
     lets you to manage your torrents, downloads, and account settings.`,
 }, {
   title: 'Easy to use API',

@@ -140,7 +140,7 @@ const FilterByTracker = ({
 }) => {
   const [updateTrackerFilter] = useMutation(UPDATE_TRACKER_FILTER_MUTATION);
   const handleChange = filter => updateTrackerFilter({
-    variables: { trackerFilter: filter },
+    variables: { trackerFilter: trackerFilter === filter ? '' : filter },
   });
   return (
     <div {...props}>
@@ -225,15 +225,15 @@ const Dashboard = () => {
     state = <Empty />;
   } else {
     const { searchFilter, statusFilter, trackerFilter } = getDashboard;
+    torrents.forEach((torrent) => {
+      trackers[torrent.trackerHost] = true;
+    });
     if (searchFilter) {
       torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter.toLowerCase()));
     }
     if (statusFilter !== torrentStatus.ALL) {
       torrents = torrents.filter(torrent => torrent.state === statusFilter);
     }
-    torrents.forEach((torrent) => {
-      trackers[torrent.trackerHost] = true;
-    });
     if (trackerFilter) {
       torrents = torrents.filter(torrent => torrent.trackerHost === trackerFilter);
     }
@@ -266,6 +266,7 @@ const Dashboard = () => {
           }
           .content {
             margin: 0 -15px;
+            overflow: hidden;
           }
           @media(min-width: 768px) {
             .dashboard {
@@ -283,7 +284,6 @@ const Dashboard = () => {
             .inner {
               border: 1px solid #ddd;
               border-radius: 5px;
-              overflow: hidden;
             }
           }
         `}</style>

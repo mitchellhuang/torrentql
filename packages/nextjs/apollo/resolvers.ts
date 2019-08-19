@@ -8,6 +8,7 @@ export const typeDefs = gql`
     type Dashboard {
       searchFilter: String
       statusFilter: String
+      trackerFilter: String
       selectedTorrents: [String]
     }
     extend type Query {
