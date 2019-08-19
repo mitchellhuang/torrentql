@@ -14,7 +14,6 @@ import {
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
 import nanoid from 'nanoid';
-import { createHash } from 'crypto';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
@@ -179,14 +178,11 @@ export class UserResolver {
     @Args() { name }: CreateApiKeyInput,
     @Ctx() ctx: Context,
   ) {
-    const key = nanoid();
-    const hash = createHash('sha256').update(key).digest('hex');
     const apiKey = new ApiKey();
-    apiKey.hash = hash;
+    apiKey.key = nanoid();
     apiKey.name = name;
     apiKey.user = Promise.resolve(ctx.user);
     await this.apiKeyRepository.save(apiKey);
-    apiKey.id = key;
     return apiKey;
   }
 }

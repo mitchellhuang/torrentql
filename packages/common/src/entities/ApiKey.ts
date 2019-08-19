@@ -4,10 +4,12 @@ import {
   Column,
   Index,
   ManyToOne,
+  BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
+import crypto from 'crypto';
 import { User } from './User';
 
 @ObjectType()
@@ -26,6 +28,9 @@ export class ApiKey {
   @Index()
   hash: string;
 
+  @Field({ nullable: true })
+  key: string;
+
   @ManyToOne(type => User, user => user.apiKeys)
   user: Promise<User>;
 
@@ -35,5 +40,16 @@ export class ApiKey {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @BeforeInsert()
+  hashKey() {
+    if (this.key) {
+      this.hash = ApiKey.hashKey(this.key);
+    }
+  }
+
+  static hashKey(key: string) {
+    return crypto.createHash('sha256').update(key).digest('hex');
+  }
 
 }

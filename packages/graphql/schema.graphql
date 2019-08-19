@@ -6,6 +6,7 @@
 type ApiKey {
   id: ID!
   name: String!
+  key: String
   createdAt: DateTime!
 }
 
