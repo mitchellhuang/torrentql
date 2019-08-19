@@ -7,11 +7,11 @@ class Logout extends Component {
     if (!process.browser) {
       await apolloClient.resetStore();
       res.clearCookie('token');
-      res.redirect('/login');
+      res.redirect('/');
     } else {
       await apolloClient.resetStore();
       jsCookie.remove('token');
-      Router.push('/login');
+      Router.push('/');
     }
     return {};
   }

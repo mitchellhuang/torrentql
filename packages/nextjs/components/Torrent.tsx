@@ -216,4 +216,4 @@ const ProgressBar = ({
   );
 };
 
-export { TRow, TCell, Torrent as default, TorrentHeader };
+export { Torrent as default, TorrentHeader, TRow, TCell };

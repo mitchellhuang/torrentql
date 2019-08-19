@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { Compass, UploadCloud, DownloadCloud, Pause, Clock, AlertCircle, Loader } from 'react-feather';
 import DashboardLayout from '../layouts/Dashboard';
+import withAuth from '../lib/withAuth';
 import { GET_TORRENTS_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import {
   UPDATE_SEARCH_FILTER_MUTATION,
@@ -298,4 +299,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
