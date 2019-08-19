@@ -38,27 +38,16 @@ const TRow: React.FunctionComponent<ITRow> = ({
         cursor: pointer;
         outline: none;
         font-weight: 400;
-        height: 42.5px;
-        margin: 0 -15px;
-        padding: 0 15px;
-        border-bottom: 1px solid #ddd;
+        height: 40px;
+        border-top: 1px solid var(--button-hover);
       }
       .row:not(.header):hover {
         background-color: var(--toolbar-gray);
       }
       .header {
-        height: 35px;
         cursor: default;
-        font-size: 11pt;
-        border-top: 1px solid #ddd;
-      }
-      @media(min-width: 768px) {
-        .row {
-          margin: 0;
-          border-left: 1px solid #ddd;
-          border-right: 1px solid #ddd;
-          border-radius: 5px;
-        }
+        font-size: 16px;
+        border-top: 0;
       }
     `}</style>
   </div>
@@ -81,6 +70,7 @@ const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
+        padding: 0 10px;
         overflow: hidden;
       }
       .children {
@@ -103,7 +93,8 @@ const TorrentHeader = ({ torrents, selected }) => {
   return (
     <TRow header>
       <div className="checkbox" onClick={() => handleSelection()}>
-        <Square size={20} className="icon-square" />
+        {!allSelected && <Square size={20} />}
+        {allSelected && <CheckSquare size={20} />}
       </div>
       <TCell flex={5}>Name</TCell>
       <TCell flex={2}>Progress</TCell>
@@ -116,6 +107,9 @@ const TorrentHeader = ({ torrents, selected }) => {
           display: flex;
           align-items: center;
           justify-content: center;
+          cursor: pointer;
+          width: 30px;
+          padding: 0 10px;
         }
       `}</style>
     </TRow>
@@ -168,19 +162,19 @@ const Torrent = ({
         {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
       </TCell>
       <style jsx>{`
-    .checkbox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      padding: 0 10px;
-    }
-    .checkbox input {
-      width: 0;
-      height: 0;
-      visibility: hidden;
-    }
-  `}</style>
+        .checkbox {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          padding: 0 10px;
+        }
+        .checkbox input {
+          width: 0;
+          height: 0;
+          visibility: hidden;
+        }
+      `}</style>
     </TRow>
   );
 };
