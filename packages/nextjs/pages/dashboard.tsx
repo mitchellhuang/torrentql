@@ -288,11 +288,6 @@ const Dashboard = () => {
               overflow: hidden;
             }
           }
-          @media(min-width: 1024px) {
-            .sidebar {
-              min-width: 250px;
-            }
-          }
         `}</style>
       </div>
     </DashboardLayout>
