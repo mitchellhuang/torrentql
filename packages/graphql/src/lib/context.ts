@@ -1,7 +1,9 @@
 import { Request } from 'express';
 import { Connection } from 'typeorm';
 import { AuthChecker } from 'type-graphql';
+import { createHash } from 'crypto';
 import { User } from '@torrentql/common/dist/entities/User';
+import { ApiKey } from '@torrentql/common/dist/entities/ApiKey';
 
 export interface Context {
   user: User;
@@ -26,6 +28,20 @@ export const createContext = (connection: Connection) => {
       return {
         user,
       };
+    }
+    const apiSecretKey = req.headers['api_secret_key'];
+    if (apiSecretKey && typeof apiSecretKey === 'string') {
+      const apiSecretKeyHash = createHash('sha256').update(apiSecretKey).digest('hex');
+      const apiKeyRepository = connection.getRepository(ApiKey);
+      const apiKey = await apiKeyRepository.findOne({
+        hash: apiSecretKeyHash,
+      });
+      if (apiKey) {
+        const user = await apiKey.user;
+        return {
+          user,
+        };
+      }
     }
     return {
       user: undefined,

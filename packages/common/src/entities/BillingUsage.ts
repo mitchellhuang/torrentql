@@ -13,7 +13,7 @@ import { Torrent } from './Torrent';
 export class BillingUsage {
 
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column('bigint')
   diskUsage: number;
