@@ -273,7 +273,7 @@ const Dashboard = () => {
               flex-direction: row;
             }
             .sidebar {
-              min-width: 250px;
+              min-width: 200px;
               margin-right: 15px;
               margin-bottom: 0;
             }
@@ -285,6 +285,11 @@ const Dashboard = () => {
               border: 1px solid #ddd;
               border-radius: 5px;
               overflow: hidden;
+            }
+          }
+          @media(min-width: 1024px) {
+            .sidebar {
+              min-width: 250px;
             }
           }
         `}</style>
