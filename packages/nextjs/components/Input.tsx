@@ -2,14 +2,18 @@ import React from 'react';
 
 interface IInput extends React.HTMLProps<HTMLInputElement>  {
   label?: string;
+  small?: boolean;
   errors?: string[];
+  noMargin?: boolean;
 }
 
 const Input: React.FunctionComponent<IInput> = ({
   id,
   label,
   type,
+  small,
   errors,
+  noMargin,
   ...props
 }) => (
   <div>
@@ -22,7 +26,7 @@ const Input: React.FunctionComponent<IInput> = ({
     { errors && errors.map(error => <div key={error} className="error">{error}</div>)}
     <style jsx>{`
       div {
-        margin-bottom: 15px;
+        margin-bottom: ${noMargin ? '0' : '15px'};
       }
       label {
         display: block;
@@ -41,7 +45,7 @@ const Input: React.FunctionComponent<IInput> = ({
         border: 1px solid var(--gray);
         border-radius: 3px;
         padding: 6px 10px;
-        height: 38px;
+        height: ${small ? '34px' : '38px'};
         line-height: 24px;
         vertical-align: middle;
         box-shadow: inset 0 1px 2px rgba(27,31,35,.075);

@@ -15,6 +15,7 @@ if (!process.browser) {
 const DEFAULT_DASHBOARD_CACHE = {
   searchFilter: '',
   statusFilter: torrentStatus.ALL,
+  trackerFilter: null,
   selectedTorrents: [],
   __typename: 'Dashboard',
 };

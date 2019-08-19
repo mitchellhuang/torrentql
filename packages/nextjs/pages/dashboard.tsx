@@ -3,7 +3,11 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import { Compass, UploadCloud, DownloadCloud, Pause, Clock, AlertCircle, Loader } from 'react-feather';
 import DashboardLayout from '../layouts/Dashboard';
 import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
-import { UPDATE_SEARCH_FILTER_MUTATION, UPDATE_STATUS_FILTER_MUTATION } from '../apollo/mutations';
+import {
+  UPDATE_SEARCH_FILTER_MUTATION,
+  UPDATE_STATUS_FILTER_MUTATION,
+  UPDATE_TRACKER_FILTER_MUTATION,
+} from '../apollo/mutations';
 import Torrent, { TorrentHeader } from '../components/Torrent';
 import ToolBar from '../components/ToolBar';
 import Input from '../components/Input';
@@ -52,6 +56,8 @@ const FilterBySearch = (props) => {
         type="text"
         placeholder="Search torrents..."
         onChange={e => handleChange((e.target as HTMLInputElement).value)}
+        small
+        noMargin
       />
       <style jsx>{`
         ul {
@@ -127,10 +133,50 @@ const FilterByStatus = ({
   );
 };
 
-const Actions = () => (
-  <div>
-  </div>
-);
+const FilterByTracker = ({
+  trackers,
+  trackerFilter,
+  ...props
+}) => {
+  const [updateTrackerFilter] = useMutation(UPDATE_TRACKER_FILTER_MUTATION);
+  const handleChange = filter => updateTrackerFilter({
+    variables: { trackerFilter: filter },
+  });
+  return (
+    <div {...props}>
+      <h5 className="mb-2">Filter by Tracker</h5>
+      <ul>
+        { trackers.map(item => (
+          <li
+            key={item}
+            onClick={() => handleChange(item)}
+            className={trackerFilter === item && 'selected'}>
+            <span>{item}</span>
+          </li>
+        )) }
+      </ul>
+      <style jsx>{`
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        li {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+        li:not(:last-child) {
+          margin-bottom: 7.5px;
+        }
+        .selected {
+          color: var(--primary);
+          font-weight: 600;
+        }
+      `}</style>
+    </div>
+  );
+};
 
 const Loading = () => (
   <div>
@@ -172,17 +218,24 @@ const Dashboard = () => {
   let torrents = data && data.me && data.me.torrents || [];
   let state;
   let content;
+  const trackers = {};
   if (loading) {
     state = <Loading />;
   } else if (!torrents.length) {
     state = <Empty />;
   } else {
-    const { searchFilter, statusFilter, selectedTorrents } = getDashboard;
+    const { searchFilter, statusFilter, trackerFilter } = getDashboard;
     if (searchFilter) {
       torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter.toLowerCase()));
     }
     if (statusFilter !== torrentStatus.ALL) {
       torrents = torrents.filter(torrent => torrent.state === statusFilter);
+    }
+    torrents.forEach((torrent) => {
+      trackers[torrent.trackerHost] = true;
+    });
+    if (trackerFilter) {
+      torrents = torrents.filter(torrent => torrent.trackerHost === trackerFilter);
     }
     content = torrents.map(torrent => <Torrent key={torrent.id} torrent={torrent} />);
   }
@@ -191,8 +244,9 @@ const Dashboard = () => {
       <div className="dashboard">
         <div className="sidebar">
           <NetworkGraph className="mb-3" />
-          <FilterBySearch />
-          <FilterByStatus statusFilter={getDashboard.statusFilter} />
+          <FilterBySearch className="mb-3" />
+          <FilterByStatus className="mb-3" statusFilter={getDashboard.statusFilter} />
+          <FilterByTracker trackers={Object.keys(trackers)} trackerFilter={getDashboard.trackerFilter} />
         </div>
         <div className="content">
           <div className="inner">
