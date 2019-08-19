@@ -284,6 +284,7 @@ const Dashboard = () => {
             .inner {
               border: 1px solid #ddd;
               border-radius: 5px;
+              overflow: hidden;
             }
           }
         `}</style>
