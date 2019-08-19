@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 import { Compass, UploadCloud, DownloadCloud, Pause, Clock, AlertCircle, Loader } from 'react-feather';
 import DashboardLayout from '../layouts/Dashboard';
-import { ME_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
+import { GET_TORRENTS_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
 import {
   UPDATE_SEARCH_FILTER_MUTATION,
   UPDATE_STATUS_FILTER_MUTATION,
@@ -213,9 +213,9 @@ const Empty = () => (
 );
 
 const Dashboard = () => {
-  const { loading, data } = useQuery(ME_QUERY, { ssr: false, pollInterval: 2000 });
+  const { loading, data } = useQuery(GET_TORRENTS_QUERY, { ssr: false, pollInterval: 2000 });
   const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
-  let torrents = data && data.me && data.me.torrents || [];
+  let torrents = data && data.getTorrents || [];
   let state;
   let content;
   const trackers = {};

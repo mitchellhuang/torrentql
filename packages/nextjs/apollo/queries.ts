@@ -21,31 +21,6 @@ export const ME_QUERY = gql`
   {
     me {
       id
-      torrents {
-        id
-        hash
-        name
-        state
-        progress
-        ratio
-        uploadSpeed
-        downloadSpeed
-        eta
-        numPeers
-        numSeeds
-        totalPeers
-        totalSeeds
-        totalWanted
-        totalUploaded
-        totalDownloaded
-        tracker
-        trackerHost
-        trackerStatus
-        server {
-          id
-          region
-        }
-      }
     }
   }
 `;
@@ -59,6 +34,40 @@ export const GET_TORRENT_QUERY = gql`
       state
       progress
       ratio
+      totalSize
+      uploadSpeed
+      downloadSpeed
+      eta
+      numPeers
+      numSeeds
+      totalPeers
+      totalSeeds
+      totalWanted
+      totalUploaded
+      totalDownloaded
+      tracker
+      trackerHost
+      trackerStatus
+      files
+      selectedFile @client
+      server {
+        id
+        region
+      }
+    }
+  }
+`;
+
+export const GET_TORRENTS_QUERY = gql`
+  query GetTorrents {
+    getTorrents {
+      id
+      hash
+      name
+      state
+      progress
+      ratio
+      totalSize
       uploadSpeed
       downloadSpeed
       eta
