@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 
 const items = [
   { name: 'Home', url: '/dashboard' },
-  { name: 'Downloads', url: '/downloads' },
+  { name: 'Files', url: '/files' },
   { name: 'Account →', url: '/account' },
 ];
 

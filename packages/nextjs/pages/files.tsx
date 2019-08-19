@@ -2,12 +2,12 @@ import React from 'react';
 import Dashboard from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 
-const Downloads = () => (
-  <Dashboard title="Downloads" noFooter>
+const Files = () => (
+  <Dashboard title="Files" noFooter>
     <div>
-      Downloads.
+      Files.
     </div>
   </Dashboard>
 );
 
-export default withAuth(Downloads);
+export default withAuth(Files);
