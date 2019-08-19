@@ -97,6 +97,7 @@ const TorrentHeader = ({ torrents, selected }) => {
         {allSelected && <CheckSquare size={20} />}
       </div>
       <TCell flex={5}>Name</TCell>
+      <TCell flex={1}>Size</TCell>
       <TCell flex={2}>Progress</TCell>
       <TCell flex={1}>Down Speed</TCell>
       <TCell flex={1}>Up Speed</TCell>
@@ -145,6 +146,9 @@ const Torrent = ({
             {torrent.name}
           </a>
         </Link>
+      </TCell>
+      <TCell flex={1}>
+        {prettyBytes(torrent.totalSize)}
       </TCell>
       <TCell flex={2}>
         <ProgressBar progress={torrent.progress} state={torrent.state} />
