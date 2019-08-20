@@ -8,12 +8,16 @@ interface INavBarItem {
   url: string;
 }
 
-const NavBar: React.FunctionComponent<{
-  items: INavBarItem[],
-  router: any,
-}> = ({
+interface INavBar {
+  items: INavBarItem[];
+  router: any;
+  logoLink?: string;
+}
+
+const NavBar: React.FunctionComponent<INavBar> = ({
   items,
   router,
+  logoLink,
 }) => {
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -23,7 +27,7 @@ const NavBar: React.FunctionComponent<{
     <div className="navbar">
       <div className="wrapper">
         <div className="logo-burger-wrapper">
-          <Logo />
+          <Logo link={logoLink} />
           { items.length ? <NavBarBurger
             open={open}
             onClick={() => toggle()}

@@ -241,7 +241,7 @@ const Dashboard = () => {
               flex-direction: row;
             }
             .sidebar {
-              min-width: 200px;
+              min-width: 250px;
               margin-right: 15px;
               margin-bottom: 0;
             }

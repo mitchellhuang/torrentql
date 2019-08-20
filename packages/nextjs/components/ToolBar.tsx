@@ -62,7 +62,7 @@ const ToolBar = () => {
   const handleResumeTorrent = id => resumeTorrent({
     variables: { id },
   });
-  const iconSize = 20;
+  const iconSize = 22;
   return (
     <div className="toolbar">
       <ToolBarButton

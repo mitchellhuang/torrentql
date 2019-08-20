@@ -3,8 +3,15 @@ import Link from 'next/link';
 import logo from '../static/icon-left-font.png';
 import logoAbove from '../static/icon-above-font.svg';
 
-export const Logo: React.FunctionComponent<React.HTMLProps<HTMLAnchorElement>> = props => (
-  <Link href="/">
+interface ILogo extends React.HTMLProps<HTMLAnchorElement> {
+  link?: string;
+}
+
+export const Logo: React.FunctionComponent<ILogo> = ({
+  link,
+  ...props
+}) => (
+  <Link href={link ? link : '/'}>
     <a {...props}>
       <style jsx>{`
         a {
@@ -20,8 +27,11 @@ export const Logo: React.FunctionComponent<React.HTMLProps<HTMLAnchorElement>> =
   </Link>
 );
 
-export const LogoAbove: React.FunctionComponent<React.HTMLProps<HTMLAnchorElement>> = props => (
-  <Link href="/">
+export const LogoAbove: React.FunctionComponent<ILogo> = ({
+  link,
+  ...props
+}) => (
+  <Link href={link ? link : '/'}>
     <a {...props}>
       <style jsx>{`
         a {

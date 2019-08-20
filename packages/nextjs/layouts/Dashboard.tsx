@@ -5,7 +5,6 @@ import Head from '../components/Head';
 import NavBar from '../components/NavBar';
 
 const items = [
-  { name: 'Home', url: '/dashboard' },
   { name: 'Files', url: '/files' },
   { name: 'Account →', url: '/account' },
 ];
@@ -28,7 +27,7 @@ const Dashboard : React.FunctionComponent<IDashboard> = ({
 }) => (
   <Global backgroundColor="var(--dashboard-bg)" {...props}>
     <Head title={title} />
-    <NavBar items={noNavBarItems ? [] : items} />
+    <NavBar logoLink="/dashboard" items={noNavBarItems ? [] : items} />
     <div className={classNames({ wrapper: !noWrap, 'no-pad': noPad })}>
       <div className="main">
         <div className="content">
