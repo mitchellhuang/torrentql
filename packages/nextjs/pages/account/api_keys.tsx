@@ -72,7 +72,7 @@ const ApiKeys = () => {
   return (
     <Account title="API Keys">
       <Card title="API Keys">
-        <Button onClick={toggle}>Create API Key</Button>
+        <Button onClick={toggle}>Create</Button>
         <CreateApiKeyModal active={active} toggle={toggle} />
         {content}
       </Card>
