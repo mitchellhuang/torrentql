@@ -6,13 +6,9 @@ const meetsRequiredStrength = value => /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)
   ? undefined
   : 'Must be at least 7 characters, and contain 1 letter and 1 number.';
 
-// @ts-ignore
 const ResetPasswordForm = ({ onSubmit }) => (
   <Form
-    onSubmit={(x) => {
-      onSubmit();
-      console.log(x);
-    }}
+    onSubmit={onSubmit}
     validate={({ password1, password2 }) => {
       const errors = { password1: null, password2: null };
       if (!password1 || !password2) {
@@ -21,7 +17,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
       } else if (password1 !== password2) {
         errors.password2 = 'Passwords must match!';
       }
-      return errors;
+      return (errors.password1 === null && errors.password2 === null) ? null : errors;
     }}
     render={({ handleSubmit }) => (
       <form onSubmit={handleSubmit}>

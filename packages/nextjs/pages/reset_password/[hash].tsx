@@ -8,7 +8,7 @@ const onSubmit = async (x) => {
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   await sleep(300);
   console.log(x);
-}
+};
 
 const ResetForm = ({ router }) => (
   <Dashboard title="reset-password">

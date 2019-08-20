@@ -19,11 +19,10 @@ const ResetPassword = () => {
           </div>}
           {!generated && <h3 className="mb-3">Reset your password</h3>}
           {!generated && <ResetPasswordForm onSubmit={async ({ email }) => {
-            const res = await sendPasswordResetEmail({
+            await sendPasswordResetEmail({
               variables: { email },
             });
             setGenerated(true);
-            console.log(res);
           }}/>}
         </Card>
       </div>

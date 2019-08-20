@@ -70,6 +70,12 @@ export const SEND_PASSWORD_RESET_EMAIL_MUTATION = gql`
   }
 `;
 
+export const UPDATE_FORGOTTEN_PASSWORD_MUTATION = gql`
+  mutation updateForgottenPasswordMutation($newPassword: String!, $token: String!) {
+    updateForgottenPasswordMutation(newPassword: $newPassword, token: $token)
+  }
+`;
+
 export const UPDATE_USER_PASSWORD_MUTATION = gql`
   mutation updateUserPassword($oldPassword: String!, $password: String!) {
     updateUserPassword(oldPassword: $oldPassword, password: $password) {

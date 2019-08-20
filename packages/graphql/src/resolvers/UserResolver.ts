@@ -71,6 +71,17 @@ class UpdateUserPasswordInput {
   password: string;
 }
 
+
+@ArgsType()
+class UpdateForgottenPassword {
+  @Field()
+  @MinLength(8)
+  newPassword: string;
+
+  @Field()
+  token: string;
+}
+
 @Resolver(of => User)
 export class UserResolver {
   @InjectRepository(User)
@@ -197,6 +208,13 @@ export class UserResolver {
     }
     user.password = password;
     return this.userRepository.save(user);
+  }
+
+  @Mutation(returns => User)
+  async updateForgottenPasswordMutation(
+    @Args() { newPassword, token }: UpdateForgottenPassword,
+  ) {
+
   }
 
   @Authorized()
