@@ -7,6 +7,7 @@ interface IButton extends React.HTMLProps<HTMLButtonElement & HTMLAnchorElement>
   href?: string;
   block?: boolean;
   outline?: boolean;
+  small?: boolean;
 }
 
 const Button: React.FunctionComponent<IButton> = ({
@@ -14,6 +15,7 @@ const Button: React.FunctionComponent<IButton> = ({
   href,
   block,
   outline,
+  small,
   className,
   ...props
 }) => {
@@ -38,7 +40,7 @@ const Button: React.FunctionComponent<IButton> = ({
       <style jsx>{`
         .button {
           display: inline-block;
-          padding: 9px 10px;
+          padding: ${small ? '7px 8px' : '9px 10px'};
           color: var(--white);
           background-color: var(--primary);
           border: 1px solid var(--primary);
@@ -47,6 +49,7 @@ const Button: React.FunctionComponent<IButton> = ({
           cursor: pointer;
           text-decoration: none;
           text-align: center;
+          font-size: ${small ? 14 : 16}px;
           font-weight: 600;
           transition: all 0.15s ease;
         }

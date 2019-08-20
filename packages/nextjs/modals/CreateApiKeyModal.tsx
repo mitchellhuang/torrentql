@@ -86,7 +86,7 @@ const CreateApiKeyModal = ({
               </Button>
               ) : (
                 <Button type="submit" disabled={isSubmitting} block>
-                  Create API Key
+                  Create
                 </Button>
               )}
           </Form>

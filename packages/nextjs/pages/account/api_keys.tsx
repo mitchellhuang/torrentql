@@ -38,7 +38,7 @@ const ApiKey = ({
       <TCell flex={2}>{name}</TCell>
       <TCell flex={2}>{moment(createdAt).format('LLL')}</TCell>
       <TCell flex={1}>
-        <Button onClick={() => handleDeleteApiKey(id)}>Delete</Button>
+        <Button onClick={() => handleDeleteApiKey(id)} small>Delete</Button>
       </TCell>
     </TRow>
   );
@@ -72,7 +72,7 @@ const ApiKeys = () => {
   return (
     <Account title="API Keys">
       <Card title="API Keys">
-        <Button onClick={toggle}>Create</Button>
+        <Button onClick={toggle} small>Create a new key</Button>
         <CreateApiKeyModal active={active} toggle={toggle} />
         {content}
       </Card>
