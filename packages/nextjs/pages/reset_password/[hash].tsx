@@ -4,10 +4,16 @@ import Dashboard from '../../layouts/Dashboard';
 import ResetPasswordForm from '../../forms/ResetPasswordForm';
 import Card from '../../components/Card';
 
+const onSubmit = async (x) => {
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  await sleep(300);
+  console.log(x);
+}
+
 const ResetForm = ({ router }) => (
   <Dashboard title="reset-password">
     <Card>
-      <ResetPasswordForm onSubmit={x => console.log(x)}/>
+      <ResetPasswordForm onSubmit={onSubmit}/>
     </Card>
     <style jsx>{`
       .reset-wrapper {
