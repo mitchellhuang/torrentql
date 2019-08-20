@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
+import classNames from 'classnames';
 import { Logo } from './Logo';
 
 interface INavBarItem {
   name: string;
   url: string;
+
 }
 
 interface INavBar {
   items: INavBarItem[];
   router: any;
   logoLink?: string;
+  noMaxWidth?: boolean;
 }
 
 const NavBar: React.FunctionComponent<INavBar> = ({
   items,
   router,
   logoLink,
+  noMaxWidth,
 }) => {
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -25,7 +29,7 @@ const NavBar: React.FunctionComponent<INavBar> = ({
   };
   return (
     <div className="navbar">
-      <div className="wrapper">
+      <div className={classNames('wrapper', { 'wrapper-no-max-width': noMaxWidth })}>
         <div className="logo-burger-wrapper">
           <Logo link={logoLink} />
           { items.length ? <NavBarBurger

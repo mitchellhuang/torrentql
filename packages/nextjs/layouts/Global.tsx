@@ -81,6 +81,9 @@ const Global: React.FunctionComponent<{
         max-width: 1280px;
         flex: 1;
       }
+      .wrapper-no-max-width {
+        max-width: none;
+      }
       @media(min-width: 768px) {
         .wrapper {
           margin: 0 auto;

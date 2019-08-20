@@ -208,7 +208,7 @@ const Dashboard = () => {
     content = torrents.map(torrent => <Torrent key={torrent.id} torrent={torrent} />);
   }
   return (
-    <DashboardLayout title="Dashboard">
+    <DashboardLayout title="Dashboard" noMaxWidth>
       <div className="dashboard">
         <div className="sidebar">
           <NetworkGraph className="mb-3" />

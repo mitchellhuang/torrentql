@@ -11,7 +11,7 @@ const items = [
 
 interface IDashboard extends React.HTMLProps<HTMLDivElement> {
   title: string;
-  noWrap?: boolean;
+  noMaxWidth?: boolean;
   noPad?: boolean;
   noFooter?: boolean;
   noNavBarItems?: boolean;
@@ -21,7 +21,7 @@ interface IDashboard extends React.HTMLProps<HTMLDivElement> {
 const Dashboard : React.FunctionComponent<IDashboard> = ({
   children,
   title,
-  noWrap,
+  noMaxWidth,
   noPad,
   noNavBarItems,
   homeLink,
@@ -29,8 +29,8 @@ const Dashboard : React.FunctionComponent<IDashboard> = ({
 }) => (
   <Global backgroundColor="var(--dashboard-bg)" {...props}>
     <Head title={title} />
-    <NavBar logoLink={!homeLink && '/dashboard'} items={noNavBarItems ? [] : items} />
-    <div className={classNames({ wrapper: !noWrap, 'no-pad': noPad })}>
+    <NavBar logoLink={!homeLink && '/dashboard'} items={noNavBarItems ? [] : items} noMaxWidth={noMaxWidth} />
+    <div className={classNames('wrapper', { 'wrapper-no-max-width': noMaxWidth, 'no-pad': noPad })}>
       <div className="main">
         <div className="content">
           {children}
