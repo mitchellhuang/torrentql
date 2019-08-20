@@ -80,7 +80,7 @@ const NavBar: React.FunctionComponent<INavBar> = ({
           font-size: 20px;
           font-weight: 600;
           border-radius: 5px;
-          margin-bottom: 10px;
+          margin-bottom: 5px;
         }
         .tabs li:last-child a {
           color: var(--primary);

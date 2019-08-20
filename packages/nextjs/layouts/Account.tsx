@@ -91,7 +91,7 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         display: flex;
         align-items: center;
         color: var(--light-black);
-        font-size: 16px;
+        font-size: 18px;
       }
       .selected a {
         color: var(--primary);
@@ -108,6 +108,9 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
           min-width: 200px;
           margin-right: 15px;
           margin-bottom: 0;
+        }
+        a {
+          font-size: 16px;
         }
       }
       @media(min-width: 1024px) {
