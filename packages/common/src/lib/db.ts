@@ -7,6 +7,7 @@ import { Server } from '../entities/Server';
 import { BillingUsage } from '../entities/BillingUsage';
 import { BillingPeriod } from '../entities/BillingPeriod';
 import { BillingHistory } from '../entities/BillingHistory';
+import { ApiKey } from '../entities/ApiKey';
 
 export const createConnectionFromEnv = () => createConnection({
   type: 'postgres',
@@ -23,6 +24,7 @@ export const createConnectionFromEnv = () => createConnection({
     BillingUsage,
     BillingPeriod,
     BillingHistory,
+    ApiKey,
   ],
   namingStrategy: new SnakeNamingStrategy(),
   synchronize: true,

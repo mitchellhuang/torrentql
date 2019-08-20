@@ -12,10 +12,12 @@ import {
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { IsEmail, MinLength } from 'class-validator';
+import { IsEmail, IsUUID, MinLength } from 'class-validator';
+import nanoid from 'nanoid';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { ApiKey } from '@torrentql/common/dist/entities/ApiKey';
 import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
 
@@ -58,6 +60,19 @@ class UpdateUserPasswordInput {
   password: string;
 }
 
+@ArgsType()
+class CreateApiKeyInput {
+  @Field()
+  name: string;
+}
+
+@ArgsType()
+class DeleteApiKeyInput {
+  @Field()
+  @IsUUID()
+  id: string;
+}
+
 @Resolver(of => User)
 export class UserResolver {
   @InjectRepository(User)
@@ -65,6 +80,9 @@ export class UserResolver {
 
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
+
+  @InjectRepository(ApiKey)
+  private apiKeyRepository: Repository<ApiKey>;
 
   @Authorized()
   @Query(returns => User)
@@ -159,5 +177,33 @@ export class UserResolver {
   async deleteUser(@Ctx() ctx: Context) {
     await this.userRepository.remove(ctx.user);
     return true;
+  }
+
+  @Authorized()
+  @Mutation(returns => ApiKey)
+  async createApiKey(
+    @Args() { name }: CreateApiKeyInput,
+    @Ctx() ctx: Context,
+  ) {
+    const apiKey = new ApiKey();
+    apiKey.key = nanoid();
+    apiKey.name = name;
+    apiKey.user = Promise.resolve(ctx.user);
+    await this.apiKeyRepository.save(apiKey);
+    return apiKey;
+  }
+
+  @Authorized()
+  @Mutation(returns => Boolean)
+  async deleteApiKey(
+    @Args() { id }: DeleteApiKeyInput,
+    @Ctx() ctx: Context,
+  ) {
+    const apiKey = await this.apiKeyRepository.findOne(id);
+    if (apiKey) {
+      await this.apiKeyRepository.remove(apiKey);
+      return true;
+    }
+    return false;
   }
 }

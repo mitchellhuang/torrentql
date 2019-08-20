@@ -5,7 +5,7 @@ import Card from '../../components/Card';
 
 const Usage = () => (
   <Account title="Usage">
-    <Card title="Usage" className="mb-3">
+    <Card title="Usage">
       Usage information will go here.
     </Card>
   </Account>

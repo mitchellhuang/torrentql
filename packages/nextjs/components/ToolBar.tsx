@@ -3,7 +3,7 @@ import useModal from '../lib/useModal';
 import AddTorrentModal from '../modals/AddTorrentModal';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import { DELETE_TORRENT_MUTATION, PAUSE_TORRENT_MUTATION, RESUME_TORRENT_MUTATION } from '../apollo/mutations';
-import { GET_DASHBOARD_QUERY, ME_QUERY } from '../apollo/queries';
+import { GET_DASHBOARD_QUERY, GET_TORRENTS_QUERY } from '../apollo/queries';
 import { Minus, Plus, Pause, Play } from 'react-feather';
 
 interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
@@ -47,12 +47,12 @@ const ToolBar = () => {
     variables: {
       id,
     },
-    update: (store) => {
-      const data : any = store.readQuery({ query: ME_QUERY });
-      data.me.torrents = data.me.torrents.filter(torrent => torrent.id !== id);
-      store.writeQuery({
-        query: ME_QUERY,
-        data,
+    update: (cache) => {
+      let { getTorrents } = cache.readQuery({ query: GET_TORRENTS_QUERY });
+      getTorrents = getTorrents.filter(torrent => torrent.id !== id);
+      cache.writeQuery({
+        query: GET_TORRENTS_QUERY,
+        data: { getTorrents },
       });
     },
   });

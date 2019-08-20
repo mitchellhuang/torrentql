@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
-import { Compass, UploadCloud, DownloadCloud, Pause, Clock, AlertCircle, Loader } from 'react-feather';
+import { Compass, UploadCloud, DownloadCloud, Pause, Clock } from 'react-feather';
 import DashboardLayout from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
 import { GET_TORRENTS_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
@@ -12,6 +12,7 @@ import {
 import Torrent, { TorrentHeader } from '../components/Torrent';
 import ToolBar from '../components/ToolBar';
 import Input from '../components/Input';
+import { LoadingState, EmptyState } from '../components/State';
 import { torrentStatus } from '../lib/constants';
 
 const NetworkGraph = props => (
@@ -179,40 +180,6 @@ const FilterByTracker = ({
   );
 };
 
-const Loading = () => (
-  <div>
-    <Loader size={35} />
-    <h4 className="mt-2">Loading</h4>
-    <style jsx>{`
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 25px 0;
-        color: var(--dark-gray);
-      }
-    `}</style>
-  </div>
-);
-
-const Empty = () => (
-  <div>
-    <AlertCircle size={35} />
-    <h4 className="mt-2">No torrents</h4>
-    <style jsx>{`
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 25px 0;
-        color: var(--dark-gray);
-      }
-    `}</style>
-  </div>
-);
-
 const Dashboard = () => {
   const { loading, data } = useQuery(GET_TORRENTS_QUERY, { ssr: false, pollInterval: 2000 });
   const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
@@ -221,9 +188,9 @@ const Dashboard = () => {
   let content;
   const trackers = {};
   if (loading) {
-    state = <Loading />;
+    state = <LoadingState />;
   } else if (!torrents.length) {
-    state = <Empty />;
+    state = <EmptyState message="No torrents found" />;
   } else {
     const { searchFilter, statusFilter, trackerFilter } = getDashboard;
     torrents.forEach((torrent) => {

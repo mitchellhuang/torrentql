@@ -15,7 +15,7 @@ import { Torrent } from './Torrent';
 export class BillingPeriod {
 
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column('bigint')
   diskUsageByteSeconds: number;

@@ -97,3 +97,20 @@ export const RESUME_TORRENT_MUTATION = gql`
     resumeTorrent(id: $id)
   }
 `;
+
+export const CREATE_API_KEY_MUTATION = gql`
+  mutation createApiKey($name: String!) {
+    createApiKey(name: $name) {
+      id
+      name
+      key
+      createdAt
+    }
+  }
+`;
+
+export const DELETE_API_KEY_MUTATION = gql`
+  mutation deleteApiKey($id: String!) {
+    deleteApiKey(id: $id)
+  }
+`;
