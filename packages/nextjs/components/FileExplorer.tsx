@@ -5,7 +5,6 @@ import { UPDATE_SELECTED_FILE_MUTATION } from '../apollo/mutations';
 import { primary } from '../layouts/Global';
 
 const directoryColor = '#A7B0BD';
-
 function directoryDive(dictionary, key, depth, id) {
   if (dictionary.type === 'file') {
     return (
@@ -66,6 +65,8 @@ const Directory = ({ name, depth, children }) => {
 
 const File = ({ name, depth, path, id }) => {
   const filePath = `/files/${encodeURIComponent(path)}`;
+  const hostNamePath = 'https://gra001.torrentql.com/';
+  const ngnixFilePath = `${hostNamePath}${encodeURIComponent(path)}`;
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
@@ -76,7 +77,7 @@ const File = ({ name, depth, path, id }) => {
         <FileIcon color={primary} className="file-icon" />
         {name}
       </div>
-      <a href={filePath}>
+      <a href={ngnixFilePath}>
         <span className="download">Download</span>
         <Download size={12}/>
       </a>
