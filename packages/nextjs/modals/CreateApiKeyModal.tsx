@@ -69,7 +69,7 @@ const CreateApiKeyModal = ({
                 <h5 className="mb-2">Result</h5>
                 <p>Your API Key:</p>
                 <pre><b>{status.key}</b></pre>
-                <p>After you close this modal you will not be able see the key again.</p>
+                <p>You will not be able to see this key again after closing this modal.</p>
                 <style jsx>{`
                   pre {
                     margin: 10px 0;

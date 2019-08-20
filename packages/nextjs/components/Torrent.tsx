@@ -58,7 +58,13 @@ const Torrent = ({
     return updateSelectedTorrents({ variables : { selectedTorrents } });
   };
   return (
-    <TRow key={torrent.id} selected={selected} onClick={() => handleSelection()}>
+    <TRow
+      key={torrent.id}
+      selected={selected}
+      onClick={() => handleSelection()}
+      pointer
+      hover
+    >
       <div className="checkbox">
         <input type="checkbox" value={torrent.id} />
         {!selected && <Square size={20} />}

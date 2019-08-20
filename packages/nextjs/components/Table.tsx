@@ -2,8 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
+  height?: number;
   header?: boolean;
   selected?: boolean;
+  pointer?: boolean;
+  hover?: boolean;
 }
 
 const TRow: React.FunctionComponent<ITRow> = ({
@@ -11,6 +14,9 @@ const TRow: React.FunctionComponent<ITRow> = ({
   className,
   header,
   selected,
+  height,
+  pointer,
+  hover,
   onClick,
 }) => (
   <div
@@ -28,19 +34,18 @@ const TRow: React.FunctionComponent<ITRow> = ({
         box-sizing: border-box;
         color: var(--black);
         background-color: var(--white);
-        cursor: pointer;
+        cursor: ${pointer ? 'pointer' : 'default'};
         outline: none;
         font-weight: 400;
-        height: 40px;
+        height: ${height ? height : 38}px;
         border-top: 1px solid var(--button-hover);
       }
-      .row:not(.header):hover {
-        background-color: var(--toolbar-gray);
+      .row:hover {
+        background-color: ${hover ? 'var(--toolbar-gray)' : 'var(--white)'};
       }
       .header {
-        cursor: default;
         font-size: 16px;
-        border-top: 0;
+        border-color: transparent;
       }
     `}</style>
   </div>

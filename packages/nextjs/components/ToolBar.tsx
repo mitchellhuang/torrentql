@@ -80,7 +80,7 @@ const ToolBar = () => {
       <style jsx>{`
         .toolbar {
           display: flex;
-          height: 40px;
+          height: 38px;
           align-items: center;
           justify-content: flex-start;
           background-color: var(--toolbar-gray);
