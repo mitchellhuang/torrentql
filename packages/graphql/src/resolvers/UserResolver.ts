@@ -73,13 +73,13 @@ class UpdateUserPasswordInput {
 
 
 @ArgsType()
-class UpdateForgottenPassword {
+class ResetPassword {
   @Field()
   @MinLength(8)
   password: string;
 
   @Field()
-  token: string;
+  key: string;
 }
 
 @Resolver(of => User)
@@ -147,37 +147,6 @@ export class UserResolver {
     return user;
   }
 
-  @Mutation(returns => Boolean)
-  async sendPasswordResetEmail(
-    @Args() { email }: SendPasswordResetEmail,
-  ) {
-    const user = this.userRepository.findOne({
-      email,
-    });
-    if (!user) {
-      return true;
-    }
-    const passwordReset = new PasswordReset();
-    passwordReset.key = nanoid();
-    passwordReset.user = Promise.resolve(user);
-    const url = `http://localhost:3000/reset_password/${passwordReset.key}`;
-    const msg = {
-      to: email,
-      from: 'support@torrentql.com',
-      templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
-      dynamic_template_data: {
-        link: `<a href="${url}">${url}</a>`,
-      },
-    };
-    try {
-      await sgMail.send(msg);
-    } catch (err) {
-      throw new Error('Unable to send password reset email.');
-    }
-    await this.passwordResetRepository.save(passwordReset);
-    return true;
-  }
-
   @Authorized()
   @Mutation(returns => User)
   async updateUserEmail(
@@ -212,11 +181,55 @@ export class UserResolver {
     return this.userRepository.save(user);
   }
 
-  @Mutation(returns => User)
-  async updateForgottenPasswordMutation(
-    @Args() { password, token }: UpdateForgottenPassword,
+  @Mutation(returns => Boolean)
+  async sendPasswordResetEmail(
+    @Args() { email }: SendPasswordResetEmail,
   ) {
+    const user = await this.userRepository.findOne({
+      email,
+    });
+    if (!user) {
+      return true;
+    }
+    const passwordReset = new PasswordReset();
+    passwordReset.key = nanoid();
+    passwordReset.user = Promise.resolve(user);
+    const url = `http://localhost:3000/reset_password/${passwordReset.key}`;
+    const msg = {
+      to: email,
+      from: 'support@torrentql.com',
+      templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
+      dynamic_template_data: {
+        link: `<a href="${url}">${url}</a>`,
+      },
+    };
+    try {
+      await sgMail.send(msg);
+    } catch (err) {
+      throw new Error('Unable to send password reset email.');
+    }
+    await this.passwordResetRepository.save(passwordReset);
+    return true;
+  }
 
+  @Mutation(returns => Boolean)
+  async resetPassword(
+    @Args() { password, key }: ResetPassword,
+  ) {
+    const hash = PasswordReset.hashKey(key);
+    const passwordReset = await this.passwordResetRepository.findOne({
+      hash,
+    });
+    if (!passwordReset) {
+      throw new Error('Invalid password reset link.');
+    }
+    if (new Date(passwordReset.expiredAt) < new Date()) {
+      throw new Error('Password reset link expired.');
+    }
+    const user = await passwordReset.user;
+    user.password = password;
+    await this.userRepository.save(user);
+    return true;
   }
 
   @Authorized()

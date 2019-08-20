@@ -46,10 +46,10 @@ type Mutation {
   resumeTorrent(id: String!): Boolean!
   login(email: String!, password: String!): User!
   createUser(email: String!, password: String!): User!
-  sendPasswordResetEmail(email: String!): Boolean!
   updateUserEmail(email: String!): User!
   updateUserPassword(oldPassword: String!, password: String!): User!
-  updateForgottenPasswordMutation(password: String!, token: String!): User!
+  sendPasswordResetEmail(email: String!): Boolean!
+  resetPassword(password: String!, key: String!): Boolean!
   deleteUser: Boolean!
 }
 
