@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { useMutation } from 'react-apollo-hooks';
 import { ADD_TORRENT_MUTATION } from '../apollo/mutations';
-import { ME_QUERY } from '../apollo/queries';
+import { GET_TORRENTS_QUERY } from '../apollo/queries';
 import Modal from '../components/Modal';
 import Input from '../components/Input';
 import Error from '../components/Error';
@@ -44,7 +44,7 @@ const AddTorrentModal = ({
               variables: {
                 data,
               },
-              refetchQueries: [{ query: ME_QUERY }],
+              refetchQueries: [{ query: GET_TORRENTS_QUERY }],
             });
             toggle();
             setSubmitting(false);

@@ -37,6 +37,7 @@ type Mutation {
   updateUserPassword(oldPassword: String!, password: String!): User!
   deleteUser: Boolean!
   createApiKey(name: String!): ApiKey!
+  deleteApiKey(id: String!): Boolean!
 }
 
 type Query {

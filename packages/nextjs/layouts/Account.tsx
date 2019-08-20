@@ -22,7 +22,7 @@ const items = [
     icon: PieChart,
   },
   {
-    url: '/account/api',
+    url: '/account/api_keys',
     name: 'API Keys',
     icon: Lock,
   },

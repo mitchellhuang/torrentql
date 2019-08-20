@@ -12,7 +12,7 @@ import {
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { IsEmail, MinLength } from 'class-validator';
+import { IsEmail, IsUUID, MinLength } from 'class-validator';
 import nanoid from 'nanoid';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { User } from '@torrentql/common/dist/entities/User';
@@ -64,6 +64,13 @@ class UpdateUserPasswordInput {
 class CreateApiKeyInput {
   @Field()
   name: string;
+}
+
+@ArgsType()
+class DeleteApiKeyInput {
+  @Field()
+  @IsUUID()
+  id: string;
 }
 
 @Resolver(of => User)
@@ -184,5 +191,19 @@ export class UserResolver {
     apiKey.user = Promise.resolve(ctx.user);
     await this.apiKeyRepository.save(apiKey);
     return apiKey;
+  }
+
+  @Authorized()
+  @Mutation(returns => Boolean)
+  async deleteApiKey(
+    @Args() { id }: DeleteApiKeyInput,
+    @Ctx() ctx: Context,
+  ) {
+    const apiKey = await this.apiKeyRepository.findOne(id);
+    if (apiKey) {
+      await this.apiKeyRepository.remove(apiKey);
+      return true;
+    }
+    return false;
   }
 }

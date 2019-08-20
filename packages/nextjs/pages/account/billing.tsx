@@ -5,7 +5,7 @@ import Card from '../../components/Card';
 
 const Billing = () => (
   <Account title="Billing">
-    <Card title="Billing" className="mb-3">
+    <Card title="Billing">
       Billing information will go here.
     </Card>
   </Account>

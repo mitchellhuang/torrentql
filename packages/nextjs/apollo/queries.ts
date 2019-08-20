@@ -21,6 +21,14 @@ export const ME_QUERY = gql`
   {
     me {
       id
+      email
+      balance
+      apiKeys {
+        id
+        name
+        key
+        createdAt
+      }
     }
   }
 `;
