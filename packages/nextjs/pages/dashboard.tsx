@@ -148,12 +148,12 @@ const FilterByTracker = ({
     <div {...props}>
       <h5 className="mb-2">Filter by Tracker</h5>
       <ul>
-        { trackers.map(item => (
+        { Object.keys(trackers).map(item => (
           <li
             key={item}
             onClick={() => handleChange(item)}
             className={trackerFilter === item && 'selected'}>
-            <span>{item}</span>
+            <span>{item} [{trackers[item]}]</span>
           </li>
         )) }
       </ul>
@@ -194,7 +194,11 @@ const Dashboard = () => {
   } else {
     const { searchFilter, statusFilter, trackerFilter } = getDashboard;
     torrents.forEach((torrent) => {
-      trackers[torrent.trackerHost] = true;
+      if (trackers[torrent.trackerHost]) {
+        trackers[torrent.trackerHost] += 1;
+      } else {
+        trackers[torrent.trackerHost] = 1;
+      }
     });
     if (searchFilter) {
       torrents = torrents.filter(torrent => torrent.name.toLowerCase().includes(searchFilter.toLowerCase()));
@@ -214,7 +218,7 @@ const Dashboard = () => {
           <NetworkGraph className="mb-3" />
           <FilterBySearch className="mb-3" />
           <FilterByStatus className="mb-3" statusFilter={getDashboard.statusFilter} />
-          <FilterByTracker trackers={Object.keys(trackers)} trackerFilter={getDashboard.trackerFilter} />
+          <FilterByTracker trackers={trackers} trackerFilter={getDashboard.trackerFilter} />
         </div>
         <div className="content">
           <div className="inner">
