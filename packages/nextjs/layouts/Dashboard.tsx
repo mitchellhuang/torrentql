@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 
 const items = [
   { name: 'Files', url: '/files' },
-  { name: 'Account →', url: '/account' },
+  { name: 'Account', url: '/account' },
 ];
 
 interface IDashboard extends React.HTMLProps<HTMLDivElement> {

@@ -3,7 +3,7 @@ import { AlertCircle, Loader } from 'react-feather';
 
 const LoadingState = () => (
   <div>
-    <Loader size={35} />
+    <Loader size={30} />
     <h4 className="mt-2">Loading</h4>
     <style jsx>{`
       div {
@@ -22,7 +22,7 @@ const EmptyState = ({
   message
 }) => (
   <div>
-    <AlertCircle size={35} />
+    <AlertCircle size={30} />
     <h4 className="mt-2">{message}</h4>
     <style jsx>{`
       div {
