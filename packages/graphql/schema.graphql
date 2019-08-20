@@ -53,13 +53,6 @@ type Mutation {
   deleteUser: Boolean!
 }
 
-type PasswordReset {
-  id: ID!
-  hash: String!
-  email: String!
-  expiryDate: DateTime!
-}
-
 type Query {
   getTorrent(id: String!): Torrent!
   getTorrents: [Torrent!]!

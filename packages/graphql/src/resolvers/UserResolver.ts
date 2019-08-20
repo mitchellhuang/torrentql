@@ -151,30 +151,31 @@ export class UserResolver {
   async sendPasswordResetEmail(
     @Args() { email }: SendPasswordResetEmail,
   ) {
-    try {
-      const id = nanoid();
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(id, salt);
-      const url = `http://localhost:3000/reset_password/${hash}`;
-      const msg = {
-        to: email,
-        from: 'i-love-torrents69@torrentql.com',
-        templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
-        dynamic_template_data: {
-          link: `<a href="${url}">${url}</a>`,
-        },
-      };
-      await sgMail.send(msg);
-      const passwordReset = new PasswordReset();
-      passwordReset.hash = hash;
-      passwordReset.email = email;
-      // TODO: make expiresAt
-      passwordReset.expiryDate = new Date(new Date().getTime() + 60 * 60 * 24 * 1000);
-      await this.passwordResetRepository.save(passwordReset);
+    const user = this.userRepository.findOne({
+      email,
+    });
+    if (!user) {
       return true;
-    } catch (err) {
-      throw new Error('Unable to generate email.');
     }
+    const passwordReset = new PasswordReset();
+    passwordReset.key = nanoid();
+    passwordReset.user = Promise.resolve(user);
+    const url = `http://localhost:3000/reset_password/${passwordReset.key}`;
+    const msg = {
+      to: email,
+      from: 'support@torrentql.com',
+      templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
+      dynamic_template_data: {
+        link: `<a href="${url}">${url}</a>`,
+      },
+    };
+    try {
+      await sgMail.send(msg);
+    } catch (err) {
+      throw new Error('Unable to send password reset email.');
+    }
+    await this.passwordResetRepository.save(passwordReset);
+    return true;
   }
 
   @Authorized()
