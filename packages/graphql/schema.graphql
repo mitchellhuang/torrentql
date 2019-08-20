@@ -49,6 +49,7 @@ type Mutation {
   sendPasswordResetEmail(email: String!): Boolean!
   updateUserEmail(email: String!): User!
   updateUserPassword(oldPassword: String!, password: String!): User!
+  updateForgottenPasswordMutation(password: String!, token: String!): User!
   deleteUser: Boolean!
 }
 
