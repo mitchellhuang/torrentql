@@ -1,6 +1,28 @@
 import { Deluge } from '@ctrl/deluge';
 import { Torrent } from '../entities/Torrent';
 
+const directoryDiscover = (hostname, dictionary, name) => {
+  const hostName = `${hostname}.torrentql.com`;
+  if (!dictionary || !dictionary.contents) {
+    return;
+  }
+  if (fileLevel[key].type === 'file') {
+    console.log(`File: ${hostName}/${fileLevel[key].path}`);
+    return fileLevel[key];
+  }
+  // console.log('HOSTNAME: ', hostName);
+  // console.log('FILE STRUCTURE: ', fileDirectory.contents);
+  const fileLevel = dictionary.contents;
+  Object.keys(fileLevel).forEach((key) => {
+    // if file we return link otherwise
+    // recursively step through directory
+
+    // console.log(fileLevel[key]);
+    console.log(`Directory: ${hostName}/${fileLevel[key].path}`);
+    directoryDiscover(hostname, fileLevel[key], name);
+  });
+};
+
 export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | null> => {
   const server = await torrent.server;
   const deluge = new Deluge({
@@ -16,6 +38,11 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   } catch (err) {
     return null;
   }
+  const hostNamePath = 'https://gra001.torrentql.com';
+  const ngnixFilePath = `${hostNamePath}/${encodeURIComponent('deez-nuts')}`;
+  // console.log(server.id);
+  const torrentFiles =  directoryDiscover(server.id, files.result);
+  // console.log(files.result);
   torrent.name = status.result.name;
   torrent.state = status.result.state.toLowerCase();
   torrent.progress = status.result.progress;
