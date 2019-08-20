@@ -81,19 +81,11 @@ const CreateApiKeyModal = ({
               )}
             <Error error={status && status.error} />
             {status && status.key ? (
-              <Button
-                type="button"
-                onClick={toggle}
-                block
-              >
+              <Button type="button" onClick={toggle} block>
                 Close
               </Button>
               ) : (
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  block
-                >
+                <Button type="submit" disabled={isSubmitting} block>
                   Create
                 </Button>
               )}
