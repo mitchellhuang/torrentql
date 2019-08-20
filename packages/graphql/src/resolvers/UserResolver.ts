@@ -76,7 +76,7 @@ class UpdateUserPasswordInput {
 class UpdateForgottenPassword {
   @Field()
   @MinLength(8)
-  newPassword: string;
+  password: string;
 
   @Field()
   token: string;
@@ -168,6 +168,7 @@ export class UserResolver {
       const passwordReset = new PasswordReset();
       passwordReset.hash = hash;
       passwordReset.email = email;
+      // TODO: make expiresAt
       passwordReset.expiryDate = new Date(new Date().getTime() + 60 * 60 * 24 * 1000);
       await this.passwordResetRepository.save(passwordReset);
       return true;
@@ -212,7 +213,7 @@ export class UserResolver {
 
   @Mutation(returns => User)
   async updateForgottenPasswordMutation(
-    @Args() { newPassword, token }: UpdateForgottenPassword,
+    @Args() { password, token }: UpdateForgottenPassword,
   ) {
 
   }
