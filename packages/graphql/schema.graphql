@@ -29,6 +29,7 @@ scalar JSON
 type Mutation {
   createApiKey(name: String!): ApiKey!
   deleteApiKey(id: String!): Boolean!
+  createBitcoinTransaction(amount: Float!): Boolean!
   addTorrent(data: String!): Torrent!
   deleteTorrent(id: String!): Boolean!
   pauseTorrent(id: String!): Boolean!

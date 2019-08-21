@@ -26,6 +26,7 @@
     "lerna": "^3.16.4",
     "lodash": "^4.17.15",
     "nanoid": "^2.0.3",
+    "opennode": "^1.1.1",
     "parse-torrent": "^7.0.0",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.10",

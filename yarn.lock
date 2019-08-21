@@ -2882,6 +2882,14 @@ axios@*, axios@^0.19.0:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
 
+axios@^0.18.0:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
+  integrity sha512-0BfJq4NSfQXd+SkFdrvFbG7addhYSBA2mQwISr46pD6E5iqkWg02RAs8vyTT/j0RTnoYmeXauBuSv1qKwR179g==
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
+
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -7593,6 +7601,13 @@ onetime@^2.0.0:
   integrity sha1-BnQoIw/WdEOyeUsiu6UotoZ5YtQ=
   dependencies:
     mimic-fn "^1.0.0"
+
+opennode@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/opennode/-/opennode-1.1.1.tgz#112fd83fcd66c0865cc79a8a5979721da4b98723"
+  integrity sha512-I9jljZvSTA63kFgi6N5EN7+6rRFCkxop0Rn1Wm5Zrd8CC/JC1RiuI06n4DgCp+ncgIL9YOZ1+rdXLFLBxl9xhA==
+  dependencies:
+    axios "^0.18.0"
 
 optimism@^0.9.0:
   version "0.9.6"
