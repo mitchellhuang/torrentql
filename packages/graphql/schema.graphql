@@ -16,6 +16,14 @@ BigInt can represent values between -(2^53) + 1 and 2^53 - 1.
 """
 scalar BigInt
 
+type BitcoinTransaction {
+  id: ID!
+  status: String!
+  amount: Float!
+  amountSatoshi: BigInt!
+  invoiceUrl: String!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -29,7 +37,7 @@ scalar JSON
 type Mutation {
   createApiKey(name: String!): ApiKey!
   deleteApiKey(id: String!): Boolean!
-  createBitcoinTransaction(amount: Float!): Boolean!
+  createBitcoinTransaction(amount: Float!): BitcoinTransaction!
   addTorrent(data: String!): Torrent!
   deleteTorrent(id: String!): Boolean!
   pauseTorrent(id: String!): Boolean!
@@ -85,4 +93,5 @@ type User {
   token: String
   torrents: [Torrent!]!
   apiKeys: [ApiKey!]!
+  bitcoinTransactions: [BitcoinTransaction!]!
 }

@@ -12,6 +12,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import bcrypt from 'bcryptjs';
 import { Torrent } from './Torrent';
 import { ApiKey } from './ApiKey';
+import { BitcoinTransaction } from './BitcoinTransaction';
 
 @ObjectType()
 @Entity('users')
@@ -42,6 +43,10 @@ export class User {
   @Field(type => [ApiKey])
   @OneToMany(type => ApiKey, apiKey => apiKey.user)
   apiKeys: Promise<ApiKey[]>;
+
+  @Field(type => [BitcoinTransaction])
+  @OneToMany(type => BitcoinTransaction, bitcoinTransaction => bitcoinTransaction.user)
+  bitcoinTransactions: Promise<BitcoinTransaction[]>;
 
   @CreateDateColumn()
   createdAt: Date;
