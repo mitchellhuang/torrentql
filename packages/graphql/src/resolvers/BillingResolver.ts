@@ -65,6 +65,9 @@ export class BillingResolver {
           .getRepository(BitcoinTransaction)
           .findOne(charge.id);
         if (bitcoinTransaction) {
+          if (bitcoinTransaction.status === 'paid') {
+            return;
+          }
           bitcoinTransaction.status = charge.status;
           await transaction
             .getRepository(BitcoinTransaction)
