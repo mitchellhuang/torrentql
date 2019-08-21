@@ -2,9 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import Button from '../components/Button';
 
-const meetsRequiredStrength = value => /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.exec(value) !== null
-  ? undefined
-  : 'Must be at least 7 characters, and contain 1 letter and 1 number.';
+const isLongEnough = value => value && value.length >= 8 ? undefined : 'Must be at least 8 characters long.';
 
 const ResetPasswordForm = ({ onSubmit }) => (
   <Form
@@ -21,7 +19,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
     }}
     render={({ handleSubmit }) => (
       <form onSubmit={handleSubmit}>
-        <Field name="password1" validate={meetsRequiredStrength}>
+        <Field name="password1" validate={isLongEnough}>
           {({ input, meta }) => (
             <div className="input-group">
               <input {...input}/>
@@ -29,7 +27,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
             </div>
           )}
         </Field>
-        <Field name="password2" validate={meetsRequiredStrength}>
+        <Field name="password2" validate={isLongEnough}>
           {({ input, meta }) => (
             <div className="input-group">
               <input {...input}/>

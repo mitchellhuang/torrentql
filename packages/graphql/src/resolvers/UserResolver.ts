@@ -21,7 +21,6 @@ import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
 import sgMail from '@sendgrid/mail';
 import nanoid from 'nanoid';
-import bcrypt from 'bcryptjs';
 
 sgMail.setApiKey('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');
 
@@ -108,8 +107,7 @@ export class UserResolver {
       },
     });
     const torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
-    const torrentsWithDelugeNotNull = torrentsWithDeluge.filter(torrent => torrent !== null);
-    return torrentsWithDelugeNotNull;
+    return torrentsWithDeluge.filter(torrent => torrent !== null);
   }
 
   @Mutation(returns => User)
@@ -188,12 +186,15 @@ export class UserResolver {
     const user = await this.userRepository.findOne({
       email,
     });
+    console.log(user);
     if (!user) {
+      console.log('returning true for !user');
       return true;
     }
     const passwordReset = new PasswordReset();
     passwordReset.key = nanoid();
     passwordReset.user = Promise.resolve(user);
+    console.log('passReset', passwordReset);
     const url = `http://localhost:3000/reset_password/${passwordReset.key}`;
     const msg = {
       to: email,
@@ -203,6 +204,7 @@ export class UserResolver {
         link: `<a href="${url}">${url}</a>`,
       },
     };
+    console.log(url);
     try {
       await sgMail.send(msg);
     } catch (err) {

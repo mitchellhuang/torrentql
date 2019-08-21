@@ -70,9 +70,9 @@ export const SEND_PASSWORD_RESET_EMAIL_MUTATION = gql`
   }
 `;
 
-export const UPDATE_FORGOTTEN_PASSWORD_MUTATION = gql`
-  mutation updateForgottenPasswordMutation($password: String!, $token: String!) {
-    updateForgottenPasswordMutation(password: $password, token: $token)
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword($password: String!, $key: String!) {
+      resetPassword(password: $password, key: $key)
   }
 `;
 
