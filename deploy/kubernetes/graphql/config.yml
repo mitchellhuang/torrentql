@@ -14,4 +14,5 @@ data:
   DB_DATABASE: ""
   DB_SSL: ""
   JWT_SECRET: ""
+  OPENNODE_API_KEY: ""
   SERVER_ROOT_URL: ""
