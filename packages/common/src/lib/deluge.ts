@@ -1,7 +1,7 @@
 import { Deluge } from '@ctrl/deluge';
 import { Torrent } from '../entities/Torrent';
 
-const directoryDiscover = (hostname, dictionary, name) => {
+const directoryDiscover = (hostname, dictionary, name = '') => {
   const hostName = `${hostname}.torrentql.com`;
   if (!dictionary || !dictionary.contents) {
     return 'No files exist';
