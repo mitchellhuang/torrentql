@@ -22,6 +22,8 @@ type BitcoinTransaction {
   amount: Float!
   amountSatoshi: BigInt!
   invoiceUrl: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """

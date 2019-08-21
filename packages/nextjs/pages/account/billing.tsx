@@ -1,9 +1,11 @@
 import React from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
+import moment from 'moment';
 import Account from '../../layouts/Account';
 import withAuth from '../../lib/withAuth';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
+import { TRow, TCell } from '../../components/Table';
 import { ME_QUERY } from '../../apollo/queries';
 import { CREATE_BITCOIN_TRANSACTION_MUTATION } from '../../apollo/mutations';
 import { LoadingState, EmptyState } from '../../components/State';
@@ -50,13 +52,48 @@ const Automatic = props => (
   </Card>
 );
 
-const History = props => (
-  <Card title="Transaction History" {...props}>
-    <p className="footnote">
-      Your transaction history for the last 30 days.
-    </p>
-  </Card>
-);
+const History = ({
+  bitcoinTransactions,
+  ...props
+}) => {
+  const Layout = ({ children, ...props }) => (
+    <Card title="Transaction History" {...props}>
+      {children}
+      <p className="footnote mt-2">
+        Your transaction history since the beginning of time.
+      </p>
+    </Card>
+  );
+  const bitcoinTransactionsFiltered = bitcoinTransactions.filter(bt => bt.status !== 'unpaid');
+  if (!bitcoinTransactionsFiltered.length) {
+    return (
+      <Layout {...props}>
+      </Layout>
+    );
+  }
+  return (
+    <Layout>
+      <div className="table">
+        <TRow header bold noPad>
+          <TCell flex={4}>ID</TCell>
+          <TCell flex={1}>Status</TCell>
+          <TCell flex={1}>Amount</TCell>
+          <TCell flex={2}>Created at</TCell>
+          <TCell flex={2}>Updated at</TCell>
+        </TRow>
+        {bitcoinTransactionsFiltered.map(bitcoinTransaction => (
+          <TRow noPad>
+            <TCell flex={4}>{bitcoinTransaction.id}</TCell>
+            <TCell flex={1}>{bitcoinTransaction.status}</TCell>
+            <TCell flex={1}>${bitcoinTransaction.amount}</TCell>
+            <TCell flex={2}>{moment(bitcoinTransaction.createdAt).format('LLL')}</TCell>
+            <TCell flex={2}>{moment(bitcoinTransaction.updatedAt).format('LLL')}</TCell>
+          </TRow>
+          ))}
+      </div>
+    </Layout>
+  );
+};
 
 const Billing = () => {
   const { loading, data } = useQuery(ME_QUERY, { ssr: false });
@@ -76,7 +113,7 @@ const Billing = () => {
         <Balance balance={me.balance} className="mb-3" />
         <Recharge className="mb-3" />
         <Automatic className="mb-3" />
-        <History />
+        <History bitcoinTransactions={me.bitcoinTransactions} />
       </div>
       <style jsx>{`
         div :global(.footnote) {

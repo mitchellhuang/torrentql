@@ -40,8 +40,8 @@ export class BillingResolver {
       currency: 'USD',
       description: `Recharge Account $${amount}`,
       customer_email: user.email,
-      callback_url: 'https://torrentql.com/webhook/opennode',
-      success_url: 'https://torrentql.com/account/billing',
+      callback_url: `${process.env.SERVER_ROOT_URL}/webhook/opennode`,
+      success_url: `${process.env.SERVER_ROOT_URL}/account/billing`,
       auto_settle: false,
     });
     const bitcoinTransaction = new BitcoinTransaction();

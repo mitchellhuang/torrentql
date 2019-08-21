@@ -112,6 +112,9 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         a {
           font-size: 16px;
         }
+        .content {
+          overflow: hidden;
+        }
       }
       @media(min-width: 1024px) {
         .sidebar {

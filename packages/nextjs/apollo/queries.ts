@@ -29,6 +29,14 @@ export const ME_QUERY = gql`
         key
         createdAt
       }
+      bitcoinTransactions {
+        id
+        status
+        amount
+        amountSatoshi
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

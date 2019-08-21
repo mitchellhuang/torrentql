@@ -42,9 +42,11 @@ export class BitcoinTransaction {
   @ManyToOne(type => User, user => user.bitcoinTransactions)
   user: Promise<User>;
 
+  @Field()
   @CreateDateColumn()
   createdAt: Date;
 
+  @Field()
   @UpdateDateColumn()
   updatedAt: Date;
 
