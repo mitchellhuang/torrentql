@@ -14,7 +14,7 @@ import { User } from '@torrentql/common/dist/entities/User';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import { Context } from '../lib/context';
 
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.SERVER_ROOT_URL !== 'https://torrentql.com';
 
 opennode.setCredentials(process.env.OPENNODE_API_KEY, dev ? 'dev' : 'live');
 
