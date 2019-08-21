@@ -4,20 +4,15 @@ import { Torrent } from '../entities/Torrent';
 const directoryDiscover = (hostname, dictionary, name) => {
   const hostName = `${hostname}.torrentql.com`;
   if (!dictionary || !dictionary.contents) {
-    return;
+    return 'No files exist';
   }
   if (dictionary[name] && dictionary[name].type === 'file') {
-    console.log(`File: ${hostName}/${dictionary[name].path}`);
-    return dictionary[name];
+    return `${hostName}/${dictionary[name].path}`;
   }
   const fileLevel = dictionary.contents;
   Object.keys(fileLevel).forEach((key) => {
-      // if file we return link otherwise
-      // recursively step through directory
-
-      // console.log(fileLevel[key]);
-    console.log(`Directory: ${hostName}/${fileLevel[key].path}`);
     directoryDiscover(hostname, fileLevel[key], key);
+    return `${hostName}/${fileLevel[key].path}`;
   });
 };
 
