@@ -15,4 +15,4 @@ data:
   DB_SSL: ""
   JWT_SECRET: ""
   OPENNODE_API_KEY: ""
-  SERVER_ROOT_URL: ""
+  ROOT_URL: ""
