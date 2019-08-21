@@ -2,12 +2,14 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import { join } from 'path';
 import express from 'express';
+import bodyParser from 'body-parser';
 import serveIndex from 'serve-index';
 import { useContainer } from 'typeorm';
 import { buildSchema, emitSchemaDefinitionFile } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
 import { createConnectionFromEnv } from '@torrentql/common/dist/lib/db';
+import { BillingResolver } from './resolvers/BillingResolver';
 import * as jwt from './lib/jwt';
 import { createContext, authChecker } from './lib/context';
 
@@ -53,6 +55,12 @@ const createServer = async () => {
 
   server.get('/', (req, res) => {
     res.sendStatus(200);
+  });
+
+  const urlencodedParser = bodyParser.urlencoded({ extended: true });
+
+  server.post('/webhook/opennode', urlencodedParser, (req, res) => {
+    BillingResolver.webhook(req, res);
   });
 
   server.get('/health', async (req, res) => {

@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import {
   Args,
   ArgsType,
@@ -9,6 +9,8 @@ import {
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import opennode from 'opennode';
+import { Request, Response } from 'express';
+import { User } from '@torrentql/common/dist/entities/User';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import { Context } from '../lib/context';
 
@@ -51,5 +53,39 @@ export class BillingResolver {
     bitcoinTransaction.invoiceUrl = urlPrefix + charge.id;
     bitcoinTransaction.user = Promise.resolve(ctx.user);
     return this.bitcoinTransactionRepository.save(bitcoinTransaction);
+  }
+
+  static async webhook(req: Request, res: Response) {
+    const connection = getConnection();
+    const charge = req.body;
+    const isValid = await opennode.signatureIsValid(charge);
+    if (isValid) {
+      await connection.transaction(async (transaction) => {
+        const bitcoinTransaction = await transaction
+          .getRepository(BitcoinTransaction)
+          .findOne(charge.id);
+        if (bitcoinTransaction) {
+          bitcoinTransaction.status = charge.status;
+          await transaction
+            .getRepository(BitcoinTransaction)
+            .save(bitcoinTransaction);
+          if (bitcoinTransaction.status === 'paid') {
+            const user = await bitcoinTransaction.user;
+            await transaction
+              .getRepository(User)
+              .createQueryBuilder('user')
+              .update({
+                balance: () => 'balance + :amount',
+              })
+              .where({
+                id: user.id,
+              })
+              .setParameter('amount', bitcoinTransaction.amount)
+              .execute();
+          }
+        }
+      });
+    }
+    res.sendStatus(200);
   }
 }
