@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import Button from '../components/Button';
+import Input from '../components/Input';
 
 const isLongEnough = value => value && value.length >= 8 ? undefined : 'Must be at least 8 characters long.';
 
@@ -22,7 +23,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
         <Field name="password1" validate={isLongEnough}>
           {({ input, meta }) => (
             <div className="input-group">
-              <input {...input} type="password" />
+              <Input {...input} type="password" />
               {meta.error && meta.touched && <span>{meta.error}</span>}
             </div>
           )}
@@ -30,7 +31,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
         <Field name="password2" validate={isLongEnough}>
           {({ input, meta }) => (
             <div className="input-group">
-              <input {...input} type="password" />
+              <Input {...input} type="password" />
               {meta.error && meta.touched && <span>{meta.error}</span>}
             </div>
           )}
