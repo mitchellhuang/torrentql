@@ -114,3 +114,12 @@ export const DELETE_API_KEY_MUTATION = gql`
     deleteApiKey(id: $id)
   }
 `;
+
+export const CREATE_BITCOIN_TRANSACTION_MUTATION = gql`
+  mutation createBitcoinTransaction($amount: Float!) {
+    createBitcoinTransaction(amount: $amount) {
+      id
+      invoiceUrl
+    }
+  }
+`;

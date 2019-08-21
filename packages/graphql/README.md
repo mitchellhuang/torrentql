@@ -21,6 +21,7 @@ DB_DATABASE=torrentql
 DB_SSL=false
 JWT_SECRET=torrentql
 FILES_PATH=/Users/mitchell/Downloads
+ROOT_URL=http://localhost:3000
 ```
 
 ## Installation

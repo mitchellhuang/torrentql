@@ -58,9 +58,9 @@ const ApiKeys = () => {
   const apiKeys = data && data.me && data.me.apiKeys;
   let content;
   if (loading) {
-    content = <LoadingState noPad />;
+    content = <LoadingState />;
   } else if (!apiKeys.length) {
-    content = <EmptyState message="No keys found" noPad />;
+    content = <EmptyState message="No keys found" />;
   } else {
     content = (
       <div className="mt-2">

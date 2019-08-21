@@ -8,6 +8,7 @@ import { BillingUsage } from '../entities/BillingUsage';
 import { BillingPeriod } from '../entities/BillingPeriod';
 import { BillingHistory } from '../entities/BillingHistory';
 import { ApiKey } from '../entities/ApiKey';
+import { BitcoinTransaction } from '../entities/BitcoinTransaction';
 
 export const createConnectionFromEnv = () => createConnection({
   type: 'postgres',
@@ -25,6 +26,7 @@ export const createConnectionFromEnv = () => createConnection({
     BillingPeriod,
     BillingHistory,
     ApiKey,
+    BitcoinTransaction,
   ],
   namingStrategy: new SnakeNamingStrategy(),
   synchronize: true,
