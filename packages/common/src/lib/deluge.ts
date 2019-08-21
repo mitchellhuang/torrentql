@@ -31,11 +31,7 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   } catch (err) {
     return null;
   }
-  const hostNamePath = 'https://gra001.torrentql.com';
-  const ngnixFilePath = `${hostNamePath}/${encodeURIComponent('deez-nuts')}`;
-  // console.log(server.id);
   const torrentFiles =  directoryDiscover(server.id, files.result);
-  // console.log(files.result);
   torrent.name = status.result.name;
   torrent.state = status.result.state.toLowerCase();
   torrent.progress = status.result.progress;
@@ -54,6 +50,6 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   torrent.tracker = status.result.tracker;
   torrent.trackerHost = status.result.tracker_host;
   torrent.trackerStatus = status.result.tracker_status;
-  torrent.files = files.result;
+  torrent.files = torrentFiles;
   return torrent;
 };
