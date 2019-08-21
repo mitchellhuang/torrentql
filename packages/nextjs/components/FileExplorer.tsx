@@ -10,7 +10,7 @@ function directoryDive(dictionary, key, depth, id) {
   if (dictionary.type === 'file') {
     return (
       <Fragment key={key}>
-        <File name={key} path={dictionary.path} depth={depth} id={id} />
+        <File name={key} path={dictionary.path} depth={depth} id={id} hostname="https://gra001.torrentql.com"/>
       </Fragment>
     );
   }
@@ -64,8 +64,7 @@ const Directory = ({ name, depth, children }) => {
   );
 };
 
-const File = ({ name, depth, path, id }) => {
-  const filePath = `https://gra001.torrentql.com/${path}`;
+const File = ({ name, depth, path, id, hostname }) => {
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
@@ -76,7 +75,7 @@ const File = ({ name, depth, path, id }) => {
         <FileIcon color={primary} className="file-icon" />
         {name}
       </div>
-      <a href={filePath}>
+      <a href={`${hostname}/${path}`}>
         <span className="download">Download</span>
         <Download size={12}/>
       </a>
