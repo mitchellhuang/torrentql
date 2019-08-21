@@ -7,6 +7,8 @@ interface ITRow extends React.HTMLProps<HTMLDivElement> {
   selected?: boolean;
   pointer?: boolean;
   hover?: boolean;
+  bold?: boolean;
+  noPad?: boolean;
 }
 
 const TRow: React.FunctionComponent<ITRow> = ({
@@ -17,6 +19,8 @@ const TRow: React.FunctionComponent<ITRow> = ({
   height,
   pointer,
   hover,
+  bold,
+  noPad,
   onClick,
 }) => (
   <div
@@ -36,9 +40,10 @@ const TRow: React.FunctionComponent<ITRow> = ({
         background-color: var(--white);
         cursor: ${pointer ? 'pointer' : 'default'};
         outline: none;
-        font-weight: 400;
+        font-weight: ${bold ? 600 : 400};
         height: ${height ? height : 38}px;
         border-top: 1px solid var(--button-hover);
+        padding: ${noPad ? '0' : '0 15px'};
       }
       .row:hover {
         background-color: ${hover ? 'var(--toolbar-gray)' : 'var(--white)'};
@@ -68,8 +73,10 @@ const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
-        padding: 0 10px;
         overflow: hidden;
+      }
+      .t-cell:not(:last-child) {
+        margin-right: 10px;
       }
       .children {
         flex: 1;

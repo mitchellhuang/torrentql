@@ -34,7 +34,7 @@ const ApiKey = ({
     },
   });
   return (
-    <TRow>
+    <TRow noPad>
       <TCell flex={2}>{name}</TCell>
       <TCell flex={2}>{moment(createdAt).format('LLL')}</TCell>
       <TCell flex={1}>
@@ -45,7 +45,7 @@ const ApiKey = ({
 };
 
 const Header = () => (
-  <TRow header>
+  <TRow header bold noPad>
     <TCell flex={2}>Name</TCell>
     <TCell flex={2}>Created at</TCell>
     <TCell flex={1}>Actions</TCell>
@@ -63,7 +63,7 @@ const ApiKeys = () => {
     content = <EmptyState message="No keys found" />;
   } else {
     content = (
-      <div className="mt-3">
+      <div className="mt-2">
         <Header />
         {apiKeys.map(apiKey => <ApiKey key={apiKey.id} apiKey={apiKey} />)}
       </div>

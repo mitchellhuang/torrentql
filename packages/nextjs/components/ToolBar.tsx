@@ -6,8 +6,8 @@ import { DELETE_TORRENT_MUTATION, PAUSE_TORRENT_MUTATION, RESUME_TORRENT_MUTATIO
 import { GET_DASHBOARD_QUERY, GET_TORRENTS_QUERY } from '../apollo/queries';
 import { Minus, Plus, Pause, Play } from 'react-feather';
 
-interface IToolBarButton extends React.HTMLProps<HTMLInputElement>  {
-  icon: React.ReactElement;
+interface IToolBarButton extends React.HTMLProps<HTMLElement>  {
+  icon: React.ReactNode;
   primary?: Boolean;
 }
 
@@ -16,10 +16,8 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
   icon,
   className,
 }) => (
-  <div className="tool-bar-button">
-    <button onClick={onClick} className={className}>
-      {icon}
-    </button>
+  <button onClick={onClick} className={className}>
+    {icon}
     <style jsx>{`
       button {
         display: flex;
@@ -32,9 +30,10 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
         text-align: center;
         font-weight: 600;
         transition: all 0.15s ease;
+        padding: 0;
       }
     `}</style>
-  </div>
+  </button>
 );
 
 const ToolBar = () => {
@@ -56,26 +55,26 @@ const ToolBar = () => {
       });
     },
   });
-  const handlePauseTorrent = id => pauseTorrent({
-    variables: { id },
-  });
-  const handleResumeTorrent = id => resumeTorrent({
-    variables: { id },
-  });
-  const iconSize = 22;
+  const handlePauseTorrent = id => pauseTorrent({ variables: { id } });
+  const handleResumeTorrent = id => resumeTorrent({ variables: { id } });
+  const size = 22;
   return (
     <div className="toolbar">
       <ToolBarButton
         onClick={() => selectedTorrents.forEach(id => handleResumeTorrent(id))}
-        icon={<Play size={iconSize} className="icon" />} />
+        icon={<Play size={size} />}
+        className="mr" />
       <ToolBarButton
         onClick={() => selectedTorrents.forEach(id => handlePauseTorrent(id))}
-        icon={<Pause size={iconSize} className="icon" />} />
+        icon={<Pause size={size} />} />
       <span className="line-separator" />
-      <ToolBarButton onClick={toggle} icon={<Plus size={iconSize} />} />
+      <ToolBarButton
+        onClick={toggle}
+        icon={<Plus size={size} />}
+        className="mr" />
       <ToolBarButton
         onClick={() => selectedTorrents.forEach(id => handleDeleteTorrent(id))}
-        icon={<Minus size={iconSize} />} />
+        icon={<Minus size={size} />} />
       <AddTorrentModal active={active} toggle={toggle} />
       <style jsx>{`
         .toolbar {
@@ -84,14 +83,17 @@ const ToolBar = () => {
           align-items: center;
           justify-content: flex-start;
           background-color: var(--toolbar-gray);
-          padding: 0 8px;
+          padding: 0 15px;
         }
         .toolbar :global(.icon):hover {
           fill: var(--blue-gray);
         }
+        .toolbar :global(.mr) {
+          margin-right: 12px;
+        }
         .line-separator {
           width: 2px;
-          margin: 0 15px;
+          margin: 0 20px;
           height: 25px;
           background-color: var(--blue-gray);
         }

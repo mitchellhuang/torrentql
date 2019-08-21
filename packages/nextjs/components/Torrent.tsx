@@ -35,8 +35,7 @@ const TorrentHeader = ({ torrents, selected }) => {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          width: 30px;
-          padding: 0 10px;
+          margin-right: 15px;
         }
       `}</style>
     </TRow>
@@ -102,8 +101,7 @@ const Torrent = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 30px;
-          padding: 0 10px;
+          margin-right: 15px;
         }
         .checkbox input {
           width: 0;
