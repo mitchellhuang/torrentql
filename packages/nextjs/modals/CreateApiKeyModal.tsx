@@ -59,7 +59,7 @@ const CreateApiKeyModal = ({
             <Input
               id="name"
               type="text"
-              placeholder="Enter a name for the API key"
+              placeholder="Enter an API key name"
               value={name}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -67,9 +67,9 @@ const CreateApiKeyModal = ({
             {status && status.key && (
               <div className="mb-3">
                 <h5 className="mb-2">Result</h5>
-                <p>Your API Key:</p>
+                <p>Your API Secret Key:</p>
                 <pre><b>{status.key}</b></pre>
-                <p>You will not be able to see this key again after closing this modal.</p>
+                <p>Note: You will only be able to see this key once.</p>
                 <style jsx>{`
                   pre {
                     margin: 10px 0;
@@ -86,7 +86,7 @@ const CreateApiKeyModal = ({
               </Button>
               ) : (
                 <Button type="submit" disabled={isSubmitting} block>
-                  Create
+                  Create a new key
                 </Button>
               )}
           </Form>

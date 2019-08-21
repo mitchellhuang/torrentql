@@ -1,7 +1,17 @@
 import React from 'react';
 import { AlertCircle, Loader } from 'react-feather';
 
-const LoadingState = () => (
+interface IState {
+  noPad?: boolean;
+}
+
+interface IEmptyState extends IState {
+  message: string;
+}
+
+const LoadingState: React.FunctionComponent<IState> = ({
+  noPad,
+}) => (
   <div>
     <Loader size={30} />
     <h4 className="mt-2">Loading</h4>
@@ -11,15 +21,16 @@ const LoadingState = () => (
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 15px 0;
+        padding: ${noPad ? '0' : '15px 0'};
         color: var(--dark-gray);
       }
     `}</style>
   </div>
 );
 
-const EmptyState = ({
-  message
+const EmptyState: React.FunctionComponent<IEmptyState> = ({
+  message,
+  noPad,
 }) => (
   <div>
     <AlertCircle size={30} />
@@ -30,7 +41,7 @@ const EmptyState = ({
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 15px 0;
+        padding: ${noPad ? '0' : '15px 0'};
         color: var(--dark-gray);
       }
     `}</style>

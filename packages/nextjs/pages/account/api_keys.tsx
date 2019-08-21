@@ -38,7 +38,7 @@ const ApiKey = ({
       <TCell flex={2}>{name}</TCell>
       <TCell flex={2}>{moment(createdAt).format('LLL')}</TCell>
       <TCell flex={1}>
-        <Button onClick={() => handleDeleteApiKey(id)} small>Delete</Button>
+        <Button onClick={() => handleDeleteApiKey(id)} small outline>Delete</Button>
       </TCell>
     </TRow>
   );
@@ -58,9 +58,9 @@ const ApiKeys = () => {
   const apiKeys = data && data.me && data.me.apiKeys;
   let content;
   if (loading) {
-    content = <LoadingState />;
+    content = <LoadingState noPad />;
   } else if (!apiKeys.length) {
-    content = <EmptyState message="No keys found" />;
+    content = <EmptyState message="No keys found" noPad />;
   } else {
     content = (
       <div className="mt-2">
@@ -72,7 +72,7 @@ const ApiKeys = () => {
   return (
     <Account title="API Keys">
       <Card title="API Keys">
-        <Button onClick={toggle} small>Create a new key</Button>
+        <Button onClick={toggle}>Create a new key</Button>
         <CreateApiKeyModal active={active} toggle={toggle} />
         {content}
       </Card>
