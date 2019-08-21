@@ -41,7 +41,7 @@ const Automatic = props => (
 const History = props => (
   <Card title="Transaction History" {...props}>
     <p>
-      Your transaction history for the last 7 days.
+      Your transaction history for the last 30 days.
     </p>
   </Card>
 );
@@ -53,7 +53,7 @@ const Billing = () => {
     return (
       <Account title="Billing">
         <Card title="Billing">
-          <LoadingState noPad />
+          <LoadingState />
         </Card>
       </Account>
     );
