@@ -6,20 +6,18 @@ const directoryDiscover = (hostname, dictionary, name) => {
   if (!dictionary || !dictionary.contents) {
     return;
   }
-  if (fileLevel[key].type === 'file') {
-    console.log(`File: ${hostName}/${fileLevel[key].path}`);
-    return fileLevel[key];
+  if (dictionary[name] && dictionary[name].type === 'file') {
+    console.log(`File: ${hostName}/${dictionary[name].path}`);
+    return dictionary[name];
   }
-  // console.log('HOSTNAME: ', hostName);
-  // console.log('FILE STRUCTURE: ', fileDirectory.contents);
   const fileLevel = dictionary.contents;
   Object.keys(fileLevel).forEach((key) => {
-    // if file we return link otherwise
-    // recursively step through directory
+      // if file we return link otherwise
+      // recursively step through directory
 
-    // console.log(fileLevel[key]);
+      // console.log(fileLevel[key]);
     console.log(`Directory: ${hostName}/${fileLevel[key].path}`);
-    directoryDiscover(hostname, fileLevel[key], name);
+    directoryDiscover(hostname, fileLevel[key], key);
   });
 };
 
