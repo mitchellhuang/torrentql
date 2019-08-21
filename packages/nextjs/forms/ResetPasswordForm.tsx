@@ -22,7 +22,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
         <Field name="password1" validate={isLongEnough}>
           {({ input, meta }) => (
             <div className="input-group">
-              <input {...input}/>
+              <input {...input} type="password" />
               {meta.error && meta.touched && <span>{meta.error}</span>}
             </div>
           )}
@@ -30,7 +30,7 @@ const ResetPasswordForm = ({ onSubmit }) => (
         <Field name="password2" validate={isLongEnough}>
           {({ input, meta }) => (
             <div className="input-group">
-              <input {...input}/>
+              <input {...input} type="password" />
               {meta.error && meta.touched && <span>{meta.error}</span>}
             </div>
           )}

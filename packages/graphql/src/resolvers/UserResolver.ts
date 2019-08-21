@@ -16,13 +16,8 @@ import { IsEmail, MinLength } from 'class-validator';
 import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
-import { PasswordReset } from '@torrentql/common/dist/entities/PasswordReset';
 import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
-import sgMail from '@sendgrid/mail';
-import nanoid from 'nanoid';
-
-sgMail.setApiKey('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');
 
 @ArgsType()
 class LoginInput {
@@ -54,13 +49,6 @@ class UpdateUserEmailInput {
 }
 
 @ArgsType()
-class SendPasswordResetEmail {
-  @Field()
-  @IsEmail()
-  email: string;
-}
-
-@ArgsType()
 class UpdateUserPasswordInput {
   @Field()
   oldPassword: string;
@@ -71,16 +59,6 @@ class UpdateUserPasswordInput {
 }
 
 
-@ArgsType()
-class ResetPassword {
-  @Field()
-  @MinLength(8)
-  password: string;
-
-  @Field()
-  key: string;
-}
-
 @Resolver(of => User)
 export class UserResolver {
   @InjectRepository(User)
@@ -88,9 +66,6 @@ export class UserResolver {
 
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
-
-  @InjectRepository(PasswordReset)
-  private passwordResetRepository: Repository<PasswordReset>;
 
   @Authorized()
   @Query(returns => User)
@@ -177,63 +152,6 @@ export class UserResolver {
     }
     user.password = password;
     return this.userRepository.save(user);
-  }
-
-  @Mutation(returns => Boolean)
-  async sendPasswordResetEmail(
-    @Args() { email }: SendPasswordResetEmail,
-  ) {
-    const user = await this.userRepository.findOne({
-      email,
-    });
-    console.log(user);
-    if (!user) {
-      console.log('returning true for !user');
-      return true;
-    }
-    const passwordReset = new PasswordReset();
-    passwordReset.key = nanoid();
-    passwordReset.user = Promise.resolve(user);
-    console.log('passReset', passwordReset);
-    const url = `http://localhost:3000/reset_password/${passwordReset.key}`;
-    const msg = {
-      to: email,
-      from: 'support@torrentql.com',
-      templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
-      dynamic_template_data: {
-        link: `<a href="${url}">${url}</a>`,
-      },
-    };
-    console.log(url);
-    try {
-      await sgMail.send(msg);
-    } catch (err) {
-      throw new Error('Unable to send password reset email.');
-    }
-    await this.passwordResetRepository.save(passwordReset);
-    return true;
-  }
-
-  @Mutation(returns => Boolean)
-  async resetPassword(
-    @Args() { password, key }: ResetPassword,
-  ) {
-    const hash = PasswordReset.hashKey(key);
-    const passwordReset = await this.passwordResetRepository.findOne({
-      hash,
-    });
-    if (!passwordReset) {
-      throw new Error('Invalid password reset link.');
-    }
-    if (new Date(passwordReset.expiredAt) < new Date() || passwordReset.used === true) {
-      throw new Error('Password reset link expired.');
-    }
-    const user = await passwordReset.user;
-    user.password = password;
-    await this.userRepository.save(user);
-    passwordReset.used = true;
-    await this.passwordResetRepository.save(passwordReset);
-    return true;
   }
 
   @Authorized()
