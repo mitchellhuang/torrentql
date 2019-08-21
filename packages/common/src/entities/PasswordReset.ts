@@ -23,6 +23,9 @@ export class PasswordReset {
 
   key: string;
 
+  @Column({ default: false })
+  used: boolean;
+
   @ManyToOne(type => User)
   user: Promise<User>;
 

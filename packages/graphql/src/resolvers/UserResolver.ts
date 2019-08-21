@@ -225,12 +225,14 @@ export class UserResolver {
     if (!passwordReset) {
       throw new Error('Invalid password reset link.');
     }
-    if (new Date(passwordReset.expiredAt) < new Date()) {
+    if (new Date(passwordReset.expiredAt) < new Date() || passwordReset.used === true) {
       throw new Error('Password reset link expired.');
     }
     const user = await passwordReset.user;
     user.password = password;
     await this.userRepository.save(user);
+    passwordReset.used = true;
+    await this.passwordResetRepository.save(passwordReset);
     return true;
   }
 

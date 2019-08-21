@@ -13,8 +13,8 @@ const ResetPassword = () => {
     <Dashboard title="reset_password">
       <div className="reset-wrapper">
         <Card>
-          {generated && <div>
-            <CheckCircle/>
+          {generated && <div className="generated">
+            <CheckCircle size={20} color="green" className="check-icon" />
             You did it! Check your email and follow the link to finish resetting your password.
           </div>}
           {!generated && <h3 className="mb-3">Reset your password</h3>}
@@ -30,6 +30,14 @@ const ResetPassword = () => {
         .reset-wrapper {
           display: flex;
           justify-content: center;
+        }
+        .generated {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .generated :global(.check-icon) {
+          margin-right: 5px;
         }
       `}</style>
     </Dashboard>
