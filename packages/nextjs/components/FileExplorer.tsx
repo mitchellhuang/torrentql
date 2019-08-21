@@ -65,7 +65,7 @@ const Directory = ({ name, depth, children }) => {
 };
 
 const File = ({ name, depth, path, id }) => {
-  const filePath = `gra001.torrentql.com/${encodeURIComponent(path)}`;
+  const filePath = `https://gra001.torrentql.com/${path}`;
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
