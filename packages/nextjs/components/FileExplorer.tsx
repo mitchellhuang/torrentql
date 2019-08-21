@@ -65,6 +65,7 @@ const Directory = ({ name, depth, children }) => {
 };
 
 const File = ({ name, depth, path, id, hostname }) => {
+  const filePath = `${hostname}/${path}`;
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
@@ -75,7 +76,7 @@ const File = ({ name, depth, path, id, hostname }) => {
         <FileIcon color={primary} className="file-icon" />
         {name}
       </div>
-      <a href={`${hostname}/${path}`}>
+      <a href={filePath}>
         <span className="download">Download</span>
         <Download size={12}/>
       </a>
