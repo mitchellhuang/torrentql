@@ -8,7 +8,7 @@ const SendResetEmailForm = ({ onSubmit }) => (
     render={({ handleSubmit }) => (
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
-          <Field name="email" component="input" placeholder="email@torrentql.com" />
+          <Field name="email" component="input" placeholder="Enter your email" />
         </div>
         <Button type="submit" block>Reset</Button>
         <style jsx>{`

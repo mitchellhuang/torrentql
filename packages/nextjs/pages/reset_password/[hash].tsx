@@ -37,15 +37,16 @@ const Error = () => (
 
 const Success = () => (
   <div className="success">
-    You're all good to go! Password successfully reset
-    <CheckCircle size={20} className="icon" color="green" />
+    You're all good to go! Password successfully reset.
+    <a href="/login">Click here to login.</a>
+    <CheckCircle size={20} color="green" />
     <style jsx>{`
       .success {
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      .success :global(.icon) {
+      a {
         margin: 0 5px;
       }
     `}</style>
@@ -55,11 +56,11 @@ const Success = () => (
 const ResetForm = ({ router }) => {
   const [status, setStatus] = useState(states.form);
   const [resetPassword] = useMutation(RESET_PASSWORD_MUTATION);
-  const onSubmit = async (x) => {
+  const onSubmit = async (data) => {
     try {
       await resetPassword({
         variables: {
-          password: x.password1,
+          password: data.password1,
           key: router.query.hash,
         },
       });

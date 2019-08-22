@@ -13,7 +13,7 @@ import { PasswordReset } from '@torrentql/common/dist/entities/PasswordReset';
 import sgMail from '@sendgrid/mail';
 import nanoid from 'nanoid';
 
-sgMail.setApiKey(process.env.SG_KEY as string);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 @ArgsType()
 class SendPasswordResetEmail {
@@ -53,7 +53,7 @@ export class PasswordResetResolver {
     const passwordReset = new PasswordReset();
     passwordReset.key = nanoid();
     passwordReset.user = Promise.resolve(user);
-    const url = `${process.env.ROOT_CLIENT_URL as string}/reset_password/${passwordReset.key}`;
+    const url = `${process.env.ROOT_URL as string}/reset_password/${passwordReset.key}`;
     const msg = {
       to: email,
       from: 'support@torrentql.com',
