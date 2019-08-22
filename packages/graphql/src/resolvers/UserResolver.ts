@@ -58,7 +58,6 @@ class UpdateUserPasswordInput {
   password: string;
 }
 
-
 @Resolver(of => User)
 export class UserResolver {
   @InjectRepository(User)
