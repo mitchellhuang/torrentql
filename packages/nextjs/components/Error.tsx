@@ -1,4 +1,5 @@
 import React from 'react';
+import colors from '../lib/colors';
 
 const Error = ({
   error,
@@ -9,7 +10,7 @@ const Error = ({
         {error}
         <style jsx>{`
           .error {
-            color: var(--error);
+            color: ${colors.error};
             margin-bottom: 15px;
           }
           .error::first-letter {

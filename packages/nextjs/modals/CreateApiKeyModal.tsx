@@ -8,6 +8,7 @@ import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
 import transformErrors from '../lib/transformErrors';
+import colors from '../lib/colors';
 
 const CreateApiKeyModal = ({
   active,
@@ -74,7 +75,7 @@ const CreateApiKeyModal = ({
                   pre {
                     margin: 10px 0;
                     padding: 10px;
-                    background-color: var(--light-gray);
+                    background-color: ${colors.lightGray};
                   }
                 `}</style>
               </div>

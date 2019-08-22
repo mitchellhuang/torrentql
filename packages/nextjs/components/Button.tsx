@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
+import colors from '../lib/colors';
 
 interface IButton extends React.HTMLProps<HTMLButtonElement & HTMLAnchorElement> {
   type?: any;
@@ -41,9 +42,9 @@ const Button: React.FunctionComponent<IButton> = ({
         .button {
           display: inline-block;
           padding: ${small ? '7px 8px' : '9px 10px'};
-          color: var(--white);
-          background-color: var(--primary);
-          border: 1px solid var(--primary);
+          color: ${colors.white};
+          background-color: ${colors.primary};
+          border: 1px solid ${colors.primary};
           border-radius: 5px;
           outline: none;
           cursor: pointer;
@@ -54,7 +55,7 @@ const Button: React.FunctionComponent<IButton> = ({
           transition: all 0.15s ease;
         }
         .button:hover {
-          background-color: #1C71B9;
+          background-color: ${colors.primary.darken(0.1)};
         }
         .button:disabled {
           background-color: #aaa;
@@ -66,14 +67,14 @@ const Button: React.FunctionComponent<IButton> = ({
           box-sizing: border-box;
         }
         .button--outline {
-          color: var(--primary);
-          background-color: var(--white);
-          border: 1px solid var(--primary);
+          color: ${colors.primary};
+          background-color: ${colors.white};
+          border: 1px solid ${colors.primary};
         }
         .button--outline:hover {
           background-color: initial;
-          border-color: #1C71B9;
-          color: #1C71B9;
+          border-color: ${colors.primary.darken(0.1)};
+          color: ${colors.primary.darken(0.1)};
         }
       `}</style>
     </>

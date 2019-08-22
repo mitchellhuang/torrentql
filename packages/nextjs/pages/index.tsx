@@ -1,6 +1,7 @@
 import React from 'react';
 import Main from '../layouts/Main';
 import Button from '../components/Button';
+import colors from '../lib/colors';
 
 const Index = () => (
   <Main>
@@ -40,7 +41,7 @@ const Hero = () => (
         margin-bottom: 15px;
       }
       .image {
-        background-color: var(--light-gray);
+        background-color: ${colors.lightGray};
         width: 100%;
         height: 225px;
         border-radius: 5px;
@@ -122,7 +123,7 @@ const Features = (
         margin-bottom: 0;
       }
       .image {
-        background-color: var(--light-gray);
+        background-color: ${colors.lightGray};
         height: 200px;
         border-radius: 5px;
         margin-bottom: 15px;

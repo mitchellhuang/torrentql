@@ -14,6 +14,7 @@ import ToolBar from '../components/ToolBar';
 import Input from '../components/Input';
 import { LoadingState, EmptyState } from '../components/State';
 import { torrentStatus } from '../lib/constants';
+import colors from '../lib/colors';
 
 const NetworkGraph = props => (
   <div {...props}>
@@ -79,7 +80,7 @@ const FilterBySearch = (props) => {
           margin-left: 10px;
         }
         .selected {
-          color: var(--primary);
+          color: ${colors.primary};
           font-weight: 600;
         }
       `}</style>
@@ -127,7 +128,7 @@ const FilterByStatus = ({
           margin-left: 10px;
         }
         .selected {
-          color: var(--primary);
+          color: ${colors.primary};
           font-weight: 600;
         }
       `}</style>
@@ -172,7 +173,7 @@ const FilterByTracker = ({
           margin-bottom: 7.5px;
         }
         .selected {
-          color: var(--primary);
+          color: ${colors.primary};
           font-weight: 600;
         }
       `}</style>

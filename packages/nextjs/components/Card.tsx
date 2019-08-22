@@ -1,4 +1,5 @@
 import React from 'react';
+import colors from '../lib/colors';
 
 export interface ICard extends React.HTMLProps<HTMLDivElement> {
    title?: string;
@@ -14,7 +15,7 @@ const Card: React.FunctionComponent<ICard> = ({
     {children}
     <style jsx>{`
       div {
-        background-color: var(--white);
+        background-color: ${colors.white};
         border-top: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
         padding: 15px;

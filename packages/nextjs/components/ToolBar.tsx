@@ -5,6 +5,7 @@ import { useMutation, useQuery } from 'react-apollo-hooks';
 import { DELETE_TORRENT_MUTATION, PAUSE_TORRENT_MUTATION, RESUME_TORRENT_MUTATION } from '../apollo/mutations';
 import { GET_DASHBOARD_QUERY, GET_TORRENTS_QUERY } from '../apollo/queries';
 import { Minus, Plus, Pause, Play } from 'react-feather';
+import colors from '../lib/colors';
 
 interface IToolBarButton extends React.HTMLProps<HTMLElement>  {
   icon: React.ReactNode;
@@ -21,8 +22,8 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
     <style jsx>{`
       button {
         display: flex;
-        color: var(--blue-gray);
-        background-color: var(--toolbar-gray);
+        color: ${colors.blueGray};
+        background-color: ${colors.toolbarGray};
         border: none;
         outline: none;
         cursor: pointer;
@@ -82,11 +83,11 @@ const ToolBar = () => {
           height: 38px;
           align-items: center;
           justify-content: flex-start;
-          background-color: var(--toolbar-gray);
+          background-color: ${colors.toolbarGray};
           padding: 0 15px;
         }
         .toolbar :global(.icon):hover {
-          fill: var(--blue-gray);
+          fill: ${colors.blueGray};
         }
         .toolbar :global(.mr) {
           margin-right: 12px;
@@ -95,7 +96,7 @@ const ToolBar = () => {
           width: 2px;
           margin: 0 20px;
           height: 25px;
-          background-color: var(--blue-gray);
+          background-color: ${colors.blueGray};
         }
         @media(min-width: 768px) {
           .toolbar {

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import classNames from 'classnames';
 import { Logo } from './Logo';
+import colors from '../lib/colors';
 
 interface INavBarItem {
   name: string;
@@ -80,14 +81,14 @@ const NavBar: React.FunctionComponent<INavBar> = ({
         }
         .tabs li a {
           display: flex;
-          color: var(--black);
+          color: ${colors.black};
           font-size: 20px;
           font-weight: 600;
           border-radius: 5px;
           margin-bottom: 5px;
         }
         .tabs li:last-child a {
-          color: var(--primary);
+          color: ${colors.primary};
           margin-bottom: 0;
         }
         @media(min-width: 768px) {
@@ -108,13 +109,13 @@ const NavBar: React.FunctionComponent<INavBar> = ({
           }
           .tabs li a {
             display: inline-block;
-            color: var(--black);
+            color: ${colors.black};
             font-size: 16px;
             margin-bottom: 0;
             margin-right: 15px;
           }
           .tabs li:last-child a {
-            color: var(--black);
+            color: ${colors.black};
             margin-bottom: 0;
             margin-right: 0;
           }
@@ -153,7 +154,7 @@ const NavBarBurger = ({
       .bar {
         width: 22px;
         height: 1px;
-        background: var(--black);
+        background: ${colors.black};
         transition: transform 550ms ease;
       }
       .bar:first-child {

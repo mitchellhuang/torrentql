@@ -9,6 +9,7 @@ import { TRow, TCell } from '../../components/Table';
 import { ME_QUERY } from '../../apollo/queries';
 import { CREATE_BITCOIN_TRANSACTION_MUTATION } from '../../apollo/mutations';
 import { LoadingState, EmptyState } from '../../components/State';
+import colors from '../../lib/colors';
 
 const Balance = ({
   balance,
@@ -117,7 +118,7 @@ const Billing = () => {
       </div>
       <style jsx>{`
         div :global(.footnote) {
-          color: var(--dark-gray);
+          color: ${colors.darkGray};
         }
       `}</style>
     </Account>
