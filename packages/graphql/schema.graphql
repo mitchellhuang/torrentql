@@ -40,6 +40,8 @@ type Mutation {
   createBitcoinTransaction(amount: Float!): BitcoinTransaction!
   createApiKey(name: String!): ApiKey!
   deleteApiKey(id: String!): Boolean!
+  sendPasswordResetEmail(email: String!): Boolean!
+  resetPassword(password: String!, key: String!): Boolean!
   addTorrent(data: String!): Torrent!
   deleteTorrent(id: String!): Boolean!
   pauseTorrent(id: String!): Boolean!

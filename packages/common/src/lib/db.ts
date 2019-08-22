@@ -7,6 +7,7 @@ import { Server } from '../entities/Server';
 import { BillingUsage } from '../entities/BillingUsage';
 import { BillingPeriod } from '../entities/BillingPeriod';
 import { BillingHistory } from '../entities/BillingHistory';
+import { PasswordReset } from '../entities/PasswordReset';
 import { ApiKey } from '../entities/ApiKey';
 import { BitcoinTransaction } from '../entities/BitcoinTransaction';
 
@@ -27,6 +28,7 @@ export const createConnectionFromEnv = () => createConnection({
     BillingHistory,
     ApiKey,
     BitcoinTransaction,
+    PasswordReset,
   ],
   namingStrategy: new SnakeNamingStrategy(),
   synchronize: true,

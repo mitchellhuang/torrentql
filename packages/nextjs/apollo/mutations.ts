@@ -64,6 +64,18 @@ export const UPDATE_USER_EMAIL_MUTATION = gql`
   }
 `;
 
+export const SEND_PASSWORD_RESET_EMAIL_MUTATION = gql`
+  mutation sendPasswordResetEmail($email: String!) {
+    sendPasswordResetEmail(email: $email)
+  }
+`;
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword($password: String!, $key: String!) {
+      resetPassword(password: $password, key: $key)
+  }
+`;
+
 export const UPDATE_USER_PASSWORD_MUTATION = gql`
   mutation updateUserPassword($oldPassword: String!, $password: String!) {
     updateUserPassword(oldPassword: $oldPassword, password: $password) {
