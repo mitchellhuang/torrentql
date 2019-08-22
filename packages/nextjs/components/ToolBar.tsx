@@ -1,9 +1,9 @@
 import React from 'react';
 import useModal from '../lib/useModal';
 import AddTorrentModal from '../modals/AddTorrentModal';
-import { useMutation, useQuery } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { DELETE_TORRENT_MUTATION, PAUSE_TORRENT_MUTATION, RESUME_TORRENT_MUTATION } from '../apollo/mutations';
-import { GET_DASHBOARD_QUERY, GET_TORRENTS_QUERY } from '../apollo/queries';
+import { GET_TORRENTS_QUERY } from '../apollo/queries';
 import { Minus, Plus, Pause, Play } from 'react-feather';
 import colors from '../lib/colors';
 
@@ -37,12 +37,13 @@ const ToolBarButton: React.FunctionComponent<IToolBarButton> = ({
   </button>
 );
 
-const ToolBar = () => {
+const ToolBar = ({
+  selectedTorrents,
+}) => {
   const { active, toggle } = useModal();
   const [deleteTorrent] = useMutation(DELETE_TORRENT_MUTATION);
   const [pauseTorrent] = useMutation(PAUSE_TORRENT_MUTATION);
   const [resumeTorrent] = useMutation(RESUME_TORRENT_MUTATION);
-  const { data: { getDashboard: { selectedTorrents } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   const handleDeleteTorrent = id => deleteTorrent({
     variables: {
       id,

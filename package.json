@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "lerna": "^3.16.4",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "yarn-deduplicate": "^1.1.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.1",

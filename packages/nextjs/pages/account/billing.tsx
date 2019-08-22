@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import moment from 'moment';
 import Account from '../../layouts/Account';
 import withAuth from '../../lib/withAuth';
@@ -83,7 +83,7 @@ const History = ({
           <TCell flex={2}>Updated at</TCell>
         </TRow>
         {bitcoinTransactionsFiltered.map(bitcoinTransaction => (
-          <TRow noPad>
+          <TRow key={bitcoinTransaction.id} noPad>
             <TCell flex={4}>{bitcoinTransaction.id}</TCell>
             <TCell flex={1}>{bitcoinTransaction.status}</TCell>
             <TCell flex={1}>${bitcoinTransaction.amount}</TCell>
@@ -97,7 +97,7 @@ const History = ({
 };
 
 const Billing = () => {
-  const { loading, data } = useQuery(ME_QUERY, { ssr: false });
+  const { loading, data } = useQuery(ME_QUERY);
   const me = data && data.me;
   if (loading) {
     return (

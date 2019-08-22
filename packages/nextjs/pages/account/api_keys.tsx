@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import moment from 'moment';
 import Account from '../../layouts/Account';
 import withAuth from '../../lib/withAuth';
@@ -54,7 +54,7 @@ const Header = () => (
 
 const ApiKeys = () => {
   const { active, toggle } = useModal();
-  const { loading, data } = useQuery(ME_QUERY, { ssr: false });
+  const { loading, data } = useQuery(ME_QUERY);
   const apiKeys = data && data.me && data.me.apiKeys;
   let content;
   if (loading) {

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { GET_TORRENT_QUERY, GET_DASHBOARD_QUERY } from './queries';
+import { GET_TORRENT_QUERY, DASHBOARD_QUERY } from './queries';
 
 export const typeDefs = gql`
     extend type Torrent {
@@ -12,7 +12,7 @@ export const typeDefs = gql`
       selectedTorrents: [String]
     }
     extend type Query {
-      getDashboard: Dashboard!
+      dashboard: Dashboard!
     }
     extend type Mutation {
       updateSelectedFile(id: String!, filePath: String!): Torrent
@@ -40,45 +40,44 @@ export const resolvers = {
   Mutation: {
     updateSelectedFile: (_, { id, filePath }, { cache }) => {
       const { getTorrent } = cache.readQuery({ query: GET_TORRENT_QUERY, variables: { id } });
-      getTorrent.selectedFile = filePath;
       cache.writeQuery({
         query: GET_TORRENT_QUERY,
-        data : { getTorrent },
+        data : { getTorrent: { ...getTorrent, selectedFile: filePath } },
         variables: { id },
       });
       return getTorrent;
     },
     updateSearchFilter: (_, { searchFilter }, { cache }) => {
-      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
-      getDashboard.searchFilter = searchFilter;
-      return cache.writeQuery({
-        query: GET_DASHBOARD_QUERY,
-        data: { getDashboard },
+      const { dashboard } = cache.readQuery({ query: DASHBOARD_QUERY });
+      cache.writeQuery({
+        query: DASHBOARD_QUERY,
+        data: { dashboard: { ...dashboard, searchFilter } },
       });
+      return dashboard;
     },
     updateStatusFilter: (_, { statusFilter }, { cache }) => {
-      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
-      getDashboard.statusFilter = statusFilter;
-      return cache.writeQuery({
-        query: GET_DASHBOARD_QUERY,
-        data: { getDashboard },
+      const { dashboard } = cache.readQuery({ query: DASHBOARD_QUERY });
+      cache.writeQuery({
+        query: DASHBOARD_QUERY,
+        data: { dashboard: { ...dashboard, statusFilter } },
       });
+      return dashboard;
     },
     updateTrackerFilter: (_, { trackerFilter }, { cache }) => {
-      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
-      getDashboard.trackerFilter = trackerFilter;
-      return cache.writeQuery({
-        query: GET_DASHBOARD_QUERY,
-        data: { getDashboard },
+      const { dashboard } = cache.readQuery({ query: DASHBOARD_QUERY });
+      cache.writeQuery({
+        query: DASHBOARD_QUERY,
+        data: { dashboard: { ...dashboard, trackerFilter } },
       });
+      return dashboard;
     },
     updateSelectedTorrents: (_, { selectedTorrents }, { cache }) => {
-      const { getDashboard } = cache.readQuery({ query: GET_DASHBOARD_QUERY });
-      getDashboard.selectedTorrents = selectedTorrents;
-      return cache.writeQuery({
-        query: GET_DASHBOARD_QUERY,
-        data: { getDashboard },
+      const { dashboard } = cache.readQuery({ query: DASHBOARD_QUERY });
+      cache.writeQuery({
+        query: DASHBOARD_QUERY,
+        data: { dashboard: { ...dashboard, selectedTorrents } },
       });
+      return dashboard;
     },
   },
 };

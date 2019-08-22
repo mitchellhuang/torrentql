@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
 import Global from './Global';
 import NavBar from '../components/NavBar';

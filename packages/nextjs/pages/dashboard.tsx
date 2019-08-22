@@ -1,9 +1,9 @@
 import React from 'react';
-import { useQuery, useMutation } from 'react-apollo-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Compass, UploadCloud, DownloadCloud, Pause, Clock } from 'react-feather';
 import DashboardLayout from '../layouts/Dashboard';
 import withAuth from '../lib/withAuth';
-import { GET_TORRENTS_QUERY, GET_DASHBOARD_QUERY } from '../apollo/queries';
+import { GET_TORRENTS_QUERY, DASHBOARD_QUERY } from '../apollo/queries';
 import {
   UPDATE_SEARCH_FILTER_MUTATION,
   UPDATE_STATUS_FILTER_MUTATION,
@@ -182,8 +182,13 @@ const FilterByTracker = ({
 };
 
 const Dashboard = () => {
-  const { loading, data } = useQuery(GET_TORRENTS_QUERY, { ssr: false, pollInterval: 2000 });
-  const { data: { getDashboard } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
+  const { loading, data } = useQuery(GET_TORRENTS_QUERY, { pollInterval: 2000 });
+  const { data: { dashboard } } = useQuery(DASHBOARD_QUERY);
+  console.log(dashboard);
+  if (!dashboard) {
+    return null;
+  }
+  const { searchFilter, statusFilter, trackerFilter, selectedTorrents } = dashboard;
   let torrents = data && data.getTorrents || [];
   let state;
   let content;
@@ -193,7 +198,6 @@ const Dashboard = () => {
   } else if (!torrents.length) {
     state = <EmptyState message="No torrents found" />;
   } else {
-    const { searchFilter, statusFilter, trackerFilter } = getDashboard;
     torrents.forEach((torrent) => {
       if (trackers[torrent.trackerHost]) {
         trackers[torrent.trackerHost] += 1;
@@ -210,7 +214,12 @@ const Dashboard = () => {
     if (trackerFilter) {
       torrents = torrents.filter(torrent => torrent.trackerHost === trackerFilter);
     }
-    content = torrents.map(torrent => <Torrent key={torrent.id} torrent={torrent} />);
+    content = torrents.map(torrent =>
+      <Torrent
+        key={torrent.id}
+        torrent={torrent}
+        selectedTorrents={selectedTorrents} />,
+    );
   }
   return (
     <DashboardLayout title="Dashboard" noMaxWidth>
@@ -218,13 +227,13 @@ const Dashboard = () => {
         <div className="sidebar">
           <NetworkGraph className="mb-3" />
           <FilterBySearch className="mb-3" />
-          <FilterByStatus className="mb-3" statusFilter={getDashboard.statusFilter} />
-          <FilterByTracker trackers={trackers} trackerFilter={getDashboard.trackerFilter} />
+          <FilterByStatus className="mb-3" statusFilter={statusFilter} />
+          <FilterByTracker trackers={trackers} trackerFilter={trackerFilter} />
         </div>
         <div className="content">
           <div className="inner">
-            <ToolBar />
-            <TorrentHeader torrents={torrents} selected={getDashboard.selectedTorrents || []} />
+            <ToolBar selectedTorrents={selectedTorrents} />
+            <TorrentHeader torrents={torrents} selected={selectedTorrents} />
             {content}
           </div>
           {state}
