@@ -6,12 +6,12 @@ import {
   Field,
   Mutation,
 } from 'type-graphql';
+import nanoid from 'nanoid';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
 import { User } from '@torrentql/common/dist/entities/User';
 import { PasswordReset } from '@torrentql/common/dist/entities/PasswordReset';
 import sgMail from '@sendgrid/mail';
-import nanoid from 'nanoid';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
