@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import colors from '../lib/colors';
 
 interface ITRow extends React.HTMLProps<HTMLDivElement> {
   height?: number;
@@ -36,17 +37,17 @@ const TRow: React.FunctionComponent<ITRow> = ({
         display: flex;
         flex-direction: row;
         box-sizing: border-box;
-        color: var(--black);
-        background-color: var(--white);
+        color: ${colors.black};
+        background-color: ${colors.white};
         cursor: ${pointer ? 'pointer' : 'default'};
         outline: none;
         font-weight: ${bold ? 600 : 400};
         height: ${height ? height : 38}px;
-        border-top: 1px solid var(--button-hover);
+        border-top: 1px solid ${colors.buttonHover};
         padding: ${noPad ? '0' : '0 15px'};
       }
       .row:hover {
-        background-color: ${hover ? 'var(--toolbar-gray)' : 'var(--white)'};
+        background-color: ${hover ? colors.toolbarGray : colors.white};
       }
       .header {
         font-size: 16px;

@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { File as FileIcon, Folder, Download } from 'react-feather';
 import { useMutation } from 'react-apollo-hooks';
 import { UPDATE_SELECTED_FILE_MUTATION } from '../apollo/mutations';
-import { primary } from '../layouts/Global';
+import colors from '../lib/colors';
 
 const directoryColor = '#A7B0BD';
 
@@ -73,7 +73,7 @@ const File = ({ name, depth, path, id }) => {
       className="file"
       onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
       <div className="name">
-        <FileIcon color={primary} className="file-icon" />
+        <FileIcon color={colors.primary.toString()} className="file-icon" />
         {name}
       </div>
       <a href={filePath}>

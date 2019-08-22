@@ -1,5 +1,6 @@
 import React from 'react';
 import Main from '../layouts/Main';
+import colors from '../lib/colors';
 
 const Pricing: React.FunctionComponent<{}> = () => (
   <Main title="Pricing">
@@ -112,7 +113,7 @@ const Pricing: React.FunctionComponent<{}> = () => (
         margin-right: -3px;
       }
       .pricing {
-        background-color: var(--white);
+        background-color: ${colors.white};
         display: flex;
         height: 75px;
       }
@@ -123,7 +124,7 @@ const Pricing: React.FunctionComponent<{}> = () => (
       }
       .info {
         font-weight: bolder;
-        color: var(--dark-gray);
+        color: ${colors.darkGray};
       }
       .disclaimer {
         font-size: 10px;

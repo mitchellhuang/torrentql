@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Global from './Global';
 import Head from '../components/Head';
 import NavBar from '../components/NavBar';
+import colors from '../lib/colors';
 
 const items = [
   { name: 'Files', url: '/files' },
@@ -27,7 +28,7 @@ const Dashboard : React.FunctionComponent<IDashboard> = ({
   homeLink,
   ...props
 }) => (
-  <Global backgroundColor="var(--dashboard-bg)" {...props}>
+  <Global backgroundColor={colors.dashboardBg} {...props}>
     <Head title={title} />
     <NavBar logoLink={!homeLink && '/dashboard'} items={noNavBarItems ? [] : items} noMaxWidth={noMaxWidth} />
     <div className={classNames('wrapper', { 'wrapper-no-max-width': noMaxWidth, 'no-pad': noPad })}>

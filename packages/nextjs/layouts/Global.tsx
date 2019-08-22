@@ -1,11 +1,10 @@
 import React from 'react';
-
-const primary = '#207ECE';
-const secondary = '#2752BE';
+import Color from 'color';
+import colors from '../lib/colors';
 
 const Global: React.FunctionComponent<{
   children: React.ReactNode
-  backgroundColor?: string;
+  backgroundColor?: Color;
 }> = ({
   children,
   backgroundColor,
@@ -14,33 +13,14 @@ const Global: React.FunctionComponent<{
     {children}
     <div id="modal-root" />
     <style jsx global>{`
-      :root {
-        --primary: ${primary};
-        --secondary: ${secondary};
-        --button-hover: #E8E8E8;
-        --black: #111;
-        --light-black: #1A1F36;
-        --white: #FFF;
-        --gray: #999;
-        --toolbar-gray: #EEE;
-        --green: #6ECF85;
-        --light-green: #E1F7EC;
-        --light-gray: #F5F5F5;
-        --dark-gray: #696969;
-        --dashboard-bg: #E3E8EE;
-        --error: #FF0000;
-        --blue-gray: #526780;
-        --dark-blue: #152D4B;
-        --dark-dark-blue: #10243C;
-      };
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
           Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
           "Segoe UI Emoji", "Segoe UI Symbol";
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
-        color: var(--black);
-        background-color: ${backgroundColor || 'var(--white)'};
+        color: ${colors.black};
+        background-color: ${backgroundColor || colors.white};
       }
       h1, h2, h3, h4, h5 {
         margin: 0;
@@ -64,11 +44,11 @@ const Global: React.FunctionComponent<{
         text-transform: uppercase;
       }
       a {
-        color: var(--primary);
+        color: ${colors.primary};
         text-decoration: none;
       }
       a:hover {
-        color: #1C71B9;
+        color: ${colors.primary.darken(0.1)}
       }
       p {
         margin: 0;
@@ -94,4 +74,4 @@ const Global: React.FunctionComponent<{
   </>
 );
 
-export { Global as default, primary, secondary };
+export { Global as default };

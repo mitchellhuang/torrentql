@@ -8,6 +8,7 @@ import { useMutation, useQuery } from 'react-apollo-hooks';
 import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
 import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 import { TRow, TCell } from './Table';
+import colors from '../lib/colors';
 
 const TorrentHeader = ({ torrents, selected }) => {
   const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
@@ -119,8 +120,8 @@ const ProgressBar = ({
 }) => {
   const iconSize = 20;
   const background = progress > 0
-    ? `linear-gradient(to right, var(--green) ${progress}%, var(--light-green) 0)`
-    : 'var(--light-gray)';
+    ? `linear-gradient(to right, ${colors.green} ${progress}%, ${colors.lightGreen} 0)`
+    : colors.lightGray;
   return (
     <div className="progress-bar">
       {state === torrentStatus.PAUSED && <Pause size={iconSize} className="icon" />}
@@ -137,7 +138,7 @@ const ProgressBar = ({
           overflow: hidden;
         }
         .progress-bar :global(.icon) {
-          fill: var(--blue-gray);
+          fill: ${colors.blueGray};
         }
         .progress-bar-inner {
           width: 100%;

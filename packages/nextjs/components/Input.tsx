@@ -1,4 +1,5 @@
 import React from 'react';
+import colors from '../lib/colors';
 
 interface IInput extends React.HTMLProps<HTMLInputElement>  {
   label?: string;
@@ -42,7 +43,7 @@ const Input: React.FunctionComponent<IInput> = ({
       input[type=text],
       input[type=password],
       input[type=email] {
-        border: 1px solid var(--gray);
+        border: 1px solid ${colors.gray};
         border-radius: 3px;
         padding: 6px 10px;
         height: ${small ? '34px' : '38px'};
@@ -54,10 +55,10 @@ const Input: React.FunctionComponent<IInput> = ({
       input[type=text]:focus,
       input[type=password]:focus,
       input[type=email]:focus {
-        border-color: var(--primary);
+        border-color: ${colors.primary};
       }
       .error {
-        color: var(--error);
+        color: ${colors.error};
         margin-top: 10px;
       }
       .error::first-letter {

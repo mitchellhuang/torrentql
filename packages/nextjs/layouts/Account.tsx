@@ -4,6 +4,7 @@ import Dashboard from './Dashboard';
 import { Home, CreditCard, PieChart, Lock, LogOut } from 'react-feather';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
+import colors from '../lib/colors';
 
 const items = [
   {
@@ -90,11 +91,11 @@ const Account: React.FunctionComponent<IAccount & WithRouterProps> = ({
         text-transform: capitalize;
         display: flex;
         align-items: center;
-        color: var(--light-black);
+        color: ${colors.lightBlack};
         font-size: 18px;
       }
       .selected a {
-        color: var(--primary);
+        color: ${colors.primary};
         font-weight: 600;
       }
       .tab-text {

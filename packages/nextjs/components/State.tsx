@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertCircle, Loader } from 'react-feather';
+import colors from '../lib/colors';
 
 interface IState {
   noPad?: boolean;
@@ -22,7 +23,7 @@ const LoadingState: React.FunctionComponent<IState> = ({
         align-items: center;
         justify-content: center;
         padding: ${noPad ? '0' : '15px 0'};
-        color: var(--dark-gray);
+        color: ${colors.darkGray};
       }
     `}</style>
   </div>
@@ -42,7 +43,7 @@ const EmptyState: React.FunctionComponent<IEmptyState> = ({
         align-items: center;
         justify-content: center;
         padding: ${noPad ? '0' : '15px 0'};
-        color: var(--dark-gray);
+        color: ${colors.darkGray};
       }
     `}</style>
   </div>
