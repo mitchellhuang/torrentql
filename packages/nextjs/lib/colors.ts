@@ -18,4 +18,4 @@ const colors = {
   buttonHover: Color('#E8E8E8'),
 };
 
-export { colors as default };
+export default colors;
