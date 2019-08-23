@@ -184,7 +184,6 @@ const FilterByTracker = ({
 const Dashboard = () => {
   const { loading, data } = useQuery(GET_TORRENTS_QUERY, { pollInterval: 2000 });
   const { data: { dashboard } } = useQuery(DASHBOARD_QUERY);
-  console.log(dashboard);
   if (!dashboard) {
     return null;
   }

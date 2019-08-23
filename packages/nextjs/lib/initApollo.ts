@@ -7,7 +7,6 @@ import { typeDefs, resolvers } from '../apollo/resolvers';
 import { torrentStatus } from '../lib/constants';
 
 let apolloClient = null;
-let token = null;
 
 const DEFAULT_DASHBOARD_CACHE = {
   searchFilter: '',
@@ -37,7 +36,8 @@ function create(initialState, { getToken }) {
     };
   });
   if (typeof window === 'undefined') {
-    if (!token && token !== undefined) {
+    let token;
+    if (getToken) {
       token = getToken();
     }
     cache.writeData({
