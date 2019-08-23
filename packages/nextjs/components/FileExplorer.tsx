@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { File as FileIcon, Folder, Download } from 'react-feather';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_SELECTED_FILE_MUTATION } from '../apollo/mutations';
 import colors from '../lib/colors';
 

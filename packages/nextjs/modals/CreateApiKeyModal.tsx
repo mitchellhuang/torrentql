@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { CREATE_API_KEY_MUTATION } from '../apollo/mutations';
 import { ME_QUERY } from '../apollo/queries';
 import Modal from '../components/Modal';

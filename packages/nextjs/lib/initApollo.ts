@@ -6,11 +6,7 @@ import fetch from 'isomorphic-fetch';
 import { typeDefs, resolvers } from '../apollo/resolvers';
 import { torrentStatus } from '../lib/constants';
 
-let apolloClient;
-
-if (!process.browser) {
-  (global as any).fetch = fetch;
-}
+let apolloClient = null;
 
 const DEFAULT_DASHBOARD_CACHE = {
   searchFilter: '',
@@ -21,10 +17,15 @@ const DEFAULT_DASHBOARD_CACHE = {
 };
 
 function create(initialState, { getToken }) {
+  const browser = typeof window !== 'undefined';
   const httpLink = new HttpLink({
-    uri: process.browser ? '/graphql' : process.env.API_URI,
+    uri: browser ? '/graphql' : process.env.API_URI,
     credentials: 'same-origin',
+    fetch: !fetch && fetch,
   });
+  const cache = new InMemoryCache({
+    freezeResults: true,
+  }).restore(initialState || {});
   const authLink = setContext((_, { headers }) => {
     const token = getToken();
     return {
@@ -34,26 +35,31 @@ function create(initialState, { getToken }) {
       },
     };
   });
-  const token = getToken();
-  const cache = new InMemoryCache().restore(initialState || {});
-  cache.writeData({
-    data: {
-      isLoggedIn: !!token,
-      getDashboard: DEFAULT_DASHBOARD_CACHE,
-    },
-  });
+  if (typeof window === 'undefined') {
+    let token;
+    if (getToken) {
+      token = getToken();
+    }
+    cache.writeData({
+      data: {
+        isLoggedIn: !!token,
+        dashboard: DEFAULT_DASHBOARD_CACHE,
+      },
+    });
+  }
   return new ApolloClient({
-    connectToDevTools: process.browser,
-    ssrMode: !process.browser,
+    connectToDevTools: browser,
+    ssrMode: !browser,
     link: authLink.concat(httpLink),
     cache,
+    assumeImmutableResults: true,
     typeDefs,
     resolvers,
   });
 }
 
 export default function initApollo(initialState, options) {
-  if (!process.browser) {
+  if (typeof window === 'undefined') {
     return create(initialState, options);
   }
   if (!apolloClient) {
@@ -62,7 +68,7 @@ export default function initApollo(initialState, options) {
       return apolloClient.cache.writeData({
         data: {
           isLoggedIn: false,
-          getDashboard: DEFAULT_DASHBOARD_CACHE,
+          dashboard: DEFAULT_DASHBOARD_CACHE,
         },
       });
     });

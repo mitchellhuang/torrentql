@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { ADD_TORRENT_MUTATION } from '../apollo/mutations';
 import { GET_TORRENTS_QUERY } from '../apollo/queries';
 import Modal from '../components/Modal';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import { Formik, Form } from 'formik';
-import { useMutation, useApolloClient } from 'react-apollo-hooks';
+import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import jsCookie from 'js-cookie';
 import { LOGIN_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
