@@ -8,8 +8,6 @@ const directoryColor = '#A7B0BD';
 
 function directoryDive(dictionary, depth, id) {
   if (dictionary.type === 'file') {
-    // console.log('key: ', key)
-    console.dir(dictionary, { depth: null });
     return (
       <Fragment key={dictionary.name}>
         <File name={dictionary.name} path={dictionary.path} depth={depth} id={id} url={dictionary.url}/>
@@ -39,7 +37,6 @@ const Directory = ({ name, depth, children, url }) => {
           <Download size={12}/>
         </a>
       </div>
-
       {expanded && children}
       <style jsx>{`
       .directory {
