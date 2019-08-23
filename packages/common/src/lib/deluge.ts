@@ -1,6 +1,39 @@
 import { Deluge } from '@ctrl/deluge';
 import { Torrent } from '../entities/Torrent';
 
+const directoryDiscover = (hostname, dictionary, name = '') => {
+  const url = `https://${hostname}.torrentql.com`;
+  if (!dictionary) {
+    return {
+      ...dictionary,
+      url: `${url}/`,
+      name: null,
+    };
+  }
+  if (dictionary.type === 'file') {
+    return {
+      ...dictionary,
+      url: `${url}/${encodeURI(dictionary.path)}`,
+      name: dictionary.path.split('/')[dictionary.path.split('/').length - 1],
+    };
+  }
+  const fileLevel = dictionary.contents;
+  dictionary.name = null;
+  if (dictionary.path) {
+    const filePath = dictionary.path.split('/');
+    dictionary.url = `${url}/${encodeURI(dictionary.path)}.zip`;
+    if (filePath.length > 1) {
+      dictionary.name = filePath[filePath.length - 1];
+    } else {
+      dictionary.name = filePath[0];
+    }
+  }
+  dictionary.contents = Object.keys(fileLevel).map((key) => {
+    return directoryDiscover(hostname, fileLevel[key], key);
+  });
+  return dictionary;
+};
+
 export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | null> => {
   const server = await torrent.server;
   const deluge = new Deluge({
@@ -34,6 +67,8 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   torrent.tracker = status.result.tracker;
   torrent.trackerHost = status.result.tracker_host;
   torrent.trackerStatus = status.result.tracker_status;
-  torrent.files = files.result;
+  console.dir(directoryDiscover(server.id, files.result), { depth: null });
+  files.result = directoryDiscover(server.id, files.result);
+  torrent.files = files.result ;
   return torrent;
 };
