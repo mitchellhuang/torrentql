@@ -2,6 +2,8 @@ import { Deluge } from '@ctrl/deluge';
 import { Torrent } from '../entities/Torrent';
 import { File } from '../entities/File';
 
+const dev = process.env.NODE_ENV !== 'production';
+
 const transformFiles = (files: any, prefix: string, name?: string): File => {
   if (files.type === 'file') {
     return {
@@ -25,7 +27,7 @@ const transformFiles = (files: any, prefix: string, name?: string): File => {
 
 export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | null> => {
   const server = await torrent.server;
-  const prefix = `https://${server.id}.torrentql.com/`;
+  const prefix = dev ? 'http://localhost:3001/files/' : `https://${server.id}.torrentql.com/`;
   const deluge = new Deluge({
     baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
     password: 'deluge',
