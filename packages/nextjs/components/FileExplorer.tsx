@@ -6,33 +6,40 @@ import colors from '../lib/colors';
 
 const directoryColor = '#A7B0BD';
 
-function directoryDive(dictionary, key, depth, id) {
+function directoryDive(dictionary, depth, id) {
   if (dictionary.type === 'file') {
+    // console.log('key: ', key)
+    console.dir(dictionary, { depth: null });
     return (
-      <Fragment key={key}>
-        <File name={key} path={dictionary.path} depth={depth} id={id} />
+      <Fragment key={dictionary.name}>
+        <File name={dictionary.name} path={dictionary.path} depth={depth} id={id} url={dictionary.url}/>
       </Fragment>
     );
   }
   const contents = dictionary.contents;
   return (
-    <Fragment key={key}>
-      <Directory name={key} depth={depth}>
-        {Object.keys(contents).map(key => directoryDive(contents[key], key, depth + 1, id))}
+    <Fragment key={dictionary.name}>
+      <Directory name={dictionary.name} depth={depth} url={dictionary.url}>
+        {Object.keys(contents).map(key => directoryDive(contents[key], depth + 1, id))}
       </Directory>
     </Fragment>
   );
 }
 
-const Directory = ({ name, depth, children }) => {
+const Directory = ({ name, depth, children, url }) => {
   const [expanded, toggle] = useState(false);
   const offSet = depth > 0 ? (depth * 5) + 5 : 0;
   return (
     <div className="directory">
       <div className="row" onClick={() => toggle(!expanded)} role="button" tabIndex={0}>
-        <Folder className="folder" color={directoryColor}/>
+        <Folder className="folder" color={directoryColor} />
         <span className="name">{name}</span>
+        <a href={url}>
+          <span className="download">Download</span>
+          <Download size={12}/>
+        </a>
       </div>
+
       {expanded && children}
       <style jsx>{`
       .directory {
@@ -64,19 +71,19 @@ const Directory = ({ name, depth, children }) => {
   );
 };
 
-const File = ({ name, depth, path, id }) => {
+const File = ({ name, depth, path, id, url }) => {
   const filePath = `/files/${encodeURIComponent(path)}`;
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
     <div
       className="file"
-      onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
+      onClick={() => updateSelectedFile({ variables: { id, url } })}>
       <div className="name">
         <FileIcon color={colors.primary.toString()} className="file-icon" />
         {name}
       </div>
-      <a href={filePath}>
+      <a href={url}>
         <span className="download">Download</span>
         <Download size={12}/>
       </a>
@@ -119,7 +126,7 @@ const FileExplorer = ({ torrent }) => {
   const initialDir = Object.keys(fileContents)[0];
   return (
     <div className="file-explorer">
-      {directoryDive(torrent.files.contents[initialDir], initialDir, 0, torrent.id)}
+      {directoryDive(torrent.files.contents[initialDir], 0, torrent.id)}
       <style jsx>{`
         .file-explorer {
           border-radius: 5px;

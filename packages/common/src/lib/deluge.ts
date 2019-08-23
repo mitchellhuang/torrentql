@@ -22,7 +22,7 @@ const directoryDiscover = (hostname, dictionary, name = '') => {
   const fileLevel = dictionary.contents;
   if (dictionary.path) {
     const filePath = dictionary.path.split('/');
-    dictionary.url = `${url}/${encodeURI(dictionary.path)}.zip`;
+    dictionary.url = `${url}/${encodeURI(dictionary.path)}`;
     if (filePath.length > 1) {
       dictionary.name = filePath[filePath.length - 1];
     } else {
@@ -69,6 +69,7 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   torrent.tracker = status.result.tracker;
   torrent.trackerHost = status.result.tracker_host;
   torrent.trackerStatus = status.result.tracker_status;
+  console.dir(directoryDiscover(server.id, files.result), { depth : null });
   files.result = directoryDiscover(server.id, files.result);
   torrent.files = files.result ;
   return torrent;
