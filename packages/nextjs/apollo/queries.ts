@@ -6,9 +6,9 @@ export const IS_LOGGED_IN_QUERY = gql`
   }
 `;
 
-export const GET_DASHBOARD_QUERY = gql`
-  {
-    getDashboard @client {
+export const DASHBOARD_QUERY = gql`
+  query dashboard {
+    dashboard @client {
       searchFilter
       statusFilter
       trackerFilter
@@ -18,7 +18,7 @@ export const GET_DASHBOARD_QUERY = gql`
 `;
 
 export const ME_QUERY = gql`
-  {
+  query me {
     me {
       id
       email
@@ -42,7 +42,7 @@ export const ME_QUERY = gql`
 `;
 
 export const GET_TORRENT_QUERY = gql`
-  query GetTorrent($id: String!) {
+  query getTorrent($id: String!) {
     getTorrent(id: $id) {
       id
       hash
@@ -75,7 +75,7 @@ export const GET_TORRENT_QUERY = gql`
 `;
 
 export const GET_TORRENTS_QUERY = gql`
-  query GetTorrents {
+  query getTorrents {
     getTorrents {
       id
       hash

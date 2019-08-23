@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nextjs-config
+  labels:
+    app: torrentql
+    tier: frontend
+data:
+  NODE_ENV: ""
+  API_URI: ""

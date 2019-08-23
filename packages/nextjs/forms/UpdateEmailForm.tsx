@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_USER_EMAIL_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';

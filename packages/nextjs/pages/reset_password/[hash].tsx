@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'next/router';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { Frown, CheckCircle } from 'react-feather';
 import { RESET_PASSWORD_MUTATION } from '../../apollo/mutations';
 import Dashboard from '../../layouts/Dashboard';

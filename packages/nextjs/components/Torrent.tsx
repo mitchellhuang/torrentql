@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { CheckSquare, Square, Pause, Play } from 'react-feather';
 import { torrentStatus } from '../lib/constants';
-import { useMutation, useQuery } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
-import { GET_DASHBOARD_QUERY } from '../apollo/queries';
 import { TRow, TCell } from './Table';
 import colors from '../lib/colors';
 
@@ -47,9 +46,9 @@ const constrainRange = (x : string) : number => Math.max(parseInt(x, 10), 0);
 
 const Torrent = ({
   torrent,
+  selectedTorrents,
 }) => {
   const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
-  let { data: { getDashboard: { selectedTorrents } } } = useQuery(GET_DASHBOARD_QUERY, { ssr: false });
   const selected = selectedTorrents.includes(torrent.id);
   const handleSelection = () => {
     selectedTorrents = selectedTorrents.includes(torrent.id)

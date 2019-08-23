@@ -3,7 +3,7 @@ import Link from 'next/link';
 import prettyBytes from 'pretty-bytes';
 import { withRouter } from 'next/router';
 import { ArrowLeft } from 'react-feather';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import withAuth from '../../lib/withAuth';
 import { GET_TORRENT_QUERY } from '../../apollo/queries';
 import FileExplorer from '../../components/FileExplorer';
@@ -138,11 +138,7 @@ const TorrentInfo = ({ torrent }) =>  (
   );
 
 const TorrentWithData = ({ id }) => {
-  const { loading, data, error } = useQuery(GET_TORRENT_QUERY, {
-    ssr: false,
-    pollInterval: 2000,
-    variables: { id },
-  });
+  const { loading, data, error } = useQuery(GET_TORRENT_QUERY, { variables: { id }, pollInterval: 2000 });
   if (loading || !process.browser) {
     return <Unstyled message="Loading..." />;
   }
