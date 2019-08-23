@@ -59,7 +59,7 @@ export class PasswordResetResolver {
       from: 'support@torrentql.com',
       templateId: 'd-cf226a37da354348be3bd9d50e4cc228',
       dynamic_template_data: {
-        link: `<a href="${url}">${url}</a>`,
+        url: `<a href="${url}">${url}</a>`,
       },
     };
     try {
