@@ -1,6 +1,5 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
-import classNames from 'classnames';
 import Link from 'next/link';
 import { CheckSquare, Square, Pause, Play } from 'react-feather';
 import { torrentStatus } from '../lib/constants';
