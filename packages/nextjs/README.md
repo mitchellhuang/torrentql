@@ -13,7 +13,6 @@ Create a `.env` file from `.env.example` to load environment variables from a fi
 
 ```
 API_URI=http://localhost:3001/graphql
-FILES_URI=http://localhost:3001/files
 ```
 
 ## Installation

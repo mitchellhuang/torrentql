@@ -1,51 +1,59 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { File as FileIcon, Folder, Download } from 'react-feather';
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_SELECTED_FILE_MUTATION } from '../apollo/mutations';
 import colors from '../lib/colors';
 
-const directoryColor = '#A7B0BD';
-
-function directoryDive(dictionary, key, depth, id) {
-  if (dictionary.type === 'file') {
+const directoryDive = (files, depth, id) => {
+  if (files.type === 'file') {
     return (
-      <Fragment key={key}>
-        <File name={key} path={dictionary.path} depth={depth} id={id} />
-      </Fragment>
+      <File
+        key={files.name}
+        name={files.name}
+        depth={depth}
+        id={id}
+        url={files.url}
+      />
     );
   }
-  const contents = dictionary.contents;
   return (
-    <Fragment key={key}>
-      <Directory name={key} depth={depth}>
-        {Object.keys(contents).map(key => directoryDive(contents[key], key, depth + 1, id))}
-      </Directory>
-    </Fragment>
+    <Directory
+      key={files.name}
+      name={files.name}
+      depth={depth}
+      url={files.url}
+    >
+      {Object.values(files.children).map(files => directoryDive(files, depth + 1, id))}
+    </Directory>
   );
-}
+};
 
-const Directory = ({ name, depth, children }) => {
+const Directory = ({ name, depth, children, url }) => {
   const [expanded, toggle] = useState(false);
-  const offSet = depth > 0 ? (depth * 5) + 5 : 0;
+  const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
     <div className="directory">
       <div className="row" onClick={() => toggle(!expanded)} role="button" tabIndex={0}>
-        <Folder className="folder" color={directoryColor}/>
+        <Folder className="folder" color={colors.primary.toString()} />
         <span className="name">{name}</span>
+        <a href={url} target="_blank">
+          <span className="download">Download</span>
+          <Download size={12}/>
+        </a>
       </div>
       {expanded && children}
       <style jsx>{`
       .directory {
         display: flex;
         flex-direction: column;
-        margin-left: ${offSet}px;
+        margin-left: ${offset}px;
         cursor: pointer;
       }
       .directory:not(:last-child) {
         margin-bottom: 5px;
       }
       .directory :global(.folder) {
-        fill: ${directoryColor};
+        fill: ${colors.primary};
       }
       .row {
         display: flex;
@@ -56,6 +64,15 @@ const Directory = ({ name, depth, children }) => {
       .row:focus {
         outline:0;
       }
+      .download {
+        margin-right: 5px;
+      }
+      a {
+        margin-left: 5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
       .name {
         margin-left: 5px;
       }
@@ -64,19 +81,16 @@ const Directory = ({ name, depth, children }) => {
   );
 };
 
-const File = ({ name, depth, path, id }) => {
-  const filePath = `/files/${encodeURIComponent(path)}`;
+const File = ({ name, depth, id, url }) => {
   const [updateSelectedFile] = useMutation(UPDATE_SELECTED_FILE_MUTATION);
   const offset = depth > 0 ? (depth * 5) + 5 : 0;
   return (
     <div
       className="file"
-      onClick={() => updateSelectedFile({ variables: { id, filePath } })}>
-      <div className="name">
-        <FileIcon color={colors.primary.toString()} className="file-icon" />
-        {name}
-      </div>
-      <a href={filePath}>
+      onClick={() => updateSelectedFile({ variables: { id, url } })}>
+      <FileIcon color={colors.primary.toString()} className="file-icon" />
+      <span className="name">{name}</span>
+      <a href={url} target="_blank">
         <span className="download">Download</span>
         <Download size={12}/>
       </a>
@@ -105,9 +119,7 @@ const File = ({ name, depth, path, id }) => {
           white-space: nowrap;
           display: flex;
           align-items: center;
-        }
-        :global(.file-icon) {
-          margin-right: 5px;
+          margin-left: 5px;
         }
       `}</style>
     </div>
@@ -115,11 +127,11 @@ const File = ({ name, depth, path, id }) => {
 };
 
 const FileExplorer = ({ torrent }) => {
-  const fileContents = torrent.files.contents;
-  const initialDir = Object.keys(fileContents)[0];
+  const id = torrent.id;
+  const files = torrent.files;
   return (
     <div className="file-explorer">
-      {directoryDive(torrent.files.contents[initialDir], initialDir, 0, torrent.id)}
+      {directoryDive(files, 0, id)}
       <style jsx>{`
         .file-explorer {
           border-radius: 5px;

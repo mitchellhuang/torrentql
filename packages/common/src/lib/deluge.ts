@@ -1,8 +1,33 @@
 import { Deluge } from '@ctrl/deluge';
 import { Torrent } from '../entities/Torrent';
+import { File } from '../entities/File';
+
+const dev = process.env.NODE_ENV !== 'production';
+
+const transformFiles = (files: any, prefix: string, name?: string): File => {
+  if (files.type === 'file') {
+    return {
+      name: name || 'Unknown',
+      type: files.type,
+      url: prefix + encodeURI(files.path),
+      progress: files.progress,
+    };
+  }
+  const nameOrFirstKey = name || Object.keys(files.contents)[0];
+  const contents = name ? files.contents : files.contents[nameOrFirstKey].contents;
+  const progress = name ? files.progress : files.contents[nameOrFirstKey].progress;
+  return {
+    name: nameOrFirstKey,
+    type: files.type,
+    url: prefix + encodeURI(files.path || nameOrFirstKey),
+    progress,
+    children: Object.keys(contents).map(key => transformFiles(contents[key], prefix, key)),
+  };
+};
 
 export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | null> => {
   const server = await torrent.server;
+  const prefix = dev ? 'http://localhost:3001/files/' : `https://${server.id}.torrentql.com/`;
   const deluge = new Deluge({
     baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
     password: 'deluge',
@@ -34,6 +59,6 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   torrent.tracker = status.result.tracker;
   torrent.trackerHost = status.result.tracker_host;
   torrent.trackerStatus = status.result.tracker_status;
-  torrent.files = files.result;
+  torrent.files = transformFiles(files.result, prefix);
   return torrent;
 };

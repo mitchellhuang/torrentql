@@ -41,6 +41,45 @@ export const ME_QUERY = gql`
   }
 `;
 
+const FILES_FRAGMENT = gql`
+  fragment FileFields on File {
+    name
+    type
+    progress
+    url
+  }
+  fragment Files on File {
+    ...FileFields
+    children {
+      ...FileFields
+      children {
+        ...FileFields
+        children {
+          ...FileFields
+          children {
+            ...FileFields
+            children {
+              ...FileFields
+              children {
+                ...FileFields
+                children {
+                  ...FileFields
+                  children {
+                    ...FileFields
+                    children {
+                      ...FileFields
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_TORRENT_QUERY = gql`
   query getTorrent($id: String!) {
     getTorrent(id: $id) {
@@ -64,7 +103,9 @@ export const GET_TORRENT_QUERY = gql`
       tracker
       trackerHost
       trackerStatus
-      files
+      files {
+        ...Files
+      }
       selectedFile @client
       server {
         id
@@ -72,6 +113,7 @@ export const GET_TORRENT_QUERY = gql`
       }
     }
   }
+  ${FILES_FRAGMENT}
 `;
 
 export const GET_TORRENTS_QUERY = gql`
@@ -97,7 +139,9 @@ export const GET_TORRENTS_QUERY = gql`
       tracker
       trackerHost
       trackerStatus
-      files
+      files {
+        ...Files
+      }
       selectedFile @client
       server {
         id
@@ -105,4 +149,5 @@ export const GET_TORRENTS_QUERY = gql`
       }
     }
   }
+  ${FILES_FRAGMENT}
 `;

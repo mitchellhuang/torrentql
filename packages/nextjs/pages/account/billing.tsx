@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import { TRow, TCell } from '../../components/Table';
 import { ME_QUERY } from '../../apollo/queries';
 import { CREATE_BITCOIN_TRANSACTION_MUTATION } from '../../apollo/mutations';
-import { LoadingState, EmptyState } from '../../components/State';
+import { LoadingState } from '../../components/State';
 import colors from '../../lib/colors';
 
 const Balance = ({

@@ -15,9 +15,6 @@ const createServer = async () => {
     if (process.env.API_URI) {
       server.use(proxy(process.env.API_URI));
     }
-    if (process.env.FILES_URI) {
-      server.use(proxy(process.env.FILES_URI));
-    }
   }
 
   server.get('*', (req, res) => handle(req, res));

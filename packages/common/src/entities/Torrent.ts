@@ -9,9 +9,9 @@ import {
 } from 'typeorm';
 import { Field, ID, ObjectType, Int, Float } from 'type-graphql';
 import BigInt from 'graphql-bigint';
-import { GraphQLJSON } from 'graphql-type-json';
 import { User } from './User';
 import { Server } from './Server';
+import { File } from './File';
 
 @ObjectType()
 @Entity('torrents')
@@ -94,8 +94,8 @@ export class Torrent {
   @Field()
   trackerStatus: string;
 
-  @Field(type => GraphQLJSON)
-  files: Object;
+  @Field()
+  files: File;
 
   @Field(type => User)
   @ManyToOne(type => User, user => user.torrents)
