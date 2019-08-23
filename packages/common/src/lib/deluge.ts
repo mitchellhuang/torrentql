@@ -69,7 +69,6 @@ export const mapDelugeToTorrent = async (torrent: Torrent): Promise<Torrent | nu
   torrent.tracker = status.result.tracker;
   torrent.trackerHost = status.result.tracker_host;
   torrent.trackerStatus = status.result.tracker_status;
-  console.dir(directoryDiscover(server.id, files.result), { depth : null });
   files.result = directoryDiscover(server.id, files.result);
   torrent.files = files.result ;
   return torrent;
