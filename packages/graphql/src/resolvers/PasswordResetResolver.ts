@@ -53,11 +53,11 @@ export class PasswordResetResolver {
     const passwordReset = new PasswordReset();
     passwordReset.key = nanoid();
     passwordReset.user = Promise.resolve(user);
-    const url = `${process.env.ROOT_URL as string}/reset_password/${passwordReset.key}`;
+    const url = `${process.env.FRONTEND_HOST as string}/reset_password/${passwordReset.key}`;
     const msg = {
       to: email,
       from: 'support@torrentql.com',
-      templateId: 'd-0acf3aefc3dd46ee87a1afc3ad9956ef',
+      templateId: 'd-cf226a37da354348be3bd9d50e4cc228',
       dynamic_template_data: {
         link: `<a href="${url}">${url}</a>`,
       },

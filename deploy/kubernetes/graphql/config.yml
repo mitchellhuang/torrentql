@@ -14,5 +14,6 @@ data:
   DB_DATABASE: ""
   DB_SSL: ""
   JWT_SECRET: ""
+  FRONTEND_HOST: ""
   OPENNODE_API_KEY: ""
-  ROOT_URL: ""
+  SENDGRID_API_KEY: ""

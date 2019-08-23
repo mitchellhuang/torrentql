@@ -14,7 +14,7 @@ import { User } from '@torrentql/common/dist/entities/User';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import { Context } from '../lib/context';
 
-const dev = process.env.ROOT_URL !== 'https://torrentql.com';
+const dev = process.env.FRONTEND_HOST !== 'https://torrentql.com';
 
 opennode.setCredentials(process.env.OPENNODE_API_KEY, dev ? 'dev' : 'live');
 
@@ -40,8 +40,8 @@ export class BillingResolver {
       currency: 'USD',
       description: `Recharge Account $${amount}`,
       customer_email: user.email,
-      callback_url: `${process.env.ROOT_URL}/webhook/opennode`,
-      success_url: `${process.env.ROOT_URL}/account/billing`,
+      callback_url: `${process.env.FRONTEND_HOST}/webhook/opennode`,
+      success_url: `${process.env.FRONTEND_HOST}/account/billing`,
       auto_settle: false,
     });
     const bitcoinTransaction = new BitcoinTransaction();
