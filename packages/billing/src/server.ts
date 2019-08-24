@@ -5,7 +5,6 @@ import { User } from '@torrentql/common/dist/entities/User';
 import { BillingUsage } from '@torrentql/common/dist/entities/BillingUsage';
 import { BillingPeriod } from '@torrentql/common/dist/entities/BillingPeriod';
 import { BillingHistory } from '@torrentql/common/dist/entities/BillingHistory';
-import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 
 const DISK_USAGE_GB_MONTH_PRICE = 0.01;
 const DISK_USAGE_GB_SECOND_PRICE = DISK_USAGE_GB_MONTH_PRICE / 30 / 86400;
@@ -61,11 +60,11 @@ const run = async () => {
         .leftJoinAndSelect('torrent.server', 'server')
         .getMany();
 
-      let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
-      torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
+      let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
+      torrentsDeluge = torrentsDeluge.filter(v => v);
 
       await Promise.all(
-        (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
+        (torrentsDeluge as Torrent[]).map(async (torrent) => {
           return transaction
             .getRepository(BillingPeriod)
             .createQueryBuilder('billing_period')
@@ -103,11 +102,11 @@ const run = async () => {
         .leftJoinAndSelect('torrent.server', 'server')
         .getMany();
 
-      let torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
-      torrentsWithDeluge = torrentsWithDeluge.filter(torrent => torrent !== null);
+      let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
+      torrentsDeluge = torrentsDeluge.filter(v => v);
 
       await Promise.all(
-        (torrentsWithDeluge as Torrent[]).map(async (torrent) => {
+        (torrentsDeluge as Torrent[]).map(async (torrent) => {
           const cached = cache.get(torrent.id);
           const usage: Usage = {
             diskUsage: torrent.totalSize,

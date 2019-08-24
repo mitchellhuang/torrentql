@@ -13,7 +13,6 @@ import {
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
-import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import * as jwt from '../lib/jwt';
@@ -80,8 +79,9 @@ export class UserResolver {
         isActive: true,
       },
     });
-    const torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
-    return torrentsWithDeluge.filter(torrent => torrent !== null);
+    let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
+    torrentsDeluge = torrentsDeluge.filter(v => v);
+    return torrentsDeluge;
   }
 
   @Mutation(returns => User)

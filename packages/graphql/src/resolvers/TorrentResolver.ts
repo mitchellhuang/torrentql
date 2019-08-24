@@ -16,7 +16,6 @@ import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
 import { Context } from '../lib/context';
-import { mapDelugeToTorrent } from '@torrentql/common/dist/lib/deluge';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { Server } from '@torrentql/common/dist/entities/Server';
 
@@ -76,11 +75,11 @@ export class TorrentResolver {
     if (ctx.user.id !== user.id) {
       throw new Error('Torrent not found.');
     }
-    const torrentWithDeluge = await mapDelugeToTorrent(torrent);
-    if (!torrentWithDeluge) {
+    const torrentDeluge = await torrent.injectDeluge();
+    if (!torrentDeluge) {
       throw new Error('Torrent not found');
     }
-    return torrentWithDeluge;
+    return torrentDeluge;
   }
 
   @Authorized()
@@ -93,9 +92,9 @@ export class TorrentResolver {
         isActive: true,
       },
     });
-    const torrentsWithDeluge = await Promise.all(torrents.map(mapDelugeToTorrent));
-    const torrentsWithDelugeNotNull = torrentsWithDeluge.filter(torrent => torrent !== null);
-    return torrentsWithDelugeNotNull;
+    let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
+    torrentsDeluge = torrentsDeluge.filter(v => v);
+    return torrentsDeluge;
   }
 
   @Authorized()
@@ -175,12 +174,7 @@ export class TorrentResolver {
       torrent.isActive = false;
       await this.torrentRepository.save(torrent);
     } else if (activeHashes.length === 1) {
-      const server = await torrent.server;
-      const deluge = new Deluge({
-        baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
-        password: 'deluge',
-        timeout: 1000,
-      });
+      const deluge = await torrent.deluge();
       await deluge.removeTorrent(torrent.hash, true);
       torrent.isActive = false;
       await this.torrentRepository.save(torrent);
@@ -195,16 +189,11 @@ export class TorrentResolver {
     if (!torrent) {
       throw new Error('Torrent not found.');
     }
-    const torrentUser = await torrent.user;
-    if (torrentUser.id !== ctx.user.id) {
+    const user = await torrent.user;
+    if (user.id !== ctx.user.id) {
       throw new Error('Torrent not found.');
     }
-    const server = await torrent.server;
-    const deluge = new Deluge({
-      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
-      password: 'deluge',
-      timeout: 1000,
-    });
+    const deluge = await torrent.deluge();
     await deluge.pauseTorrent(torrent.hash);
     return true;
   }
@@ -216,16 +205,11 @@ export class TorrentResolver {
     if (!torrent) {
       throw new Error('Torrent not found.');
     }
-    const torrentUser = await torrent.user;
-    if (torrentUser.id !== ctx.user.id) {
+    const user = await torrent.user;
+    if (user.id !== ctx.user.id) {
       throw new Error('Torrent not found.');
     }
-    const server = await torrent.server;
-    const deluge = new Deluge({
-      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
-      password: 'deluge',
-      timeout: 1000,
-    });
+    const deluge = await torrent.deluge();
     await deluge.resumeTorrent(torrent.hash);
     return true;
   }
