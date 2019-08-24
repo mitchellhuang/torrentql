@@ -21,7 +21,7 @@ const transformFiles = (files: any, prefix: string, name?: string): File => {
     type: files.type,
     url: prefix + encodeURI(files.path || nameOrFirstKey),
     progress,
-    children: Object.keys(contents).map(key => transformFiles(contents[key], prefix, key)),
+    children: contents && Object.keys(contents).map(key => transformFiles(contents[key], prefix, key)),
   };
 };
 
