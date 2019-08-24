@@ -17,10 +17,9 @@ const CreateApiKeyModal = ({
   const [createApiKey] = useMutation<{createApiKey}>(CREATE_API_KEY_MUTATION, {
     update(cache, { data: { createApiKey } }) {
       const { me } = cache.readQuery({ query: ME_QUERY });
-      me.apiKeys = me.apiKeys.concat([createApiKey]);
       cache.writeQuery({
         query: ME_QUERY,
-        data: { me },
+        data: { me: { ...me, apiKeys: me.apiKeys.concat([createApiKey]) } },
       });
     },
   });

@@ -49,11 +49,10 @@ const ToolBar = ({
       id,
     },
     update: (cache) => {
-      let { getTorrents } = cache.readQuery({ query: GET_TORRENTS_QUERY });
-      getTorrents = getTorrents.filter(torrent => torrent.id !== id);
+      const { getTorrents } = cache.readQuery({ query: GET_TORRENTS_QUERY });
       cache.writeQuery({
         query: GET_TORRENTS_QUERY,
-        data: { getTorrents },
+        data: { getTorrents: getTorrents.filter(torrent => torrent.id !== id) },
       });
     },
   });

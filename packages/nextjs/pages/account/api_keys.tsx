@@ -26,10 +26,9 @@ const ApiKey = ({
     },
     update(cache) {
       const { me } = cache.readQuery({ query: ME_QUERY });
-      me.apiKeys = me.apiKeys.filter(apiKey => apiKey.id !== id);
       cache.writeQuery({
         query: ME_QUERY,
-        data: { me },
+        data: { me: { ...me, apiKeys: me.apiKeys.filter(apiKey => apiKey.id !== id) } },
       });
     },
   });
