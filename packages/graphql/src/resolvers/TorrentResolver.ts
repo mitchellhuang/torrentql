@@ -150,7 +150,7 @@ export class TorrentResolver {
     torrent.hash = hash;
     torrent.type = type;
     torrent.data = data;
-    torrent.server = Promise.resolve(server);
+    torrent.server = server;
     torrent.user = Promise.resolve(ctx.user);
     return this.torrentRepository.save(torrent);
   }

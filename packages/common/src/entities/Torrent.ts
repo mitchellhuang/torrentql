@@ -105,8 +105,8 @@ export class Torrent {
   user: Promise<User>;
 
   @Field(type => Server)
-  @ManyToOne(type => Server, server => server.torrents)
-  server: Promise<Server>;
+  @ManyToOne(type => Server, server => server.torrents, { eager: true })
+  server: Server;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -115,9 +115,8 @@ export class Torrent {
   updatedAt: Date;
 
   async deluge() {
-    const server = await this.server;
     return new Deluge({
-      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      baseUrl: `${this.server.protocol}://${this.server.host}:${this.server.port}/`,
       password: 'deluge',
       timeout: 1000,
     });
@@ -125,7 +124,7 @@ export class Torrent {
 
   async injectDeluge() {
     const deluge = await this.deluge();
-    const prefix = dev ? 'http://localhost:3001/files/' : `https://${server.id}.torrentql.com/`;
+    const prefix = dev ? 'http://localhost:3001/files/' : `https://${this.server.id}.torrentql.com/`;
     let status;
     let files;
     try {
