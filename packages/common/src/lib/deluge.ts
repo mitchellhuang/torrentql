@@ -14,13 +14,16 @@ const transformFiles = (files: any, prefix: string, name?: string): File => {
     };
   }
   const nameOrFirstKey = name || Object.keys(files.contents)[0];
-  const contents = name ? files.contents : files.contents[nameOrFirstKey].contents;
-  const progress = name ? files.progress : files.contents[nameOrFirstKey].progress;
+  if (!name) {
+    // tslint:disable-next-line
+    files = files.contents[nameOrFirstKey];
+  }
+  const contents = files.contents;
   return {
     name: nameOrFirstKey,
     type: files.type,
     url: prefix + encodeURI(files.path || nameOrFirstKey),
-    progress,
+    progress: files.progress,
     children: contents && Object.keys(contents).map(key => transformFiles(contents[key], prefix, key)),
   };
 };
