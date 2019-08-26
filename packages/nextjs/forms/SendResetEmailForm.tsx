@@ -36,7 +36,7 @@ const SendResetEmailForm = ({ onComplete }) => {
     <form onSubmit={handleSubmit}>
       <Input
         {...email.input}
-        type="text"
+        type="email"
         label="Email"
         placeholder="Enter your email"
         error={email.meta.touched && email.meta.error}
