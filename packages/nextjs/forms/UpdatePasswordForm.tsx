@@ -5,7 +5,7 @@ import { UPDATE_USER_PASSWORD_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
-import transformErrors from '../lib/transformErrors';
+import transformErrors from '../lib/error';
 
 const UpdatePasswordForm = () => {
   const [updateUser] = useMutation(UPDATE_USER_PASSWORD_MUTATION);
@@ -42,7 +42,7 @@ const UpdatePasswordForm = () => {
             value={oldPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status && status.oldPassword}
+            error={status && status.oldPassword}
           />
           <Input
             id="password"
@@ -52,9 +52,9 @@ const UpdatePasswordForm = () => {
             value={password}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status && status.password}
+            error={status && status.password}
           />
-          <Error error={status && status.error} />
+          <Error>{status && status.error}</Error>
           <Button
             type="submit"
             disabled={isSubmitting}

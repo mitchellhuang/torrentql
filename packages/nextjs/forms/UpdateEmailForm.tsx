@@ -5,7 +5,7 @@ import { UPDATE_USER_EMAIL_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
-import transformErrors from '../lib/transformErrors';
+import transformErrors from '../lib/error';
 
 const UpdateEmailForm = () => {
   const [updateUserEmail] = useMutation(UPDATE_USER_EMAIL_MUTATION);
@@ -41,9 +41,9 @@ const UpdateEmailForm = () => {
             value={email}
             onChange={handleChange}
             onBlur={handleBlur}
-            errors={status && status.email}
+            error={status && status.email}
           />
-          <Error error={status && status.error} />
+          <Error>{status && status.error}</Error>
           <Button
             type="submit"
             disabled={isSubmitting}

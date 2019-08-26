@@ -1,24 +1,50 @@
 import React from 'react';
-import { Form, Field } from 'react-final-form';
+import * as yup from 'yup';
+import { FORM_ERROR } from 'final-form';
+import { useForm, useField } from 'react-final-form-hooks';
+import { useMutation } from '@apollo/react-hooks';
+import { SEND_PASSWORD_RESET_EMAIL_MUTATION } from '../apollo/mutations';
+import Input from '../components/Input';
 import Button from '../components/Button';
+import Error from '../components/Error';
+import { validateSync } from '../lib/validate';
+import { transformError } from '../lib/error';
 
-const SendResetEmailForm = ({ onSubmit }) => (
-  <Form
-    onSubmit={onSubmit}
-    render={({ handleSubmit }) => (
-      <form onSubmit={handleSubmit}>
-        <div className="input-wrapper">
-          <Field name="email" component="input" placeholder="Enter your email" />
-        </div>
-        <Button type="submit" block>Reset</Button>
-        <style jsx>{`
-          .input-wrapper :global(input) {
-            width: 100%;
-            margin-bottom: 15px;
-          }
-        `}</style>
-      </form>
-  )} />
-);
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email(),
+});
+
+const SendResetEmailForm = ({ onComplete }) => {
+  const [sendPasswordResetEmail] = useMutation(SEND_PASSWORD_RESET_EMAIL_MUTATION);
+  const { form, handleSubmit, pristine, submitting, submitError } = useForm({
+    onSubmit: async ({ email }) => {
+      try {
+        await sendPasswordResetEmail({ variables: { email } });
+      } catch (error) {
+        return {
+          [FORM_ERROR]: transformError(error),
+        };
+      }
+      onComplete();
+    },
+    validate: values => validateSync(schema, values),
+  });
+  const email = useField('email', form);
+  return (
+    <form onSubmit={handleSubmit}>
+      <Input
+        {...email.input}
+        type="text"
+        label="Email"
+        placeholder="Enter your email"
+        error={email.meta.touched && email.meta.error}
+      />
+      {submitError && <Error className="mb-3">{submitError}</Error>}
+      <Button type="submit" disabled={pristine || submitting} block>Reset</Button>
+    </form>
+  );
+};
 
 export default SendResetEmailForm;

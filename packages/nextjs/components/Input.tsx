@@ -1,30 +1,29 @@
 import React from 'react';
+import Error from './Error';
 import colors from '../lib/colors';
 
 interface IInput extends React.HTMLProps<HTMLInputElement>  {
   label?: string;
   small?: boolean;
-  errors?: string[];
+  error?: string;
   noMargin?: boolean;
 }
 
 const Input: React.FunctionComponent<IInput> = ({
-  id,
   label,
   type,
   small,
-  errors,
+  error,
   noMargin,
   ...props
 }) => (
   <div>
-    { label && <label htmlFor={id}>{label}</label>}
+    {label && <label>{label}</label>}
     <input
-      id={id}
       type={type}
       {...props}
     />
-    { errors && errors.map(error => <div key={error} className="error">{error}</div>)}
+    {error && <Error className="mt-2">{error}</Error>}
     <style jsx>{`
       div {
         margin-bottom: ${noMargin ? '0' : '15px'};
@@ -56,13 +55,6 @@ const Input: React.FunctionComponent<IInput> = ({
       input[type=password]:focus,
       input[type=email]:focus {
         border-color: ${colors.primary};
-      }
-      .error {
-        color: ${colors.error};
-        margin-top: 10px;
-      }
-      .error::first-letter {
-        text-transform: capitalize;
       }
     `}</style>
   </div>

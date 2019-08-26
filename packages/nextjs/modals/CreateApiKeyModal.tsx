@@ -7,7 +7,7 @@ import Modal from '../components/Modal';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
-import transformErrors from '../lib/transformErrors';
+import transformErrors from '../lib/error';
 import colors from '../lib/colors';
 
 const CreateApiKeyModal = ({
@@ -79,7 +79,7 @@ const CreateApiKeyModal = ({
                 `}</style>
               </div>
               )}
-            <Error error={status && status.error} />
+            <Error>{status && status.error}</Error>
             {status && status.key ? (
               <Button type="button" onClick={toggle} block>
                 Close

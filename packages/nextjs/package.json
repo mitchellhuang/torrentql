@@ -46,7 +46,9 @@
     "react-dom": "^16.9.0",
     "react-feather": "^2.0.3",
     "react-final-form": "^6.3.0",
-    "webpack": "^4.39.2"
+    "react-final-form-hooks": "^2.0.1",
+    "webpack": "^4.39.2",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
@@ -55,6 +57,7 @@
     "@types/js-cookie": "^2.2.2",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
-    "@types/styled-jsx": "^2.2.8"
+    "@types/styled-jsx": "^2.2.8",
+    "@types/yup": "^0.26.23"
   }
 }

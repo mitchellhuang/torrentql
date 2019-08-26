@@ -1,43 +1,34 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { CheckCircle } from 'react-feather';
 import Dashboard from '../layouts/Dashboard';
 import Card from '../components/Card';
 import ResetPasswordForm from '../forms/SendResetEmailForm';
-import { SEND_PASSWORD_RESET_EMAIL_MUTATION } from '../apollo/mutations';
-import { CheckCircle } from 'react-feather';
 
 const ResetPassword = () => {
   const [generated, setGenerated] = useState(false);
-  const [sendPasswordResetEmail] = useMutation(SEND_PASSWORD_RESET_EMAIL_MUTATION);
   return (
-    <Dashboard title="reset_password">
-      <div className="reset-wrapper">
-        <Card>
+    <Dashboard title="Reset Password">
+      <div className="reset-password">
+        <Card title="Reset Password">
           {generated && <div className="generated">
-            <CheckCircle size={20} color="green" className="check-icon" />
-            You did it! Check your email and follow the link to finish resetting your password.
+            <p>
+              <CheckCircle size={20} color="green" />
+              <span className="ml-2">
+                Check your email and follow the link to finish resetting your password.
+              </span>
+            </p>
           </div>}
-          {!generated && <h3 className="mb-3">Reset your password</h3>}
-          {!generated && <ResetPasswordForm onSubmit={async ({ email }) => {
-            await sendPasswordResetEmail({
-              variables: { email },
-            });
-            setGenerated(true);
-          }}/>}
+          {!generated && <ResetPasswordForm onComplete={() => setGenerated(true)} />}
         </Card>
       </div>
       <style jsx>{`
-        .reset-wrapper {
-          display: flex;
-          justify-content: center;
-        }
-        .generated {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .generated :global(.check-icon) {
-          margin-right: 5px;
+        @media(min-width: 768px) {
+          .reset-password {
+            margin: 0 auto;
+            align-items: center;
+            max-width: 350px;
+            padding: 50px 0;
+          }
         }
       `}</style>
     </Dashboard>

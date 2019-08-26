@@ -7,10 +7,7 @@ import Card from '../components/Card';
 const Login = () => (
   <Dashboard title="Log in" noNavBarItems noFooter homeLink>
     <div className="login">
-      <Card>
-        <div className="header">
-          <h1>Log in</h1>
-        </div>
+      <Card title="Log in">
         <LoginForm />
       </Card>
       <div className="helpers">
@@ -23,9 +20,6 @@ const Login = () => (
       </div>
     </div>
     <style jsx>{`
-      .header {
-        margin-bottom: 10px;
-      }
       .helpers {
         margin-top: 15px;
       }

@@ -7,7 +7,7 @@ import Modal from '../components/Modal';
 import Input from '../components/Input';
 import Error from '../components/Error';
 import Button from '../components/Button';
-import transformErrors from '../lib/transformErrors';
+import transformErrors from '../lib/error';
 
 const getFileBase64 = file => new Promise((resolve) => {
   const reader = new FileReader();
@@ -80,7 +80,7 @@ const AddTorrentModal = ({
               onChange={(e: any) => setFieldValue('file', e.target.files[0])}
               onBlur={handleBlur}
             />
-            <Error error={status && status.error} />
+            <Error>{status && status.error}</Error>
             <Button
               type="submit"
               disabled={isSubmitting}
