@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -56,7 +55,7 @@ const Modal = ({
         background-color: #fff;
         border-radius: 5px;
         max-height: 75vh;
-        max-width: 550px;
+        max-width: 400px;
         padding: 15px;
         width: 100%;
         overflow: auto;

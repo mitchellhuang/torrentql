@@ -16,8 +16,8 @@ const colors = {
   error: Color('#FF0000'),
   toolbarGray: Color('#EEE'),
   buttonHover: Color('#E8E8E8'),
-  cardBoxShadow: Color('rgba(30,55,90,.1)'),
-  cardBorder: Color('rgba(30,55,90,.1)'),
+  boxShadow: Color('rgba(30,55,90,.1)'),
+  border: Color('rgba(30,55,90,.1)'),
 };
 
 export default colors;

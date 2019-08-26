@@ -85,7 +85,7 @@ const History = ({
         {bitcoinTransactionsFiltered.map(bitcoinTransaction => (
           <TRow key={bitcoinTransaction.id} noPad>
             <TCell flex={4}>{bitcoinTransaction.id}</TCell>
-            <TCell flex={1}>{bitcoinTransaction.status}</TCell>
+            <TCell flex={1}>{bitcoinTransaction.status.toUpperCase()}</TCell>
             <TCell flex={1}>${bitcoinTransaction.amount}</TCell>
             <TCell flex={2}>{moment(bitcoinTransaction.createdAt).format('LLL')}</TCell>
             <TCell flex={2}>{moment(bitcoinTransaction.updatedAt).format('LLL')}</TCell>
@@ -110,14 +110,12 @@ const Billing = () => {
   }
   return (
     <Account title="Billing">
-      <div>
-        <Balance balance={me.balance} className="mb-3" />
-        <Recharge className="mb-3" />
-        <Automatic className="mb-3" />
-        <History bitcoinTransactions={me.bitcoinTransactions} />
-      </div>
+      <Balance balance={me.balance} className="mb-3" />
+      <Recharge className="mb-3" />
+      <Automatic className="mb-3" />
+      <History bitcoinTransactions={me.bitcoinTransactions} />
       <style jsx>{`
-        div :global(.footnote) {
+        :global(.footnote) {
           color: ${colors.darkGray};
         }
       `}</style>
