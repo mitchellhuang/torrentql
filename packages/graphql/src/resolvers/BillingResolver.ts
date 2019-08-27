@@ -8,6 +8,7 @@ import {
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { IsEnum } from 'class-validator';
 import opennode from 'opennode';
 import { Request, Response } from 'express';
 import { User } from '@torrentql/common/dist/entities/User';
@@ -18,9 +19,18 @@ const dev = process.env.FRONTEND_HOST !== 'https://torrentql.com';
 
 opennode.setCredentials(process.env.OPENNODE_API_KEY, dev ? 'dev' : 'live');
 
+enum BitcoinTransactionAmount {
+  Twenty = 20,
+  Forty = 40,
+  Sixty = 60,
+  Eighty = 80,
+  Hundred = 100,
+}
+
 @ArgsType()
 class CreateBitcoinTransactionInput {
   @Field()
+  @IsEnum(BitcoinTransactionAmount)
   amount: number;
 }
 
