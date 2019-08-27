@@ -8,7 +8,7 @@ import {
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { IsUUID } from 'class-validator';
+import { IsUUID, IsNotEmpty } from 'class-validator';
 import nanoid from 'nanoid';
 import { ApiKey } from '@torrentql/common/dist/entities/ApiKey';
 import { Context } from '../lib/context';
@@ -16,6 +16,7 @@ import { Context } from '../lib/context';
 @ArgsType()
 class CreateApiKeyInput {
   @Field()
+  @IsNotEmpty()
   name: string;
 }
 

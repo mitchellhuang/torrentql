@@ -52,7 +52,7 @@ type Mutation {
   login(email: String!, password: String!): User!
   createUser(email: String!, password: String!): User!
   updateUserEmail(email: String!): User!
-  updateUserPassword(oldPassword: String!, password: String!): User!
+  updateUserPassword(password: String!, newPassword: String!): User!
   deleteUser: Boolean!
 }
 
@@ -101,4 +101,5 @@ type User {
   torrents: [Torrent!]!
   apiKeys: [ApiKey!]!
   bitcoinTransactions: [BitcoinTransaction!]!
+  createdAt: DateTime!
 }

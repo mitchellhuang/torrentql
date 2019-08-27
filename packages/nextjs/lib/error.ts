@@ -1,4 +1,10 @@
-const transformErrors = (err) => {
+export const transformError = (error) => {
+  // tslint:disable-next-line:no-parameter-reassignment
+  error = error.graphQLErrors[0];
+  return error.message;
+};
+
+export default (err) => {
   // tslint:disable-next-line:no-parameter-reassignment
   err = err.graphQLErrors[0];
   if (err) {
@@ -20,5 +26,3 @@ const transformErrors = (err) => {
     error: 'An unknown error occurred.',
   };
 };
-
-export default transformErrors;

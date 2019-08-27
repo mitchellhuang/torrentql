@@ -11,7 +11,7 @@ import {
   Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { Validator, MinLength, IsUUID } from 'class-validator';
+import { Validator, IsUUID, IsNotEmpty } from 'class-validator';
 import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
@@ -31,7 +31,7 @@ class GetTorrentInput {
 @ArgsType()
 class AddTorrentInput {
   @Field()
-  @MinLength(1)
+  @IsNotEmpty()
   data: string;
 }
 

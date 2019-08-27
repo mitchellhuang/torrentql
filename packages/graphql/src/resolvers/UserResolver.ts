@@ -50,11 +50,11 @@ class UpdateUserEmailInput {
 @ArgsType()
 class UpdateUserPasswordInput {
   @Field()
-  oldPassword: string;
+  password: string;
 
   @Field()
   @MinLength(8)
-  password: string;
+  newPassword: string;
 }
 
 @Resolver(of => User)
@@ -141,15 +141,15 @@ export class UserResolver {
   @Authorized()
   @Mutation(returns => User)
   async updateUserPassword(
-    @Args() { oldPassword, password }: UpdateUserPasswordInput,
+    @Args() { password, newPassword }: UpdateUserPasswordInput,
     @Ctx() ctx: Context,
   ) {
     const user = ctx.user;
-    const valid = await user.verifyPassword(oldPassword);
+    const valid = await user.verifyPassword(password);
     if (!valid) {
-      throw new Error('Invalid old password.');
+      throw new Error('Invalid existing password.');
     }
-    user.password = password;
+    user.password = newPassword;
     return this.userRepository.save(user);
   }
 

@@ -1,46 +1,40 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import Dashboard from '../layouts/Dashboard';
+import { CheckCircle } from 'react-feather';
+import Main from '../layouts/Main';
 import Card from '../components/Card';
 import ResetPasswordForm from '../forms/SendResetEmailForm';
-import { SEND_PASSWORD_RESET_EMAIL_MUTATION } from '../apollo/mutations';
-import { CheckCircle } from 'react-feather';
+import colors from '../lib/colors';
 
 const ResetPassword = () => {
   const [generated, setGenerated] = useState(false);
-  const [sendPasswordResetEmail] = useMutation(SEND_PASSWORD_RESET_EMAIL_MUTATION);
   return (
-    <Dashboard title="reset_password">
-      <div className="reset-wrapper">
-        <Card>
-          {generated && <div className="generated">
-            <CheckCircle size={20} color="green" className="check-icon" />
-            You did it! Check your email and follow the link to finish resetting your password.
-          </div>}
-          {!generated && <h3 className="mb-3">Reset your password</h3>}
-          {!generated && <ResetPasswordForm onSubmit={async ({ email }) => {
-            await sendPasswordResetEmail({
-              variables: { email },
-            });
-            setGenerated(true);
-          }}/>}
-        </Card>
+    <Main title="Reset Password" backgroundColor={colors.dashboardBg} noFooter>
+      <div className="wrapper">
+        <div className="reset-password">
+          <Card title="Reset Password">
+            {generated && <div className="generated">
+              <p>
+                <CheckCircle size={20} color="green" />
+                <span className="ml-2">
+                  Check your email and follow the link to finish resetting your password.
+                </span>
+              </p>
+            </div>}
+            {!generated && <ResetPasswordForm onFinish={() => setGenerated(true)} />}
+          </Card>
+        </div>
       </div>
       <style jsx>{`
-        .reset-wrapper {
-          display: flex;
-          justify-content: center;
-        }
-        .generated {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .generated :global(.check-icon) {
-          margin-right: 5px;
+        @media(min-width: 768px) {
+          .reset-password {
+            margin: 0 auto;
+            align-items: center;
+            width: 350px;
+            padding: 50px 0;
+          }
         }
       `}</style>
-    </Dashboard>
+    </Main>
   );
 };
 

@@ -48,6 +48,7 @@ export class User {
   @OneToMany(type => BitcoinTransaction, bitcoinTransaction => bitcoinTransaction.user)
   bitcoinTransactions: Promise<BitcoinTransaction[]>;
 
+  @Field()
   @CreateDateColumn()
   createdAt: Date;
 
