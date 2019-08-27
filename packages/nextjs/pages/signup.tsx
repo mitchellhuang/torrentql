@@ -7,14 +7,16 @@ import colors from '../lib/colors';
 
 const Signup = () => (
   <Main title="Sign up" backgroundColor={colors.dashboardBg} noFooter>
-    <div className="signup">
-      <Card>
-        <h1 className="mb-2">Sign up</h1>
-        <SignupForm />
-      </Card>
-      <div className="helpers">
-        <div>
-          Have an account? <Link href="/login"><a>Log in</a></Link>
+    <div className="wrapper">
+      <div className="signup">
+        <Card>
+          <h1 className="mb-2">Sign up</h1>
+          <SignupForm />
+        </Card>
+        <div className="helpers">
+          <div>
+            Have an account? <Link href="/login"><a>Log in</a></Link>
+          </div>
         </div>
       </div>
     </div>
@@ -26,7 +28,7 @@ const Signup = () => (
         .signup {
           margin: 0 auto;
           align-items: center;
-          max-width: 350px;
+          width: 350px;
           padding: 50px 0;
         }
         .helpers {
