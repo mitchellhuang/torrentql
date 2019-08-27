@@ -232,12 +232,17 @@ const Dashboard = () => {
         <div className="content">
           <div className="inner">
             <ToolBar selectedTorrents={selectedTorrents} />
-            <TorrentHeader torrents={torrents} selected={selectedTorrents} />
-            {content}
+            <div className="test">
+              <TorrentHeader torrents={torrents} selected={selectedTorrents} />
+              {content}
+            </div>
           </div>
           {state}
         </div>
         <style jsx>{`
+          .content{
+            width: 1000px;
+          }
           .dashboard {
             display: flex;
             flex-direction: column;
@@ -252,6 +257,9 @@ const Dashboard = () => {
           @media(min-width: 768px) {
             .dashboard {
               flex-direction: row;
+            }
+            .content {
+              width: 1000px;
             }
             .sidebar {
               min-width: 250px;
