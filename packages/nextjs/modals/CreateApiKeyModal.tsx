@@ -30,7 +30,7 @@ const CreateApiKeyModal = ({
             }
           `}</style>
         </div>
-        ) : <CreateApiKeyForm onFinished={apiKey => setApiKey(apiKey)} />}
+        ) : <CreateApiKeyForm onFinish={apiKey => setApiKey(apiKey)} />}
     </Modal>
   );
 };

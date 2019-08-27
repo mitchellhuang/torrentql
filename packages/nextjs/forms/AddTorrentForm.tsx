@@ -24,7 +24,7 @@ const getFileBase64 = file => new Promise<string>((resolve) => {
   };
 });
 
-const AddTorrentForm = ({ onFinished }) => {
+const AddTorrentForm = ({ onFinish }) => {
   const [file, setFile] = useState();
   const [addTorrent] = useMutation(ADD_TORRENT_MUTATION, {
     refetchQueries: [{ query: GET_TORRENTS_QUERY }],
@@ -46,7 +46,7 @@ const AddTorrentForm = ({ onFinished }) => {
           [FORM_ERROR]: transformError(error),
         };
       }
-      onFinished();
+      onFinish();
     },
     validate: values => validateSync(schema, values),
   });

@@ -11,7 +11,7 @@ const AddTorrentModal = ({
     active={active}
     toggle={toggle}
   >
-    <AddTorrentForm onFinished={() => toggle()} />
+    <AddTorrentForm onFinish={() => toggle()} />
   </Modal>
 );
 

@@ -16,7 +16,7 @@ const schema = yup.object().shape({
     .email(),
 });
 
-const SendResetEmailForm = ({ onComplete }) => {
+const SendResetEmailForm = ({ onFinish }) => {
   const [sendPasswordResetEmail] = useMutation(SEND_PASSWORD_RESET_EMAIL_MUTATION);
   const { form, handleSubmit, pristine, submitting, submitError } = useForm({
     onSubmit: async ({ email }) => {
@@ -27,7 +27,7 @@ const SendResetEmailForm = ({ onComplete }) => {
           [FORM_ERROR]: transformError(error),
         };
       }
-      onComplete();
+      onFinish();
     },
     validate: values => validateSync(schema, values),
   });

@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     .required(),
 });
 
-const CreateApiKeyForm = ({ onFinished }) => {
+const CreateApiKeyForm = ({ onFinish }) => {
   const [createApiKey] = useMutation(CREATE_API_KEY_MUTATION, {
     update(cache, { data: { createApiKey } }) {
       const { me } = cache.readQuery({ query: ME_QUERY });
@@ -32,7 +32,7 @@ const CreateApiKeyForm = ({ onFinished }) => {
       try {
         const result = await createApiKey({ variables: { name } });
         const { data: { createApiKey: { key } } } = result as any;
-        onFinished(key);
+        onFinish(key);
       } catch (error) {
         return {
           [FORM_ERROR]: transformError(error),

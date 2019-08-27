@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     .min(8),
 });
 
-const ResetPasswordForm = ({ secret, onComplete }) => {
+const ResetPasswordForm = ({ secret, onFinish }) => {
   const [resetPassword] = useMutation(RESET_PASSWORD_MUTATION);
   const { form, handleSubmit, pristine, submitting, submitError } = useForm({
     onSubmit: async ({ password }) => {
@@ -28,7 +28,7 @@ const ResetPasswordForm = ({ secret, onComplete }) => {
           [FORM_ERROR]: transformError(error),
         };
       }
-      onComplete();
+      onFinish();
     },
     validate: values => validateSync(schema, values),
   });

@@ -12,7 +12,7 @@ const ResetForm = ({ router }) => {
       <div className="reset-password">
         <Card title="Reset Password">
           <div className="contents">
-            {!success && <ResetPasswordForm secret={router.query.secret} onComplete={() => setSuccess(true)} />}
+            {!success && <ResetPasswordForm secret={router.query.secret} onFinish={() => setSuccess(true)} />}
             {success && (
               <p>
                 <CheckCircle size={20} color="green" />

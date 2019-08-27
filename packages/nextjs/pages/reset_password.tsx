@@ -18,7 +18,7 @@ const ResetPassword = () => {
               </span>
             </p>
           </div>}
-          {!generated && <ResetPasswordForm onComplete={() => setGenerated(true)} />}
+          {!generated && <ResetPasswordForm onFinish={() => setGenerated(true)} />}
         </Card>
       </div>
       <style jsx>{`
