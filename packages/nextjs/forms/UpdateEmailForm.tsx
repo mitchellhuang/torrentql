@@ -42,7 +42,7 @@ const UpdateEmailForm = () => {
         error={email.meta.touched && email.meta.error}
       />
       {submitError && <Error className="mb-3">{submitError}</Error>}
-      <Button type="submit" disabled={pristine || submitting} block>Update email</Button>
+      <Button type="submit" disabled={pristine || submitting}>Update email</Button>
     </form>
   );
 };

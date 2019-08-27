@@ -11,10 +11,10 @@ import { validateSync } from '../lib/validate';
 import { transformError } from '../lib/error';
 
 const schema = yup.object().shape({
-  oldPassword: yup
+  password: yup
     .string()
     .required(),
-  password: yup
+  newPassword: yup
     .string()
     .required()
     .min(8),
@@ -23,9 +23,9 @@ const schema = yup.object().shape({
 const UpdatePasswordForm = () => {
   const [updateUserPassword] = useMutation(UPDATE_USER_PASSWORD_MUTATION);
   const { form, handleSubmit, pristine, submitting, submitError } = useForm({
-    onSubmit: async ({ oldPassword, password }) => {
+    onSubmit: async ({ password, newPassword }) => {
       try {
-        await updateUserPassword({ variables: { oldPassword, password } });
+        await updateUserPassword({ variables: { password, newPassword } });
       } catch (error) {
         return {
           [FORM_ERROR]: transformError(error),
@@ -34,26 +34,26 @@ const UpdatePasswordForm = () => {
     },
     validate: values => validateSync(schema, values),
   });
-  const oldPassword = useField('oldPassword', form);
   const password = useField('password', form);
+  const newPassword = useField('newPassword', form);
   return (
     <form onSubmit={handleSubmit}>
       <Input
-        {...oldPassword.input}
+        {...password.input}
         type="password"
-        label="Old password"
-        placeholder="Enter your old password"
-        error={oldPassword.meta.touched && oldPassword.meta.error}
+        label="Existing password"
+        placeholder="Enter your existing password"
+        error={password.meta.touched && password.meta.error}
       />
       <Input
-        {...password.input}
+        {...newPassword.input}
         type="password"
         label="New password"
         placeholder="Enter your new password"
-        error={password.meta.touched && password.meta.error}
+        error={newPassword.meta.touched && newPassword.meta.error}
       />
       {submitError && <Error className="mb-3">{submitError}</Error>}
-      <Button type="submit" disabled={pristine || submitting} block>Update password</Button>
+      <Button type="submit" disabled={pristine || submitting}>Update password</Button>
     </form>
   );
 };
