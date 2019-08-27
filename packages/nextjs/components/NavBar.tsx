@@ -57,6 +57,7 @@ const NavBar: React.FunctionComponent<INavBar> = ({
           position: sticky;
           top: 0;
           margin: 0;
+          ${noMaxWidth && 'min-width: 1290px;'}
           border-bottom: 1px solid #ddd;
         }
         .wrapper {

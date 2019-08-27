@@ -240,41 +240,28 @@ const Dashboard = () => {
           {state}
         </div>
         <style jsx>{`
-          .content{
-            width: 1000px;
-          }
           .dashboard {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
           }
           .sidebar {
             margin-bottom: 15px;
           }
           .content {
             margin: 0 -15px;
-            overflow: hidden;
+            margin: 0;
+            width: 100%;
+            min-width: 1000px;
           }
-          @media(min-width: 768px) {
-            .dashboard {
-              flex-direction: row;
-            }
-            .content {
-              width: 1000px;
-            }
-            .sidebar {
-              min-width: 250px;
-              margin-right: 15px;
-              margin-bottom: 0;
-            }
-            .content {
-              flex: 1;
-              margin: 0;
-            }
-            .inner {
-              border: 1px solid #ddd;
-              border-radius: 5px;
-              overflow: hidden;
-            }
+          .sidebar {
+            min-width: 250px;
+            margin-right: 15px;
+            margin-bottom: 0;
+          }
+          .inner {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
           }
         `}</style>
       </div>
