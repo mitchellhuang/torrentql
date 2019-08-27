@@ -23,12 +23,17 @@ const TorrentHeader = ({ torrents, selected }) => {
       </div>
       <TCell width={500}>Name</TCell>
       <TCell width={80}>Size</TCell>
-      <TCell width={80}>Progress</TCell>
-      <TCell width={80}>Down Speed</TCell>
-      <TCell width={80}>Up Speed</TCell>
-      <TCell width={80}>Peers</TCell>
+      <TCell width={175}>Progress</TCell>
+      <TCell width={100}>Down Speed</TCell>
+      <TCell width={100}>Up Speed</TCell>
+      <TCell width={75}>Peers</TCell>
       <TCell width={80}>Seeds</TCell>
       <style jsx>{`
+        .draggable {
+          display: flex;
+          align-items: center;
+          border-right: 1px solid black;
+        }
         .checkbox {
           display: flex;
           align-items: center;
@@ -80,16 +85,16 @@ const Torrent = ({
       <TCell width={80}>
         {prettyBytes(torrent.totalSize)}
       </TCell>
-      <TCell width={80}>
+      <TCell width={175}>
         <ProgressBar progress={torrent.progress} state={torrent.state} />
       </TCell>
-      <TCell width={80}>
+      <TCell width={100}>
         {prettyBytes(torrent.downloadSpeed)}/s
       </TCell>
-      <TCell width={80}>
+      <TCell width={100}>
         {prettyBytes(torrent.uploadSpeed)}/s
       </TCell>
-      <TCell width={80}>
+      <TCell width={75}>
         {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
       </TCell>
       <TCell width={80}>

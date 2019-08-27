@@ -71,11 +71,12 @@ const TCell: React.FunctionComponent<ITRow> = ({ width, children }) => (
       .t-cell {
         width: ${width}px;
         display: flex;
-        justify-content: flex-start;
         align-items: center;
-        flex-direction: row;
         overflow: hidden;
-        drag: true;
+      }
+      .t-cell:first-child {
+        background-color: blue;
+        border-right: 1px solid black;
       }
       .t-cell:not(:last-child) {
         margin-right: 10px;
@@ -86,7 +87,7 @@ const TCell: React.FunctionComponent<ITRow> = ({ width, children }) => (
         white-space: nowrap;
         text-overflow: ellipsis;
       }
-      @media
+
     `}</style>
   </div>
 );
