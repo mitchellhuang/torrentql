@@ -9,7 +9,6 @@ const CreateApiKeyModal = ({
   toggle,
 }) => {
   const [apiKey, setApiKey] = useState('');
-  console.log(apiKey);
   return (
     <Modal
       title="Create API Key"
