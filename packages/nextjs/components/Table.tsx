@@ -69,12 +69,13 @@ const TCell: React.FunctionComponent<ITRow> = ({ width, children }) => (
     </span>
     <style jsx>{`
       .t-cell {
+        width: ${width}px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         flex-direction: row;
-        flex: ${flex || 1};
         overflow: hidden;
+        drag: true;
       }
       .t-cell:not(:last-child) {
         margin-right: 10px;

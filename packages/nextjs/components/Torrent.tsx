@@ -21,13 +21,13 @@ const TorrentHeader = ({ torrents, selected }) => {
         {!allSelected && <Square size={20} />}
         {allSelected && <CheckSquare size={20} />}
       </div>
-      <TCell flex={5}>Name</TCell>
-      <TCell flex={1}>Size</TCell>
-      <TCell flex={2}>Progress</TCell>
-      <TCell flex={1}>Down Speed</TCell>
-      <TCell flex={1}>Up Speed</TCell>
-      <TCell flex={1}>Peers</TCell>
-      <TCell flex={1}>Seeds</TCell>
+      <TCell width={500}>Name</TCell>
+      <TCell width={80}>Size</TCell>
+      <TCell width={80}>Progress</TCell>
+      <TCell width={80}>Down Speed</TCell>
+      <TCell width={80}>Up Speed</TCell>
+      <TCell width={80}>Peers</TCell>
+      <TCell width={80}>Seeds</TCell>
       <style jsx>{`
         .checkbox {
           display: flex;
@@ -68,7 +68,7 @@ const Torrent = ({
         {!selected && <Square size={20} />}
         {selected && <CheckSquare size={20} />}
       </div>
-      <TCell flex={5}>
+      <TCell width={500}>
         <Link href={`/torrents/${torrent.id}`}>
           <a
             className="torrent-name"
@@ -77,22 +77,22 @@ const Torrent = ({
           </a>
         </Link>
       </TCell>
-      <TCell flex={1}>
+      <TCell width={80}>
         {prettyBytes(torrent.totalSize)}
       </TCell>
-      <TCell flex={2}>
+      <TCell width={80}>
         <ProgressBar progress={torrent.progress} state={torrent.state} />
       </TCell>
-      <TCell flex={1}>
+      <TCell width={80}>
         {prettyBytes(torrent.downloadSpeed)}/s
       </TCell>
-      <TCell flex={1}>
+      <TCell width={80}>
         {prettyBytes(torrent.uploadSpeed)}/s
       </TCell>
-      <TCell flex={1}>
+      <TCell width={80}>
         {torrent.numPeers} / {constrainRange(torrent.totalPeers)}
       </TCell>
-      <TCell flex={1}>
+      <TCell width={80}>
         {torrent.numSeeds} / {constrainRange(torrent.totalSeeds)}
       </TCell>
       <style jsx>{`
