@@ -61,7 +61,7 @@ const SignupForm = () => {
         error={password.meta.touched && password.meta.error}
       />
       {submitError && <Error className="mb-3">{submitError}</Error>}
-      <Button type="submit" disabled={pristine || submitting} block>Log in</Button>
+      <Button type="submit" disabled={pristine || submitting} block>Sign up</Button>
     </form>
   );
 };

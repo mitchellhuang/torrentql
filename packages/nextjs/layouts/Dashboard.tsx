@@ -15,8 +15,6 @@ interface IDashboard extends React.HTMLProps<HTMLDivElement> {
   noMaxWidth?: boolean;
   noPad?: boolean;
   noFooter?: boolean;
-  noNavBarItems?: boolean;
-  homeLink?: boolean;
 }
 
 const Dashboard : React.FunctionComponent<IDashboard> = ({
@@ -24,13 +22,11 @@ const Dashboard : React.FunctionComponent<IDashboard> = ({
   title,
   noMaxWidth,
   noPad,
-  noNavBarItems,
-  homeLink,
   ...props
 }) => (
   <Global backgroundColor={colors.dashboardBg} {...props}>
     <Head title={title} />
-    <NavBar logoLink={!homeLink && '/dashboard'} items={noNavBarItems ? [] : items} noMaxWidth={noMaxWidth} />
+    <NavBar logoLink="/dashboard" items={items} noMaxWidth={noMaxWidth} />
     <div className={classNames('wrapper', { 'wrapper-no-max-width': noMaxWidth, 'no-pad': noPad })}>
       <div className="main">
         <div className="content">
