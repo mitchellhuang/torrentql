@@ -50,7 +50,7 @@ type Mutation {
   pauseTorrent(id: String!): Boolean!
   resumeTorrent(id: String!): Boolean!
   login(email: String!, password: String!): User!
-  createUser(email: String!, password: String!): User!
+  createUser(firstName: String!, lastName: String!, email: String!, password: String!): User!
   updateUserEmail(email: String!): User!
   updateUserPassword(oldPassword: String!, password: String!): User!
   deleteUser: Boolean!
@@ -95,6 +95,8 @@ type Torrent {
 
 type User {
   id: ID!
+  firstName: String!
+  lastName: String!
   email: String!
   balance: Float!
   token: String

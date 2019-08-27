@@ -23,6 +23,14 @@ export class User {
   id: string;
 
   @Field()
+  @Column()
+  firstName: string;
+
+  @Field()
+  @Column()
+  lastName: string;
+
+  @Field()
   @Column({ unique: true })
   email: string;
 

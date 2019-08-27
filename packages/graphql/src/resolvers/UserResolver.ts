@@ -32,6 +32,12 @@ class LoginInput {
 @ArgsType()
 class CreateUserInput {
   @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
   @IsEmail()
   email: string;
 
@@ -102,9 +108,11 @@ export class UserResolver {
 
   @Mutation(returns => User)
   async createUser(
-    @Args() { email, password }: CreateUserInput,
+    @Args() { firstName, lastName, email, password }: CreateUserInput,
   ) {
     const user = new User();
+    user.firstName = firstName;
+    user.lastName = lastName;
     user.email = email;
     user.password = password;
     try {

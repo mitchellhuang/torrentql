@@ -27,9 +27,9 @@ const SignupForm = () => {
   const client = useApolloClient();
   const [createUser] = useMutation(CREATE_USER_MUTATION);
   const { form, handleSubmit, pristine, submitting, submitError } = useForm({
-    onSubmit: async ({ email, password }) => {
+    onSubmit: async ({ firstName, lastName, email, password }) => {
       try {
-        const result = await createUser({ variables: { email, password } });
+        const result = await createUser({ variables: { firstName, lastName, email, password } });
         const { data: { createUser: { token } } } = result as any;
         jsCookie.set('token', token, { expires: 365 });
         client.writeData({ data: { isLoggedIn: true } });
@@ -42,10 +42,26 @@ const SignupForm = () => {
     },
     validate: values => validateSync(schema, values),
   });
+  const firstName = useField('firstName', form);
+  const lastName = useField('lastName', form);
   const email = useField('email', form);
   const password = useField('password', form);
   return (
     <form onSubmit={handleSubmit}>
+      <Input
+        {...firstName.input}
+        type="text"
+        label="First name"
+        placeholder="Enter your first name"
+        error={firstName.meta.touched && firstName.meta.error}
+      />
+      <Input
+        {...lastName.input}
+        type="text"
+        label="Last name"
+        placeholder="Enter your last name"
+        error={lastName.meta.touched && lastName.meta.error}
+      />
       <Input
         {...email.input}
         type="email"

@@ -49,8 +49,8 @@ export const UPDATE_SELECTED_TORRENTS_MUTATION = gql`
 `;
 
 export const CREATE_USER_MUTATION = gql`
-  mutation createUser($email: String!, $password: String!) {
-    createUser(email: $email, password: $password) {
+  mutation createUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    createUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
       token
     }
   }
