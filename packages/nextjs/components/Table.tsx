@@ -62,7 +62,7 @@ interface ITRow extends React.HTMLProps<HTMLDivElement> {
   flex?: number;
 }
 
-const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
+const TCell: React.FunctionComponent<ITRow> = ({ width, children }) => (
   <div className="t-cell">
     <span className="children">
       {children}
@@ -85,6 +85,7 @@ const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+      @media
     `}</style>
   </div>
 );
