@@ -1,26 +1,25 @@
 import React from 'react';
 import colors from '../lib/colors';
 
-const Error = ({
-  error,
+type IError = React.HTMLProps<HTMLDivElement>;
+
+const Error: React.FunctionComponent<IError> = ({
+  children,
+  ...props
 }) => {
-  if (error) {
-    return (
-      <div className="error">
-        {error}
-        <style jsx>{`
-          .error {
-            color: ${colors.error};
-            margin-bottom: 15px;
-          }
-          .error::first-letter {
-            text-transform: capitalize;
-          }
-        `}</style>
-      </div>
-    );
-  }
-  return null;
+  return children && (
+    <div {...props}>
+      {children}
+      <style jsx>{`
+        div {
+          color: ${colors.error};
+        }
+        div::first-letter {
+          text-transform: capitalize;
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default Error;

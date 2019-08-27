@@ -1,16 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-import Dashboard from '../layouts/Dashboard';
+import Main from '../layouts/Main';
 import LoginForm from '../forms/LoginForm';
 import Card from '../components/Card';
+import colors from '../lib/colors';
 
 const Login = () => (
-  <Dashboard title="Log in" noNavBarItems noFooter homeLink>
+  <Main title="Log in" backgroundColor={colors.dashboardBg} noFooter>
     <div className="login">
       <Card>
-        <div className="header">
-          <h1>Log in</h1>
-        </div>
+        <h1 className="mb-2">Log in</h1>
         <LoginForm />
       </Card>
       <div className="helpers">
@@ -23,9 +22,6 @@ const Login = () => (
       </div>
     </div>
     <style jsx>{`
-      .header {
-        margin-bottom: 10px;
-      }
       .helpers {
         margin-top: 15px;
       }
@@ -41,7 +37,7 @@ const Login = () => (
         }
       }
     `}</style>
-  </Dashboard>
+  </Main>
 );
 
 export default Login;

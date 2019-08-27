@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import Color from 'color';
 import { IS_LOGGED_IN_QUERY } from '../apollo/queries';
 import Global from './Global';
 import NavBar from '../components/NavBar';
@@ -10,12 +11,14 @@ interface IMain {
   children: React.ReactNode;
   title?: string;
   noFooter?: boolean;
+  backgroundColor?: Color;
 }
 
 const Main: React.FunctionComponent<IMain> = ({
   children,
   title,
   noFooter,
+  backgroundColor,
 }) => {
   const { data } = useQuery(IS_LOGGED_IN_QUERY);
   const items = [
@@ -28,7 +31,7 @@ const Main: React.FunctionComponent<IMain> = ({
     : { name: 'Log in →', url: '/login' };
   items.push(finalItem);
   return (
-    <Global>
+    <Global backgroundColor={backgroundColor}>
       <Head title={title} />
       <div className="main">
         <NavBar items={items} />
