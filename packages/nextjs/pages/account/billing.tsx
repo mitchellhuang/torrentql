@@ -34,12 +34,13 @@ const Recharge = (props) => {
         <Button className="mr-2" onClick={() => handleClick(80)} outline>$80</Button>
         <Button onClick={() => handleClick(100)} outline>$100</Button>
       </div>
-      { loading ?
+      {loading ?
           <p className="mt-2">Generating invoice...</p> :
-          bitcoinTransaction &&
-            <p className="mt-2">
-              <a href={bitcoinTransaction.invoiceUrl} target="_blank">Pay with Bitcoin</a>
-            </p> }
+          bitcoinTransaction && (
+            <Button className="mt-2" href={bitcoinTransaction.invoiceUrl} target="_blank">
+              Pay with Bitcoin
+            </Button>
+          )}
       <p className="footnote mt-2">Recharge your account balance with Bitcoin.</p>
     </Card>
   );
