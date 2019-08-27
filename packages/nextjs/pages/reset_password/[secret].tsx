@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { withRouter } from 'next/router';
 import { CheckCircle } from 'react-feather';
-import Dashboard from '../../layouts/Dashboard';
+import Main from '../../layouts/Main';
 import ResetPasswordForm from '../../forms/ResetPasswordForm';
 import Card from '../../components/Card';
+import colors from '../../lib/colors';
 
 const ResetForm = ({ router }) => {
   const [success, setSuccess] = useState(false);
   return (
-    <Dashboard title="Reset Password">
+    <Main title="Reset Password" backgroundColor={colors.dashboardBg} noFooter>
       <div className="reset-password">
         <Card title="Reset Password">
           <div className="contents">
@@ -32,7 +33,7 @@ const ResetForm = ({ router }) => {
           }
         }
       `}</style>
-    </Dashboard>
+    </Main>
   );
 };
 

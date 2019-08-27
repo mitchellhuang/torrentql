@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { CheckCircle } from 'react-feather';
-import Dashboard from '../layouts/Dashboard';
+import Main from '../layouts/Main';
 import Card from '../components/Card';
 import ResetPasswordForm from '../forms/SendResetEmailForm';
+import colors from '../lib/colors';
 
 const ResetPassword = () => {
   const [generated, setGenerated] = useState(false);
   return (
-    <Dashboard title="Reset Password">
+    <Main title="Reset Password" backgroundColor={colors.dashboardBg} noFooter>
       <div className="reset-password">
         <Card title="Reset Password">
           {generated && <div className="generated">
@@ -31,7 +32,7 @@ const ResetPassword = () => {
           }
         }
       `}</style>
-    </Dashboard>
+    </Main>
   );
 };
 
