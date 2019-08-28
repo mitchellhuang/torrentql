@@ -46,6 +46,13 @@ interface UsageByUser {
   endAt: Date;
 }
 
+interface Cost {
+  cost: number;
+  diskUsageCost: number;
+  dataTransferInCost: number;
+  dataTransferOutCost: number;
+}
+
 const getUsageByUser = (transaction: EntityManager): Promise<UsageByUser[]> => transaction
   .getRepository(BillingPeriod)
   .createQueryBuilder('billing_period')
@@ -63,7 +70,7 @@ const getUsageByUser = (transaction: EntityManager): Promise<UsageByUser[]> => t
   .leftJoin('billing_period.user', 'user')
   .getRawMany();
 
-const getCost = (usage: UsageByUser) => {
+const getCost = (usage: UsageByUser): Cost => {
   const diskUsageCost = usage.diskUsageByteSeconds * DISK_USAGE_BYTE_SECONDS_PRICE;
   const dataTransferInCost = usage.dataTransferIn * DATA_TRANSFER_IN_BYTES_PRICE;
   const dataTransferOutCost = usage.dataTransferOut * DATA_TRANSFER_OUT_BYTES_PRICE;
