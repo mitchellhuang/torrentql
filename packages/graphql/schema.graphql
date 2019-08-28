@@ -64,6 +64,7 @@ type Query {
 
 type Server {
   id: ID!
+  tag: String!
   region: String!
 }
 

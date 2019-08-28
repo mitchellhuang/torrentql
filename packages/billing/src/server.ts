@@ -113,7 +113,7 @@ const run = async () => {
       const torrents = await transaction
         .getRepository(Torrent)
         .createQueryBuilder('torrent')
-        .where('is_active = true')
+        .where('active = true')
         .leftJoinAndSelect('torrent.user', 'user')
         .leftJoinAndSelect('torrent.server', 'server')
         .getMany();
@@ -157,7 +157,7 @@ const run = async () => {
       const torrents = await transaction
         .getRepository(Torrent)
         .createQueryBuilder('torrent')
-        .where('is_active = true')
+        .where('active = true')
         .leftJoinAndSelect('torrent.user', 'user')
         .leftJoinAndSelect('torrent.server', 'server')
         .getMany();

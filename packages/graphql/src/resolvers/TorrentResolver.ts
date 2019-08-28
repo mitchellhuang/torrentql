@@ -89,7 +89,7 @@ export class TorrentResolver {
     const torrents = await this.torrentRepository.find({
       where: {
         user: { id: user.id },
-        isActive: true,
+        active: true,
       },
     });
     let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
@@ -106,7 +106,7 @@ export class TorrentResolver {
       throw new Error('No server available.');
     }
     const deluge = new Deluge({
-      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      baseUrl: server.delugeUrl,
       password: 'deluge',
       timeout: 1000,
     });
@@ -146,7 +146,7 @@ export class TorrentResolver {
       throw new Error('Could not parse torrent file.');
     }
     const torrent = new Torrent();
-    torrent.isActive = true;
+    torrent.active = true;
     torrent.hash = hash;
     torrent.type = type;
     torrent.data = data;
@@ -168,15 +168,15 @@ export class TorrentResolver {
     }
     const activeHashes = await this.torrentRepository.find({
       hash: torrent.hash,
-      isActive: true,
+      active: true,
     });
     if (activeHashes.length > 1) {
-      torrent.isActive = false;
+      torrent.active = false;
       await this.torrentRepository.save(torrent);
     } else if (activeHashes.length === 1) {
       const deluge = await torrent.deluge();
       await deluge.removeTorrent(torrent.hash, true);
-      torrent.isActive = false;
+      torrent.active = false;
       await this.torrentRepository.save(torrent);
     }
     return true;

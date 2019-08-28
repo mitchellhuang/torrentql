@@ -14,8 +14,6 @@ import { User } from './User';
 import { Server } from './Server';
 import { File } from './File';
 
-const dev = process.env.NODE_ENV !== 'production';
-
 @ObjectType()
 @Entity('torrents')
 export class Torrent {
@@ -41,7 +39,7 @@ export class Torrent {
 
   @Index()
   @Column()
-  isActive: boolean;
+  active: boolean;
 
   @Field()
   name: string;
@@ -116,7 +114,7 @@ export class Torrent {
 
   async deluge() {
     return new Deluge({
-      baseUrl: `${this.server.protocol}://${this.server.host}:${this.server.port}/`,
+      baseUrl: this.server.delugeUrl,
       password: 'deluge',
       timeout: 1000,
     });
@@ -124,7 +122,7 @@ export class Torrent {
 
   async injectDeluge() {
     const deluge = await this.deluge();
-    const prefix = dev ? 'http://localhost:3001/files/' : `https://${this.server.id}.torrentql.com/`;
+    const prefix = this.server.fileUrl;
     let status;
     let files;
     try {

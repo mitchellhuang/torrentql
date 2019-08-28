@@ -80,7 +80,7 @@ export class UserResolver {
     const torrents = await this.torrentRepository.find({
       where: {
         user: { id: user.id },
-        isActive: true,
+        active: true,
       },
     });
     let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
