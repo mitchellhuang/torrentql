@@ -39,6 +39,7 @@ interface History {
 interface UsageByUser {
   userId: string;
   balance: number;
+  status: User['status'];
   diskUsageByteSeconds: number;
   dataTransferIn: number;
   dataTransferOut: number;
@@ -65,6 +66,7 @@ const getUsageByUser = (transaction: EntityManager): Promise<UsageByUser[]> => t
     CURRENT_TIMESTAMP - interval '24 hour' as "endAt"
   `)
   .addSelect('user.balance as "balance"')
+  .addSelect('user.status as "status"')
   .groupBy('billing_period.user_id')
   .addGroupBy('user.id')
   .leftJoin('billing_period.user', 'user')
@@ -88,13 +90,21 @@ const run = async () => {
     await connection.transaction(async (transaction) => {
       const usageByUser = await getUsageByUser(transaction);
       await Promise.all(
-        usageByUser.map(async (usage) => {
+        usageByUser.map((usage) => {
           const { cost } = getCost(usage);
-          if (cost > usage.balance) {
-            console.log('LOCK ACCOUNT HERE');
+          if (cost > usage.balance && usage.status === 'enabled') {
+            return transaction
+              .getRepository(User)
+              .createQueryBuilder('user')
+              .update({
+                status: 'disabled',
+              })
+              .where({
+                id: usage.userId,
+              })
+              .execute();
           }
-          console.log(cost);
-          console.log(usage.balance);
+          return Promise.resolve(undefined);
         }),
       );
     });
