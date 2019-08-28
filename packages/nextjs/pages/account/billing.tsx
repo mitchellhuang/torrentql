@@ -66,15 +66,14 @@ const History = ({
       </p>
     </Card>
   );
-  const bitcoinTransactionsFiltered = bitcoinTransactions.filter(bt => bt.status !== 'unpaid');
-  if (!bitcoinTransactionsFiltered.length) {
+  if (!bitcoinTransactions.length) {
     return (
       <Layout {...props}>
       </Layout>
     );
   }
   return (
-    <Layout>
+    <Layout {...props}>
       <div className="table">
         <TRow header bold noPad>
           <TCell flex={4}>ID</TCell>
@@ -83,7 +82,7 @@ const History = ({
           <TCell flex={2}>Created at</TCell>
           <TCell flex={2}>Updated at</TCell>
         </TRow>
-        {bitcoinTransactionsFiltered.map(bitcoinTransaction => (
+        {bitcoinTransactions.map(bitcoinTransaction => (
           <TRow key={bitcoinTransaction.id} noPad>
             <TCell flex={4}>{bitcoinTransaction.id}</TCell>
             <TCell flex={1}>{bitcoinTransaction.status}</TCell>

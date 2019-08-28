@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import {
   Resolver,
   Query,
@@ -15,6 +15,7 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
 
@@ -65,6 +66,9 @@ export class UserResolver {
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
 
+  @InjectRepository(BitcoinTransaction)
+  private bitcoinTransactionRepository: Repository<BitcoinTransaction>;
+
   @Authorized()
   @Query(returns => User)
   me(@Ctx() ctx: Context) {
@@ -82,6 +86,16 @@ export class UserResolver {
     let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
     torrentsDeluge = torrentsDeluge.filter(v => v);
     return torrentsDeluge;
+  }
+
+  @FieldResolver()
+  async bitcoinTransactions(@Root() user: User) {
+    return this.bitcoinTransactionRepository.find({
+      where: {
+        user: { id: user.id },
+        status: Not('unpaid'),
+      },
+    });
   }
 
   @Mutation(returns => User)
