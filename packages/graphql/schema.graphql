@@ -57,6 +57,7 @@ type Mutation {
 }
 
 type Query {
+  billingUsage: [String!]!
   getTorrent(id: String!): Torrent!
   getTorrents: [Torrent!]!
   me: User!

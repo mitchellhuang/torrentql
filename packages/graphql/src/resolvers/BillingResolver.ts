@@ -38,9 +38,23 @@ class CreateBitcoinTransactionInput {
 
 export class BillingResolver {
   @InjectRepository(BitcoinTransaction)
-  @InjectRepository(BillingUsage)
   private bitcoinTransactionRepository: Repository<BitcoinTransaction>;
+
+  @InjectRepository(BillingUsage)
   private billingUsageRepository: Repository<BillingUsage>;
+
+  @Authorized()
+  @Query(returns => [String])
+  async billingUsage(@Ctx() ctx: Context) {
+    const result = await this.billingUsageRepository.find({
+      where: {
+        user: { id: ctx.user.id },
+      },
+    });
+    console.log('result', result);
+    return ['asdf'];
+  }
+
   @Authorized()
   @Mutation(returns => BitcoinTransaction)
   async createBitcoinTransaction(
@@ -66,17 +80,6 @@ export class BillingResolver {
     bitcoinTransaction.invoiceUrl = urlPrefix + charge.id;
     bitcoinTransaction.user = Promise.resolve(ctx.user);
     return this.bitcoinTransactionRepository.save(bitcoinTransaction);
-  }
-
-  @Authorized()
-  @Query(returns => String)
-  async billingUsage(@Ctx() ctx: Context) {
-    // this.billingUsageRepository
-    // .find({})
-    // console.log(JSON.stringify(this.billingUsageRepository));
-    const result = this.billingUsageRepository;
-    // console.log(result);
-    return 'asdf';
   }
 
   static async webhook(req: Request, res: Response) {
