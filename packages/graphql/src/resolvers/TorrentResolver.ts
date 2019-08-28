@@ -8,16 +8,16 @@ import {
   Args,
   Field,
   ArgsType,
-  Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Validator, IsUUID, IsNotEmpty } from 'class-validator';
 import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
-import { Context } from '../lib/context';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { Server } from '@torrentql/common/dist/entities/Server';
+import { Context } from '../lib/context';
+import { Authorized, Enabled } from '../lib/decorators';
 
 const validator = new Validator();
 
@@ -98,6 +98,7 @@ export class TorrentResolver {
   }
 
   @Authorized()
+  @Enabled()
   @Mutation(returns => Torrent)
   async addTorrent(@Args() { data }: AddTorrentInput, @Ctx() ctx: Context) {
     const servers = await this.serverRepository.find();
@@ -199,6 +200,7 @@ export class TorrentResolver {
   }
 
   @Authorized()
+  @Enabled()
   @Mutation(returns => Boolean)
   async resumeTorrent(@Args() { id }: ResumeTorrentInput, @Ctx() ctx: Context) {
     const torrent = await this.torrentRepository.findOne(id);

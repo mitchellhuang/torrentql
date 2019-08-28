@@ -5,7 +5,6 @@ import {
   Field,
   Mutation,
   Ctx,
-  Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEnum } from 'class-validator';
@@ -14,6 +13,7 @@ import { Request, Response } from 'express';
 import { User } from '@torrentql/common/dist/entities/User';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import { Context } from '../lib/context';
+import { Authorized } from '../lib/decorators';
 
 const dev = process.env.FRONTEND_HOST !== 'https://torrentql.com';
 

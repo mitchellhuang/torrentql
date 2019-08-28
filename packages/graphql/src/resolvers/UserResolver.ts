@@ -9,7 +9,6 @@ import {
   Root,
   Mutation,
   Ctx,
-  Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
@@ -18,6 +17,7 @@ import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
+import { Authorized } from '../lib/decorators';
 
 @ArgsType()
 class LoginInput {
