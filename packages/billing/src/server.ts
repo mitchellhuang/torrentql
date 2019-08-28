@@ -63,7 +63,7 @@ const getUsageByUser = (transaction: EntityManager): Promise<UsageByUser[]> => t
     SUM(data_transfer_in) - SUM(data_transfer_in_billed) AS "dataTransferIn",
     SUM(data_transfer_out) - SUM(data_transfer_out_billed) AS "dataTransferOut",
     CURRENT_TIMESTAMP as "beginAt",
-    CURRENT_TIMESTAMP - interval '24 hour' as "endAt"
+    CURRENT_TIMESTAMP - interval '1 hour' as "endAt"
   `)
   .addSelect('user.balance as "balance"')
   .addSelect('user.status as "status"')
@@ -91,6 +91,18 @@ const checkSufficientBalance = async (transaction: EntityManager) => {
           .createQueryBuilder('user')
           .update({
             status: 'disabled',
+          })
+          .where({
+            id: usage.userId,
+          })
+          .execute();
+      }
+      if (cost < usage.balance && usage.status === 'disabled') {
+        return transaction
+          .getRepository(User)
+          .createQueryBuilder('user')
+          .update({
+            status: 'enabled',
           })
           .where({
             id: usage.userId,
@@ -270,7 +282,7 @@ const run = async () => {
 
   setInterval(writeBillingPeriod, 1 * 1000);
   setInterval(writeBillingUsage, 60 * 1000);
-  setInterval(writeBillingHistory, 86400 * 1000);
+  setInterval(writeBillingHistory, 3600 * 1000);
 };
 
 run();

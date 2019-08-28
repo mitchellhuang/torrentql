@@ -89,6 +89,11 @@ export class UserResolver {
   }
 
   @FieldResolver()
+  async balance(@Root() user: User) {
+    return parseFloat(user.balance as any).toFixed(2);
+  }
+
+  @FieldResolver()
   async bitcoinTransactions(@Root() user: User) {
     return this.bitcoinTransactionRepository.find({
       where: {

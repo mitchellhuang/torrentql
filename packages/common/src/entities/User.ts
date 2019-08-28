@@ -29,15 +29,16 @@ export class User {
   @Column()
   password: string;
 
+  @Field()
   @Column({
     type: 'enum',
     enum: ['enabled', 'disabled', 'banned'],
-    default: 'enabled',
+    default: 'disabled',
   })
   status: 'enabled' | 'disabled' | 'banned';
 
   @Field()
-  @Column('decimal', { precision: 19, scale: 4, default: 0 })
+  @Column('decimal', { precision: 19, scale: 9, default: 0 })
   balance: number;
 
   @Field({ nullable: true })
