@@ -80,35 +80,33 @@ const getCost = (usage: UsageByUser): Cost => {
   return { cost, diskUsageCost, dataTransferInCost, dataTransferOutCost };
 };
 
+const checkSufficientBalance = async (transaction: EntityManager) => {
+  const usageByUser = await getUsageByUser(transaction);
+  return Promise.all(
+    usageByUser.map((usage) => {
+      const { cost } = getCost(usage);
+      if (cost > usage.balance && usage.status === 'enabled') {
+        return transaction
+          .getRepository(User)
+          .createQueryBuilder('user')
+          .update({
+            status: 'disabled',
+          })
+          .where({
+            id: usage.userId,
+          })
+          .execute();
+      }
+      return Promise.resolve(undefined);
+    }),
+  );
+};
+
 const run = async () => {
   console.log('Starting billing daemon...');
 
   const cache = new Map<string, Usage>();
   const connection = await createConnectionFromEnv();
-
-  const checkSufficientBalance = async () => {
-    await connection.transaction(async (transaction) => {
-      const usageByUser = await getUsageByUser(transaction);
-      await Promise.all(
-        usageByUser.map((usage) => {
-          const { cost } = getCost(usage);
-          if (cost > usage.balance && usage.status === 'enabled') {
-            return transaction
-              .getRepository(User)
-              .createQueryBuilder('user')
-              .update({
-                status: 'disabled',
-              })
-              .where({
-                id: usage.userId,
-              })
-              .execute();
-          }
-          return Promise.resolve(undefined);
-        }),
-      );
-    });
-  };
 
   const writeBillingPeriod = async () => {
     await connection.transaction(async (transaction) => {
@@ -149,6 +147,8 @@ const run = async () => {
             .execute();
         }),
       );
+
+      await checkSufficientBalance(transaction);
     });
   };
 
@@ -264,12 +264,10 @@ const run = async () => {
     });
   };
 
-  // checkSufficientBalance();
   // writeBillingPeriod();
   // writeBillingUsage();
   // writeBillingHistory();
 
-  setInterval(checkSufficientBalance, 1 * 1000);
   setInterval(writeBillingPeriod, 1 * 1000);
   setInterval(writeBillingUsage, 60 * 1000);
   setInterval(writeBillingHistory, 86400 * 1000);
