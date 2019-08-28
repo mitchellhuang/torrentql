@@ -1,27 +1,33 @@
 import React from 'react';
-import { VictoryChart, VictoryLine } from 'victory';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
 import { useQuery } from '@apollo/react-hooks';
-import { BILLING_USAGE_QUERY } from '../apollo/queries';
+import { GET_BILLING_USAGE_QUERY } from '../apollo/queries';
 
 const Graph = () => {
-  const data = useQuery(BILLING_USAGE_QUERY);
-  console.log(data);
+  const { data: { getBillingUsage } } = useQuery(GET_BILLING_USAGE_QUERY);
+  console.log(getBillingUsage);
+  let points;
+  if (getBillingUsage) {
+    points = getBillingUsage.map((billingUsage) => ({
+      x: new Date(billingUsage.createdAt).getTime(),
+      y: billingUsage.diskUsage / 100000000,
+    }));
+  }
   return (
-    <VictoryChart animate={{
-      duration: 1700,
-      onLoad: { duration: 200 },
-    }}>
-      <VictoryLine
-        data={[
-          { x: 1, y: 2 },
-          { x: 2, y: 3 },
-          { x: 3, y: 5 },
-          { x: 4, y: 4 },
-          { x: 5, y: 6 },
-        ]}
-      />
-    </VictoryChart>
+    <XYPlot
+      width={300}
+      height={300}>
+      <HorizontalGridLines />
+      <LineSeries
+        data={points || [
+          {x: 1, y: 10},
+          {x: 2, y: 5},
+          {x: 3, y: 15}
+        ]}/>
+      <XAxis />
+      <YAxis />
+    </XYPlot>
   );
-}
+};
 
 export default Graph;

@@ -16,6 +16,13 @@ BigInt can represent values between -(2^53) + 1 and 2^53 - 1.
 """
 scalar BigInt
 
+type BillingUsage {
+  diskUsage: BigInt!
+  dataTransferIn: BigInt!
+  dataTransferOut: BigInt!
+  createdAt: DateTime!
+}
+
 type BitcoinTransaction {
   id: ID!
   status: String!
@@ -57,7 +64,7 @@ type Mutation {
 }
 
 type Query {
-  billingUsage: [String!]!
+  getBillingUsage: [BillingUsage!]!
   getTorrent(id: String!): Torrent!
   getTorrents: [Torrent!]!
   me: User!

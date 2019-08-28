@@ -1,4 +1,4 @@
-import { Repository, getConnection } from 'typeorm';
+import { Repository, getConnection, MoreThanOrEqual } from 'typeorm';
 import {
   Args,
   ArgsType,
@@ -44,15 +44,15 @@ export class BillingResolver {
   private billingUsageRepository: Repository<BillingUsage>;
 
   @Authorized()
-  @Query(returns => [String])
-  async billingUsage(@Ctx() ctx: Context) {
-    const result = await this.billingUsageRepository.find({
-      where: {
-        user: { id: ctx.user.id },
-      },
-    });
-    console.log('result', result);
-    return ['asdf'];
+  @Query(returns => [BillingUsage])
+  async getBillingUsage(@Ctx() ctx: Context) {
+    const billingUsages = await this.billingUsageRepository
+      .createQueryBuilder('billing_usage')
+      .where('user_id = :id', { id: ctx.user.id })
+      .andWhere("created_at >= CURRENT_TIMESTAMP - interval '1hr'")
+      .andWhere('created_at < CURRENT_TIMESTAMP')
+      .getMany();
+    return billingUsages;
   }
 
   @Authorized()
