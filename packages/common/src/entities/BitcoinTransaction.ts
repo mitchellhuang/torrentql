@@ -2,6 +2,7 @@ import {
   Entity,
   PrimaryColumn,
   Column,
+  Index,
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
@@ -25,6 +26,7 @@ export class BitcoinTransaction {
 
   @Field()
   @Column()
+  @Index()
   status: string;
 
   @Field(type => Float)
