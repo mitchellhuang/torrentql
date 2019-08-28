@@ -4,6 +4,7 @@ import {
   ArgsType,
   Field,
   Mutation,
+  Query,
   Ctx,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
@@ -12,6 +13,7 @@ import opennode from 'opennode';
 import { Request, Response } from 'express';
 import { User } from '@torrentql/common/dist/entities/User';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
+import { BillingUsage } from '@torrentql/common/dist/entities/BillingUsage';
 import { Context } from '../lib/context';
 import { Authorized } from '../lib/decorators';
 
@@ -36,8 +38,9 @@ class CreateBitcoinTransactionInput {
 
 export class BillingResolver {
   @InjectRepository(BitcoinTransaction)
+  @InjectRepository(BillingUsage)
   private bitcoinTransactionRepository: Repository<BitcoinTransaction>;
-
+  private billingUsageRepository: Repository<BillingUsage>;
   @Authorized()
   @Mutation(returns => BitcoinTransaction)
   async createBitcoinTransaction(
@@ -63,6 +66,17 @@ export class BillingResolver {
     bitcoinTransaction.invoiceUrl = urlPrefix + charge.id;
     bitcoinTransaction.user = Promise.resolve(ctx.user);
     return this.bitcoinTransactionRepository.save(bitcoinTransaction);
+  }
+
+  @Authorized()
+  @Query(returns => String)
+  async billingUsage(@Ctx() ctx: Context) {
+    // this.billingUsageRepository
+    // .find({})
+    // console.log(JSON.stringify(this.billingUsageRepository));
+    const result = this.billingUsageRepository;
+    // console.log(result);
+    return 'asdf';
   }
 
   static async webhook(req: Request, res: Response) {
