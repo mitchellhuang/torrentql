@@ -89,7 +89,7 @@ type Torrent {
   tracker: String!
   trackerHost: String!
   trackerStatus: String!
-  files: File!
+  files: File
   user: User!
   server: Server!
 }

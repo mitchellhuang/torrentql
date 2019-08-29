@@ -95,8 +95,8 @@ export class Torrent {
   @Field()
   trackerStatus: string;
 
-  @Field()
-  files: File;
+  @Field({ nullable: true })
+  files?: File;
 
   @Field(type => User)
   @ManyToOne(type => User, user => user.torrents)
@@ -149,7 +149,8 @@ export class Torrent {
     this.tracker = status.result.tracker;
     this.trackerHost = status.result.tracker_host;
     this.trackerStatus = status.result.tracker_status;
-    this.files = transformFiles(files.result, prefix);
+    const filesExist = Object.keys(files.result.contents).length > 0;
+    this.files = filesExist ? transformFiles(files.result, prefix) : undefined;
     return this;
   }
 
