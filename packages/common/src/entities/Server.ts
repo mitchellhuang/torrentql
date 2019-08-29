@@ -35,6 +35,10 @@ export class Server {
   @Column({ default: true })
   enabled: boolean;
 
+  @Index()
+  @Column({ default: false })
+  next: boolean;
+
   @Column()
   delugeUrl: string;
 

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import {
   Resolver,
   Query,
@@ -56,13 +56,47 @@ class ResumeTorrentInput {
   id: string;
 }
 
+const serverSelector = async (region: Server['region']) => {
+  const connection = await getConnection();
+  return connection.transaction<Server | undefined>(async (transaction) => {
+    const servers = await transaction
+      .getRepository(Server)
+      .find({
+        where: {
+          enabled: true,
+          region,
+        },
+        order: {
+          id: 'ASC',
+        },
+      });
+    if (servers.length === 0) {
+      return undefined;
+    }
+    if (servers.length === 1) {
+      return servers[0];
+    }
+    const idx = _.findIndex(servers, { next: true });
+    if (idx === -1) {
+      await transaction
+        .getRepository(Server)
+        .update({ id: 2 }, { next: true });
+      return servers[0];
+    }
+    await transaction
+      .getRepository(Server)
+      .update({ id: servers[idx].id }, { next: false });
+    await transaction
+      .getRepository(Server)
+      .update({ id: servers[idx + 1] ? servers[idx + 1].id : 1 }, { next: true });
+    return servers[idx];
+  });
+};
+
 @Resolver(of => Torrent)
 export class TorrentResolver {
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
-
-  @InjectRepository(Server)
-  private serverRepository: Repository<Server>;
 
   @Authorized()
   @Query(returns => Torrent)
@@ -101,8 +135,7 @@ export class TorrentResolver {
   @Enabled()
   @Mutation(returns => Torrent)
   async addTorrent(@Args() { data }: AddTorrentInput, @Ctx() ctx: Context) {
-    const servers = await this.serverRepository.find();
-    const server = _.sample(servers);
+    const server = await serverSelector('eu-west-1');
     if (!server) {
       throw new Error('No server available.');
     }
