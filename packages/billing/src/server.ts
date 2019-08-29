@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { EntityManager } from 'typeorm';
 import { createConnectionFromEnv } from '@torrentql/common/dist/lib/db';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { User } from '@torrentql/common/dist/entities/User';
@@ -37,12 +38,81 @@ interface History {
 
 interface UsageByUser {
   userId: string;
+  balance: number;
+  status: User['status'];
   diskUsageByteSeconds: number;
   dataTransferIn: number;
   dataTransferOut: number;
   beginAt: Date;
   endAt: Date;
 }
+
+interface Cost {
+  cost: number;
+  diskUsageCost: number;
+  dataTransferInCost: number;
+  dataTransferOutCost: number;
+}
+
+const getUsageByUser = (transaction: EntityManager): Promise<UsageByUser[]> => transaction
+  .getRepository(BillingPeriod)
+  .createQueryBuilder('billing_period')
+  .select(`
+    user_id as "userId",
+    SUM(disk_usage_byte_seconds) - SUM(disk_usage_byte_seconds_billed) AS "diskUsageByteSeconds",
+    SUM(data_transfer_in) - SUM(data_transfer_in_billed) AS "dataTransferIn",
+    SUM(data_transfer_out) - SUM(data_transfer_out_billed) AS "dataTransferOut",
+    CURRENT_TIMESTAMP as "beginAt",
+    CURRENT_TIMESTAMP - interval '1 hour' as "endAt"
+  `)
+  .addSelect('user.balance as "balance"')
+  .addSelect('user.status as "status"')
+  .groupBy('billing_period.user_id')
+  .addGroupBy('user.id')
+  .leftJoin('billing_period.user', 'user')
+  .getRawMany();
+
+const getCost = (usage: UsageByUser): Cost => {
+  const diskUsageCost = usage.diskUsageByteSeconds * DISK_USAGE_BYTE_SECONDS_PRICE;
+  const dataTransferInCost = usage.dataTransferIn * DATA_TRANSFER_IN_BYTES_PRICE;
+  const dataTransferOutCost = usage.dataTransferOut * DATA_TRANSFER_OUT_BYTES_PRICE;
+  const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
+  return { cost, diskUsageCost, dataTransferInCost, dataTransferOutCost };
+};
+
+const checkSufficientBalance = async (transaction: EntityManager) => {
+  const usageByUser = await getUsageByUser(transaction);
+  return Promise.all(
+    usageByUser.map((usage) => {
+      const { cost } = getCost(usage);
+      if (cost > usage.balance && usage.status === 'enabled') {
+        return transaction
+          .getRepository(User)
+          .createQueryBuilder('user')
+          .update({
+            status: 'disabled',
+          })
+          .where({
+            id: usage.userId,
+          })
+          .execute();
+      }
+      if (cost < usage.balance && usage.status === 'disabled') {
+        return transaction
+          .getRepository(User)
+          .createQueryBuilder('user')
+          .update({
+            status: 'enabled',
+          })
+          .where({
+            id: usage.userId,
+          })
+          .execute();
+      }
+      return Promise.resolve(undefined);
+    }),
+  );
+};
 
 const run = async () => {
   console.log('Starting billing daemon...');
@@ -55,7 +125,7 @@ const run = async () => {
       const torrents = await transaction
         .getRepository(Torrent)
         .createQueryBuilder('torrent')
-        .where('is_active = true')
+        .where('active = true')
         .leftJoinAndSelect('torrent.user', 'user')
         .leftJoinAndSelect('torrent.server', 'server')
         .getMany();
@@ -89,6 +159,8 @@ const run = async () => {
             .execute();
         }),
       );
+
+      await checkSufficientBalance(transaction);
     });
   };
 
@@ -97,7 +169,7 @@ const run = async () => {
       const torrents = await transaction
         .getRepository(Torrent)
         .createQueryBuilder('torrent')
-        .where('is_active = true')
+        .where('active = true')
         .leftJoinAndSelect('torrent.user', 'user')
         .leftJoinAndSelect('torrent.server', 'server')
         .getMany();
@@ -137,26 +209,16 @@ const run = async () => {
 
   const writeBillingHistory = async () => {
     await connection.transaction(async (transaction) => {
-      const usageByUser: UsageByUser[] = await transaction
-        .getRepository(BillingPeriod)
-        .createQueryBuilder()
-        .select(`
-          user_id as "userId",
-          SUM(disk_usage_byte_seconds) - SUM(disk_usage_byte_seconds_billed) AS "diskUsageByteSeconds",
-          SUM(data_transfer_in) - SUM(data_transfer_in_billed) AS "dataTransferIn",
-          SUM(data_transfer_out) - SUM(data_transfer_out_billed) AS "dataTransferOut",
-          CURRENT_TIMESTAMP as "beginAt",
-          CURRENT_TIMESTAMP - interval '24 hour' as "endAt"
-        `)
-        .groupBy('user_id')
-        .getRawMany();
+      const usageByUser = await getUsageByUser(transaction);
 
       await Promise.all(
         usageByUser.map((usage) => {
-          const diskUsageCost = usage.diskUsageByteSeconds * DISK_USAGE_BYTE_SECONDS_PRICE;
-          const dataTransferInCost = usage.dataTransferIn * DATA_TRANSFER_IN_BYTES_PRICE;
-          const dataTransferOutCost = usage.dataTransferOut * DATA_TRANSFER_OUT_BYTES_PRICE;
-          const cost = diskUsageCost + dataTransferInCost + dataTransferOutCost;
+          const {
+            cost,
+            diskUsageCost,
+            dataTransferInCost,
+            dataTransferOutCost,
+          } = getCost(usage);
           if (cost <= 0) {
             return Promise.resolve(undefined);
           }
@@ -220,7 +282,7 @@ const run = async () => {
 
   setInterval(writeBillingPeriod, 1 * 1000);
   setInterval(writeBillingUsage, 60 * 1000);
-  setInterval(writeBillingHistory, 86400 * 1000);
+  setInterval(writeBillingHistory, 3600 * 1000);
 };
 
 run();

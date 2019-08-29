@@ -16,7 +16,11 @@ export class Server {
 
   @Field(type => ID)
   @PrimaryColumn()
-  id: string;
+  id: number;
+
+  @Field()
+  @Column()
+  tag: string;
 
   @Field()
   @Index()
@@ -27,38 +31,15 @@ export class Server {
   })
   region: 'eu-west-1';
 
-  @Column()
-  host: string;
+  @Index()
+  @Column({ default: true })
+  enabled: boolean;
 
   @Column()
-  port: string;
+  delugeUrl: string;
 
   @Column()
-  protocol: string;
-
-  @Column({ nullable: true })
-  cpuLoad: string;
-
-  @Column({ nullable: true })
-  activeTorrents: string;
-
-  @Column({ nullable: true })
-  totalTorrents: string;
-
-  @Column({ nullable: true })
-  usedSpace: string;
-
-  @Column({ nullable: true })
-  totalSpace: string;
-
-  @Column({ nullable: true })
-  downloadSpeed: string;
-
-  @Column({ nullable: true })
-  uploadSpeed: string;
-
-  @Column({ nullable: true })
-  portSpeed: string;
+  fileUrl: string;
 
   @OneToMany(type => Torrent, torrent => torrent.server)
   torrents: Promise<Torrent[]>;

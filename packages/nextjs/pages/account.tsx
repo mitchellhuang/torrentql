@@ -24,8 +24,8 @@ const Account = () => {
   return (
     <Layout title="Account">
       <Card title="Account" className="mb-3">
-        <p>Status: Active</p>
-        <p>Created at: {moment(me.createdAt).format('LL')}</p>
+        <p>Status: {me.status.toUpperCase()}</p>
+        <p>Created on: {moment(me.createdAt).format('LL')}</p>
       </Card>
       <Card title="Email" className="mb-3">
         <UpdateEmailForm />

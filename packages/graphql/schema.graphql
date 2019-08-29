@@ -64,6 +64,7 @@ type Query {
 
 type Server {
   id: ID!
+  tag: String!
   region: String!
 }
 
@@ -96,6 +97,7 @@ type Torrent {
 type User {
   id: ID!
   email: String!
+  status: String!
   balance: Float!
   token: String
   torrents: [Torrent!]!
