@@ -1936,13 +1936,6 @@
     "@types/node" "*"
     "@types/tough-cookie" "*"
 
-"@types/graphql-type-json@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@types/graphql-type-json/-/graphql-type-json-0.3.1.tgz#9c370b9cfa8aec1dba9f5a1e900e1315f9e43af6"
-  integrity sha512-JSPuVHAVW9rDeE3Bsn2QF5cF1rjjWB2UCe22F9inieMRPti9zZvgfus5XOE6xHz2BRnb0HTY6Y9gIZZZjnRcsw==
-  dependencies:
-    graphql "14.5.0"
-
 "@types/graphql-upload@^8.0.0":
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@types/graphql-upload/-/graphql-upload-8.0.0.tgz#cf1a464e1ad3d185d6e1d77b5df0ca26057a572c"
@@ -5416,11 +5409,6 @@ graphql-tools@^4.0.0:
     iterall "^1.1.3"
     uuid "^3.1.0"
 
-graphql-type-json@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.3.0.tgz#bb32e1b74bf52ebc690f9df12b4067bc061f818a"
-  integrity sha512-lnxg5HiB95yxy+/5cDKtP6pZo0zgntsOmqsjeCBXFGJ4YoMF3+1YaSEKWJntNTu+VsAm3zf6lPxFpp1kxzofLA==
-
 graphql-upload@^8.0.2:
   version "8.0.7"
   resolved "https://registry.yarnpkg.com/graphql-upload/-/graphql-upload-8.0.7.tgz#8644264e241529552ea4b3797e7ee15809cf01a3"
@@ -5435,13 +5423,6 @@ graphql@*, graphql@^14.5.3:
   version "14.5.3"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.3.tgz#e025851cc413e153220f4edbbb25d49f55104fa0"
   integrity sha512-W8A8nt9BsMg0ZK2qA3DJIVU6muWhxZRYLTmc+5XGwzWzVdUdPVlAAg5hTBjiTISEnzsKL/onasu6vl3kgGTbYg==
-  dependencies:
-    iterall "^1.2.2"
-
-graphql@14.5.0:
-  version "14.5.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.0.tgz#4801e6460942c9c591944617f6dd224a9e531520"
-  integrity sha512-wnGcTD181L2xPnIwHHjx/moV4ulxA2Kms9zcUY+B/SIrK+2N+iOC6WNgnR2zVTmg1Z8P+CZq5KXibTnatg3WUw==
   dependencies:
     iterall "^1.2.2"
 
