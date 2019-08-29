@@ -80,7 +80,7 @@ const serverSelector = async (region: Server['region']) => {
     if (idx === -1) {
       await transaction
         .getRepository(Server)
-        .update({ id: 2 }, { next: true });
+        .update({ id: servers[1].id }, { next: true });
       return servers[0];
     }
     await transaction
@@ -88,7 +88,7 @@ const serverSelector = async (region: Server['region']) => {
       .update({ id: servers[idx].id }, { next: false });
     await transaction
       .getRepository(Server)
-      .update({ id: servers[idx + 1] ? servers[idx + 1].id : 1 }, { next: true });
+      .update({ id: servers[idx + 1] ? servers[idx + 1].id : servers[0].id }, { next: true });
     return servers[idx];
   });
 };
