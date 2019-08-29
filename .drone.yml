@@ -113,6 +113,7 @@ steps:
   - kubectl rollout status deployment torrentql-graphql
   depends_on:
   - build-graphql
+  - build-billing
   - build-nextjs
   when:
     branch:
