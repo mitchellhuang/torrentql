@@ -4,6 +4,29 @@ name: default
 steps:
 - name: envsubst
   image: supinf/envsubst
+  environment:
+    API_URI:
+      from_secret: api_uri
+    DB_DATABASE:
+      from_secret: db_database
+    DB_HOST:
+      from_secret: db_host
+    DB_PASSWORD:
+      from_secret: db_password
+    DB_PORT:
+      from_secret: db_port
+    DB_SSL:
+      from_secret: db_ssl
+    DB_USER:
+      from_secret: db_user
+    FRONTEND_HOST:
+      from_secret: frontend_host
+    JWT_SECRET:
+      from_secret: jwt_secret
+    OPENNODE_API_KEY:
+      from_secret: opennode_api_key
+    SENDGRID_API_KEY:
+      from_secret: sendgrid_api_key
   commands:
   - cd deploy
   - export TAG=$DRONE_COMMIT_SHA
@@ -64,6 +87,7 @@ steps:
   - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
   - mv doctl /usr/local/bin/
   - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/graphql/config.yml
   - kubectl apply -f deploy/kubernetes/graphql/deploy.yml
   - kubectl rollout status deployment torrentql-graphql
   depends_on:
@@ -83,6 +107,7 @@ steps:
   - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
   - mv doctl /usr/local/bin/
   - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/nextjs/config.yml
   - kubectl apply -f deploy/kubernetes/nextjs/deploy.yml
   - kubectl rollout status deployment torrentql-nextjs
   depends_on:
