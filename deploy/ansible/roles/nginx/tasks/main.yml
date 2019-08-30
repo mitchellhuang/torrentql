@@ -35,6 +35,8 @@
     restart: yes
     restart_policy: always
     network_mode: host
+    env:
+      DEFAULT_HOST: "gra000.eu-west-1.torrentql.com"
     ports:
       - "80:80"
       - "443:443"
@@ -58,17 +60,17 @@
     volumes_from:
       - nginx-proxy
 
-- name: run nginx-fileserver container
+- name: run nginx-files container
   docker_container:
     image: nginx
-    name: nginx-fileserver
+    name: nginx-files
     state: started
     restart: yes
     restart_policy: always
     env:
-      VIRTUAL_HOST: "{{ ansible_hostname }}.torrentql.com"
+      VIRTUAL_HOST: "gra000.eu-west-1.torrentql.com"
       VIRTUAL_PORT: "80"
-      LETSENCRYPT_HOST: "{{ ansible_hostname }}.torrentql.com"
+      LETSENCRYPT_HOST: "gra000.eu-west-1.torrentql.com"
     volumes:
-      - /data:/data
+      - /downloads:/downloads
       - /etc/nginx/conf.d:/etc/nginx/conf.d

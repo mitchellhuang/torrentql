@@ -1,7 +1,16 @@
 - name: create data directory
   become: yes
   file:
-    path: /data
+    path: /config
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0775
+
+- name: create data directory
+  become: yes
+  file:
+    path: /downloads
     state: directory
     owner: ubuntu
     group: ubuntu
@@ -11,15 +20,19 @@
   docker_container:
     image: linuxserver/deluge
     name: deluge
+    restart: yes
     state: started
     restart_policy: always
     env:
-      PUID: "0"
-      PGID: "0"
-    network_mode: host
+      PUID: "1000"
+      PGID: "1000"
+      VIRTUAL_HOST: "gra000-deluge.eu-west-1.torrentql.com"
+      VIRTUAL_PORT: "8112"
+      LETSENCRYPT_HOST: "gra000-deluge.eu-west-1.torrentql.com"
     ports:
       - "8112:8112"
       - "58846:58846"
       - "58946:58946"
     volumes:
-      - /data:/root/Downloads
+      - /config:/config
+      - /downloads:/downloads
