@@ -32,7 +32,6 @@
     image: jwilder/nginx-proxy
     name: nginx-proxy
     state: started
-    restart: yes
     restart_policy: always
     network_mode: host
     env:
@@ -51,7 +50,6 @@
     image: jrcs/letsencrypt-nginx-proxy-companion
     name: nginx-proxy-letsencrypt
     state: started
-    restart: yes
     restart_policy: always
     env:
       DEFAULT_EMAIL: mitchell@mitchellhuang.net
@@ -65,7 +63,6 @@
     image: nginx
     name: nginx-files
     state: started
-    restart: yes
     restart_policy: always
     env:
       VIRTUAL_HOST: "gra000.eu-west-1.torrentql.com"

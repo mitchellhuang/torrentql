@@ -20,7 +20,6 @@
   docker_container:
     image: linuxserver/deluge
     name: deluge
-    restart: yes
     state: started
     restart_policy: always
     env:
