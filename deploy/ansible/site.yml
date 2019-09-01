@@ -5,6 +5,13 @@
   roles:
     - { role: common, tags: common }
 
+- name: apply deluge
+  hosts: deluge
+  remote_user: ubuntu
+
+  roles:
+    - { role: deluge, tags: deluge }
+
 - name: apply nginx
   hosts: deluge
   remote_user: ubuntu
@@ -12,9 +19,9 @@
   roles:
     - { role: nginx, tags: nginx }
 
-- name: apply deluge
+- name: apply services
   hosts: deluge
   remote_user: ubuntu
 
   roles:
-    - { role: deluge, tags: deluge }
+    - { role: services, tags: services }
