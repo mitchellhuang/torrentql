@@ -285,4 +285,9 @@ const run = async () => {
   setInterval(writeBillingHistory, 3600 * 1000);
 };
 
-run();
+try {
+  run();
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}
