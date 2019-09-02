@@ -21,30 +21,6 @@ const Balance = ({
   </Card>
 );
 
-const PayWithBitcoinButton = ({
-  href,
-  ...props
-}) => (
-  <a
-    href={href}
-    target="_blank"
-    {...props}>
-    <img
-      src="/static/payment-button.svg" />
-    <style jsx>{`
-      a {
-        display: inline-block;
-        height: 46.34px;
-        width: 165px;
-      }
-      a img {
-        width: 100%;
-        border-radius: 5px;
-      }
-    `}</style>
-  </a>
-);
-
 const Recharge = (props) => {
   const [createBitcoinTransaction, { loading, data }] = useMutation(CREATE_BITCOIN_TRANSACTION_MUTATION);
   const bitcoinTransaction = data && data.createBitcoinTransaction;
@@ -60,7 +36,11 @@ const Recharge = (props) => {
       </div>
       {loading ?
           <p className="mt-2">Generating invoice...</p> :
-          bitcoinTransaction && <PayWithBitcoinButton className="mt-2" href={bitcoinTransaction.invoiceUrl} />}
+          bitcoinTransaction && (
+            <Button className="mt-2" href={bitcoinTransaction.invoiceUrl} target="_blank">
+              Pay with Bitcoin
+            </Button>
+          )}
       <p className="footnote mt-2">Recharge your account balance with Bitcoin.</p>
     </Card>
   );
