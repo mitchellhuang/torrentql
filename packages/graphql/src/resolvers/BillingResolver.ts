@@ -48,7 +48,7 @@ export class BillingResolver {
     const charge = await opennode.createCharge({
       amount,
       currency: 'USD',
-      description: `Recharge Account $${amount}`,
+      description: `$${amount} Account Recharge`,
       customer_email: user.email,
       callback_url: `${process.env.FRONTEND_HOST}/webhook/opennode`,
       success_url: `${process.env.FRONTEND_HOST}/account/billing`,
