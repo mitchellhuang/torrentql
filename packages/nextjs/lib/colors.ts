@@ -12,12 +12,9 @@ const colors = {
   lightGray: Color('#F5F5F5'),
   darkGray: Color('#696969'),
   blueGray: Color('#526780'),
-  dashboardBg: Color('rgb(247, 248, 250)'),
-  error: Color('#FF0000'),
-  toolbarGray: Color('#EEE'),
-  buttonHover: Color('#E8E8E8'),
-  boxShadow: Color('rgba(30,55,90,.1)'),
-  border: Color('rgba(30,55,90,.1)'),
+  dashboardBg: Color('#F7F8FA'),
+  error: Color('#FF3A26'),
+  border: Color('rgba(30,55,90,0.15)'),
 };
 
 export default colors;

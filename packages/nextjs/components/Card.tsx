@@ -20,7 +20,6 @@ const Card: React.FunctionComponent<ICard> = ({
         border-bottom: 1px solid ${colors.border};
         padding: 15px;
         margin: 0 -15px;
-        box-shadow: 0 1px 4px 0 ${colors.boxShadow};
       }
       @media(min-width: 768px) {
         div {

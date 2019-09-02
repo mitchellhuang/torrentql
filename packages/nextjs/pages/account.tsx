@@ -8,6 +8,30 @@ import Card from '../components/Card';
 import UpdateEmailForm from '../forms/UpdateEmailForm';
 import UpdatePasswordForm from '../forms/UpdatePasswordForm';
 import { LoadingState } from '../components/State';
+import colors from '../lib/colors';
+
+const StatusColor = {
+  enabled: colors.green,
+  disabled: colors.error,
+  banned: colors.error,
+};
+
+const Status = ({
+  status,
+}) => (
+  <span>
+    {status}
+    <style jsx>{`
+      span {
+        text-transform: capitalize;
+        color: white;
+        padding: 4px 5px;
+        border-radius: 5px;
+        background-color: ${StatusColor[status]};
+      }
+    `}</style>
+  </span>
+);
 
 const Account = () => {
   const { loading, data } = useQuery(ME_QUERY);
@@ -24,7 +48,7 @@ const Account = () => {
   return (
     <Layout title="Account">
       <Card title="Account" className="mb-3">
-        <p>Status: {me.status.toUpperCase()}</p>
+        <p className="mb-1">Status: <Status status={me.status} /></p>
         <p>Created on: {moment(me.createdAt).format('LL')}</p>
       </Card>
       <Card title="Email" className="mb-3">

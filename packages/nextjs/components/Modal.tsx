@@ -55,7 +55,7 @@ const Modal = ({
         background-color: #fff;
         border-radius: 5px;
         max-height: 75vh;
-        max-width: 400px;
+        max-width: 420px;
         padding: 15px;
         width: 100%;
         overflow: auto;
