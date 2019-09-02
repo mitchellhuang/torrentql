@@ -43,11 +43,11 @@ const TRow: React.FunctionComponent<ITRow> = ({
         outline: none;
         font-weight: ${bold ? 600 : 400};
         height: ${height ? height : 38}px;
-        border-top: 1px solid ${colors.buttonHover};
+        border-top: 1px solid ${colors.border};
         padding: ${noPad ? '0' : '0 15px'};
       }
       .row:hover {
-        background-color: ${hover ? colors.toolbarGray : colors.white};
+        background-color: ${hover ? colors.dashboardBg : colors.white};
       }
       .header {
         font-size: 16px;

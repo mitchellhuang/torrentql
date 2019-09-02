@@ -263,7 +263,7 @@ const Dashboard = () => {
               margin: 0;
             }
             .inner {
-              border: 1px solid #ddd;
+              border: 1px solid ${colors.border};
               border-radius: 5px;
               overflow: hidden;
             }

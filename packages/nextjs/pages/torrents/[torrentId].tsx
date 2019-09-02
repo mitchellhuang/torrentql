@@ -167,9 +167,6 @@ const TorrentWithData = ({ id }) => {
         .name {
           margin-bottom: 15px;
         }
-        .info:global(pre) {
-          font-size: 14px;
-        }
         .back {
           display: flex;
           align-items: center;

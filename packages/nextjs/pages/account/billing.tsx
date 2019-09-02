@@ -26,7 +26,7 @@ const Recharge = (props) => {
   const bitcoinTransaction = data && data.createBitcoinTransaction;
   const handleClick = amount => createBitcoinTransaction({ variables: { amount } });
   return (
-    <Card title="Recharge Account" {...props}>
+    <Card title="Recharge" {...props}>
       <div>
         <Button className="mr-2" onClick={() => handleClick(20)} outline>$20</Button>
         <Button className="mr-2" onClick={() => handleClick(40)} outline>$40</Button>
@@ -59,10 +59,10 @@ const History = ({
   ...props
 }) => {
   const Layout = ({ children, ...props }) => (
-    <Card title="Transaction History" {...props}>
+    <Card title="Recharge History" {...props}>
       {children}
       <p className="footnote mt-2">
-        Your transaction history since the beginning of time.
+        Your recharge history since the beginning of time.
       </p>
     </Card>
   );
@@ -110,14 +110,12 @@ const Billing = () => {
   }
   return (
     <Account title="Billing">
-      <div>
-        <Balance balance={me.balance} className="mb-3" />
-        <Recharge className="mb-3" />
-        <Automatic className="mb-3" />
-        <History bitcoinTransactions={me.bitcoinTransactions} />
-      </div>
+      <Balance balance={me.balance} className="mb-3" />
+      <Recharge className="mb-3" />
+      <Automatic className="mb-3" />
+      <History bitcoinTransactions={me.bitcoinTransactions} />
       <style jsx>{`
-        div :global(.footnote) {
+        :global(.footnote) {
           color: ${colors.darkGray};
         }
       `}</style>

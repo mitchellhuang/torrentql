@@ -58,8 +58,8 @@ const Button: React.FunctionComponent<IButton> = ({
           background-color: ${colors.primary.darken(0.1)};
         }
         .button:disabled {
-          background-color: #aaa;
-          border-color: #aaa;
+          background-color: ${colors.primary.lighten(0.2)};
+          border-color: ${colors.primary.lighten(0.2)};
         }
         .button--block {
           display: block;
