@@ -18,3 +18,10 @@
 
   roles:
     - { role: nginx, tags: nginx }
+
+- name: apply services
+  hosts: deluge
+  remote_user: ubuntu
+
+  roles:
+    - { role: services, tags: services }

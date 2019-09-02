@@ -34,12 +34,13 @@ const Recharge = (props) => {
         <Button className="mr-2" onClick={() => handleClick(80)} outline>$80</Button>
         <Button onClick={() => handleClick(100)} outline>$100</Button>
       </div>
-      { loading ?
+      {loading ?
           <p className="mt-2">Generating invoice...</p> :
-          bitcoinTransaction &&
-            <p className="mt-2">
-              <a href={bitcoinTransaction.invoiceUrl} target="_blank">Pay with Bitcoin</a>
-            </p> }
+          bitcoinTransaction && (
+            <Button className="mt-2" href={bitcoinTransaction.invoiceUrl} target="_blank">
+              Pay with Bitcoin
+            </Button>
+          )}
       <p className="footnote mt-2">Recharge your account balance with Bitcoin.</p>
     </Card>
   );
@@ -65,15 +66,14 @@ const History = ({
       </p>
     </Card>
   );
-  const bitcoinTransactionsFiltered = bitcoinTransactions.filter(bt => bt.status !== 'unpaid');
-  if (!bitcoinTransactionsFiltered.length) {
+  if (!bitcoinTransactions.length) {
     return (
       <Layout {...props}>
       </Layout>
     );
   }
   return (
-    <Layout>
+    <Layout {...props}>
       <div className="table">
         <TRow header bold noPad>
           <TCell flex={4}>ID</TCell>
@@ -82,7 +82,7 @@ const History = ({
           <TCell flex={2}>Created at</TCell>
           <TCell flex={2}>Updated at</TCell>
         </TRow>
-        {bitcoinTransactionsFiltered.map(bitcoinTransaction => (
+        {bitcoinTransactions.map(bitcoinTransaction => (
           <TRow key={bitcoinTransaction.id} noPad>
             <TCell flex={4}>{bitcoinTransaction.id}</TCell>
             <TCell flex={1}>{bitcoinTransaction.status.toUpperCase()}</TCell>

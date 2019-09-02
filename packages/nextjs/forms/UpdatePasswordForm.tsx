@@ -1,70 +1,60 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
+import * as yup from 'yup';
+import { FORM_ERROR } from 'final-form';
+import { useForm, useField } from 'react-final-form-hooks';
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_USER_PASSWORD_MUTATION } from '../apollo/mutations';
 import Input from '../components/Input';
-import Error from '../components/Error';
 import Button from '../components/Button';
-import transformErrors from '../lib/transformErrors';
+import Error from '../components/Error';
+import { validateSync } from '../lib/validate';
+import { transformError } from '../lib/error';
+
+const schema = yup.object().shape({
+  password: yup
+    .string()
+    .required(),
+  newPassword: yup
+    .string()
+    .required()
+    .min(8),
+});
 
 const UpdatePasswordForm = () => {
-  const [updateUser] = useMutation(UPDATE_USER_PASSWORD_MUTATION);
+  const [updateUserPassword] = useMutation(UPDATE_USER_PASSWORD_MUTATION);
+  const { form, handleSubmit, pristine, submitting, submitError } = useForm({
+    onSubmit: async ({ password, newPassword }) => {
+      try {
+        await updateUserPassword({ variables: { password, newPassword } });
+      } catch (error) {
+        return {
+          [FORM_ERROR]: transformError(error),
+        };
+      }
+    },
+    validate: values => validateSync(schema, values),
+  });
+  const password = useField('password', form);
+  const newPassword = useField('newPassword', form);
   return (
-    <Formik
-      initialValues={{ oldPassword: '', password: '' }}
-      onSubmit={async ({ oldPassword, password }, { setSubmitting, setStatus }) => {
-        try {
-          await updateUser({
-            variables: {
-              oldPassword,
-              password,
-            },
-          });
-          setSubmitting(false);
-        } catch (err) {
-          setStatus(transformErrors(err));
-          setSubmitting(false);
-        }
-      }}
-      render={({
-        values: { oldPassword, password },
-        status,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-      }) => (
-        <Form>
-          <Input
-            id="oldPassword"
-            label="Old password"
-            placeholder="Enter your old password"
-            type="password"
-            value={oldPassword}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            errors={status && status.oldPassword}
-          />
-          <Input
-            id="password"
-            label="New password"
-            placeholder="Enter your new password"
-            type="password"
-            value={password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            errors={status && status.password}
-          />
-          <Error error={status && status.error} />
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            block
-          >
-            Update password
-          </Button>
-        </Form>
-      )}
-    />
+    <form onSubmit={handleSubmit}>
+      <Input
+        {...password.input}
+        type="password"
+        label="Existing password"
+        placeholder="Enter your existing password"
+        error={password.meta.touched && password.meta.error}
+      />
+      <Input
+        {...newPassword.input}
+        type="password"
+        label="New password"
+        placeholder="Enter your new password"
+        error={newPassword.meta.touched && newPassword.meta.error}
+      />
+      {submitError && <Error className="mb-3">{submitError}</Error>}
+      <Button type="submit" disabled={pristine || submitting}>Update password</Button>
+    </form>
   );
 };
 

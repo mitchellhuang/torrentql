@@ -52,7 +52,7 @@ type Mutation {
   login(email: String!, password: String!): User!
   createUser(email: String!, password: String!): User!
   updateUserEmail(email: String!): User!
-  updateUserPassword(oldPassword: String!, password: String!): User!
+  updateUserPassword(password: String!, newPassword: String!): User!
   deleteUser: Boolean!
 }
 
@@ -64,6 +64,7 @@ type Query {
 
 type Server {
   id: ID!
+  tag: String!
   region: String!
 }
 
@@ -88,7 +89,7 @@ type Torrent {
   tracker: String!
   trackerHost: String!
   trackerStatus: String!
-  files: File!
+  files: File
   user: User!
   server: Server!
 }
@@ -96,9 +97,11 @@ type Torrent {
 type User {
   id: ID!
   email: String!
+  status: String!
   balance: Float!
   token: String
   torrents: [Torrent!]!
   apiKeys: [ApiKey!]!
   bitcoinTransactions: [BitcoinTransaction!]!
+  createdAt: DateTime!
 }

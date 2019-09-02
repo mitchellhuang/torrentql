@@ -1,0 +1,53 @@
+version: '2'
+services:
+  deluge:
+    image: linuxserver/deluge
+    restart: always
+    environment:
+      PUID: 1000
+      PGID: 1000
+      VIRTUAL_HOST: gra000-deluge.eu-west-1.torrentql.com
+      VIRTUAL_PORT: 8112
+      LETSENCRYPT_HOST: gra000-deluge.eu-west-1.torrentql.com
+    ports:
+      - 8112:8112
+      - 58846:58846
+      - 58946:58946
+    volumes:
+      - /config:/config
+      - /downloads:/downloads
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    environment:
+      DEFAULT_HOST: gra000.eu-west-1.torrentql.com
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/torrentql/nginx/certs:/etc/nginx/certs
+      - /var/torrentql/nginx/vhost.d:/etc/nginx/vhost.d
+      - /var/torrentql/nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  nginx-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    environment:
+      DEFAULT_EMAIL: mitchell@mitchellhuang.net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-proxy
+
+  nginx-files:
+    image: nginx
+    restart: always
+    environment:
+      VIRTUAL_HOST: gra000.eu-west-1.torrentql.com
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: gra000.eu-west-1.torrentql.com
+    volumes:
+      - /downloads:/downloads
+      - /var/torrentql/nginx/conf.d:/etc/nginx/conf.d

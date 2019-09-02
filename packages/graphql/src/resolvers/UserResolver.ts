@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import {
   Resolver,
   Query,
@@ -9,14 +9,15 @@ import {
   Root,
   Mutation,
   Ctx,
-  Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IsEmail, MinLength } from 'class-validator';
 import { User } from '@torrentql/common/dist/entities/User';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
+import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
 import * as jwt from '../lib/jwt';
 import { Context } from '../lib/context';
+import { Authorized } from '../lib/decorators';
 
 @ArgsType()
 class LoginInput {
@@ -50,11 +51,11 @@ class UpdateUserEmailInput {
 @ArgsType()
 class UpdateUserPasswordInput {
   @Field()
-  oldPassword: string;
+  password: string;
 
   @Field()
   @MinLength(8)
-  password: string;
+  newPassword: string;
 }
 
 @Resolver(of => User)
@@ -64,6 +65,9 @@ export class UserResolver {
 
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
+
+  @InjectRepository(BitcoinTransaction)
+  private bitcoinTransactionRepository: Repository<BitcoinTransaction>;
 
   @Authorized()
   @Query(returns => User)
@@ -76,12 +80,27 @@ export class UserResolver {
     const torrents = await this.torrentRepository.find({
       where: {
         user: { id: user.id },
-        isActive: true,
+        active: true,
       },
     });
     let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
     torrentsDeluge = torrentsDeluge.filter(v => v);
     return torrentsDeluge;
+  }
+
+  @FieldResolver()
+  async balance(@Root() user: User) {
+    return parseFloat(user.balance as any).toFixed(2);
+  }
+
+  @FieldResolver()
+  async bitcoinTransactions(@Root() user: User) {
+    return this.bitcoinTransactionRepository.find({
+      where: {
+        user: { id: user.id },
+        status: Not('unpaid'),
+      },
+    });
   }
 
   @Mutation(returns => User)
@@ -141,15 +160,15 @@ export class UserResolver {
   @Authorized()
   @Mutation(returns => User)
   async updateUserPassword(
-    @Args() { oldPassword, password }: UpdateUserPasswordInput,
+    @Args() { password, newPassword }: UpdateUserPasswordInput,
     @Ctx() ctx: Context,
   ) {
     const user = ctx.user;
-    const valid = await user.verifyPassword(oldPassword);
+    const valid = await user.verifyPassword(password);
     if (!valid) {
-      throw new Error('Invalid old password.');
+      throw new Error('Invalid existing password.');
     }
-    user.password = password;
+    user.password = newPassword;
     return this.userRepository.save(user);
   }
 

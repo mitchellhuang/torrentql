@@ -23,6 +23,8 @@ export const ME_QUERY = gql`
       id
       email
       balance
+      status
+      createdAt
       apiKeys {
         id
         name

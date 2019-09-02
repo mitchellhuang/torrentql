@@ -77,8 +77,8 @@ export const RESET_PASSWORD_MUTATION = gql`
 `;
 
 export const UPDATE_USER_PASSWORD_MUTATION = gql`
-  mutation updateUserPassword($oldPassword: String!, $password: String!) {
-    updateUserPassword(oldPassword: $oldPassword, password: $password) {
+  mutation updateUserPassword($password: String!, $newPassword: String!) {
+    updateUserPassword(password: $password, newPassword: $newPassword) {
       id
     }
   }

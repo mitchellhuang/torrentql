@@ -13,11 +13,11 @@ const sync = async () => {
     password: '$2a$10$IwpYVnIhBS3GJKHSfVIZduMgyHNxXVKI6tR9kuW8u2yhn0Azg8HlC',
   });
   await connection.manager.insert(Server, {
-    id: 'gra001',
-    host: 'localhost',
-    port: '8112',
-    protocol: 'http',
+    id: 1,
+    tag: 'gra001',
     region: 'eu-west-1',
+    delugeUrl: 'http://localhost:8112/',
+    fileUrl: 'http://localhost:3001/files/',
   });
   await connection.close();
 };

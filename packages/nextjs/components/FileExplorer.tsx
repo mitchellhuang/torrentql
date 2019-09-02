@@ -129,6 +129,9 @@ const File = ({ name, depth, id, url }) => {
 const FileExplorer = ({ torrent }) => {
   const id = torrent.id;
   const files = torrent.files;
+  if (!files) {
+    return null;
+  }
   return (
     <div className="file-explorer">
       {directoryDive(files, 0, id)}

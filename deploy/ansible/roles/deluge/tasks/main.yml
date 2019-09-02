@@ -1,25 +1,17 @@
-- name: create data directory
+- name: create deluge config directory
   become: yes
   file:
-    path: /data
+    path: /config
     state: directory
     owner: ubuntu
     group: ubuntu
     mode: 0775
 
-- name: run deluge container
-  docker_container:
-    image: linuxserver/deluge
-    name: deluge
-    state: started
-    restart_policy: always
-    env:
-      PUID: "0"
-      PGID: "0"
-    network_mode: host
-    ports:
-      - "8112:8112"
-      - "58846:58846"
-      - "58946:58946"
-    volumes:
-      - /data:/root/Downloads
+- name: create deluge data directory
+  become: yes
+  file:
+    path: /downloads
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0775

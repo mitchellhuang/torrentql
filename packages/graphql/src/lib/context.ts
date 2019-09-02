@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { Connection } from 'typeorm';
-import { AuthChecker } from 'type-graphql';
 import { User } from '@torrentql/common/dist/entities/User';
 import { ApiKey } from '@torrentql/common/dist/entities/ApiKey';
 
@@ -46,11 +45,4 @@ export const createContext = (connection: Connection) => {
       user: undefined,
     };
   };
-};
-
-export const authChecker: AuthChecker<Context2> = (
-  { root, args, context, info },
-  roles,
-) => {
-  return !!context.user;
 };

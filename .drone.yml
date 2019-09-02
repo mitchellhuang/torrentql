@@ -4,6 +4,29 @@ name: default
 steps:
 - name: envsubst
   image: supinf/envsubst
+  environment:
+    API_URI:
+      from_secret: api_uri
+    DB_DATABASE:
+      from_secret: db_database
+    DB_HOST:
+      from_secret: db_host
+    DB_PASSWORD:
+      from_secret: db_password
+    DB_PORT:
+      from_secret: db_port
+    DB_SSL:
+      from_secret: db_ssl
+    DB_USER:
+      from_secret: db_user
+    FRONTEND_HOST:
+      from_secret: frontend_host
+    JWT_SECRET:
+      from_secret: jwt_secret
+    OPENNODE_API_KEY:
+      from_secret: opennode_api_key
+    SENDGRID_API_KEY:
+      from_secret: sendgrid_api_key
   commands:
   - cd deploy
   - export TAG=$DRONE_COMMIT_SHA
@@ -23,6 +46,27 @@ steps:
       - "${DRONE_COMMIT_SHA}"
     context: ./
     dockerfile: packages/graphql/Dockerfile
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+  depends_on:
+  - envsubst
+  when:
+    branch:
+    - master
+
+- name: build-billing
+  image: plugins/ecr
+  settings:
+    registry: 392244324571.dkr.ecr.eu-west-1.amazonaws.com
+    region: eu-west-1
+    repo: 392244324571.dkr.ecr.eu-west-1.amazonaws.com/torrentql-billing
+    tags:
+      - latest
+      - "${DRONE_COMMIT_SHA}"
+    context: ./
+    dockerfile: packages/billing/Dockerfile
     access_key:
       from_secret: aws_access_key_id
     secret_key:
@@ -64,11 +108,32 @@ steps:
   - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
   - mv doctl /usr/local/bin/
   - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/graphql/config.yml
   - kubectl apply -f deploy/kubernetes/graphql/deploy.yml
   - kubectl rollout status deployment torrentql-graphql
   depends_on:
   - build-graphql
+  - build-billing
   - build-nextjs
+  when:
+    branch:
+    - master
+
+- name: deploy-billing
+  image: lachlanevenson/k8s-kubectl
+  environment:
+    DIGITALOCEAN_ACCESS_TOKEN:
+      from_secret: digitalocean_access_token
+  commands:
+  - apk add --no-cache curl
+  - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
+  - mv doctl /usr/local/bin/
+  - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/billing/config.yml
+  - kubectl apply -f deploy/kubernetes/billing/deploy.yml
+  - kubectl rollout status deployment torrentql-billing
+  depends_on:
+  - deploy-graphql
   when:
     branch:
     - master
@@ -83,10 +148,11 @@ steps:
   - curl -sL https://github.com/digitalocean/doctl/releases/download/v1.22.0/doctl-1.22.0-linux-amd64.tar.gz | tar -xzv
   - mv doctl /usr/local/bin/
   - doctl kubernetes cluster kubeconfig save tql-k8s-staging
+  - kubectl apply -f deploy/kubernetes/nextjs/config.yml
   - kubectl apply -f deploy/kubernetes/nextjs/deploy.yml
   - kubectl rollout status deployment torrentql-nextjs
   depends_on:
-  - deploy-graphql
+  - deploy-billing
   when:
     branch:
     - master
@@ -99,4 +165,5 @@ steps:
     channel: alerts
   depends_on:
   - deploy-graphql
+  - deploy-billing
   - deploy-nextjs

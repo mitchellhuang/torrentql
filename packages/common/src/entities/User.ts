@@ -30,7 +30,15 @@ export class User {
   password: string;
 
   @Field()
-  @Column('decimal', { precision: 19, scale: 4, default: 0 })
+  @Column({
+    type: 'enum',
+    enum: ['enabled', 'disabled', 'banned'],
+    default: 'disabled',
+  })
+  status: 'enabled' | 'disabled' | 'banned';
+
+  @Field()
+  @Column('decimal', { precision: 19, scale: 9, default: 0 })
   balance: number;
 
   @Field({ nullable: true })
@@ -48,6 +56,7 @@ export class User {
   @OneToMany(type => BitcoinTransaction, bitcoinTransaction => bitcoinTransaction.user)
   bitcoinTransactions: Promise<BitcoinTransaction[]>;
 
+  @Field()
   @CreateDateColumn()
   createdAt: Date;
 

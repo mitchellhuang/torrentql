@@ -6,5 +6,5 @@ metadata:
     app: torrentql
     tier: frontend
 data:
-  NODE_ENV: ""
-  API_URI: ""
+  NODE_ENV: production
+  API_URI: "${API_URI}"

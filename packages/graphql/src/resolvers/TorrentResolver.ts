@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import {
   Resolver,
   Query,
@@ -8,16 +8,16 @@ import {
   Args,
   Field,
   ArgsType,
-  Authorized,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { Validator, MinLength, IsUUID } from 'class-validator';
+import { Validator, IsUUID, IsNotEmpty } from 'class-validator';
 import { Deluge } from '@ctrl/deluge';
 import parseTorrent from 'parse-torrent';
 import axios from 'axios';
-import { Context } from '../lib/context';
 import { Torrent } from '@torrentql/common/dist/entities/Torrent';
 import { Server } from '@torrentql/common/dist/entities/Server';
+import { Context } from '../lib/context';
+import { Authorized, Enabled } from '../lib/decorators';
 
 const validator = new Validator();
 
@@ -31,7 +31,7 @@ class GetTorrentInput {
 @ArgsType()
 class AddTorrentInput {
   @Field()
-  @MinLength(1)
+  @IsNotEmpty()
   data: string;
 }
 
@@ -56,13 +56,47 @@ class ResumeTorrentInput {
   id: string;
 }
 
+const serverSelector = async (region: Server['region']) => {
+  const connection = await getConnection();
+  return connection.transaction<Server | undefined>(async (transaction) => {
+    const servers = await transaction
+      .getRepository(Server)
+      .find({
+        where: {
+          enabled: true,
+          region,
+        },
+        order: {
+          id: 'ASC',
+        },
+      });
+    if (servers.length === 0) {
+      return undefined;
+    }
+    if (servers.length === 1) {
+      return servers[0];
+    }
+    const idx = _.findIndex(servers, { next: true });
+    if (idx === -1) {
+      await transaction
+        .getRepository(Server)
+        .update({ id: servers[1].id }, { next: true });
+      return servers[0];
+    }
+    await transaction
+      .getRepository(Server)
+      .update({ id: servers[idx].id }, { next: false });
+    await transaction
+      .getRepository(Server)
+      .update({ id: servers[idx + 1] ? servers[idx + 1].id : servers[0].id }, { next: true });
+    return servers[idx];
+  });
+};
+
 @Resolver(of => Torrent)
 export class TorrentResolver {
   @InjectRepository(Torrent)
   private torrentRepository: Repository<Torrent>;
-
-  @InjectRepository(Server)
-  private serverRepository: Repository<Server>;
 
   @Authorized()
   @Query(returns => Torrent)
@@ -89,7 +123,7 @@ export class TorrentResolver {
     const torrents = await this.torrentRepository.find({
       where: {
         user: { id: user.id },
-        isActive: true,
+        active: true,
       },
     });
     let torrentsDeluge = await Promise.all(torrents.map(torrent => torrent.injectDeluge()));
@@ -98,15 +132,15 @@ export class TorrentResolver {
   }
 
   @Authorized()
+  @Enabled()
   @Mutation(returns => Torrent)
   async addTorrent(@Args() { data }: AddTorrentInput, @Ctx() ctx: Context) {
-    const servers = await this.serverRepository.find();
-    const server = _.sample(servers);
+    const server = await serverSelector('eu-west-1');
     if (!server) {
       throw new Error('No server available.');
     }
     const deluge = new Deluge({
-      baseUrl: `${server.protocol}://${server.host}:${server.port}/`,
+      baseUrl: server.delugeUrl,
       password: 'deluge',
       timeout: 1000,
     });
@@ -146,7 +180,7 @@ export class TorrentResolver {
       throw new Error('Could not parse torrent file.');
     }
     const torrent = new Torrent();
-    torrent.isActive = true;
+    torrent.active = true;
     torrent.hash = hash;
     torrent.type = type;
     torrent.data = data;
@@ -168,15 +202,15 @@ export class TorrentResolver {
     }
     const activeHashes = await this.torrentRepository.find({
       hash: torrent.hash,
-      isActive: true,
+      active: true,
     });
     if (activeHashes.length > 1) {
-      torrent.isActive = false;
+      torrent.active = false;
       await this.torrentRepository.save(torrent);
     } else if (activeHashes.length === 1) {
       const deluge = await torrent.deluge();
       await deluge.removeTorrent(torrent.hash, true);
-      torrent.isActive = false;
+      torrent.active = false;
       await this.torrentRepository.save(torrent);
     }
     return true;
@@ -199,6 +233,7 @@ export class TorrentResolver {
   }
 
   @Authorized()
+  @Enabled()
   @Mutation(returns => Boolean)
   async resumeTorrent(@Args() { id }: ResumeTorrentInput, @Ctx() ctx: Context) {
     const torrent = await this.torrentRepository.findOne(id);

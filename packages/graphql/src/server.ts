@@ -11,7 +11,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { createConnectionFromEnv } from '@torrentql/common/dist/lib/db';
 import { BillingResolver } from './resolvers/BillingResolver';
 import * as jwt from './lib/jwt';
-import { createContext, authChecker } from './lib/context';
+import { createContext } from './lib/context';
 
 const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
@@ -26,7 +26,6 @@ const createServer = async () => {
       join(__dirname, './resolvers/*.js'),
     ],
     container: Container,
-    authChecker,
   });
 
   await emitSchemaDefinitionFile('./schema.graphql', schema);
