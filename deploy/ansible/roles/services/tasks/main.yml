@@ -1,0 +1,8 @@
+- name: copy docker-compose.yml
+  copy:
+    src: files/docker-compose.yml
+    dest: /var/torrentql/docker-compose.yml
+
+- name: run services docker-compose.yml
+  docker_compose:
+    project_src: /var/torrentql
