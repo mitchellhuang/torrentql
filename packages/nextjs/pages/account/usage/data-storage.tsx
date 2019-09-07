@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks';
 import Account from '../../../layouts/Account';
 import withAuth from '../../../lib/withAuth';
 import Card from '../../../components/Card';
-// import Link from 'next/link';
 import GraphTabs from '../../../components/GraphTabs';
 import BillingUsageGraph from '../../../components/BillingUsageGraph';
 import { GET_BILLING_USAGE_QUERY } from '../../../apollo/queries';
@@ -16,12 +15,14 @@ const Usage = () => {
     content = keys.map(key => <BillingUsageGraph billingUsages={getBillingUsage} graphType={key} key={key} />);
   }
   return (
-    <Account title="Usage">
-    <GraphTabs />
-      <Card title="Usage">
+    <>
+      <Account title="Usage">
+        <Card title="Usage">
+        <GraphTabs/>
         {content}
-      </Card>
-    </Account>
+        </Card>
+      </Account>
+    </>
   );
 };
 

@@ -17,7 +17,7 @@ const Usage = () => {
   return (
     <Account title="Usage">
       <Card title="Usage">
-        <GraphTabs/>
+      <GraphTabs/>
         {content}
       </Card>
     </Account>

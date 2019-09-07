@@ -10,15 +10,23 @@ const GraphTabs = () => {
           <Link href={link}><div className="key">{key}</div></Link>
           <style jsx>{`
               .key {
-                background-color: lightgray;
-                flex: 1;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid black;
-              }
-              .key:hover {
-                background-color: white;
-              }
+                display: inline-flex;
+                padding: 10px;
+                background-color: #F7F8FA;
+                color: rgb(32, 126, 206);
+
+                }
+                .key:hover {
+                  background-color: lightblue;
+                }
+                @media(max-width: 767px) {
+                  .key {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px;
+                  }
+                }
           `}
           </style>
         </>

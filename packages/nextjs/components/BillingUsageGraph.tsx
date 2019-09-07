@@ -25,6 +25,7 @@ const generatePoints = (billingUsages, key) => {
 const BillingUsageGraph = ({ billingUsages, graphType }) => {
   return (
     <XYPlot
+      margin={{ left: 65 }}
       width={300}
       height={300}
       xType={'time'}>
