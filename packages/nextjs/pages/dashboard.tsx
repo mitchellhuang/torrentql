@@ -254,6 +254,8 @@ const Dashboard = () => {
           .tools {
             position: sticky;
             left: 0;
+            border: 1px solid ${colors.border};
+            border-radius: 5px;
           }
           @media(min-width: 768px) {
             .dashboard {
@@ -272,6 +274,12 @@ const Dashboard = () => {
               border: 1px solid ${colors.border};
               border-radius: 5px;
               overflow: visible;
+            }
+            .tools {
+              border: 1px solid ${colors.border};
+              border-radius: 5px;
+              display: flex;
+              justify-content: flex-end;
             }
           }
         `}</style>
