@@ -53,6 +53,29 @@ const TRow: React.FunctionComponent<ITRow> = ({
         font-size: 16px;
         border-color: transparent;
       }
+      @media(max-width: 768px) {
+        .row {
+          display: flex;
+          flex-direction: row;
+          width: 1000px;
+          box-sizing: border-box;
+          color: ${colors.black};
+          background-color: ${colors.white};
+          cursor: ${pointer ? 'pointer' : 'default'};
+          outline: none;
+          font-weight: ${bold ? 600 : 400};
+          height: ${height ? height : 38}px;
+          border-top: 1px solid ${colors.border};
+          padding: ${noPad ? '0' : '0 15px'};
+        }
+        .row:hover {
+          background-color: ${hover ? colors.dashboardBg : colors.white};
+        }
+        .header {
+          font-size: 16px;
+          border-color: transparent;
+        }
+      }
     `}</style>
   </div>
 );
@@ -74,14 +97,13 @@ const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
         align-items: center;
         flex-direction: row;
         flex: ${flex || 1};
-        overflow: hidden;
+        overflow: auto;
       }
       .t-cell:not(:last-child) {
         margin-right: 10px;
       }
       .children {
         flex: 1;
-        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }

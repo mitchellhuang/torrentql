@@ -247,7 +247,7 @@ const Dashboard = () => {
           }
           .content {
             margin: 0 -15px;
-            overflow: hidden;
+            overflow: visible;
           }
           @media(min-width: 768px) {
             .dashboard {
@@ -265,7 +265,7 @@ const Dashboard = () => {
             .inner {
               border: 1px solid ${colors.border};
               border-radius: 5px;
-              overflow: hidden;
+              overflow: visible;
             }
           }
         `}</style>
