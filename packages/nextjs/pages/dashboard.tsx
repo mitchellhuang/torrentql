@@ -230,8 +230,10 @@ const Dashboard = () => {
           <FilterByTracker trackers={trackers} trackerFilter={trackerFilter} />
         </div>
         <div className="content">
-          <div className="inner">
+          <div className="tools">
             <ToolBar selectedTorrents={selectedTorrents} />
+          </div>
+          <div className="inner">
             <TorrentHeader torrents={torrents} selected={selectedTorrents} />
             {content}
           </div>
@@ -248,6 +250,10 @@ const Dashboard = () => {
           .content {
             margin: 0 -15px;
             overflow: scroll;
+          }
+          .tools {
+            position: sticky;
+            left: 0;
           }
           @media(min-width: 768px) {
             .dashboard {
