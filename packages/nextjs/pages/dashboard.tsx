@@ -247,7 +247,7 @@ const Dashboard = () => {
           }
           .content {
             margin: 0 -15px;
-            overflow: visible;
+            overflow: scroll;
           }
           @media(min-width: 768px) {
             .dashboard {
