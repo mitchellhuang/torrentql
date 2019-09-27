@@ -36,6 +36,7 @@ const TRow: React.FunctionComponent<ITRow> = ({
       .row {
         display: flex;
         flex-direction: row;
+        min-width: 1000px;
         box-sizing: border-box;
         color: ${colors.black};
         background-color: ${colors.white};
@@ -52,29 +53,6 @@ const TRow: React.FunctionComponent<ITRow> = ({
       .header {
         font-size: 16px;
         border-color: transparent;
-      }
-      @media(max-width: 768px) {
-        .row {
-          display: flex;
-          flex-direction: row;
-          width: 1000px;
-          box-sizing: border-box;
-          color: ${colors.black};
-          background-color: ${colors.white};
-          cursor: ${pointer ? 'pointer' : 'default'};
-          outline: none;
-          font-weight: ${bold ? 600 : 400};
-          height: ${height ? height : 38}px;
-          border-top: 1px solid ${colors.border};
-          padding: ${noPad ? '0' : '0 15px'};
-        }
-        .row:hover {
-          background-color: ${hover ? colors.dashboardBg : colors.white};
-        }
-        .header {
-          font-size: 16px;
-          border-color: transparent;
-        }
       }
     `}</style>
   </div>
