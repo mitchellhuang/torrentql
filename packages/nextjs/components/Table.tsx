@@ -35,13 +35,11 @@ const TRow: React.FunctionComponent<ITRow> = ({
     <style jsx>{`
       .row {
         display: flex;
-        flex-direction: row;
         min-width: 1000px;
         box-sizing: border-box;
         color: ${colors.black};
         background-color: ${colors.white};
         cursor: ${pointer ? 'pointer' : 'default'};
-        outline: none;
         font-weight: ${bold ? 600 : 400};
         height: ${height ? height : 38}px;
         border-top: 1px solid ${colors.border};
@@ -73,7 +71,6 @@ const TCell: React.FunctionComponent<ITRow> = ({ flex, children }) => (
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        flex-direction: row;
         flex: ${flex || 1};
         overflow: auto;
       }
