@@ -82,7 +82,6 @@ const ToolBar = ({
           display: flex;
           height: 38px;
           align-items: center;
-          justify-content: flex-start;
           background-color: ${colors.dashboardBg};
           padding: 0 15px;
         }
@@ -97,11 +96,6 @@ const ToolBar = ({
           margin: 0 20px;
           height: 25px;
           background-color: ${colors.blueGray};
-        }
-        @media(min-width: 768px) {
-          .toolbar {
-            justify-content: flex-end;
-          }
         }
       `}</style>
     </div>
