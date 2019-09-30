@@ -1,10 +1,9 @@
 import React from 'react';
 import prettyBytes from 'pretty-bytes';
-import Link from 'next/link';
 import { CheckSquare, Square, Pause, Play } from 'react-feather';
 import { torrentStatus } from '../lib/constants';
 import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
+import { UPDATE_SELECTED_TORRENT_MUTATION, UPDATE_SELECTED_TORRENTS_MUTATION } from '../apollo/mutations';
 import { TRow, TCell } from './Table';
 import colors from '../lib/colors';
 
@@ -48,11 +47,13 @@ const Torrent = ({
   selectedTorrents,
 }) => {
   const [updateSelectedTorrents] = useMutation(UPDATE_SELECTED_TORRENTS_MUTATION);
+  const [updateSelectedTorrent] = useMutation(UPDATE_SELECTED_TORRENT_MUTATION);
   const selected = selectedTorrents.includes(torrent.id);
   const handleSelection = () => {
     selectedTorrents = selectedTorrents.includes(torrent.id)
       ? selectedTorrents.filter(id => id !== torrent.id)
       : selectedTorrents.concat([torrent.id]);
+    updateSelectedTorrent({ variables: { selectedTorrent: torrent.id } });
     return updateSelectedTorrents({ variables : { selectedTorrents } });
   };
   return (
@@ -69,13 +70,7 @@ const Torrent = ({
         {selected && <CheckSquare size={20} />}
       </div>
       <TCell flex={5}>
-        <Link href={`/torrents/${torrent.id}`}>
-          <a
-            className="torrent-name"
-            onClick={e => e.stopPropagation()}>
-            {torrent.name}
-          </a>
-        </Link>
+        {torrent.name}
       </TCell>
       <TCell flex={1}>
         {prettyBytes(torrent.totalSize)}

@@ -12,6 +12,7 @@ export const DASHBOARD_QUERY = gql`
       searchFilter
       statusFilter
       trackerFilter
+      selectedTorrent
       selectedTorrents
     }
   }

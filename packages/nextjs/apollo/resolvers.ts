@@ -9,6 +9,7 @@ export const typeDefs = gql`
       searchFilter: String
       statusFilter: String
       trackerFilter: String
+      selectedTorrent: String
       selectedTorrents: [String]
     }
     extend type Query {
@@ -19,6 +20,7 @@ export const typeDefs = gql`
       updateSearchFilter(searchFilter: String!): Dashboard
       updateStatusFilter(statusFilter: String!): Dashboard
       updateTrackerFilter(trackerFilter: String!): Dashboard
+      updateSelectedTorrent(selectedTorrent: String!): Dashboard
       updateSelectedTorrents(selectedTorrents: [String]!): Dashboard
     }
 `;
@@ -68,6 +70,14 @@ export const resolvers = {
       cache.writeQuery({
         query: DASHBOARD_QUERY,
         data: { dashboard: { ...dashboard, trackerFilter } },
+      });
+      return dashboard;
+    },
+    updateSelectedTorrent: (_, { selectedTorrent }, { cache }) => {
+      const { dashboard } = cache.readQuery({ query: DASHBOARD_QUERY });
+      cache.writeQuery({
+        query: DASHBOARD_QUERY,
+        data: { dashboard: { ...dashboard, selectedTorrent } },
       });
       return dashboard;
     },

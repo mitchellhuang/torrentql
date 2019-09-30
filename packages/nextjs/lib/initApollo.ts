@@ -9,9 +9,10 @@ import { torrentStatus } from '../lib/constants';
 let apolloClient = null;
 
 const DEFAULT_DASHBOARD_CACHE = {
-  searchFilter: '',
+  searchFilter: null,
   statusFilter: torrentStatus.ALL,
-  trackerFilter: '',
+  trackerFilter: null,
+  selectedTorrent: null,
   selectedTorrents: [],
   __typename: 'Dashboard',
 };
