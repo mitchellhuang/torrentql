@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Compass, UploadCloud, DownloadCloud, Pause, Clock } from 'react-feather';
 import DashboardLayout from '../layouts/Dashboard';
@@ -11,6 +12,7 @@ import {
 } from '../apollo/mutations';
 import Torrent, { TorrentHeader } from '../components/Torrent';
 import ToolBar from '../components/ToolBar';
+import InfoPanel from '../components/InfoPanel';
 import Input from '../components/Input';
 import { LoadingState, EmptyState } from '../components/State';
 import { torrentStatus } from '../lib/constants';
@@ -187,7 +189,7 @@ const Dashboard = () => {
   if (!dashboard) {
     return null;
   }
-  const { searchFilter, statusFilter, trackerFilter, selectedTorrents } = dashboard;
+  const { searchFilter, statusFilter, trackerFilter, selectedTorrent, selectedTorrents } = dashboard;
   let torrents = data && data.getTorrents || [];
   let state;
   let content;
@@ -237,6 +239,7 @@ const Dashboard = () => {
           </div>
           {state}
         </div>
+        {torrents && selectedTorrent && <InfoPanel torrent={_.find(torrents, { id: selectedTorrent })} />}
         <style jsx>{`
           .dashboard {
             display: flex;
