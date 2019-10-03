@@ -18,7 +18,7 @@ const items = [
     icon: CreditCard,
   },
   {
-    url: '/account/usage',
+    url: '/account/usage/data-transfer-out',
     name: 'Usage',
     icon: PieChart,
   },

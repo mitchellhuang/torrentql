@@ -17,6 +17,17 @@ export const DASHBOARD_QUERY = gql`
   }
 `;
 
+export const GET_BILLING_USAGE_QUERY = gql`
+  query getBillingUsage {
+    getBillingUsage {
+      diskUsage
+      dataTransferIn
+      dataTransferOut
+      createdAt
+    }
+  }
+`;
+
 export const ME_QUERY = gql`
   query me {
     me {

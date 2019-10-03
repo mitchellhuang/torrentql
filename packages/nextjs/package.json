@@ -46,6 +46,7 @@
     "react-feather": "^2.0.3",
     "react-final-form": "^6.3.0",
     "react-final-form-hooks": "^2.0.1",
+    "react-vis": "^1.11.7",
     "webpack": "^4.39.2",
     "yup": "^0.27.0"
   },

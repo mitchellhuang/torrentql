@@ -4,6 +4,7 @@ import {
   ArgsType,
   Field,
   Mutation,
+  Query,
   Ctx,
 } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
@@ -12,6 +13,7 @@ import opennode from 'opennode';
 import { Request, Response } from 'express';
 import { User } from '@torrentql/common/dist/entities/User';
 import { BitcoinTransaction } from '@torrentql/common/dist/entities/BitcoinTransaction';
+import { BillingUsage } from '@torrentql/common/dist/entities/BillingUsage';
 import { Context } from '../lib/context';
 import { Authorized } from '../lib/decorators';
 
@@ -37,6 +39,21 @@ class CreateBitcoinTransactionInput {
 export class BillingResolver {
   @InjectRepository(BitcoinTransaction)
   private bitcoinTransactionRepository: Repository<BitcoinTransaction>;
+
+  @InjectRepository(BillingUsage)
+  private billingUsageRepository: Repository<BillingUsage>;
+
+  @Authorized()
+  @Query(returns => [BillingUsage])
+  async getBillingUsage(@Ctx() ctx: Context) {
+    const billingUsages = await this.billingUsageRepository
+      .createQueryBuilder('billing_usage')
+      .where('user_id = :id', { id: ctx.user.id })
+      .andWhere("created_at >= CURRENT_TIMESTAMP - interval '1hr'")
+      .andWhere('created_at < CURRENT_TIMESTAMP')
+      .getMany();
+    return billingUsages;
+  }
 
   @Authorized()
   @Mutation(returns => BitcoinTransaction)

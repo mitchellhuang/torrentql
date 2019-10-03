@@ -5,6 +5,7 @@ import withApollo from '../lib/withApollo';
 
 import 'normalize.css';
 import 'bootstrap-spacing-utils';
+import 'react-vis/dist/style.css';
 
 class MyApp extends App<{apolloClient}> {
   static displayName = 'TorrentQL';
