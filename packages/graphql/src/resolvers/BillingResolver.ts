@@ -1,4 +1,4 @@
-import { Repository, getConnection, MoreThanOrEqual } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import {
   Args,
   ArgsType,
