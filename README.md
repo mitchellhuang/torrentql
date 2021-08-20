@@ -1,7 +1,5 @@
 # TorrentQL
 
-[![Build Status](https://drone.huang.mx/api/badges/mitchellhuang/torrentql/status.svg)](https://drone.huang.mx/mitchellhuang/torrentql)
-
 Download and seed torrents on-demand.
 
 ## Packages
